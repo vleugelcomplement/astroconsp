@@ -1,0 +1,93 @@
+\documentclass[12pt]{../../notes}
+\usepackage{silence}
+\WarningFilter{latex}{Reference}
+\graphicspath{{../../img/}}
+
+\begin{document}
+
+\setcounter{paragraph}{0}
+\paragraph{Определения}
+\begin{defn}\label{defn:linspace}
+  Пусть $K$~--- поле. Рассмотрим множество  $V$ с двумя операциями
+  \begin{align*}  
+    + &: V \times V \to V \\
+    \cdot &: K\times V \to V
+  \end{align*}
+  Тогда $V$~--- линейное пространство над $K$, если 
+  $\forall\, \mathbf{x},\mathbf{y},\mathbf{z}\in V,\; \alpha_i \in K$
+  \begin{enumerate}
+    \item $(\mathbf{x}+\mathbf{y}) + \mathbf{z} = \mathbf{x} + (\mathbf{y}+\mathbf{z})$
+    \item $\mathbf{x} + \mathbf{y} = \mathbf{y} + \mathbf{z} $
+    \item $\exists\, \mathbf{0}\in V : \mathbf{x} + \mathbf{0} = \mathbf{x}$
+    \item $\exists\, (-\mathbf{x})\in V : \mathbf{x} + (-\mathbf{x}) = \mathbf{0}$
+    \item $(\alpha_1+\alpha_2) \mathbf{x} = \alpha_1 \mathbf{x} + \alpha_2 \mathbf{x}$
+    \item $\alpha (\mathbf{x}_1 + \mathbf{x}_2) = \alpha \mathbf{x}_1 + \alpha \mathbf{x}_2$
+    \item $1 \cdot \mathbf{x} = \mathbf{x}$
+    \item $(\alpha_1 \alpha_2) \mathbf{x} = \alpha_1 (\alpha_2 \mathbf{x})$
+  \end{enumerate}
+\end{defn}
+
+{ \defn\label{defn:subspace}
+  Пусть $U,V$~--- линейные пространства над $K$, $U \subset V$. Тогда $U$~--- подпространство 
+  $V$.
+}
+
+{ \defn\label{defn:lincomb}
+Пусть $V$~--- линейное пространства над $K$, $\mathbf{x}_1, \dotsc, \mathbf{x}_n\in~V$, 
+$\alpha_1, \dotsc, \alpha_n \in K$. Тогда $\alpha_1 \mathbf{x}_1 + \dotsb + \alpha_n \mathbf{x}_n$~--- 
+линейная комбинация $\mathbf{x}_1, \dotsc, \mathbf{x}_n$.
+}
+
+
+\begin{lem}\label{lem:linspsign}
+  Пусть $U,V$~--- линейные пространства над $K$, $U \subset V$. Тогда если $U$ замкнуто относительно
+  $+, \cdot$  из  $V$, то  $U$~--- подпространство
+  $V$.
+\end{lem}
+\begin{itlproof}
+  Формулировка леммы аналогична тому, что всякая линейная комбинация элементов $U$ лежит в нем же.
+  Нужная дистрибутивность, ассоциативность и т.д. унаследуется от соответствующих операций в 
+  надпространстве, так как их свойства заданы на всём множестве $V$, а значит и на подмножестве $U$.
+  Однако в некоторых свойствах требовалось существование в множестве чего-нибудь.
+  Покажем, что все эти требования равносильны существованию линейной комбинации.
+  \begin{enumerate}
+      \setcounter{enumi}{2}
+    \item $\exists\, \mathbf{0}\in U \Leftarrow \exists\, 0\cdot \mathbf{x},\; \mathbf{x}\in U$
+    \item $\exists\, \mathbf{-x}\in U \Leftarrow \exists\, (-1)\cdot \mathbf{x},\; \mathbf{x}\in U$
+  \end{enumerate}
+\end{itlproof}
+
+{ \defn\label{defn:linshell}
+Пусть $V$~--- линейное пространства над $K$, $M \subset V$
+\[
+  \langle M \rangle = 
+  \left\{ \alpha_1 \mathbf{x}_1 + \dotsb + \alpha_n \mathbf{x}_n \middle|
+  \Big\{ \begin{array}{l}
+    \alpha_1, \dotsc, \alpha_n \in K\\
+    \mathbf{x}_1, \dotsc, \mathbf{x}_n \in M
+  \end{array} \right\}
+\] 
+$\langle M \rangle$~--- линейная оболочка $M$.
+}
+\begin{lem}\label{lem:linshell}
+  Верны утверждения:
+  \begin{enumerate}
+    \item $\langle M \rangle$~--- подпространство $V$
+    \item $ \langle M \rangle = \bigcap\limits_i W_i$, $W_i \supset M$, $W_i$~--- подпространство $V$
+  \end{enumerate}
+\end{lem}
+\begin{itlproof}
+  Доказательства очень похожи на соответствующие в теории групп.
+\end{itlproof}
+
+\paragraph{Линейная независимость системы векторов}
+
+{\defn\label{defn:linindp} Пусть $\mathbf{x}_1,\dotsc, \mathbf{x}_n \in V$, 
+$\alpha_1, \dotsc, \alpha_n \in K$.
+Тогда если 
+\[
+  \alpha_1\,\mathbf{x}_1 + \dotsb + \alpha_n\,\mathbf{x}_n = 0 \Leftrightarrow \forall\,i\;\alpha_i = 0
+\]
+то система векторов $\mathbf{x}_1, \dotsc, \mathbf{x}_n$ линейно независима.
+}
+\end{document}
