@@ -114,12 +114,12 @@
 
 \counterwithout{paragraph}{chapter}
 \renewcommand{\theparagraph}{\S\thinspace\arabic{paragraph}}
-%\titleformat\paragraph[block]{\normalfont\bfseries}{Билет\ \theparagraph:}{1ex}{\normalfont\bfseries}{}  
+\titleformat\paragraph[block]{\normalfont\bfseries}{\theparagraph}{2ex}{\normalfont\bfseries}{}  
 \titlespacing\paragraph{1ex}{1em plus 1ex minus 0.5ex}{0.7em plus 1ex minus 0.5ex}
 \setcounter{secnumdepth}{4}
 %setting up ToC
 \setcounter{tocdepth}{4}
-\cftsetindents{paragraph}{3.0em}{\widthof{\theparagraph--\arabic{paragraph}\hspace{1em}}}
+\cftsetindents{paragraph}{3.0em}{\widthof{\theparagraph--\arabic{paragraph}}}
 
 \hypersetup{%
   colorlinks=true,% hyperlinks will be colorful
@@ -147,12 +147,12 @@
   \addtocounter{paragraph}{1}%
   \setcounter{tmp}{\value{paragraph}}%
   \addtocounter{paragraph}{#1-2}% one day I will rewrite this. But not today :)
-  \renewcommand\theparagraph{\hspace{\widthof{\S}*(-2)}\S\thinspace\arabic{tmp}--\arabic{paragraph}}%
-  %\titleformat\paragraph[block]{\normalfont\bfseries}{Билеты\ \hspace{\widthof{\S}*2}%
-%\theparagraph:}{1ex}{\normalfont\bfseries}{}  
+  \renewcommand\theparagraph{\hspace{\widthof{\S}*(-2)}\S\S\thinspace\arabic{tmp}--\arabic{paragraph}}%
+  \titleformat\paragraph[block]{\normalfont\bfseries}{\hspace{\widthof{\S}*2}%
+\theparagraph}{2ex}{\normalfont\bfseries}{}  
   \paragraph{#2}
   \renewcommand{\theparagraph}{\S\thinspace\arabic{paragraph}}%
-  %\titleformat\paragraph[block]{\normalfont\bfseries}{Билет\ \theparagraph:}{1ex}{\normalfont\bfseries}{}%  
+  \titleformat\paragraph[block]{\normalfont\bfseries}{\theparagraph}{2ex}{\normalfont\bfseries}{}%  
   %\makeatother%
 }
 
