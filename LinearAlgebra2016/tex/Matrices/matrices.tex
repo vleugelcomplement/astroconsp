@@ -79,11 +79,14 @@
 
 \begin{defn}[Элементарные преобразования]\label{defn:elemtranf}
   \noindent\newline\par
-  \begin{tabular}{c|l|l}
-    I   & $A_i \leftrightarrows A_j$ & $A^{(i)} \leftrightarrows A^{(j)}$     \\
-    II  & $A_i := A_i + \lambda A_j$ & $A^{(i)} := A^{(i)} + \lambda A^{(j)}$ \\
-    III & $A_i := \lambda A_i$       & $A^{(i)} := \lambda A^{(i)}$           
-  \end{tabular}
+  \begin{enumerate}[I]
+    \item\label{it:transfchng}   \makebox[8em][l]{$A_i \leftrightarrows A_j$} 
+      $A^{(i)} \leftrightarrows A^{(j)}$     
+    \item\label{it:transfaddmul} \makebox[8em][l]{$A_i := A_i + \lambda A_j$} 
+      $A^{(i)} := A^{(i)} + \lambda A^{(j)}$ 
+    \item\label{it:transfmul}    \makebox[8em][l]{$A_i := \lambda A_i$}       
+      $A^{(i)} := \lambda A^{(i)}$           
+  \end{enumerate}
 \end{defn}
 \begin{defn}[Транспонированная матрица]\label{defn:transpose}
   \[
@@ -190,8 +193,8 @@
   А это вообще-то правильный кусок определителя $B$. 
   Поймём, что это за кусок определителя $A$.
   Числа-то те же самые. А вот на вопрос со знаком мы уже по сути ответили, когда рассуждали про 
-  определитель. Слагаемые точно не перемешиваются, так что каждое слагаемое просто умножается на
-  $(-1){\cdots}$. 
+  определитель. Слагаемые точно не перемешиваются, так как все перестановки"--- биекции, 
+  так что каждое слагаемое просто умножается на $(-1){\cdots}$. 
   Так что 
   \begin{align*}
     \Delta \cdot \Delta' &= (-1)^{i_1  + \dotsb + i_k  + j_1  + \dotsb + j_k } 
@@ -263,9 +266,84 @@
     \end{array}
     \right)
   \]
+  Теперь сделаем из куска с $B$ $Z_n$. 
+  \[
+    D'^{(n+j)} := C^{(n+j)} + b_{1j} C^{(1)} + \dotsb + b_{nj} C^{(n)}
+  \]
+  Внизу получатся нули, а вот сверху:
+  \[
+    d_{i,n+j} = 0 + b_{1j} a_{i1} + \dotsb + b_{nj} a_{in} = (ab)_{ij}
+  \]
+  Тысяча индексов, это же произведение матриц!
+  \[
+    D' = \left(
+    \begin{array}[h]{c|c}
+      A    & AB \\
+      \hline 
+      -E_n & 0
+    \end{array}
+    \right) 
+  \]
+  Мы тут пользовались только преобразованием \ref{it:transfaddmul}, так что определитель не
+  поменялся. 
 
-
+  Теперь переставим половинки матрицы. При этом будет совершено $n$ 
+  преобразований~\ref{it:transfchng}. Так что
+  \[
+    \begin{split}
+      \det A \det B & = \det C = \det D' = (-1)^n \det D = (-1)^n \det(-E_n) \det(AB) \\
+                    & =  (-1)^{2n} \det(AB) = \det AB
+    \end{split}
+  \]
 \end{ittproof}
+
+\paragraph{Обратимость матриц}
+
+\begin{defn}\label{defn:nonzerodet}
+  Пусть $A = M_n(K)$. Тогда $A$~--- невырожденная $\Leftrightarrow$ $\det A \neq 0$
+\end{defn}
+\begin{defn}[Взаимная матрица]\label{defn:adjointmtx}
+  \[
+    \widetilde{A} = (a)_{ij}^T
+  \]
+\end{defn}
+
+\begin{lem}\label{lem:adjointmtx}
+  \[
+    A\cdot\widetilde A = \det A \cdot E_n
+  \]
+\end{lem}
+
+\begin{defn}\label{defn:invertmtx}
+  Пусть $A = M_n(K)$. Тогда матрица $A^{-1}:$
+  \[
+    A\cdot A^{-1} = A^{-1} \cdot A = E_n
+  \]
+  (если существует)
+\end{defn}
+
+\begin{imp}
+  Если $\det A \neq 0$, то
+  \[
+    A^{-1} = \frac{1}{\det A} \widetilde{A}
+  \]
+\end{imp}
+
+\begin{imp}
+  А невырождена $\Leftrightarrow$ А"--- обратима. 
+\end{imp}
+
+\begin{imp}
+  Пусть $A,B \in M_n(K)$. Тогда 
+  \[
+    AB = E_n \Rightarrow A,B \text{~--- обратимы и } 
+    \begin{cases}
+      B = A^{-1} \\
+      A = B^{-1}
+    \end{cases}
+  \]
+\end{imp}
+
 
 
 \end{document}

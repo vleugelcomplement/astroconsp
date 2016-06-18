@@ -45,9 +45,13 @@
 \RequirePackage{epigraph}
 \RequirePackage{wasysym}
 \RequirePackage{hyperref}
+
 \RequirePackage{titlesec}
 \RequirePackage{tocloft}
 \RequirePackage{calc}
+
+\RequirePackage[shortlabels]{enumitem}
+
 \RequirePackage{chngcntr} % tools for counters 
 \RequirePackage{bbm}      %} more math fonts
 \RequirePackage{mathrsfs} %}
