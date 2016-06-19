@@ -51,6 +51,7 @@
 \RequirePackage{calc}
 
 \RequirePackage[shortlabels]{enumitem}
+\RequirePackage{perpage}
 
 \RequirePackage{chngcntr} % tools for counters 
 \RequirePackage{bbm}      %} more math fonts
@@ -120,10 +121,14 @@
 \renewcommand{\theparagraph}{\S\thinspace\arabic{paragraph}}
 \titleformat\paragraph[block]{\normalfont\bfseries}{\theparagraph}{2ex}{\normalfont\bfseries}{}  
 \titlespacing\paragraph{1ex}{1em plus 1ex minus 0.5ex}{0.7em plus 1ex minus 0.5ex}
+
+%setting up ToC and numbering
 \setcounter{secnumdepth}{4}
-%setting up ToC
 \setcounter{tocdepth}{4}
-\cftsetindents{paragraph}{3.0em}{\widthof{\theparagraph--\arabic{paragraph}}}
+\cftsetindents{paragraph}{3.0em}{\widthof{\theparagraph--\arabic{paragraph}}+1em}
+
+
+\MakePerPage{footnote}
 
 \hypersetup{%
   colorlinks=true,% hyperlinks will be colorful
@@ -131,6 +136,9 @@
   %linkbordercolor=blue,% hyperlink borders will be red
   %pdfborderstyle={/S/U/W 1}% border style will be underline of width 1pt
 }
+
+%for margin notes
+\setlength{\marginparwidth}{4cm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % new formatting cmds
@@ -177,8 +185,6 @@
 \def\lfrac#1#2{{}^{#1}\!/_{\!#2}}
 %\renewcommand\lfrac[2]{\sfrac{#1}{#2}}
 
-%for margin notes
-\setlength{\marginparwidth}{4cm}
 
 \def\dint{\displaystyle\int}
 \def\dsum{\displaystyle\sum}
@@ -189,6 +195,7 @@
 \DeclareMathOperator\Ln{Ln}
 \DeclareMathOperator\clos{clos}
 \DeclareMathOperator\grad{grad}
+\DeclareMathOperator\rk{rk}
 
 \renewcommand\C{\mathbbm{C}} 
 \newcommand\R{\mathbbm{R}} 
