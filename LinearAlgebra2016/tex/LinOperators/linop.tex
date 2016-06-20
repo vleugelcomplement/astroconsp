@@ -1,5 +1,5 @@
 %------------------------------------------------------------
-% Description : 
+% Description : Chapter about linear operators
 % Author      : tis-p30 <iliya.t@mail.ru>
 % Created at  : Sat Jun 18 12:38:13 MSK 2016
 %------------------------------------------------------------
@@ -9,6 +9,145 @@
 \graphicspath{{../../img/}}
 
 \begin{document}
-<++>
+
+\setcounter{paragraph}{7}
+
+\paragraph{Кольцо линейных операторов}
+
+\begin{defn}\label{defn:linop::operring::linop}
+  Пусть $V$~--- линейное пространство над полем $K$. Пусть также $\varphi \colon V \to V$, и
+  $\varphi$~--- линейное отображение. Тогда $\varphi$~--- линейный оператор.
+\end{defn}
+
+\begin{defn}[Сложение и умножение операторов]\label{defn:linop::operring::linopaddmul}
+  Введём 2 операции:
+  \begin{alignat*}{3}
+    +     &\colon V\times V \to V & \:&\wedge\: & (\psi + \varphi)(x) &= \psi(x) + \varphi(x) \\
+    \circ &\colon V\times V \to V & \:&\wedge\: & (\psi \circ \varphi)(x) &= \psi(\varphi(x))
+  \end{alignat*}
+\end{defn}
+
+\begin{thrm}\label{thrm:linop::operring::operring}
+  Множество эндоморфизмов $\End(V)$ с операциями, определёнными 
+  в~\ref{defn:linop::operring::linopaddmul}~--- кольцо.
+\end{thrm}
+
+\begin{thrm}\label{thrm:linop::operring::isommtx}
+  Пусть $\dim V = n$. Тогда
+  \[
+    (\End (V),\circ,+) \cong (M_n(K), \cdot, +)
+  \]
+\end{thrm}
+\begin{ittproof}
+  Пусть $\varphi, \psi \in \End(V)$, $A, B \in M_n(K)$.
+  Выберем базис в $V$ и рассмотрим отображение $f \colon \varphi \mapsto A_\varphi$,
+  композиция переходит в умножение матриц, сложение~--- в сложение матриц.
+
+  Такое отображение обратимо, действительно, 
+  \[
+    \forall\, A \in M_n(K) \;\: \big( \omega(x) := A x \big) \in \End(V)
+  \]
+  А значит $f$~--- биекция.
+
+  Пусть в выбранном базисе $\varphi(x) =  Ax$, $\psi(x) = Bx$. 
+  Уже доказывали, что матрица, соответствующая композиции $\psi\varphi$, равна $BA$.
+  Теперь разберёмся с матрицей суммы
+  \[
+    (\varphi + \psi)(x) = \varphi(x) + \psi(x) = A x + B x = (A+B) x
+  \]
+  То есть, в фиксированном базисе $(\varphi+\psi)$ соответствует $A+B$.
+  
+  Таким образом, раз базис выбирали произвольно, то в любом базисе $V$.
+  \begin{enumerate}
+    \item $f$~--- биекция.
+    \item $f(\varphi + \psi) = A_{\varphi+\psi} = A_\varphi + A_\psi = f(\varphi) + f(\psi)$
+    \item $f(\varphi \psi) = A_{\varphi\psi} = A_\varphi \cdot A_\psi = f(\varphi) \cdot f(\psi)$
+  \end{enumerate}
+  Следовательно, $f$~--- изоморфизм.
+\end{ittproof}
+
+\setcounter{paragraph}{11}
+\begin{defn}\label{defn:linop::poly::poly}
+  Пусть $\varphi\in \End(V)$, $A$~--- матрица $\varphi$ в фиксированном базисе, $p\in K[t]$.
+  Тогда
+  \begin{align*}
+    p(\varphi)(x) &= a_k \varphi^l(x) + \dotsb + a_1 \varphi(x) + a_0
+    p(A) &= a_k A^l + \dotsb + a_1 A + a_0
+  \end{align*}
+\end{defn}
+\begin{lem}\label{lem:linop::poly::mtxoprel}
+  Если в некотором базисе $\varphi$ имеет матрицу $A$, то в том же базисе $f(\varphi)$ имеет
+  матрицу $f(A)$.
+\end{lem}
+\begin{lem}\label{lem:linop::poly::commute}
+  Многочлены от одного и того же оператора и его матрицы в фиксированном базисе коммутируют.
+\end{lem}
+\begin{itlproof}
+  По сложению оно все коммутативно. В слагаемых переставлять нужно степени одного и того же.
+  Циклические группы обычно абелевы.
+\end{itlproof}
+
+\paragraph{ Инвариантные подпространства }
+\begin{defn}\label{defn:linop::invsubsp::invsubsp}
+  Пусть $\varphi\in \End(V)$, $W$~--- подпространство $V$. Тогда если $\varphi(W) \subset V$,
+  то $W$~--- $\varphi$-инвариантное подпространство $V$.
+\end{defn}
+
+\begin{lem}\label{lem:linop::invsubsb::dirsum}
+  Пусть:
+  \begin{itemize}
+    \item $V = \bigoplus_{i=1}^n W_i$
+    \item $W_{i}$~--- $\varphi$-инвариантное подпространство
+    \item базис $V$ разбивается на базисы $W_i$.
+    \item $\varphi\left.\vphantom{g_{\int}}\right|_{W_i} \in \End(V)$
+    \item В фиксированном базисе $A_i, A$~--- матрицы $\varphi_i, \varphi$ соответственно. 
+  \end{itemize}
+  Тогда
+  \[
+    A = 
+    \begin{pmatrix}
+      \boxed{A_1} & 0   & 0      & 0    \\
+      0   & \mkern -15mu \boxed{A_2} & 0      & 0    \\
+      0   & 0   & \ddots & 0    \\
+      0   & 0   & 0      & \boxed{A_n}  \\
+    \end{pmatrix}
+  \]
+\end{lem}
+\begin{itlproof}
+  Можно рассмотреть один такой <<блок>>. Если сверху/снизу него не ноли, то с инвариантностью
+  проблемы. 
+\end{itlproof}
+
+\paragraph{Характеристический многочлен оператора}
+\begin{defn}\label{defn:linop::charpoly::charpoly}
+  Пусть $\varphi\in \End(V)$, $A$~--- его матрица в выбранном базисе.
+  Тогда
+  \[
+    \chi_\varphi(t) = \det (A - t E_n)
+  \]
+\end{defn}
+
+\begin{stat}\label{stat:linop::charpoly::corr}
+  Какой бы базис не выбрали в $V$, характеристический многочлен не изменится.
+\end{stat}
+\begin{itlproof}
+  Матрицы оператора во всевозможных базисах подобны. Единичная матрица не поменяется при смене
+  базиса. А определители подобных матриц равны.
+\end{itlproof}
+
+\subparagraph{Свойства}
+\begin{enumerate}
+  \item $\deg \chi_\varphi = n$
+  \item Пусть $\chi_\varphi(t) = a_n t^n + \dotsb + a_0$. 
+    Тогда
+    \begin{align*}
+      &a_n = (-1)^n \\
+      &a_{n-1} = (-1)^n (a_{11} + \dotsb + a_{nn})
+    \end{align*}
+    {\defn\label{defn:linop::charpoly::trace} $\Tr A = a_{11} + \dotsb + a_{nn}$ }
+  \item $A \sim A' \Rightarrow \Tr A = \Tr A'$
+\end{enumerate}
+
+
 \end{document}
 

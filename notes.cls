@@ -196,6 +196,11 @@
 \DeclareMathOperator\clos{clos}
 \DeclareMathOperator\grad{grad}
 \DeclareMathOperator\rk{rk}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Ker{Ker}
+\let\Im\relax
+\DeclareMathOperator\Im{Im}
+\DeclareMathOperator\Tr{Tr}
 
 \renewcommand\C{\mathbbm{C}} 
 \newcommand\R{\mathbbm{R}} 
