@@ -148,6 +148,144 @@
   \item $A \sim A' \Rightarrow \Tr A = \Tr A'$
 \end{enumerate}
 
+\setcounter{paragraph}{19}
+\paragraph{Корневые подпространства}
+\begin{defn}\label{defn:linop::rootsp::rootv}
+  Пусть $\varphi\in \End(V)$, $\lambda \in K$\footnote{У меня тут в конспекте баг, а у вас?}
+  Корневой вектор~--- такой вектор $x$, что
+  \[
+    \exists\, k \in \N \colon (\varphi -  \lambda \id)^k(x) = 0
+  \]
+\end{defn}
+
+\begin{defn}\label{defn:linop::rootsp::rootsp}
+  Корневое подпространство~--- множество всех корневых векторов для данного числа $\lambda$.
+  Обозначается $V(\lambda)$.
+\end{defn}
+
+\begin{stat}\label{stat:linop::rootsp::eigenrel}
+  \[
+    \lambda \in \Spec \varphi \Rightarrow V_\lambda \subset V(\lambda) 
+  \]
+\end{stat}
+
+\begin{lem}\label{lem:linop::rootsp::lindep}
+  Пусть $\psi \in \End(V)$, $x\in V$, $x \neq 0$. Пусть также $k \in \N$~--- минимальное
+  $k$, что $\psi^k (x) =  0$. Тогда
+  \[
+    \{x, \psi(x) , \dotsc , \psi^{k-1}(x) \} \text{~--- линейно независимы}
+  \]
+\end{lem}
+\begin{itlproof}
+  Пусть оно линейно зависимо. Тогда
+  \[
+    \exists\, \beta_i \neq 0 \colon \beta_0 x + \beta_1 \psi(x) + \dotsb + \beta_{k-1}
+    \psi^{k-1} (x) = 0
+  \]
+  Пусть $\ell$~--- наименьший индекс $\beta$ не равного нулю. Тогда если применить к обеим
+  частям предыдущего равенства $\psi^{k-1-\ell}$, то
+  \[
+    0 + \dotsb + 0 +\beta_\ell \psi ^{k-1} (x) + 0+ \dotsb + 0 = 0 \Rightarrow \beta_l = 0 
+  \]
+  А таким методом можно получить что все $\beta_i = 0$. (?!?)
+\end{itlproof}
+
+\begin{stat}\label{stat:linop::rootsp::heightlessdim}
+  \[
+    V(\lambda) = \{ x\in V \mid (\varphi - \lambda \id)^n(x) = 0 \}, \; n = \dim V
+  \]
+\end{stat}
+\begin{itlproof}
+  Больше размерности линейно независимых векторов не наберёшь.
+\end{itlproof}
+
+\paragraph{Сумма корневых подпространств}
+
+\begin{lem}\label{lem:linop::rootspsum::gcd}
+  Пусть $f, g\in K[t]$, $(f, g) = 1$. Тогда 
+  \[
+    \big( f(\varphi)(x) = g(\varphi)(x) = 0 \big) \Rightarrow x = 0
+  \]
+\end{lem}
+
+
+\begin{thrm}\label{thrm:linop::rootspsum}
+  Пусть $\Spec \varphi = \{\lambda_1, \dotsc , \lambda_n\}$, $n = \dim V$\footnote{Тут важно,
+    что именно размерность берётся, иначе~\ref{stat:linop::rootsp::heightlessdim} не сработает}.
+  Тогда 
+  \[
+    \sum_{i=1}^{n} V(\lambda_i)^n\text{~--- прямая}
+  \]
+\end{thrm}
+\begin{ittproof}
+  Воспользуемся тут критерием прямой суммы. Докажем, что $W_i \cap V(\lambda_i) = \{0\}$.
+  Хорошо, пусть это не так. Выберем $x$ из этого пересечения. Тогда $x= \sum_{i\neq j} x_j$,
+  где $x_j \in W_j$.
+
+  Рассмотрим:
+  \begin{align*}
+    f(\varphi) = \prod_{j\neq i} (\varphi -\lambda_j \id)^n
+  \end{align*}
+  Тогда 
+  \[
+    \forall\, j \;\: f(\varphi)(x_j) = 0 \Rightarrow f(\varphi)(x) = 0
+  \]
+  В нём попросту найдётся нужное корневое число. 
+  
+  С другой стороны, \[
+    g(\varphi)(x) = (\varphi - \lambda_i)^n(x) = 0
+  \]
+
+  А поскольку $f, g$~--- взаимно просты, то по лемме \ref{lem:linop::rootspsum::gcd} $x=0$.
+\end{ittproof}
+\newpage
+\fbox{А вот тут начинается совсем жестище\ldots}
+\newpage
+\paragraph{Про инвариантность корневых подпространств}
+\begin{thrm}\label{thrm:linop::rootspinv}
+  Пусть $\varphi \in \End (V)$, $\Spec \varphi = \{\lambda_1, \dotsc , \lambda_m\}$.
+  Пусть ещё характеристический многочлен разложился на множители (ну в $\C$ заберёмся)
+  \[
+    \chi_\varphi(t) = \prod_{i=1}^m (t-\lambda_i)^{k_i}
+  \]
+  Тогда:
+  \begin{enumerate}
+    \item $\displaystyle V = \bigoplus\limits_{i=1}^m V(\lambda_i)$
+    \item $\displaystyle V(\lambda_i)$~--- $\varphi$-inv.
+  \end{enumerate}
+\end{thrm}
+
+\begin{ittproof}
+  Соорудим $i$ многочленов
+  \[
+    f_i (t) = \prod_{j\neq i} (t -\lambda_j)^{k_j}
+  \]
+  Они все взаимно просты. Тогда есть такое линейное представление $\id$ :
+  \[
+    (h_1 f_1)(\varphi) + \dotsb + (h_m f_m) (\varphi) = \id
+  \]
+  посчитаем такую штуку для каждого $x\in V$.
+  \begin{align*}
+    \intertext{Пусть}
+    &W_i = \big((h_i f_i)(\varphi)\big) (V) \\
+    \intertext{Тогда}
+    \id(V) = &W_1 + \dotsb + W_m = V
+  \end{align*}
+  \begin{enumerate}[а)]
+    \item Докажем, что $W_i$~--- $\varphi$-inv.
+      Там многочлены в процессе коммутируют, мы это доказывали в~\ref{lem:linop::poly::commute}
+      \[
+        \begin{split}
+          \varphi(W_i) &= \varphi\big(h_i f_i(\varphi)(V)\big) 
+          = \big(\varphi \cdot h_i(\varphi) \cdot f_i(\varphi) \big)(V) \\
+          &= \big( h_i(\varphi) \cdot f_i(\varphi) \big) (\varphi (V)) 
+          < \big( h_i(\varphi) \cdot f_i(\varphi) \big) (V) = W_i
+        \end{split}
+      \]
+    \item Докажем, что $W_i \subset V(\lambda_i)$. Пусть $y \in W_i$
+  \end{enumerate}<++>
+
+\end{ittproof}<++>
 
 \end{document}
 

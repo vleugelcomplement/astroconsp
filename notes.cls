@@ -201,6 +201,9 @@
 \let\Im\relax
 \DeclareMathOperator\Im{Im}
 \DeclareMathOperator\Tr{Tr}
+\DeclareMathOperator\id{id}
+\DeclareMathOperator\Spec{Spec}
+
 
 \renewcommand\C{\mathbbm{C}} 
 \newcommand\R{\mathbbm{R}} 
