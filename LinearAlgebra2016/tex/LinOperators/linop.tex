@@ -210,11 +210,9 @@
 
 
 \begin{thrm}\label{thrm:linop::rootspsum}
-  Пусть $\Spec \varphi = \{\lambda_1, \dotsc , \lambda_n\}$, $n = \dim V$\footnote{Тут важно,
-    что именно размерность берётся, иначе~\ref{stat:linop::rootsp::heightlessdim} не сработает}.
-  Тогда 
+  Пусть $\Spec \varphi = \{\lambda_1, \dotsc , \lambda_m\}$, $n = \dim V$.Тогда 
   \[
-    \sum_{i=1}^{n} V(\lambda_i)^n\text{~--- прямая}
+    \sum_{i=1}^{m} V(\lambda_i)^n\text{~--- прямая}
   \]
 \end{thrm}
 \begin{ittproof}
@@ -271,7 +269,7 @@
     \intertext{Тогда}
     \id(V) = &W_1 + \dotsb + W_m = V
   \end{align*}
-  \begin{enumerate}[а)]
+  \begin{enumerate}[a)]
     \item Докажем, что $W_i$~--- $\varphi$-inv.
       Там многочлены в процессе коммутируют, мы это доказывали в~\ref{lem:linop::poly::commute}
       \[
@@ -282,10 +280,273 @@
           < \big( h_i(\varphi) \cdot f_i(\varphi) \big) (V) = W_i
         \end{split}
       \]
-    \item Докажем, что $W_i \subset V(\lambda_i)$. Пусть $y \in W_i$
-  \end{enumerate}<++>
+    \item Докажем, что $W_i \subset V(\lambda_i)$. Пусть $y \in W_i$. Тогда
+      \[
+        \begin{split}
+          y &= (h_1(\varphi) f_1(\varphi))(x) \\
+          (\varphi - \lambda_i \id)^{k_i} (y) &= \big((\varphi - \lambda_i \id)^{k_i}  h_1(\varphi) f_1(\varphi)\big)(x) \\
+          &= h_i(\varphi) \cdot \big( \underbrace{(\varphi - \lambda_i \id)^{k_i} f_1(\varphi)}_{\chi_\varphi(\varphi) = 0} \big)(x)
+          = 0
+        \end{split}
+      \]
+  \end{enumerate}
+  Так как корневые подпространства~--- подпространства $V$, то 
+  \[
+    V \supset \bigoplus\limits_{i=1}^m V (\lambda_i) \Rightarrow \dim V \geqslant \sum_{i=1}^{m} \dim V(\lambda_i)
+  \]
+  С другой стороны, 
+  \[
+    \dim \sum_{i=1}^{m} W_i \leqslant \sum_{i=1}^{m} \dim W_i 
+  \]
+  При этом 
+  \[
+    W_i \subset V(\lambda_i) \Rightarrow \dim W_i \leqslant \dim V(\lambda_i)
+  \]
+  Так что
+  \[
+    \dim V = \dim \sum_{i=1}^{m} W_i \leqslant \sum_{i=1}^{m} \dim W_i \leqslant \sum_{i=1}^{m} \dim V(\lambda_i) \leqslant \dim V
+  \]
+\end{ittproof}
 
-\end{ittproof}<++>
+\paragraph{Размерность корневого подпространства}
 
+\begin{thrm}\label{thrm:linop::rootdim}
+  Пусть $\varphi \in \End (V)$, $\Spec \varphi = \{\lambda_1, \dotsc , \lambda_m\}$.
+  Пусть ещё характеристический многочлен разложился на множители (ну в $\C$ заберёмся)
+  \[
+    \chi_\varphi(t) = \prod_{i=1}^m (t-\lambda_i)^{k_i}
+  \]
+  Тогда:
+  \begin{enumerate}
+    \item $\dim V(\lambda_i) = k_i$
+    \item $\varphi_i = {}^{\varphi}\big\vert_{V(\lambda_i)}$ имеет единственное собственное число $\lambda_i$.
+  \end{enumerate}
+\end{thrm}
+\begin{ittproof}
+  \begin{enumerate}
+    \item[2] Пусть $\mu$~--- собственное число $\varphi_i$ не равное $\lambda_i$.
+      Тогда 
+      \begin{align*}
+        (\varphi - \mu \id) (x) = 0 \\
+        (\varphi - \lambda_i \id)^n (x) = 0 \\
+        \big((t-\mu),(t-\lambda_i)^n\big) = 1
+      \end{align*}
+      А по лемме~\ref{lem:linop::rootspsum::gcd} $x=0$. А тут что-то не так.\footnote{Собственные числа есть, так как любой
+      характеристический многочлен приводим в $\C$. А тогда $\det(A - \lambda E_n) = 0 \Rightarrow \rk(A - \lambda E_n) <
+      n$. Тогда и  размерность $\Ker (\varphi - \lambda \id)$ не ноль. Значит, ненулевой вектор там есть. }.
+
+    \item[1] Так как мы уже доказали, что пространство~--- прямая сумма корневых, то его базис разбивается на базисы корневых
+      подпространств.
+      \[
+        \underbrace{ \underbrace{e_1^1, \dotsc, e_{s_1}^1}_{\text{базис } V(\lambda_1)} , 
+        \dotsc,  \underbrace{e_1^n, \dotsc, e_{s_n}^n}_{\text{базис } V(\lambda_m)}  }_{\text{базис } V}
+      \]
+      мы когда-то (\ref{lem:linop::invsubsb::dirsum}) доказали, что матрица $\varphi$ в таком случае выглядит так:
+      \[
+        \begin{pmatrix}
+          \boxed{A_1} &    ~        &   0    &  \\
+              ~       &\mkern -15mu \boxed{A_2} &   ~    &  \\
+              ~       &    ~        & \ddots &  \\
+              0       &    ~        &   ~    & \boxed{A_m}
+        \end{pmatrix}
+      \]
+      Тогда 
+      \[
+        \begin{split}
+          \chi_\varphi(t) &= \det (A - t E_n ) = \det (A_1 - t E_n) \dotsm \det (A_m - t E_n)  = \\
+          &= \chi_{\varphi_1}(t) \dotsm \chi_{\varphi_m}(t)
+        \end{split}
+      \]
+      Что может входить в $\chi_{\varphi_i}$? $(t - \lambda_j), j\neq i$ там точно нет из второго пункта.
+      Но часть $t - \lambda_i$ в него не входить не может, иначе мы просто не наберём нужную степень в $\chi_\varphi(t)$.
+      Так что 
+      \[
+        \chi_{\varphi_i}(t) = (t - \lambda_i)^k_i
+      \]
+      Но 
+      \[
+        s_i = \dim V(\lambda_i) = \deg \chi_{\varphi_i}(t) = k_i
+      \]
+  \end{enumerate}
+\end{ittproof}
+
+
+\parrange{2}{Жорданова нормальная форма}
+
+Сначала пара определений
+\begin{defn}[Относительная линейная независимость]\label{defn:linop::jnf::relind}
+  Пусть $W$~--- подпространство $V$, $e_1, \dotsc, e_s \in V$ Тогда $\{e_i\}$ ЛНЗ относительно $W$, если
+  \[
+    \alpha_1 e_1 + \dotsb + \alpha_s e_s \in W \Rightarrow \forall\, \alpha_i = 0
+  \]
+  Или (эквивалентная формулировка) объединение с базисом подпространства линейно независимо в $V$.
+\end{defn}
+
+\begin{defn}[Относительный базис]\label{defn:linop::jnf::relbasis}
+  Пусть $W$~--- подпространство $V$. Тогда дополнение базиса $W$ до базиса $V$ называется базисом $V$ относительно
+  $W$
+
+  Или, что тоже самое, они относительно линейно независимы и их линейная оболочка с $W$ равна $V$.
+\end{defn}
+
+
+\begin{lem}\label{lem:linop::jnf::relindtorelbasis}
+  \marginpar{\footnotesize может это 1-ая корректность?  }
+  Относительно линейно независимую систему можно дополнить до относительного базиса.
+\end{lem}
+
+Теперь что известно:
+\begin{itemize}
+  \item $V$ - линейное пространство над $K$, $\dim V = n$, $\varphi\in \End(V)$
+  \item $\Spec \varphi = \{\lambda_1, \dotsc, \lambda_m\}$.
+  \item $\displaystyle \chi_\varphi(t) = \prod_{i=1}^m(t-\lambda_i)^{k_i}$
+  \item $V = \bigoplus\limits_{i=1}^m V (\lambda_i)$
+  \item $\dim V(\lambda_i) = k_i$
+  \item $A_i$~--- матрица ${}^\varphi\big|_{V(\lambda_i)}$
+    \[
+    A = \begin{pmatrix}
+          \boxed{A_1} &    ~        &   0    &  \\
+              ~       &\mkern -15mu \boxed{A_2} &   ~    &  \\
+              ~       &    ~        & \ddots &  \\
+              0       &    ~        &   ~    & \boxed{A_m}
+        \end{pmatrix}
+  \]
+\end{itemize}
+
+\begin{defn}[ЖНФ]\label{defn:linop::jnf::jnf}
+  Такая форма записи матрицы линейного оператора:
+  \[
+    \begin{pmatrix}
+      J_1 &        & ~ \\
+      ~   & \ddots & ~ \\
+      ~   & ~ & J_m \\
+    \end{pmatrix}
+  \]
+  где $J_i$~--- жорданова клетка
+  \[
+    J_i = 
+    \begin{pmatrix}
+      \lambda_i & 1   & ~ & ~   & ~  \\
+      ~   & \lambda_i & 1 & ~   & ~  \\
+      ~   & ~   & \ddots & \ddots   & ~  \\
+      ~   & ~   & ~ & \lambda_i & 1  \\
+      ~   & ~   & ~ & ~   & \lambda_i \\
+    \end{pmatrix}
+  \]
+\end{defn}
+\begin{defn}[Жорданов базис]\label{defn:linop::jnf::jbasis}
+  Базис, в котором матрица линейного оператора выглядит, как в~\ref{defn:linop::jnf::jnf}
+\end{defn}
+
+
+Рассмотрим $\psi = \varphi - \lambda \id$.
+\newcommand{\eqrot}{\rotatebox{90}{=}}
+Тогда 
+\[
+  V_\lambda = \begin{array}{c}
+    \Ker \psi\\
+    \eqrot \\
+    W_1
+\end{array} \supset 
+  \begin{array}{c}
+    \Ker \psi^2\\
+    \eqrot \\
+    W_1
+\end{array} \supset \dotsb \supset
+  \begin{array}{c}
+    \Ker \psi^{\ell}\\
+    \eqrot \\
+    W_\ell
+  \end{array} = V(\lambda)
+\]
+Во всей этой процедуре будем ещё базисы $W_j$ искать
+
+\begin{itemize}
+  \item $s_\ell$ векторов на первой ступеньке~--- базис $W_\ell$ относительно $W_{\ell-1}$, то есть что добавилось на последнем
+    шаге. 
+  \item Все ступеньки выше $r-1$~--- базис $W_\ell$ относительно $W_{r-1}$
+  \item На каждом шаге считаем $\psi$ от всего, что было на предыдущей ступеньке и добавляем векторов, 
+    чтобы выполнялось предыдущее условие.
+\end{itemize}
+
+\begin{lem}\label{lem:linop::jnf::stairscont}
+  На $r$-ой ступеньке лежат векторы из $\Ker \psi^r$. 
+\end{lem}
+\begin{itlproof}
+  По индукции:
+  \begin{description}
+    \item[База:] Векторы на $\ell$-ой ступеньке из $\Ker \psi^\ell$.
+    \item[Переход:] $x\in \Ker \psi^{r+1} \Rightarrow \psi(x) \in \Ker \psi^{r}$. А оставшиеся векторы добираются из
+      $W_r = \Ker \psi^r$
+  \end{description}
+\end{itlproof}
+
+\begin{lem}[Корректность поиска базиса]\label{lem:linop::jnf::corralg}
+  После дополнения до базиса относительно $W_{r-1}$ система будет ЛНЗ относительно $W_{r-2}$.
+\end{lem}
+
+\begin{itlproof}
+  Пусть оно линейно зависимо относительно $W_{r-2}$. Тогда 
+  \begin{equation}
+    \sum_{i=r}^{\ell} \left( \sum_{j=1}^{s_i} \alpha_j^i x_j^i \right) + \sum_{j=1}^{s_r} \beta_j \psi(x^{r}_j) = w \in W_{r-2}
+    \label{eq:linop::jnf::steprelind}
+  \end{equation}
+  \begin{enumerate}[1)]
+    \item не все $\alpha_j^i = 0$ \\
+      Пусть $t$~--- наибольший номер этажа на котором есть ненулевые $\alpha_i^t$. Применим $\psi^{t-1}$ к обеим частям
+      равенства~\eqref{eq:linop::jnf::steprelind}.
+      
+      Второй член уберётся совсем, ведь $t \geqslant r$. Правая часть пропадёт по тем же причинам. 
+      А вот от первого слагаемого левой останется кусок (это не весь, ещё штуки вида $x^{t-k}$ есть, но они пока не нужны):
+      \[
+        \sum_{j=1}^{s_t} \alpha_j^t \psi^{t-1}(x_j^t)= 0 \Rightarrow \psi^{t-1} \left( \sum_{j=1}^{s_t} \alpha_j^t x_j^t \right) = 0
+        \Rightarrow \sum_{j=1}^{s_t} \alpha_j^t x_j^t \in W_{t-1}
+      \]
+      В итоге оно линейно зависимо над $W_{t-1}$,$t-1 > r-2$ а мы тут неявно предполагали по полной индукции, что нет.
+    \item все $\alpha_j^i = 0$ 
+      Тогда просто применяем $\psi^{r-1}$ к~\eqref{eq:linop::jnf::steprelind}. Выйдет, что
+      \[
+        \psi^{r-1}\left( \sum_{j=1}^{s_r} \beta_j x_j^r \right) = 0 \Rightarrow \sum_{j=1}^{s_r} \beta_j x_j^r \in W_{r-1}
+      \]
+      Но в таком случае снова проблемы с индукционным предположением.
+  \end{enumerate}
+\end{itlproof}
+
+Теперь рассмотрим циклическое подпространство
+\[
+  N_x = \langle x, \psi(x), \dotsc, \psi^{\ell-1}(x) \rangle
+\]
+Пусть $B_{N_x}$~--- матрица $\psi \big\vert_{N_x}$. Тогда можно понять, как она выглядит:
+\[
+  \begin{cases}
+    B x = \psi(x) &\\
+    \hdotsfor{1} &\\
+    B \psi^{\ell-1} (x) = \psi^\ell(x) = 0 &\\
+  \end{cases}
+  \Rightarrow
+  B = \ell \left\{ \vphantom{ \begin{matrix}~ \\~ \\ ~ \\~ \\~ \\~\end{matrix} } \!\!\right.
+  \overbrace{
+    \boxed{
+      \begin{matrix}
+        0 & 1 & ~ & ~ & ~ \\
+        ~ & 0 & 1 & ~ & ~ \\
+        ~ & ~ & 0 & \ddots & ~ \\
+        ~ & ~ & ~ & \ddots & 1 \\
+        ~ & ~ & ~ & ~ & 0 
+      \end{matrix}
+    }
+  }^\ell
+\]
+
+Тогда блок жордановой формы выглядит так:
+\[
+    J_i = \boxed{\begin{matrix}
+          \lambda_i & 1 & ~ & ~ \cr
+          ~ & \lambda_i & \ddots & ~ \cr
+          ~ & ~ & \ddots & 1 \cr
+          ~ & ~ & ~ & \lambda_i \cr
+      \end{matrix}}
+\]
+где $\lambda_i$~--- собственное число.
 \end{document}
 

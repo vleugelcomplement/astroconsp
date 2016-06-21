@@ -104,6 +104,7 @@
 %\renewcommand{\p@stat}{\arabic{chapter}.\arabic{paragraph}.\thestat\expandafter\@gobble}
 \renewcommand{\p@defn}{\arabic{chapter}.\arabic{paragraph}.\thedefn\expandafter\@gobble}
 \renewcommand{\p@exmp}{\arabic{chapter}.\arabic{paragraph}.\theexmp\expandafter\@gobble}
+\renewcommand{\p@equation}{\theequation\expandafter\@gobble}
 
 %%%%% <---- Starting chapter without a pagebreak
 %\makeatletter 
@@ -138,7 +139,7 @@
 }
 
 %for margin notes
-\setlength{\marginparwidth}{4cm}
+\setlength{\marginparwidth}{3cm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % new formatting cmds
