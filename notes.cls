@@ -33,10 +33,11 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T2A]{fontenc}
 \RequirePackage[english,russian]{babel}
-%\RequirePackage[left=1cm,right=1cm,
-%top=1cm,bottom=1cm,bindingoffset=0cm]{geometry}
+\RequirePackage[left=1cm,right=1cm,
+top=1cm,bottom=1cm,bindingoffset=0cm]{geometry}
 \RequirePackage[intlimits]{amsmath}
 \RequirePackage{amsfonts, amssymb, amsthm}
+\RequirePackage{mathtools}
 
 \RequirePackage[pdftex]{graphicx}
 \RequirePackage{xcolor}
@@ -74,7 +75,10 @@
 \newtheorem{thrm}{Теорема}[paragraph]
 \newtheorem{lem}[thrm]{Лемма}
 \newtheorem{stat}[thrm]{Утверждение}
+\newtheorem{prop}[thrm]{Утверждение}
 \newtheorem{imp}{Следствие}[thrm]
+\newtheorem{cor}{Следствие}[thrm]
+\newtheorem*{cor*}{Следствие}
 
 \theoremstyle{definition}
 \newtheorem{defn}{Определение}[paragraph]
@@ -92,7 +96,9 @@
 \renewcommand{\thethrm}{\arabic{thrm}}
 \renewcommand{\thelem}{\arabic{lem}}
 \renewcommand{\thestat}{\arabic{stat}}
+\renewcommand{\theprop}{\arabic{prop}}
 \renewcommand{\theimp}{\arabic{imp}}
+\renewcommand{\thecor}{\arabic{cor}}
 
 \renewcommand{\thedefn}{\arabic{defn}}
 \renewcommand{\theexmp}{\arabic{exmp}}
@@ -145,7 +151,7 @@
 % new formatting cmds
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{ittproof}[1][\noskip]{\noindent$\square$\ifx\noskip#1\relax\else~(\textit{#1})\fi~\nopagebreak}%
-{\nopagebreak$\blacksquare$\par}
+{\nopagebreak\noindent$\blacksquare$\par}
 \newenvironment{itlproof}[1][\noskip]{\noindent$\blacktriangledown$\ifx\noskip#1\relax\else~(\textit{#1})\fi\\* }%
 {\nopagebreak\par\noindent\nopagebreak$\blacktriangle$\par}
 

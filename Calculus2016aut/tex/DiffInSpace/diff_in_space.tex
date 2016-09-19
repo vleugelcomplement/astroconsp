@@ -1,0 +1,82 @@
+\documentclass[12pt]{../../../notes}
+\usepackage{silence}
+\WarningFilter{latex}{Reference}
+\graphicspath{{../img/}}
+
+\begin{document}
+
+\paragraph{Оценка приращения дифференциального отображения}
+\label{par:diffspace::diffestim}
+
+\begin{prop}\label{prop:diffspace::diffestim::lagrfail}
+  Пусть $f\colon \R^n \to \R^m$, $m \geqslant 2$. Тогда формула Лагранжа
+  \[
+    f(b) - f(a) = f'(c)(b - a)
+  \]
+  не работает.
+\end{prop}
+\begin{exmp*}\label{exmp:diffspace::diffestim::lagrfail}
+  Пусть 
+  \[
+    f(t) := (\cos t, \sin t), b - a = 2\pi
+  \]
+\end{exmp*}
+
+\begin{thrm}[об оценке приращения отображения]\label{thrm:diffspace::diffestim::diffestim}
+  Пусть $f\colon G \subset \R^n \to \R^m$, $G$~--- выпуклое, $f$~--- дифференцируема, 
+  \[ 
+    \forall\, x \in G \;\: \| f'(x) \| \leqslant M 
+  \]
+  Тогда $\forall\, a,b \in G \;\: \|f(b) - f(a)\| \leqslant M \| b-a \|$
+\end{thrm}
+\begin{ittproof}
+  <<Окружим>>  исходную функцию:
+  \[
+    F = \psi \circ f \circ \varphi
+  \]
+  где 
+  \begin{align*}
+    \varphi&: \R^n \to \R^m & \varphi(t) &:= t(b-a) + a, & t&\in [0,1] \\
+    \psi&: \R^m \to \R & \psi(y) &:= \langle y, \ell \rangle, & \ell &= f(b)-f(a) 
+  \end{align*}
+  Заметим, что $F$~--- обычная вещественнозначная функция. Так что для неё работает формула
+  Лагранжа:
+  \[
+    \exists\, c \in [0,1] \colon F(1)-F(0) = F'(c)(1-0) = F'(c)
+  \]
+  Тогда из свойств нормы (по ходу дела обозначим $\varphi(c)$ за $x$):
+  \[
+    \|F'(c)\| = \|\psi'(f(x)) \cdot f'(x) \cdot \varphi'(c)\| \leqslant 
+    \|\psi'(f(x)) \| \cdot \| f'(x) \| \cdot \| \varphi'(c)\|
+  \]
+  Здесь тонкость в обозначениях. Производные~--- вроде матрицы, поэтому их нормы~--- что-то
+  странное на первый взгляд. На самом деле смысл немного иной. 
+  \[
+    \mathrm d L(x, h) = f'(x) \cdot h
+  \]
+  Таким образом, дифференциал~--- неплохое линейное отображение. А под <<нормой производной>>
+  имеется в виду норма соответствующего линейного отображения.
+
+  Теперь давайте что-нибудь скажем про эти нормы. 
+  \begin{enumerate}
+    \item $\varphi'(t) = (b-a) \Rightarrow \| \varphi'(c) \| = \| b - a\|$
+    \item $\psi(y) = \langle y, l \rangle$, $\| \psi\| = \|\ell\|$      
+  \end{enumerate}
+  Так что 
+  \[
+    \| F'(c)\| \leqslant M \cdot \| \ell \| \cdot \|b-a\|
+  \]
+  С другой стороны:
+  \[
+    F(1) - F(0) = \psi(f(b)) - \psi(f(a)) = \langle f(b), \ell \rangle - \langle f(a), \ell \rangle
+    = \langle \ell, \ell \rangle  = \|\ell \|^2
+  \]
+  В итоге, совмещая оба выражения, приходим к утверждению теоремы.
+\end{ittproof}
+
+\paragraph{Производные высших порядков}
+\label{par:diffspace::highdiff}
+
+
+
+\end{document}
