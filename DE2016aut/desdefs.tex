@@ -1,0 +1,48 @@
+\documentclass[10pt]{../notes}
+\usepackage{docmute}
+
+\title{Определения из дифуров}
+\date{\today}
+\author{\texttt{t a x u s}}
+
+\begin{document}
+
+\maketitle
+
+\begin{defn}[Дифференциальное уравнение]\label{defn:diffeq}
+  Пусть $f \in C(G)$, $G \subset \R^2$. Тогда диффур~--- вот такая штука:
+  \[
+    y' = f(x, y)
+  \]
+\end{defn}
+\begin{defn}\label{defn:diffsol}
+  Решение~--- функция $y=\varphi(x)$, определённая на $\langle a, b \rangle$ :
+  \begin{enumerate}
+    \item $\varphi(x)$~--- дифференцируема
+    \item $(x, \varphi(x)) \in G$
+    \item $\varphi'(x) = f(x, \varphi(x))$
+  \end{enumerate}
+\end{defn}
+
+\begin{defn}[Задача Коши и вокруг неё]\label{defn:cauchyprobl} 
+  Основные понятия тут:
+  \begin{enumerate}
+    \item $(x_0, y_0)$~--- начальные данные
+  \item Решение задачи Коши~--- \emph{частное} решение дифура + выполнение начальных условий
+    \item Решение задачи Коши существует, если $\exists\, (a,b) \ni x_0,
+      y=\varphi(x)\colon y_0 = \varphi(x_0)$
+    \item Решение задачи Коши единственно, если любые 2 решения совпадают в окрестности
+      $x_0$ 
+  \end{enumerate}
+\end{defn}
+
+\begin{defn}\label{defn:uniqpnt}
+  $(x_0, y_0) \in G$~--- тоска единственности, если решение задачи Коши в ней единственно.
+\end{defn}
+\begin{defn}\label{defn:uniqset}
+  $\tilde{G} \in G$~--- область единственности, если каждая её точка~--- точка
+  единственности.
+\end{defn}
+
+
+\end{document}
