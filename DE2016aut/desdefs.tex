@@ -3,11 +3,16 @@
 
 \title{Определения из дифуров}
 \date{\today}
-\author{\texttt{t a x u s}}
+\author{Лектор: В.~В.~Басов \\
+        Записал: \texttt{taxus}}
 
 \begin{document}
 
 \maketitle
+
+\chapter{Дифуры, разрешённые относительно производной}
+
+\paragraph{Основные определения}
 
 \begin{defn}[Дифференциальное уравнение]\label{defn:diffeq}
   Пусть $f \in C(G)$, $G \subset \R^2$. Тогда диффур~--- вот такая штука:
@@ -40,9 +45,77 @@
   $(x_0, y_0) \in G$~--- тоска единственности, если решение задачи Коши в ней единственно.
 \end{defn}
 \begin{defn}\label{defn:uniqset}
-  $\tilde{G} \in G$~--- область единственности, если каждая её точка~--- точка
+  $\widetilde{G} \in G$~--- область единственности, если каждая её точка~--- точка
   единственности.
 \end{defn}
 
+\begin{defn}\label{defn:inteq}
+  Пусть $f\in C(G)$, $G\subset\R^2$, $(x_0, y_0) \in G$, $x_0, x\in \langle a, b \rangle$
+  Тогда интегральным уравнением называется 
+  \[
+    y = y_0 + \int_{x_0}^{x} f(u, y)\, \mathrm d s
+  \]
+\end{defn}
+
+\begin{defn}\label{defn:intsol}
+  Решение~--- функция $y=\varphi(x)$, определённая на $\langle a, b \rangle$ :
+  \begin{enumerate}
+    \item $\varphi(x)$~--- непрерывна
+    \item $(x, \varphi(x)) \in G$
+    \item $ y = y_0 + \dint_{x_0}^{x} f(u, y)\, \mathrm d s $
+  \end{enumerate}
+\end{defn}
+
+\begin{thrm}\label{thrm:diffinteqconnect}
+  Пусть $f\in C(G)$. Тогда $y=\varphi(x)$~--- решение \ref{defn:diffeq} $\Leftrightarrow$ решение \ref{defn:inteq}.
+\end{thrm}
+
+\begin{defn}[Отрезок Пеано]\label{defn:peanosegm}
+  \begin{align*}
+    P_h(x_0, y_0) &= \{x\colon |x-x_0| \leqslant h\} \\
+    h &= \min \{a, b/M\},\; M = \max_{(x, y)\in \overline R} | f(x, y) | \\
+    \overline R &= \{ (x, y) \colon |x-x_0| \leqslant a, | y-y_0| \leqslant b\} \subset G
+  \end{align*}
+\end{defn}
+
+\begin{defn}\label{defn:partsol}
+  Решение~--- частное, если всякая его точка~--- точка единственности.
+\end{defn}
+
+\begin{defn}\label{defn:singsol}
+  Решение~--- особое, если всякая его точка~--- точка неединственности.
+\end{defn}
+
+\begin{defn}[Общее решение]\label{defn:generalsol}
+  Пусть $G$~--- область единственности. Тогда непрерывная по обеим аргументам функция $y = \varphi(x,C)$~--- общее решение 
+  дифференциального уравнения в $A \subset G$, если $\forall (x_0, y_0) \in A $:
+  \begin{enumerate}
+    \item  уравнение $y_0 = \varphi(x_0, C)$ однозначно разрешимо относительно $C$. \\
+      /Наверное, локальная монотонность нужна/
+    \item $y=\varphi(x, C_0)$ ($C_0$~--- корень $y_0=\varphi(x_0, C)$)~--- решение задачи Коши с начальными данными $x_0, y_0$
+  \end{enumerate}
+  Тут кстати в самом конспекте что-то странное. Почему-то требуется, чтобы $\varphi(x,C_0)$ была решением в окрестности $C_0$.
+\end{defn}
+
+\begin{defn}\label{defn:solcont}
+  Решение дифура, определённое на $\langle a, b \rangle$ продолжимо за точку $b$, если 
+  \[
+    \exists\, \widetilde{\varphi}(x) \colon \widetilde{\varphi}\vert_{\langle a, b \rangle} = \varphi
+    \land \widetilde{\varphi}'(x) \overset{\langle a, \widetilde b \rangle}{\equiv} f(x, \widetilde{\varphi}(x))
+  \]
+\end{defn}
+
+\paragraph{Существование решения задачи Коши}
+
+\begin{thrm}[Теорема Пеано]\label{thrm:peanothrm}
+  Пусть $f\in C(G)$. Тогда
+  \[
+    \forall\, (x_0, y_0), P_h(x) \;\: \exists\, y=\varphi(x) \colon
+    \begin{cases}
+      \varphi'(x) \overset{P_h}{\equiv} f(x, \varphi(x)) \\
+      y_0 = \varphi(x_0)
+    \end{cases} \text{(решение \ref{defn:cauchyprobl})}
+  \]
+\end{thrm}
 
 \end{document}
