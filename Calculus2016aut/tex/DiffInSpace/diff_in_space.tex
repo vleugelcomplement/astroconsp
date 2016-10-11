@@ -1,3 +1,8 @@
+%------------------------------------------------------------
+% Description : Calculus in \R^n space
+% Author      : taxus-d <iliya.t@mail.ru>
+% Created at  : ??? 
+%------------------------------------------------------------
 \documentclass[12pt]{../../../notes}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
@@ -74,9 +79,75 @@
   В итоге, совмещая оба выражения, приходим к утверждению теоремы.
 \end{ittproof}
 
-\paragraph{Производные высших порядков}
+\paragraph{Частные производные высших порядков}
+\label{par:diffspace::highpartial}
+
+\begin{defn}\label{defn:diffspace::highpartial}
+  Пусть $f \colon G \subset \R^n \to \R$, существуют производные $k$-го порядка. Тогда
+  \[
+    \partial_{i_1, \dotsc, i_{k+1}}^{k+1} f(x) := \partial_{i_{k+1}}(\partial^k_{i_1, \dotsc, i_{k+1}} f) (x)
+  \]
+\end{defn}
+\begin{rem}\label{rem:diffspace::highpartial::smooth}
+  $C^p(G)$~--- класс функций, определённых в $G$ с непрерывной производной до $p$-го порядка
+  включительно.
+  Функции из $C^1$ ещё называются гладкими.
+\end{rem}
+
+\begin{thrm}[Зависимость производных $p$-го порядка от перестановки переменных]
+  \label{thrm:diffspace::highpartial::permut}
+  Пусть \mbox{$f \in C^p(G)$}, $x\in G$. При этом
+  \[
+    \begin{split}
+      i &= \{ i_1, \dotsc, i_p \mid i_k \in \{1, \dotsc, n\}\} \\
+      j &= \{ j_1, \dotsc, j_p \mid j_k \in \{1, \dotsc, n\}\} \\
+      j &= \pi(i)
+    \end{split}
+  \]
+  Тогда 
+  $\partial_i^{\,p} f(x) = \partial_j^{\,p} f(x)$
+\end{thrm}
+\begin{rem}\label{rem:diffspace::highpartial::permut}
+  Тут важно, что есть целая окрестность. Одной точки не хватит.
+\end{rem}
+
+\paragraph{<<Многомерный>> дифференциал высоких порядков}
 \label{par:diffspace::highdiff}
 
+\begin{defn}\label{defn:diffspace::highdiff}
+  Пусть $f \colon G \subset \R^n \to \R$, $f\in C^p(G)$
+  \[  
+    \del^p f(x) := \sum_{1 \leqslant i_1 \leqslant \dotsb \leqslant i_p \leqslant n}
+    \frac{\partial^p f}{\partial x_{i_p} \dotso \partial x_{i_p}} \, \del x_{i_1} \dotsm \del x_{i_p}
+  \]
+\end{defn}
 
+\begin{stat}\label{stat:diffspace::highdiff::binom}
+  Если частные производные можно переставлять, то
+  \[
+    \del^p f(x) = \sum_{\substack{\alpha_i \geqslant 0 \\ \sum \alpha_i = p}} 
+    \frac{p!}{\alpha_1! \dotsm \alpha_n!} \, 
+    \frac{\partial^p f}{\partial x_1^{\alpha_1}\dotso \partial x_n} \,\del x_{i_1} \dotsm \del x_{i_p}
+  \]
+\end{stat}
+
+\paragraph{Формула Тейлора для функций многих переменных}
+\label{par:diffspace::taylor}
+
+\begin{thrm}\label{thrm:diffspace::taylor}
+  Пусть $f \in C^p(G), G\in \R^n$, $a\in G$. Пусть также $h\in \R^n \colon a+h \in G$.
+  Тогда 
+  \[
+    f(a+h) = \sum_{k=0}^p \frac{1}{k!} \, \del^k f(a,h) + R_p(h)
+  \]
+  Остаток $R_p(h)$ можно представить несколькими способами:
+  \begin{enumerate}
+    \item В форме Пеано: $R_p(h) = o(\|h\|^p)$
+    \item В форме Лагранжа $R_p(h) = \dfrac{1}{(p+1)!}\, \del^{p+1} f(a + \theta h, h)$, 
+      $\theta \in (0,1)$
+  \end{enumerate}
+
+
+\end{thrm}
 
 \end{document}
