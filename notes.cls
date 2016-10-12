@@ -8,12 +8,26 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{notes}
 
+%pdf search
+\RequirePackage{cmap}
+\RequirePackage{ifthen}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T2A]{fontenc}
+\RequirePackage[english,russian]{babel}
+
 % report options
 \DeclareOption{10pt}{
     \PassOptionsToClass{\CurrentOption}{report}
 }
 \DeclareOption{12pt}{
     \PassOptionsToClass{\CurrentOption}{report}
+}
+
+\newboolean{trimbord}
+\setboolean{trimbord}{false}
+
+\DeclareOption{trimbord}{
+  \setboolean{trimbord}{true}
 }
 
 %% Fallback                                  
@@ -27,14 +41,11 @@
 \LoadClass[a4paper]{report}
 
 
-%pdf search
-\RequirePackage{cmap}
 
-\RequirePackage[utf8]{inputenc}
-\RequirePackage[T2A]{fontenc}
-\RequirePackage[english,russian]{babel}
-\RequirePackage[left=1cm,right=1cm,
-top=1cm,bottom=1cm,bindingoffset=0cm]{geometry}
+\ifthenelse{\boolean{trimbord}}
+  {\RequirePackage[left=1.5cm,right=1.5cm,top=1.5cm,bottom=1.5cm,bindingoffset=0cm]{geometry}}
+  {\RequirePackage{geometry}}
+
 \RequirePackage[intlimits]{amsmath}
 \RequirePackage{amsfonts, amssymb, amsthm}
 \RequirePackage{mathtools}
@@ -222,6 +233,7 @@ top=1cm,bottom=1cm,bindingoffset=0cm]{geometry}
 \newcommand\concave{\,\overline\cap\,}
 \newcommand\circlearound[1]{#1\hspace{\widthof{#1}*(-1)}$\bigcirc$}
 
+\newcommand\del{\ensuremath\mathrm{d}}
 \endinput
 % vim: set sw=2 nofoldenable:
 

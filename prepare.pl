@@ -29,7 +29,7 @@ elsif ($fname =~ m/\.tex/) {
 \graphicspath{{../../img/}}
 
 \begin{document}
-<++>
+
 \end{document}
 EOS
 }

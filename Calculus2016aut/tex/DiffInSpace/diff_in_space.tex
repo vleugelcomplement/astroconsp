@@ -3,7 +3,7 @@
 % Author      : taxus-d <iliya.t@mail.ru>
 % Created at  : ??? 
 %------------------------------------------------------------
-\documentclass[12pt]{../../../notes}
+\documentclass[12pt,trimbord]{../../../notes}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
 \graphicspath{{../img/}}
@@ -34,6 +34,7 @@
   \]
   Тогда $\forall\, a,b \in G \;\: \|f(b) - f(a)\| \leqslant M \| b-a \|$
 \end{thrm}
+
 \begin{ittproof}
   <<Окружим>>  исходную функцию:
   \[
@@ -143,11 +144,33 @@
   Остаток $R_p(h)$ можно представить несколькими способами:
   \begin{enumerate}
     \item В форме Пеано: $R_p(h) = o(\|h\|^p)$
-    \item В форме Лагранжа $R_p(h) = \dfrac{1}{(p+1)!}\, \del^{p+1} f(a + \theta h, h)$, 
+    \item В форме Лагранжа: $R_p(h) = \dfrac{1}{(p+1)!}\, \del^{p+1} f(a + \theta h, h)$, 
       $\theta \in (0,1)$
   \end{enumerate}
 
-
 \end{thrm}
+
+\paragraph{Экстремумы}
+\label{par:diffspace::extrema}
+
+\begin{defn}\label{defn:diffspace::extrema}
+  Пусть $f\colon G \subset \R^n \to \R$, $a\in G$. Тогда говорят, что $f$ имеет в $a$ максимум (нестрогий), если
+  \[
+    \exists\, U(a) \colon \forall\, x \in U \;\: f(x) \leqslant f(a)
+  \]
+  Когда неравенство строгое, а окрестность проколотая, то максимум~--- строгий
+  Для минимума нужно $\geqslant$.
+\end{defn}
+
+\begin{thrm}[Необходимое условие экстремума]\label{thrm:diffspace::extrema::ness}
+  Пусть $a$ внутренняя точка $G \subset \R^n$, $f\in C^1(a)$. Тогда если $f$ имеет в $a$ экстремум, то
+  \[
+    \del f(a) = 0 \Leftrightarrow \forall\,i \;\: \partial_i f(a) = 0
+  \]
+\end{thrm}
+
+
+
+
 
 \end{document}
