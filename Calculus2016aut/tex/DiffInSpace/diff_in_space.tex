@@ -6,7 +6,7 @@
 \documentclass[12pt,trimbord]{../../../notes}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
-\graphicspath{{../img/}}
+\graphicspath{{../../img/}}
 
 \begin{document}
 
@@ -169,8 +169,339 @@
   \]
 \end{thrm}
 
+\begin{thrm}[Необходимое условие экстремума]\label{thrm:diffspace::extrema::suff}
+  Пусть $a\in G \subset \R^n$, $a$~--- внутренняя точка, $f\in C^2(a)$.
+  \begin{enumerate}
+    \item $\del f(a) = 0$, $\del^2 f(a) > 0 \Rightarrow$ $f$ имеет в $a$ $\min$
+    \item $\del f(a) = 0$, $\del^2 f(a) < 0 \Rightarrow$ $f$ имеет в $a$ $\max$
+    \item $\del f(a) = 0$, $\del^2 f(a) \lessgtr 0 \Rightarrow$ ничего нет
+    \item $\del f(a) = 0$, $\del^2 f(a) \leqslant 0 \Rightarrow$ $f$ не имеет в $a$ $\min$
+    \item $\del f(a) = 0$, $\del^2 f(a) \geqslant 0 \Rightarrow$ $f$ не имеет в $a$ $\max$
+  \end{enumerate}
+\end{thrm}
 
+\paragraph{Понятие о неявной функции}
+\label{par:diffspace::implicit2}
 
+\begin{defn}\label{defn:diffspace::implicit2}
+  Пусть $F\colon G \subset \R^2 \to \R$. Рассмотрим уравнение
+  \begin{equation}
+    \label{eq:diffspace::implicit2::base}
+    F(x, y) = 0
+  \end{equation}
+
+  Пусть $a =(x_0, y_0)$ удовлетворяет \ref{eq:diffspace::implicit2::base}, 
+  а $U$~--- окрестность $a \colon$ $U = U_x \times U_y$.
+  Тогда будем говорить, что уравнение \ref{eq:diffspace::implicit2::base} определяет неявную 
+  функцию $f$ в $U$, если
+  \[
+    \forall\, x\in P \; \exists!\, y\in Q \colon F(x,y) = 0 \hspace{1.5em} (y = f(x))
+  \]
+\end{defn}
+
+\begin{thrm}[О неявной функции]\label{thrm:diffspace::implicit2}
+  Пусть $F\colon G\subset \R^2 \to \R$, $F\in C^1(x_0,y_0)$, а $a=(x_0, y_0) \colon$
+  \begin{enumerate}
+    \item $F(x_0, y_0) = 0$
+    \item $F_y'(x_0, y_0) \neq 0$
+  \end{enumerate}
+  Тогда 
+  $\exists\, P(x_0), Q(y_0) \colon $ в $U = P\times Q$ уравнение \ref{eq:diffspace::implicit2::base} 
+  задаёт неявную функцию $f\colon P\to Q$. При этом
+  \[
+    f\in C^1 \land f'(x) = - \frac{F_x'(x,y)}{F_y'(x,y)}
+  \]
+\end{thrm}
+\begin{ittproof}
+  \begin{enumerate}
+    \item (Доказательство существования) \\
+      Рассмотрим $\varphi(y) = F(x_0, y)$. Пусть НУО $F_y'(x_0, y_0) > 0$.
+      Тогда 
+      \[
+        \exists\, U_\varepsilon(x_0, y_0) \colon \forall\, x, y \in U \;\: F_y'(x, y) > 0
+      \]
+      Обозначим соответствующие проекции $U$ (шар) на координатные оси за $U_x, U_y$
+      Получается, что $\varphi \uparrow U_y = (y_0 - \varepsilon; y_0 + \varepsilon)$.
+      Тогда 
+      \[
+        \begin{split}
+          \exists\, V_1(x_0) &\colon \forall\, x\in V_1 F(x, y+\varepsilon) > 0 \\
+          \exists\, V_2(x_0) &\colon \forall\, x\in V_2 F(x, y-\varepsilon) < 0 \\
+                           P &= V_1 \cap V_2
+        \end{split}
+      \]
+      Тогда из теоремы Больцано-Коши и монотонности $\varphi$
+      \[
+        \forall\, x \in P \; \exists!\, y\in Q=U_y \colon F(x, y) = 0
+      \]
+      В итоге получилось определение неявной функции.
+    \item Непрерывность в $(x_0, y_0)$ вроде очевидна, мы же каждому $x$ из $P$ сопоставили 1
+      $y$ из $Q$. Принадлежность классу $C$ можно установить проведя аналогичные рассуждения
+      для $x\in P(x_0)$
+    \item С гладкостью что-то странное. Можно наверное сделать как в Зориче.
+    \item $F(x, f(x)) \equiv 0 \Rightarrow F_x'\cdot 1 + F_2'f'(x) = 0$
+  \end{enumerate}
+\end{ittproof}
+
+\paragraph{Полнота пространства \texorpdfstring{$\R^n$}{}}
+\label{par:diffspace::banach}
+
+\paragraph{Теорема о сжимающем отображении}
+\label{par:diffspace::contrmap}
+
+\begin{defn}\label{defn:diffspace::contrmap}
+  Пусть $(X, \rho)$~--- метрическое пространство. Тогда отображение $T\colon X \to X$ называется
+  сжимающим, если 
+  \[
+    \exists\, C \in (0,1) \colon \forall\, x',x'' \rho(T(x'), T(x'')) 
+    \leqslant C\cdot \rho(x',x'')
+  \]
+\end{defn}
+
+\begin{thrm}[Банах]\label{thrm:diffspace::contrmap::banach}
+  Пусть $(X, \rho)$~--- полное метрическое пространство, а отображение $T\colon X \to X$~--- сжимающее.
+  Тогда $\exists!\, x_* \in X \colon Tx_* = x_*$ (неподвижная точка).
+  
+  Ещё часто ссылаются на следующий факт, появляющийся в процессе доказательства:
+  \[
+    \forall\, x_0 \in X \; \exists\, \lim_{n\to \infty} T^n x_0 = x_*
+  \]
+\end{thrm}
+
+\paragraph{Метод Ньютона}
+\label{par:diffspace::newtfindroot}
+потом
+
+\paragraph{Теорема об обратном отображении(формулировка)}
+\label{par:diffspace::invmaphandwave}
+
+Пусть $F: G\subset \R^n \to \R^m$~--- гладкое. Порассуждаем, когда может существовать $F^{-1}$.
+
+\rule{\textwidth}{0.5pt}
+
+Рассмотрим, например, линейное отображение.
+\[
+  y = F(x) = Ax \Leftrightarrow 
+  \begin{cases}
+    y_1 = a_{11} x_1 + \dotsb + a_{1n} x_n \\
+    \hdotsfor{1}\\
+    y_m = a_{m1} x_1 + \dotsb + a_{mn} x_n
+  \end{cases}
+\]
+
+Понятно, что в таком случае задача поиска обратного отображения сводится к поиску обратной матрицы.
+Тогда из линала ясно, что для того, чтобы у нас всё вышло, нужно
+\[
+  m = n \land \det A \neq 0 
+\]
+
+\rule{\textwidth}{0.5pt}
+
+Теперь попытаемся обобщить на остальные функции. 
+
+Пусть $a\in G$, $b = F(a)$
+\[
+  (?) \exists\, U(a), V(b) \,\colon \: F\colon U \leftrightarrow V
+\]
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.6\linewidth]{inversemap}
+\end{figure}
+
+\begin{align}
+  \Delta F &= F(x) - F(a) = y - b = \Delta y \label{eq:diffspace::invmaphandwave::delta}\\
+  \Delta F &= F'(a) dx + o(dx) \\
+  \del F(a) &= \del y(b) \label{eq:diffspace::invmaphandwave::diff}
+\end{align}
+
+Условие разрешимости \ref{eq:diffspace::invmaphandwave::diff}~--- $\det\bigl(F'(a)\bigr) \neq 0$.
+Утверждается, что \ref{eq:diffspace::invmaphandwave::diff} $\Rightarrow$
+\ref{eq:diffspace::invmaphandwave::delta}
+
+Соответственно, формулировка 
+\begin{thrm}\label{thrm:diffspace::invmaphandwave}
+  Пусть $F\colon G\subset \R^n \to \R^n$, $a\in G$, $b = F(a)$. Пусть ещё $F \in C^1$, 
+  $\det(F'(a)) \neq 0$
+  
+  Тогда 
+  \[
+    \begin{split}
+      & \exists\, U(a), V(b) \,\colon\; F \colon U \leftrightarrow V \\
+      & \exists\, F^{-1} V\to U, \; F^{-1} \in C^1
+    \end{split}
+  \]
+\end{thrm}
+
+\paragraph{Доказательство теоремы об обратимости}
+\label{par:diffspace::invmapproof}
+
+\begin{ittproof}[Теорема об обратимости отображения]
+  Введём обозначения:
+  \begin{align*}
+    F'(a) &= \Gamma\\
+    \Phi(x) &= x - \Gamma^{-1} (F(x) - y)
+  \end{align*}
+  Нетрудно заметить, что $x$~--- неподвижная точка $\Phi$ (что $\Leftrightarrow F(x)=y$ ).
+  Очень хотелось бы подогнать всё под теорему Банаха (\ref{thrm:diffspace::contrmap::banach}).
+  Тогда отображение в окрестности $a$ будет взаимно-однозначным.
+
+  \begin{enumerate}
+    \item Сначала оценим $\|\Phi'\|$.
+      \[
+        \Phi'(x) = E - \Gamma^{-1} (F'(x)) = \Gamma^{-1} (F'(a) - F'(x))
+      \]
+      Можно норму оценить
+      \[
+        \|\Phi'(x)\| = \| \Gamma^{-1} \| \cdot \| (F'(a) - F'(x)) \|
+      \]
+      Последний множитель явно $\xrightarrow[x\to a]{} 0$ (так как $F\in C^1$)
+      Тогда и $\|\Phi'(x)\|\to 0$. А значит найдётся $U_\varepsilon(a) \colon 
+      \|\Phi'(x)\| \leqslant \frac{1}{2}$.
+      
+      Тогда по теореме \ref{thrm:diffspace::diffestim::diffestim} 
+      \[
+        x, x' \in U_\varepsilon(a) \Rightarrow \| \Phi(x) - \Phi(a)\| \leqslant \frac{1}{2}
+        \|x-x'\|
+      \]
+      Собственно, почти победа. Осталось лишь выбрать внутри $U_\varepsilon$ компакт
+      $\overline{U_{\varepsilon_1}}$ (иначе множество не очень полное).
+
+    \item Теперь покажем, что 
+      \[
+        \exists\, \overline{U} \colon \Phi(U) \subset U  
+      \]
+      Попутно примем $\|y-b\| < \delta$, это потом поможет доказать непрерывность.
+      \[
+        \begin{split}
+          \|\Phi(x) - a\| = \| x - a - \Gamma^{-1}(F(x)-y)\| 
+          \leqslant \|\Gamma^{-1}\| \cdot \| \Gamma (x-a) - F(x) + y + b - b\| \\ 
+          \leqslant \|\Gamma^{-1}\| 
+          \cdot \bigl(\| - \underbrace{( F(x) - F'(a)(x-a) - F(a) )}_{\alpha}\| + \| y - b\| \bigr)
+        \end{split}
+      \]
+      Выберем произвольный $\varepsilon \colon 0 < \varepsilon < \varepsilon_1$.
+      
+      Однако мы ещё можем подкрутить $\varepsilon_1$. 
+      \[
+        \exists\, U_{\varepsilon_1} \colon \frac{\|\alpha\|}{\|x-a\|} < \frac{1}{2\|\Gamma^{-1}\|}
+      \]
+      Это следует из формулы Тейлора (\ref{thrm:diffspace::taylor}), а применять её можно, так
+      как шар~--- выпуклое множество. Ещё выберем $\delta = \frac{\varepsilon}{2\|\Gamma^{-1}\|}$.
+      Там правда $\varepsilon$, а не $\varepsilon_1$.
+
+      Тогда цепочка неравенств выше преобразуется к такому виду
+      \[
+        \ldots < \|\Gamma^{-1}\| \cdot \frac{\|x - a\|}{2\|\Gamma^{-1}\|} +
+        \frac{\varepsilon}{2\|\Gamma^{-1}\|} \cdot \|\Gamma^{-1}\|
+      \]
+
+      А теперь положим $\|x-a\| \leqslant \varepsilon$ (неравенство нужно нестрогое для полноты). 
+      Тогда
+      \[
+        x\in \overline{U_\varepsilon}(a) \Rightarrow \Phi(x) \in U_{\varepsilon}(a) \subset 
+        \overline{U_\varepsilon}(a) 
+      \]
+
+      А теперь по теореме Банаха
+      \[
+        \exists!\, x_0\in \overline{U_\varepsilon}(a) \colon \Phi(x_0) = x_0 \Leftrightarrow
+        F(x_0)= y_0 
+      \]
+      Видимо, осталось пересечь окрестность $a$ с прообразом $V(b)$ : $U = F^{-1}(V) \cap
+      U_\varepsilon (a)$
+      \item
+      Заодно получилась и непрерывность:
+      \[
+        \forall\, U\; \exists\, V_\delta(b) \colon F^{-1}(V_\delta) \subset
+        U_\varepsilon 
+      \]
+  \end{enumerate}
+\end{ittproof}
+
+\paragraph{Теорема о дифференцируемости обратного отображения}
+\label{par:diffspace::invdiff}
+
+\begin{thrm}[о дифференцируемости $F^{-1}$]\label{thrm:diffspace::invdiff}
+  Пусть $U \subset \R^n$, $V \subset \R^n$, $F\colon U \leftrightarrow V$. Пусть также
+  $F$~--- дифференцируемо в $a\in U$, $F(a) = b$,  $\det F'(a) \neq 0$. 
+  Тогда $F^{-1}$ дифференцируемо в $b$.
+\end{thrm}
+\begin{ittproof}
+  То, что есть обратное отображение, доказали выше. Пусть $y=F(x)$. Обозначим: $h= x-a$, $k=y-b$.
+  Отображение биективно, значит $h\neq 0 \Leftrightarrow k \neq 0$.
+  Из дифференцирумости $F$
+  \[
+    k = y - b = F(x) - F(a) = A h + \alpha \\
+    \alpha = o(h) \; (h\to 0)
+  \]
+  $A = F'(a) \neq 0$, следовательно $\exists\, A^{-1}$
+  \[
+    A^{-1} k = A^{-1}Ah + A^{-1}\alpha \Rightarrow \Delta F^{-1} = h = A^{-1} k - A^{-1} \alpha
+  \]
+  Докажем, что $-A^{-1} \alpha =: \beta = o(k) \; (k\to 0) $
+  \[
+    \beta \leqslant \frac{-\alpha}{\|k\|} = \frac{-\alpha}{\|h\|}\cdot \frac{\|h\|}{\|k\|}  
+  \]
+  Покажем, что последнй член~--- ограничен
+  \[
+    \frac{\|h\|}{\|k\|} = \frac{\|h\|}{\|A h + \alpha\|} 
+    \leqslant \frac{\|h\|}{\big|\|Ah\|- \|\alpha\|\big|}
+    = \frac{1}{\big|\frac{\|Ah\|}{\|h\|} - \frac{\|\alpha\|}{\|h\|}\big|}  
+  \]
+  А последнее выражение ограничено при $\|h\| < \delta$
+
+\end{ittproof}
+
+\begin{cor*}
+  $\displaystyle (F^{-1})'(b) = \bigl(F'(a)\bigr)^{-1}$
+\end{cor*}
+
+\paragraph{Теорема о гладкости обратного отображения}
+\label{par:diffspace::invsmooth}
+
+\begin{thrm}\label{thrm:diffspace::invsmooth}
+  Пусть $F\colon U \leftrightarrow V$, биективна, $\in C^p$. Пусть к тому же $\det F'(x) \neq 0$.
+  Тогда $F^{-1} \in C^p$
+\end{thrm}
+\begin{ittproof}
+  Введём обозначения (оно всё существует по предыдущим теоремам хоть где-то)
+  \[
+    \begin{aligned}
+      F'(x) &= \left(\frac{\partial F_i}{\partial x_j}\right)_{i,j=1}^n & &= (a_{ij}) = A \\
+      (F^{-1})'(y) &= \left(\frac{\partial F^{-1}_i}{\partial y_j}\right)_{i,j=1}^n & &= (b_{ij}) = B 
+    \end{aligned}
+  \]
+  Вполне ясно, что $B = A^{-1}$. Из алгебры $b_{ij} = \dfrac{\mathcal A_{ji}}{\det A}$ 
+  (здесь $\mathcal A$~--- алгебраическое дополнение).
+  
+  Заметим, что из последнего выражения следует, что $b_{ij}$~--- рациональная функция от $\{a_{lk}\}$.
+  Следовательно, $\widetilde{b_{ij}} = b_{ij}(a_{11}, \dotsc, a_{kl}, \dotsc, a_{nn}) \in C^\infty$.
+  С другой стороны
+  \[
+    b_{ij}(y) = \frac{\partial F^{-1}}{\partial y_j}(y) = \frac{\partial F^{-1}}{\partial y_j}\bigl(F(x)\bigr)
+    \Leftrightarrow b_{ij}(y) = \widehat{b_{ij}}(x)
+  \]
+
+  Так что $\widehat{b_{ij}} = b_{ij} \circ F$. 
+
+  Дальше немного магии. Введём ещё одну функцию
+  \[
+    \overline{b_{ij}}(x) = b_{ij}(a_{11}(x), \dotsc, a{kl}(x), \dotsc, a_{nn}(x))   
+  \]
+  Заметим, что каждая $a_{ij}(x) \in C^{p-1} \Rightarrow \overline{b_{ij}} \in C^{p-1}$.
+  Хорошо, тогда 
+  \[
+    b_{ij}(y) = \bigl(\overline{b_{ij}} \circ F^{(-1)}\bigr)(y) 
+  \]
+  Раньше доказали, что $F^{-1} \in C^0$. Теперь разматываем цепочку дальше:
+  \[
+    F^{-1} \in C^i \Rightarrow \overline{b_{ij}} \circ F^{-1} \in C^i \Rightarrow b_{ij} \in C^i 
+  \]
+  Значит, частные производные $F^{-1}$ принадлежат $C^i$. Тогда сама $F^{-1} \in C^{i+1}$.
+  Таким бобром мы доберёмся до $C^p$. 
+  Дальше не выйдет, так как не хватит гладкости $\overline{b_{ij}}$.
+\end{ittproof}
 
 
 \end{document}

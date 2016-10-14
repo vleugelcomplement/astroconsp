@@ -103,6 +103,7 @@
 \@addtoreset{imp}{lem}
 \@addtoreset{imp}{stat}
 \counterwithin*{rem}{thrm}
+\counterwithin*{equation}{paragraph}
 
 \renewcommand{\thethrm}{\arabic{thrm}}
 \renewcommand{\thelem}{\arabic{lem}}
@@ -234,6 +235,7 @@
 \newcommand\circlearound[1]{#1\hspace{\widthof{#1}*(-1)}$\bigcirc$}
 
 \newcommand\del{\ensuremath\mathrm{d}}
+
 \endinput
 % vim: set sw=2 nofoldenable:
 
