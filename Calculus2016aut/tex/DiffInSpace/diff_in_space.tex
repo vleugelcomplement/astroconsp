@@ -261,7 +261,7 @@
 \begin{thrm}[Банах]\label{thrm:diffspace::contrmap::banach}
   Пусть $(X, \rho)$~--- полное метрическое пространство, а отображение $T\colon X \to X$~--- сжимающее.
   Тогда $\exists!\, x_* \in X \colon Tx_* = x_*$ (неподвижная точка).
-  
+
   Ещё часто ссылаются на следующий факт, появляющийся в процессе доказательства:
   \[
     \forall\, x_0 \in X \; \exists\, \lim_{n\to \infty} T^n x_0 = x_*
@@ -502,6 +502,60 @@
   Таким бобром мы доберёмся до $C^p$. 
   Дальше не выйдет, так как не хватит гладкости $\overline{b_{ij}}$.
 \end{ittproof}
+
+\paragraph{Гладкая зависимость корней многочлена от его коэффициентов}
+\label{par:diffspace::smoothpolyroots}
+
+\begin{thrm}\label{thrm:diffspace::smoothpolyroots}
+  Пусть $P(x) \in \R[x]$ имеет $n$ корней $(x^0_j)$,  $x^0_j \in \R$, таких что $\forall\, i,j \; x^0_i \neq x^0_j$.  
+  Тогда 
+  \[
+    x_i = x_i(a_0, \dotsc, a_{n-1}) \in C^\infty
+  \]
+\end{thrm}
+
+\begin{ittproof}
+  Пусть $P(x) = (x - x_1) \dotsm (x - x_n)$. Вспомним теорему Виета (из алгебры)
+  \begin{align*}
+    a_0     & = (-1)^n x_1 \dotsm x_n \\
+    a_1     & = (-1)^{n-1} \sum_{i} \prod_{j \neq i} x_j \\
+            & \cdots \cdots \cdots  \\
+    a_{n-1} & = (-1) \sum_i x_i
+  \end{align*}
+
+  Рассмотрим $P$ как отображение $(x_1, \dotsc, x_n) \mapsto (a_0, \dotsc, a_{n-1})$.
+  \[
+    P'(x) = 
+    \begin{pmatrix}
+      \frac{\partial P_1}{\partial x_1} & \cdots & \frac{\partial P_1}{\partial x_n} \\
+      \vdots & \ddots & \vdots \\
+      \frac{\partial P_n}{\partial x_1} & \cdots & \frac{\partial P_n}{\partial x_n} \\
+    \end{pmatrix}
+    = 
+    \begin{pmatrix}
+      (-1)^n \prod_{i\neq 1} x_i & (-1)^n \prod_{i\neq 2} x_i & \cdots & (-1)^n \prod_{i\neq n} x_i \\
+      \hdotsfor{4} \\
+      -1 & -1 & \cdots & -1 
+    \end{pmatrix}
+  \]
+  Посчитаем $\det(F')$. Этот определитель можно рассмотреть как многочлен $\in R[x_1, \dotsc, x_n]$
+  Его степень не превосходит $0 + 1 + \dotsb + (n-1) = \frac{n(n-1)}{2}$. Заметим, что если хоть
+  какая-то пара столбиков равны, то определитель равен нулю. Так что $\det(F')$ делится на
+  всевозможные многочлены вида $x_i - x_j$. А их как раз $\frac{n(n-1)}{2}$ и они неприводимые.
+  Следовательно, 
+  \[
+    \det (F')(x_1, \dotsc, x_n) = C \prod_{i<j} (x_i - x_j) 
+  \]
+  А значит при условии неравенства корней он ненулевой.
+  \footnote{Этого, конечно не было в курсе алгебры, но там не используется ничего страшнее
+  теоремы о делении с остатком. Вообще доказать бы надо, но лень.}
+
+  Дальше можно воспользоваться теоремой о гладкости обратного отображения.
+\end{ittproof}
+
+\paragraph{Теорема о неявном отображении}
+\label{par:diffspace::implicit}
+
 
 
 \end{document}
