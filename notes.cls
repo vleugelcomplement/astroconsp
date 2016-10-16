@@ -235,6 +235,7 @@
 \newcommand\circlearound[1]{#1\hspace{\widthof{#1}*(-1)}$\bigcirc$}
 
 \newcommand\del{\ensuremath\mathrm{d}}
+\newcommand\pder[2]{\ensuremath \frac{\partial #1}{\partial #2}}
 
 \endinput
 % vim: set sw=2 nofoldenable:

@@ -190,9 +190,9 @@
     F(x, y) = 0
   \end{equation}
 
-  Пусть $a =(x_0, y_0)$ удовлетворяет \ref{eq:diffspace::implicit2::base}, 
+  Пусть $a =(x_0, y_0)$ удовлетворяет \eqref{eq:diffspace::implicit2::base}, 
   а $U$~--- окрестность $a \colon$ $U = U_x \times U_y$.
-  Тогда будем говорить, что уравнение \ref{eq:diffspace::implicit2::base} определяет неявную 
+  Тогда будем говорить, что уравнение \eqref{eq:diffspace::implicit2::base} определяет неявную 
   функцию $f$ в $U$, если
   \[
     \forall\, x\in P \; \exists!\, y\in Q \colon F(x,y) = 0 \hspace{1.5em} (y = f(x))
@@ -206,7 +206,7 @@
     \item $F_y'(x_0, y_0) \neq 0$
   \end{enumerate}
   Тогда 
-  $\exists\, P(x_0), Q(y_0) \colon $ в $U = P\times Q$ уравнение \ref{eq:diffspace::implicit2::base} 
+  $\exists\, P(x_0), Q(y_0) \colon $ в $U = P\times Q$ уравнение \eqref{eq:diffspace::implicit2::base} 
   задаёт неявную функцию $f\colon P\to Q$. При этом
   \[
     f\in C^1 \land f'(x) = - \frac{F_x'(x,y)}{F_y'(x,y)}
@@ -315,12 +315,12 @@
   \del F(a) &= \del y(b) \label{eq:diffspace::invmaphandwave::diff}
 \end{align}
 
-Условие разрешимости \ref{eq:diffspace::invmaphandwave::diff}~--- $\det\bigl(F'(a)\bigr) \neq 0$.
-Утверждается, что \ref{eq:diffspace::invmaphandwave::diff} $\Rightarrow$
-\ref{eq:diffspace::invmaphandwave::delta}
+Условие разрешимости \eqref{eq:diffspace::invmaphandwave::diff}~--- $\det\bigl(F'(a)\bigr) \neq 0$.
+Утверждается, что \eqref{eq:diffspace::invmaphandwave::diff} $\Rightarrow$
+\eqref{eq:diffspace::invmaphandwave::delta}
 
 Соответственно, формулировка 
-\begin{thrm}\label{thrm:diffspace::invmaphandwave}
+\begin{thrm}\label{thrm:diffspace::invmap}
   Пусть $F\colon G\subset \R^n \to \R^n$, $a\in G$, $b = F(a)$. Пусть ещё $F \in C^1$, 
   $\det(F'(a)) \neq 0$
   
@@ -547,7 +547,7 @@
     \det (F')(x_1, \dotsc, x_n) = C \prod_{i<j} (x_i - x_j) 
   \]
   А значит при условии неравенства корней он ненулевой.
-  \footnote{Этого, конечно не было в курсе алгебры, но там не используется ничего страшнее
+  \footnote{Этого, конечно, не было в курсе алгебры, но там не используется ничего страшнее
   теоремы о делении с остатком. Вообще доказать бы надо, но лень.}
 
   Дальше можно воспользоваться теоремой о гладкости обратного отображения.
@@ -556,6 +556,226 @@
 \paragraph{Теорема о неявном отображении}
 \label{par:diffspace::implicit}
 
+\verb+20:07 2016-10-15+
+
+\begin{defn}\label{defn:diffspace::implicit}
+  Пусть $F \colon \R^m\times\R^n \to \R^m$. Рассмотрим уравнение
+  \begin{equation}
+    F(x, y) = 0
+    \label{eq:diffspace::impicit::baseeq}
+  \end{equation}
+  Пусть $x^0\in \R^n$, $y^0\in \R^k$ такие, что $F(x^0, y^0) = 0$.
+ 
+  Тогда если $\exists\,P(x^0) \subset \R^n$, $Q(y^0) \subset \R^m$, такие что
+  \[
+    \forall\, x\in P \; \exists!\, y\in Q \colon F(x,y) = 0
+  \]
+  то говорят, что уравнение \eqref{eq:diffspace::impicit::baseeq} задаёт неявную функцию 
+  $f\colon P \to Q$.
+\end{defn}
+
+Сначала всякие комментарии.
+\begin{equation*}
+  \text{\eqref{eq:diffspace::impicit::baseeq}} \Leftrightarrow
+  \begin{cases}
+    F_1(x_1, \dotsc, x_n, y_1, \dotsc, y_m) = 0 \\
+    \hdotsfor{1}\\
+    F_k(x_1, \dotsc, x_n, y_1, \dotsc, y_m) = 0 \\
+  \end{cases}
+\end{equation*}
+
+Как обычно, главная идея состоит в том, чтобы всё линеаризовать
+\begin{equation}
+  \begin{cases}
+    \del F_1 = 0 \\
+    \hdotsfor{1}\\
+    \del F_k = 0 \\
+  \end{cases}
+  \Leftrightarrow 
+  \begin{cases}
+    \sum_{j=1}^m \frac{\partial F_1}{\partial y_j}\, \del y_j = 
+    \sum_{j=1}^m \frac{\partial F_1}{\partial x_j}\, \del x_j \\
+    \hdotsfor{1}\\
+    \sum_{j=1}^m \frac{\partial F_k}{\partial y_j}\, \del y_j = 
+    \sum_{j=1}^m \frac{\partial F_k}{\partial x_j}\, \del x_j .\\
+  \end{cases}\nolinebreak\label{eq:diffspace::impicit::diff}
+\end{equation}
+При этом $\del y_j$ мы хотим выразить через $\del x_j$.
+Какие-то шансы обратить всё это дело есть лишь при условиях:
+\begin{enumerate}
+  \item $k=m$
+  \item $\det \left(\dfrac{\partial(F_1, \dotsc, F_k)}{\partial(y_1, \dotsc, y_m)}\right) \neq 0$
+\end{enumerate}
+
+Сейчас будем доказывать, что \eqref{eq:diffspace::impicit::diff} $\Rightarrow$ \eqref{eq:diffspace::impicit::baseeq}.
+
+
+\begin{thrm}[Теорема о неявном отображении]\label{thrm:diffspace::implicit}
+  Пусть $F\colon G \subset \R^n \times \R^m \to \R^m $, $F \in C^p$, $p \geqslant 1$.
+  \[
+    F(x, y) = 0, \;\; (x_0, y_0) \in G
+  \]
+  \begin{enumerate}
+    \item $F(x_0, y_0) = 0 $
+    \item $\det F_y'(x_0, y_0) \neq 0$
+  \end{enumerate}
+
+  Тогда $\exists\, P(x_0), Q(x_0)$, такие, что \eqref{eq:diffspace::impicit::baseeq} задаёт
+  неявное отображение $f\colon P \to Q$. При этом $f\in C^p$ и 
+  \[
+    f'(x) = - \bigl(F_y'(x,y)\bigr)^{-1} \cdot F_x'(x,y)
+  \]
+\end{thrm}
+
+\begin{ittproof}
+  Доказательство~--- <<обёртка>> над теоремой об обратном отображении. 
+  К слову, в \cite[c.~673]{zorich1} сразу доказывается утверждение о неявном отображении.
+
+  Итак, обозначения:
+  \begin{enumerate}
+    \item $\Phi\colon G \subset \R^n\times\R^m \to \R^n\times\R^m$. Работает как-то так:
+      \[
+        (x, y) \mapsto (u, v) , \;
+        \begin{dcases}
+          u = x, & u \in R^n \\
+          v = F(x,y) , & v\in \R^m
+        \end{dcases}
+      \]
+    \item $i\colon \R^n \to \R^n \times \R^m$ такого сорта $x \mapsto (x, 0)$
+    \item $\pi \colon \R^n \times \R^m \to \R^m$ такого сорта $(x,y) \mapsto y$
+  \end{enumerate}
+
+  Теперь найдём определитель $\Phi'(x,y)$. Посчитав как-то частные производные, получим
+  \[
+    \Phi'(x,y) = 
+    \left(
+      \begin{array}{c|c}
+        E_n    & 0 \\
+        \hline
+        F_x'   &  F_y'
+      \end{array}
+    \right) \Rightarrow \det \bigl(\Phi'(x_0,y_0) \bigr) = \det E_n \cdot \det F_y'(x_0, y_0) \neq 0
+  \]
+  Чудно, значит по теореме об обратном отображении (\ref{thrm:diffspace::invmap}) 
+  $\exists\, \Phi^{-1}(x_0, y_0)$ и ещё окрестности $U(x_0, y_0), V(x_0, 0)$.
+  Теперь определим окрестности из условия теоремы:
+  \[
+    P(x_0) = i^{-1}(V) \; \land \; Q(y_0) = \pi(U)
+  \]
+  По сути~--- проекции.
+  
+  В таких обозначениях $f = \pi \circ \Phi^{-1} \circ i$. Вполне очевидно, что $f \in C^p$.
+  Ну $i, \pi \in C^\infty, \; \Phi^{-1} \in C^p$. 
+
+  К тому же
+  \[
+    \forall\, x \in P \; x \overset{i}{\mapsto} (x, 0) \overset{\Phi^{-1}}{\mapsto} (x,y) 
+    \overset{\pi}{\mapsto} y \in Q 
+  \]
+  При этом такой $y$~--- единственный. В итоге получилось задать неявно отображение $f$.
+
+  Из вышесказанного, оно сколько нужно раз дифференцируемо. Так что
+  \[
+    \pder{}{x} F(x, f(x)) = F_x' \cdot E + F_y' \cdot f'(x) = 0
+  \]
+  По условию $F_y'$~--- обратима. Следовательно,
+  \[
+    f'(x) = - (F_y'(x,y))^{-1} \cdot F_x'(x,y)
+  \]
+  
+\end{ittproof}
+
+\paragraph{Функциональная зависимость системы функций}
+\label{par:diffspace::funcdep}
+
+\begin{defn}\label{defn:diffspace::funcdep}
+  Пусть $f_1, \dotsc, f_m, g \colon G \subset \R^n \to \R$~--- гладкие функции, $x_0 \in G$.
+  Тогда эти функции называются функционально зависимыми в $V(x_0)$, если
+  \[
+    \exists\, \varphi\colon U(f(x_0)) \to \R, \varphi \in C^1 \; \colon \; g(x) = \varphi(f(x)) 
+    \text{ в } V(x_0)  
+  \]
+\end{defn}
+\begin{defn}\label{defn:diffspace::funcindep}
+  Пусть $f_1, \dotsc, f_m, g \colon G \subset \R^n \to \R$~--- гладкие функции. Тогда эти функции
+  называются функционально \emph{не}зависимыми, если определение выше не выполняется ни для какой
+  $V \subset G$
+\end{defn}
+\begin{rem*}
+  Тут лажа какая-то c определениями, не отрицание же нифига.
+\end{rem*}
+
+\verb+ 2016-10-16 13:21 +
+
+\begin{thrm}(о функциональной зависимости)\label{thrm:diffspace::funcdep}
+  Пусть $f_1, \dotsc, f_m, g \colon G \subset \R^n \to \R$~--- гладкие функции. К тому же
+  $a\in G$, $f = (f_i)_i$, $y = f(x)$, 
+  $
+    \rk \begin{pmatrix}
+      f_1' \\ \vdots \\ f_m' 
+    \end{pmatrix} = m
+  $ в точке $x\in U(a)$.
+  Тогда, если 
+  $
+    \rk \begin{pmatrix}
+      f_1' \\ \vdots \\ f_m' \\ g' 
+    \end{pmatrix} = m
+  $ в точке $x \in U(a)$, то $\exists\, V(a)$ в которой $g$ функционально зависит от $f_1, \dotsc,
+  f_m$.
+\end{thrm}
+\begin{ittproof}
+  Пусть сразу $n \geqslant m$, иначе условие теоремы не выполняется совсем никогда (ну там m
+  векторов всегда ЛЗ).
+
+  Введём обозначения:
+  \[
+    x = (\underbrace{x, \dotsc, x_m}_{\bar{x}}, \underbrace{x_{m+1}, \dotsc,
+    x_n}_{\bar{\bar{x}}}), \; \bar y = (y_1, \dotsc, y_m, \bar{\bar x})
+  \]
+
+  Из алгебры в $f'(x), x\in U(a)$ существует ненулевой минор порядка $m$. Можно НУО считать, что он
+  соответствует $\bar x$. Тогда это равносильно тому, что $\displaystyle \det \left(\pder{f}{\bar
+  x}(a)\right) \neq 0$.
+
+  Рассмотрим такую неявную функцию 
+  \[
+    F \colon \R^n \times \R^m \to \R^m, \; F(\bar{y}, \bar{x}) = y - f(\bar{x}, \bar{\bar x}) = 0 
+  \]
+  Оно всё по условию гладкое.
+  Тогда по теореме о неявном отображении существует пара окрестностей $P, Q$ и 
+  \[
+    \exists\,\varphi \colon P\subset \R^n \to Q\subset \R^m, \;  \bar x = \varphi(\bar y)
+  \] 
+  В этих окрестностях $F\equiv 0 \Leftrightarrow y \equiv f(\varphi(y, \bar{\bar x}), \bar{\bar x})$.
+  Заметим, что здесь $y, \bar{\bar x}$~--- независисые переменные. Так что если $j > m$, то
+  \[
+    \pder{}{x_j} f_i(\varphi(\bar y), \bar{\bar x}) = \sum_{k=1}^m \partial_k{f_i} \cdot
+    \pder{\varphi_k}{x_j} + \partial_j f_i \equiv 0
+  \]
+
+  Из условия на ранг известно, что 
+  \[
+    g'(x) = \sum_{i=1}^m \lambda_i f_i'(x), \; x\in U(a)
+  \]
+
+  Нам для того чтобы показать, что $g$ функционально зависит от $f$, необходимо приравнять в
+  окрестности точки $a$ $g$ к функции от $y$. Пусть снова $j>m$, тогда 
+  \begin{align*}
+    & g(x) = g(\bar x, \bar{\bar x}) = g(\varphi(\bar y), \bar{\bar x}) \\
+    &\pder{g}{x_j}  = \sum_{k=1}^m \partial_k g \cdot \pder{\varphi_k}{x_j} + \partial_j g 
+  \end{align*}
+  А вот теперь нужно воспользоваться условием на ранги. Тут очень важно, что это условие работает
+  в окрестности $a$~--- ведь какие-то тождества в точке нам ничего интересного не дадут.
+  \[
+    \pder{g}{x_j}  = \sum_{i=1}^m \lambda_i \left(\partial_k f 
+    \cdot \pder{\varphi_k}{x_j} + \partial_j f_i\right) = 0 
+  \]
+  Из того, что $g, \varphi$~--- гладкие получаем, что и функция, нужная в определении
+  \ref{defn:diffspace::funcdep} тоже гладкая. Вроде всё.
+\end{ittproof}
+
+
 
 
 \end{document}
+% vim: wrapmargin=3
