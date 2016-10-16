@@ -430,7 +430,7 @@
 \begin{ittproof}
   То, что есть обратное отображение, доказали выше. Пусть $y=F(x)$. Обозначим: $h= x-a$, $k=y-b$.
   Отображение биективно, значит $h\neq 0 \Leftrightarrow k \neq 0$.
-  Из дифференцирумости $F$
+  Из дифференцируемости $F$
   \[
     k = y - b = F(x) - F(a) = A h + \alpha \\
     \alpha = o(h) \; (h\to 0)
@@ -443,7 +443,7 @@
   \[
     \beta \leqslant \frac{-\alpha}{\|k\|} = \frac{-\alpha}{\|h\|}\cdot \frac{\|h\|}{\|k\|}  
   \]
-  Покажем, что последнй член~--- ограничен
+  Покажем, что последний член~--- ограничен
   \[
     \frac{\|h\|}{\|k\|} = \frac{\|h\|}{\|A h + \alpha\|} 
     \leqslant \frac{\|h\|}{\big|\|Ah\|- \|\alpha\|\big|}
@@ -747,7 +747,7 @@
     \exists\,\varphi \colon P\subset \R^n \to Q\subset \R^m, \;  \bar x = \varphi(\bar y)
   \] 
   В этих окрестностях $F\equiv 0 \Leftrightarrow y \equiv f(\varphi(y, \bar{\bar x}), \bar{\bar x})$.
-  Заметим, что здесь $y, \bar{\bar x}$~--- независисые переменные. Так что если $j > m$, то
+  Заметим, что здесь $y, \bar{\bar x}$~--- независимые переменные. Так что если $j > m$, то
   \[
     \pder{}{x_j} f_i(\varphi(\bar y), \bar{\bar x}) = \sum_{k=1}^m \partial_k{f_i} \cdot
     \pder{\varphi_k}{x_j} + \partial_j f_i \equiv 0
@@ -771,8 +771,40 @@
     \cdot \pder{\varphi_k}{x_j} + \partial_j f_i\right) = 0 
   \]
   Из того, что $g, \varphi$~--- гладкие получаем, что и функция, нужная в определении
-  \ref{defn:diffspace::funcdep} тоже гладкая. Вроде всё.
+  \ref{defn:diffspace::funcdep} тоже гладкая. 
+  Осталось только пересечь много окрестностей (из неявного отображения, условия на ранг etc).
 \end{ittproof}
+
+% лучше позже чем никогда
+\newcommand\bbar[1]{\ensuremath\bar{\bar{#1}}}
+% ----------------------
+
+\paragraph{Геометрический смысл ранга матрицы Якоби}
+\label{par:diffspace::geomjacob}
+\begin{defn}[Коразмерность]\label{defn:diffspace::geomjacob::codim}
+  Пусть $V$~--- подпространство $U$. Тогда $\codim V = \dim U - \dim V$.
+\end{defn}
+\begin{thrm}\label{thrm:diffspace::geomjacob}
+  Пусть $F \colon G \subset \R^n \to \R^m$, $a\in G$, $b = F(a)$,
+  $\exists\, V(a) \colon \forall\, x\in V \;\:\rk F'(x) = r$.
+  Тогда 
+  \begin{enumerate}
+    \item $\exists\, U(a)\colon F(U)$ имеет вид графика $\bbar y = \varphi(\bar y)$
+    \item $\exists\, U(a)\subset F^{-1}(b)$ имеет вид графика $\bar x = \psi(\bbar x)$
+  \end{enumerate}
+\end{thrm}
+\begin{ittproof}
+  Аккуратное следствие \ref{thrm:diffspace::funcdep} и \ref{thrm:diffspace::implicit}.
+\end{ittproof}
+\begin{rem*}
+  Ранг, собственно, показывает сколько есть степеней свободы у значений функции, причём в
+  довольно механическом смысле.
+  Мало ли, вдруг мы отобразили пространство в какую-то кривую в другом.
+\end{rem*}
+
+\paragraph{Три способа локального задания поверхности}
+\label{par:diffspace::locsurfeqs}
+
 
 
 

@@ -221,6 +221,7 @@
 \DeclareMathOperator\Im{Im}
 \DeclareMathOperator\Tr{Tr}
 \DeclareMathOperator\id{id}
+\DeclareMathOperator\codim{codim}
 \DeclareMathOperator\Spec{Spec}
 
 
