@@ -800,14 +800,180 @@
   Ранг, собственно, показывает сколько есть степеней свободы у значений функции, причём в
   довольно механическом смысле.
   Мало ли, вдруг мы отобразили пространство в какую-то кривую в другом.
+  
+  Есть кстати шансы, что в этой теореме попутно определили размерность образа при отображении, но
+  неточно. Собственно, график $\bbar y =  \varphi(\bar y)$ можно считать заданным на $y\in \R^m$,
+  которое уже <<прямое>>, а дальше размерностью объявить $\dim \{\bar y\}$.
 \end{rem*}
 
 \paragraph{Три способа локального задания поверхности}
 \label{par:diffspace::locsurfeqs}
 
+\begin{enumerate}
+  \item Параметрическое \\ 
+    \[
+      f\colon D\subset\R^k \to \R^n \;\colon \; \rk f' = k \forall\, x\in D (\geqslant k) 
+    \]
+    Тогда $M = f(D)$~--- поверхность размерности $k$. 
+    
+    Условие на ранг означает, что нигде нету изломов, параметр же по сути~--- скорость.
+  \item Задание графиком \\
+    \[
+      D \subset \R^k, \; f\colon D \to \R^{n-k} \text{~--- гладкое}
+    \]
+    Тогда $M = \{(t, f(t)) \mid t \in D\} = \Gamma_f$. 
+    \begin{defn}[Поверхность(нестрого)]\label{defn:diffspace::locsurfeq::manifold}
+      Множество $S \subset \R^m$ можно называть $k$-мерной гладкой поверхностью, если в окрестности 
+      любой своей точки оно задаётся графиком гладкого отображения $f\colon D \subset \R^k \to
+      \R^{n-k}$.
+    \end{defn}
+  \item Неявное \\
+    Пусть $F\colon \R^n \to \R^{n-k}$. Тогда 
+    \[
+      M = \left\{x\in \R^n \mid F(x) = 0\right\}
+    \]
+    По сути уравнения связи.
+\end{enumerate}
 
+\begin{thrm}\label{thrm:diffspace::locsurfeqs::conn}
+  Если в некой окрестности $a\in R^n$ $k$-мерная поверхность может быть задана один из 3
+  способов, то она может быть задана и всеми остальными.
+\end{thrm}
+\begin{ittproof}
+  \begin{description}
+    \item[$1\to 2$] см~\ref{thrm:diffspace::geomjacob}
+    \item[$2\to 3$] $F(t,y) = f(t) - y$, $F' = (f_t' \mid -E) \Rightarrow \rk F' = n-k$
+    \item[$3\to 2$] см~\ref{thrm:diffspace::geomjacob}
+    \item[$2\to 1$] $(x, y)\mapsto (x(t), f(x(t))$, где $t=x$. С рангами очевидно проблем нет. 
+  \end{description}  
+\end{ittproof}
 
+\paragraph{Условный экстремум(нестрого)}
+\label{par:diffspace::condextremahandwave}
 
+\begin{defn}[Безусловный экстремум]\label{defn:diffspace::condextremahandwave::extrema}
+  Пусть $f\colon G \subset \R^n \to \R$, $a\in G$~--- внутренняя точка. Тогда в точке $a$
+  $\max/\min$ если
+  \[
+    \exists\, U(a) \colon \forall\, x\in U \;\: f(x) \leqslant/\geqslant f(a)
+  \]
+\end{defn}
+\begin{defn}[Экстремум на подмножестве]\label{defn:diffspace::condextremahandwave::subsetextrema}
+  Пусть $f\colon G \subset \R^n \to \R$, $M\subset\R^n$~---$k$-мерная поверхность,
+  $a\in G\cap M$~--- внутренняя точка. Тогда в точке $a$
+  $\max/\min$ относительно $M$, если
+  \[
+    \exists\, U(a) \colon \forall\, x\in U\cap M \;\: f(x) \leqslant/\geqslant f(a)
+  \]
+\end{defn}
+
+Чаще всего $M$ задают неявно~--- <<накладывают условия>> на значения $f$.
+
+\begin{defn}[Условный экстремум]\label{defn:diffspace::condextremahandwave::condextrema}
+  Пусть $f\colon G \subset \R^n \to \R$, $F_1, \dotsc, F_m \colon G \subset \R^n \to \R$,
+  $a\in G\cap M$~--- внутренняя точка, $F_1(a) = \dotsb = F_m(a) = 0$.
+  Тогда в точке $a$ \emph{условный} $\max/\min$ если
+  \[
+    \exists\, U(a) \colon \forall\, x\in U, F_1(x) = \dotsb = F_m(x) = 0\;\: 
+    f(x) \leqslant/\geqslant f(a)
+  \]
+\end{defn}
+
+\begin{thrm}\label{thrm:diffspace::condextrema}
+  Пусть $f, F_1, \dotsc, F_m \in C^1(G)$, $a\in G$. Тогда если $f$ имеет в $a$ экстремум при условии
+  $F(a) = 0$, то $\nabla f(a), \nabla F_1(a), \dotsc, \nabla F_m(a)$~--- линейно зависимы.
+\end{thrm}
+
+\begin{exmp*}
+  Можно двумерный случай рассмотреть.
+  
+  \begin{minipage}{0.48\linewidth}
+    \noindent\includegraphics[width=0.6\textwidth]{condextr2d}
+  \end{minipage} \hfill
+  \begin{minipage}{0.48\linewidth}
+    $\nabla f = \lambda \nabla F$
+  \end{minipage}
+\end{exmp*}
+
+\begin{cor}[Правило Лагранжа]
+  $f$ имеет в $a$ экстремум при условии $F_1(a) = \cdots = F_m(a) = 0$, то
+  \begin{enumerate}
+    \item либо $\nabla F_1(a), \dotsc, \nabla F_m(a)$ ЛЗ
+    \item либо $\exists\, \lambda_1, \dotsc, \lambda_m \in \R \colon \nabla f(a) =
+      \sum_i \lambda_i \nabla F_i(a)$ 
+  \end{enumerate}
+\end{cor}
+
+\paragraph{Доказательство теоремы об условном экстремуме}
+\label{par:diffspace::condextrema} 
+
+\begin{ittproof}
+  \begin{enumerate}
+    \item Пусть $m = n - 1$. Будем доказывать от противного. Пусть в $a$ условный $\max$, но
+      $\nabla f(a)$, $\nabla F_1(a), \dotsc, \nabla F_m(a)$~--- ЛНЗ.
+
+      Рассмотрим $\Phi(x) = (f(x), F_1(x), \dotsc, F_m(x))$. Тогда такое $\Phi\colon G \to \R^n$.
+      Из линейной независимости градиентов
+      \[
+        \Phi'(a) = \begin{pmatrix}
+          \nabla f(a) \\ \nabla F_1(a) \\ \vdots \\ \nabla F_m(a) 
+        \end{pmatrix}, \; \det \Phi'(a) \neq 0
+      \]
+      Пусть $b = \Phi(a) = (f(a), 0, \dotsc, 0)$. Тогда по теоеме об обратном отображении 
+      (\ref{thrm:diffspace::invsmooth}) 
+      \[
+        \exists\, U(a), V(b) \;\colon\; \Phi\colon U \to V \text{~--- диффеоморфизмъ}
+      \]
+      Пусть $V \supset B_\varepsilon(b)$, $y = (f(a)+ \frac{\varepsilon}{2}, 0, \dotsc, 0) \in V$, 
+    тогда $\exists!\, x\in U \colon \Phi(x) = y$. Получается, что $f(x) > f(a)$, $\forall\, i
+    F_i(x) = 0$, что немного противоречит тому, что в $a$ условный $\max$.
+  \item Теперь рассмотрим случай $m < n - 1$ (всё остальное неинтересно, точно будет ЛЗ). \\
+    Будем доказывать от противного. Пусть в $a$ условный $\max$, но
+    $\nabla f(a)$, $\nabla F_1(a), \dotsc, \nabla F_m(a)$~--- ЛНЗ.
+    Тогда $\rk \Phi'(a) = m+1 < n$. Добавим ещё функций $F_{m+1}, \dotsc, F_{n-1}$ таких, что
+    $F_i(x) = x_{i+1} - a{i+1}$.
+
+    Введём ещё стандартное обозначение
+    \[
+      x = (\underbrace{x, \dotsc, x_{m+1}}_{\bar{x}}, \underbrace{x_{m+2}, \dotsc,
+      x_n}_{\bar{\bar{x}}})
+    \]
+    И не совсем стандартное
+    \[
+      A = \pder{(f_1, F_1, \dotsc, F_m)}{x_1, \dotsc, x_{m+1}}(a)
+    \]
+    Обычно такой <<дробью>> обозначают якобиан, но, пожалуй, сохраню обозначения с лекции.
+
+    Итак
+    \[
+      \Phi'(a) = \left(
+        \begin{array}{c|c}
+          A & * \\
+          \hline
+          0 & E_{n-m-1}
+        \end{array}
+      \right) \Rightarrow \rk \Phi'(a) = n
+    \]
+    A теперь можно подвести всё к первому пункту.
+    Рассмотрим $\widetilde{M} = \{x \mid F_1(x) = \cdots = F_{n-1}(x) = 0 \}$ (а 
+    $M =  \{x \mid F_1(x) = \cdots = F_{m}(x) = 0 \}$). Поскольку $\widetilde{M} \subset M$,
+    $f$ будет иметь в $a$ максимум и относительно $\widetilde{M}$.
+    
+    Аналогично 1 пункту получаем бред какой-то.
+  \end{enumerate}
+\end{ittproof}
+\begin{rem}
+  Такая теорема может найти лишь точки, <<подозрительные>> на экстремум. Надо ещё отдельно
+  думать. Например, вдруг там на компакте всё определено.
+\end{rem}
+\begin{rem}
+  Можно рассматривать функцию Лагранжа:
+  \[
+    \mathcal L (x) = f(x) - \sum_{i=1}^m \lambda_i F_i(x)
+  \]
+  Тогда если в $a$ условный экстремум, то в $a$ стационарная точка ($\mathcal L'(a) = 0$) функции
+  Лагража.
+\end{rem}
 
 \end{document}
 % vim: wrapmargin=3
