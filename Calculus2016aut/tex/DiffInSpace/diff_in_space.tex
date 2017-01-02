@@ -40,7 +40,7 @@
   \[
     F = \psi \circ f \circ \varphi
   \]
-  где \note{Вот тут как раз нужна выпуклость, иначе отрезок $[a;b]$ может и не лежать $\R$}
+  где \note{Вот тут как раз нужна выпуклость, иначе отрезок $[a;b]$ может и не лежать в $G$}
   \begin{align*}
     \varphi&: \R \to \R^n & \varphi(t) &:= t(b-a) + a, & t&\in [0,1] \\
     \psi&: \R^m \to \R & \psi(y) &:= \langle y, \ell \rangle, & \ell &= f(b)-f(a) 
@@ -88,7 +88,7 @@
 \begin{defn}\label{defn:diffspace::highpartial}
   Пусть $f \colon G \subset \R^n \to \R$, существуют производные $k$-го порядка. Тогда
   \[
-    \partial_{i_1, \dotsc, i_{k+1}}^{k+1} f(x) := \partial_{i_{k+1}}(\partial^k_{i_1, \dotsc, i_{k+1}} f) (x)
+    \partial_{i_1, \dotsc, i_{k+1}}^{k+1} f(x) := \partial_{i_{k+1}}(\partial^k_{i_1, \dotsc, i_{k}} f) (x)
   \]
 \end{defn}
 \begin{rem}\label{rem:diffspace::highpartial::smooth}

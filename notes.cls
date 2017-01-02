@@ -51,7 +51,7 @@
 {
   \ifthenelse{\boolean{timbord}}
   {
-    \RequirePackage[a4paper,landscape,left=5cm, right=2cm,top=1.5cm, bottom=1.5cm,
+    \RequirePackage[a4paper,landscape,left=5cm, right=2cm,top=0.5cm, bottom=0.5cm,
       marginparsep=5mm, marginparwidth=4cm]{geometry}
     \RequirePackage{cmbright}
 %     \renewcommand\bfseries{\protect \usefont{T2A}{cmss}{bx}{n}}
