@@ -3,7 +3,7 @@
 % Author      : taxus-d <iliya.t@mail.ru>
 % Created at  : ??? 
 %------------------------------------------------------------
-\documentclass[12pt,trimbord]{../../../notes}
+\documentclass[12pt,timbord]{../../../notes}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
 \graphicspath{{../../img/}}
@@ -23,7 +23,7 @@
 \begin{exmp*}\label{exmp:diffspace::diffestim::lagrfail}
   Пусть 
   \[
-    f(t) := (\cos t, \sin t), b - a = 2\pi
+    f(t) := (\cos t, \sin t),\; b - a = 2\pi
   \]
 \end{exmp*}
 
@@ -40,11 +40,12 @@
   \[
     F = \psi \circ f \circ \varphi
   \]
-  где 
+  где \note{Вот тут как раз нужна выпуклость, иначе отрезок $[a;b]$ может и не лежать $\R$}
   \begin{align*}
-    \varphi&: \R^n \to \R^m & \varphi(t) &:= t(b-a) + a, & t&\in [0,1] \\
+    \varphi&: \R \to \R^n & \varphi(t) &:= t(b-a) + a, & t&\in [0,1] \\
     \psi&: \R^m \to \R & \psi(y) &:= \langle y, \ell \rangle, & \ell &= f(b)-f(a) 
   \end{align*}
+  
   Заметим, что $F$~--- обычная вещественнозначная функция. Так что для неё работает формула
   Лагранжа:
   \[
@@ -64,6 +65,7 @@
   имеется в виду норма соответствующего линейного отображения.
 
   Теперь давайте что-нибудь скажем про эти нормы. 
+
   \begin{enumerate}
     \item $\varphi'(t) = (b-a) \Rightarrow \| \varphi'(c) \| = \| b - a\|$
     \item $\psi(y) = \langle y, l \rangle$, $\| \psi\| = \|\ell\|$      
@@ -705,8 +707,6 @@
   Тут лажа какая-то c определениями, не отрицание же нифига.
 \end{rem*}
 
-\verb+ 2016-10-16 13:21 +
-
 \begin{thrm}(о функциональной зависимости)\label{thrm:diffspace::funcdep}
   Пусть $f_1, \dotsc, f_m, g \colon G \subset \R^n \to \R$~--- гладкие функции. К тому же
   $a\in G$, $f = (f_i)_i$, $y = f(x)$, 
@@ -974,6 +974,10 @@
   Тогда если в $a$ условный экстремум, то в $a$ стационарная точка ($\mathcal L'(a) = 0$) функции
   Лагража.
 \end{rem}
+
+
+
+
 
 \end{document}
 % vim: wrapmargin=3

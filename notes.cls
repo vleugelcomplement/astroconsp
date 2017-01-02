@@ -23,12 +23,16 @@
     \PassOptionsToClass{\CurrentOption}{report}
 }
 
-\newboolean{trimbord}
-\setboolean{trimbord}{false}
+\newboolean{hardcopy}
+\newboolean{timbord}
+\newboolean{ebook}
+\setboolean{hardcopy}{false}
+\setboolean{timbord}{false}
+\setboolean{ebook}{false}
 
-\DeclareOption{trimbord}{
-  \setboolean{trimbord}{true}
-}
+\DeclareOption{hardcopy}{ \setboolean{hardcopy}{true}}
+\DeclareOption{timbord}{\setboolean{timbord}{true}}
+\DeclareOption{ebook}{\setboolean{ebook}{true}}
 
 %% Fallback                                  
 \DeclareOption*{
@@ -42,9 +46,23 @@
 
 
 
-\ifthenelse{\boolean{trimbord}}
-  {\RequirePackage[left=1.5cm,right=1.5cm,top=1.5cm,bottom=1.5cm,bindingoffset=0cm]{geometry}}
-  {\RequirePackage{geometry}}
+\ifthenelse{\boolean{hardcopy}}
+{\RequirePackage[left=1.5cm,right=1.5cm,top=1.5cm,bottom=1.5cm,bindingoffset=0cm]{geometry}}
+{
+  \ifthenelse{\boolean{timbord}}
+  {
+    \RequirePackage[a4paper,landscape,left=5cm, right=2cm,top=1.5cm, bottom=1.5cm,
+      marginparsep=5mm, marginparwidth=4cm]{geometry}
+    \RequirePackage{cmbright}
+%     \renewcommand\bfseries{\protect \usefont{T2A}{cmss}{bx}{n}}
+    \renewcommand\bfdefault{sb}
+  }
+  {
+    \ifthenelse{\boolean{ebook}}
+    {\RequirePackage[a4paper,top=2cm,bottom=2cm,right=3cm,left=3cm]{geometry}}
+    {\RequirePackage{geometry}}
+  }
+}
 
 \RequirePackage[intlimits]{amsmath}
 \RequirePackage{amsfonts, amssymb, amsthm}
@@ -133,7 +151,7 @@
 
 \titleformat{\chapter}{%
     \normalfont\LARGE\bfseries
-}{Глава \ \thechapter:}{1ex}{\normalfont\LARGE\bfseries}{}  
+  }{Глава \ \thechapter:}{1ex}{\normalfont\LARGE\bfseries}{}  
 \titlespacing\chapter{1em}{2em plus 1ex minus 0.5ex}{1.5em plus 1ex minus 0.5ex}
 
 \counterwithout{paragraph}{chapter}
@@ -156,8 +174,17 @@
   %pdfborderstyle={/S/U/W 1}% border style will be underline of width 1pt
 }
 
+\reversemarginpar
 %for margin notes
-\setlength{\marginparwidth}{3cm}
+% \setlength{\marginparwidth}{3cm}
+% due to their nature, notes are usually placed in free space. And free space
+%+ heavily depends on page orientation. Hence:
+\newcommand\note[1]{%
+  \ifthenelse{\boolean{timbord}}%
+  {\marginpar{\footnotesize #1}}%
+  {\footnote{#1}}%
+}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % new formatting cmds
@@ -198,6 +225,7 @@
 
 \def\itemskip#1{\addtocounter{enumi}{#1}}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % various niceties                      
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -237,7 +265,6 @@
 
 \newcommand\del{\ensuremath\mathrm{d}}
 \newcommand\pder[2]{\ensuremath \frac{\partial #1}{\partial #2}}
-
 \endinput
 % vim: set sw=2 nofoldenable:
 
