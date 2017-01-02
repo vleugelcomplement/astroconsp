@@ -86,7 +86,8 @@
 \label{par:diffspace::highpartial}
 
 \begin{defn}\label{defn:diffspace::highpartial}
-  Пусть $f \colon G \subset \R^n \to \R$, существуют производные $k$-го порядка. Тогда
+  Пусть $f \colon G \subset \R^n \to \R$, $\forall\, x\in G \;\: 
+  \exists\, \partial^k_{i_1, \dotsc, i_{k}} f(x)$. Тогда
   \[
     \partial_{i_1, \dotsc, i_{k+1}}^{k+1} f(x) := \partial_{i_{k+1}}(\partial^k_{i_1, \dotsc, i_{k}} f) (x)
   \]
@@ -96,7 +97,7 @@
   включительно.
   Функции из $C^1$ ещё называются гладкими.
 \end{rem}
-
+  
 \begin{thrm}[Зависимость производных $p$-го порядка от перестановки переменных]
   \label{thrm:diffspace::highpartial::permut}
   Пусть \mbox{$f \in C^p(G)$}, $x\in G$. При этом
@@ -110,35 +111,124 @@
   Тогда 
   $\partial_i^{\,p} f(x) = \partial_j^{\,p} f(x)$
 \end{thrm}
+\begin{ittproof}
+  Сначала докажем всё для $p=2$, $n=2$, т.~е.
+  \[
+    \frac{\partial^2 f }{\partial x\partial y} =  \frac{\partial^2 f }{\partial y\partial x} 
+  \]
+  Пусть $(x, y) \in G$, $(x_0+ \Delta x, y) \in G$, $(x, y + \Delta y) \in G$,
+  $(x + \Delta x, y + \Delta y) \in G$
+  Введём ещё 2 функции:
+  \begin{align*}
+    \varphi(t) &= f(t, y+ \Delta y) - f(t, y) \\
+    \psi(t) &= f(x+ \Delta x, t) - f(x, t)
+  \end{align*}
+  Тогда $\varphi(x+ \Delta x) - \varphi(x) = \varphi'(c_1) \Delta x = W$, 
+  $c_1 \in [x, x+ \Delta x]$. При этом 
+  \[
+    W = \varphi'(x) \Delta x 
+    \Delta x \left(\pder f x (c_1, y+ \Delta y) - \pder f x (c_1, y)\right) =  
+    \pdder f x y (c_1, c_2) \, \Delta x \Delta y, \; c_2 \in [y, y+ \Delta y]
+  \] 
+  Аналогично
+  \[
+    W = \pdder f y x (c_3, c_4) \Delta x \Delta y, \; c_4 \in [y, y+ \Delta y], 
+    c_3 \in [x, x+ \Delta x]
+  \]
+  По непрерывности второй производной $f$ $(f \in C^2)$
+  \begin{align*}
+    \pdder f x y (c_1, c_2) \xrightarrow[\substack{\Delta x \to 0 \\ \Delta y \to 0}]{} 
+    \pdder f x y (x, y) \\
+    \pdder f y x(c_3, c_4) \xrightarrow[\substack{\Delta x \to 0 \\ \Delta y \to 0}]{} 
+    \pdder f y x(x, y)
+  \end{align*}
+  По теореме о предельном переходе в равенствах $\ddot\smile$ смешанные производные равны.
+
+  Теперь поймём, что делать в случае произвольных $p, n$. 
+
+  Представим подстановку $\pi$ как произведение транспозиций соседних элементов. Будем дальше
+  разбираться с такими транспозициями. 
+  
+  Пусть $\tau_k = (j,j+1)$. Сначала посчитаем производные по $x_1, \dotsc, x_{j-1} = i'$.
+  А теперь обозначим $\widetilde{f} = \partial_{i'} f$. По доказанному утверждению для двух
+  переменных, $\partial_{j,j+1} \widetilde{f} = \partial_{j+1,j} \widetilde{f} $. А теперь
+  продифференцируем это равенство по оставшимся переменным.
+
+  Таким образом, для произвольной транспозиции $\tau_k = (j, j+1)$ верно утверждение теоремы. 
+  А значит, и для произвольной подстановки $\pi = \prod_k \tau_k$ теорема верна. 
+\end{ittproof}
 \begin{rem}\label{rem:diffspace::highpartial::permut}
-  Тут важно, что есть целая окрестность. Одной точки не хватит.
+  Тут важно, что $f\in C^p(G)$. Одной точки бы не хватило, мы
+  ведь рассматриваем маленький параллелепипед в $U(x)$ и используем одномерную теорему
+  Лагранжа внутри него. А для неё нужна дифференцируемость на интервале.
 \end{rem}
 
-\paragraph{<<Многомерный>> дифференциал высоких порядков}
-\label{par:diffspace::highdiff}
+\paragraph{Обобщение бинома}
+\label{par:diffspace::genbinom}
+<<Обычный>> бином Ньютона:
+\[
+  (a+b)^n  = \sum_{k=0}^n C_n^k a^k b^{n-k}
+\]
+Его нетрудно обобщить до полинома Ньютона
+\[
+  (a_1 + \dotsb + a_n)^p = \sum_{i_1=1}^n \sum_{i_2=1}^n \dotsi \sum_{i_p=1}^n a_{i_1} \dotsm a_{i_p}
+  = \sum_{{\substack{\mathclap{\alpha_i \in \{0, \dotsc, p\}}\\ \sum \alpha_i = 1}}} 
+  a_1^{\alpha_1} \dotsm a_n^{\alpha_n} \cdot C_{\alpha_1, \dotsc, \alpha_n} 
+\]
+Введём обозначения:
+\begin{itemize}
+  \item $a = (a_1, \dotsc, a_n)$
+  \item $\alpha = (\alpha_1, \dotsc, \alpha_n)$~--- мультииндекс, по сути вектор индексов, для
+    которого вводится своя куча обозначений, дабы упростить жизнь
+    \begin{enumerate}
+      \item $\alpha + \beta = (\alpha_i + \beta_i)_{i=1}^n$
+      \item $|\alpha| = \sum_{i=1}^n\alpha_i$
+      \item $\alpha! = \prod_{i=1}^n\alpha_i!$
+    \end{enumerate}
+  \item $a^\alpha = \prod_{i=1}^n a_i^{\alpha_i}$
+  \item $\partial_\alpha = \partial^n_{\alpha_1, \dotsc, \alpha_n} = \dfrac{\partial^n f}{\partial
+    x_{\alpha_1} \dotso \partial x_{\alpha_n}}$
+  \item $C_\alpha = C_{\alpha_1, \dotsc, \alpha_n}$
+\end{itemize}
+
+\begin{prop}\label{prop:diffspace::genbinom::factors}
+  $\displaystyle C_\alpha = \frac{p!}{\alpha!}$
+\end{prop}
+\begin{itlproof}
+  Ну, это просто число перестановок с повторениями. Нужно взять по множителю из $p$ скобок,
+  причём перестановки одинаковых множителей входят в одно слагаемое. В итоге нужно делить общее
+  число перестановок на число перестановок одинаковых множителей. А дальше можно сказать, что
+  в каждое слагаемое входит каждый множитель, просто некоторые в нулевой степени.
+\end{itlproof}
+
+
+\paragraph{<<Многомерный>> дифференциал высоких порядков. Формула Тейлора для функций многих
+переменных}
+\label{par:diffspace::highdifftaylor}
 
 \begin{defn}\label{defn:diffspace::highdiff}
-  Пусть $f \colon G \subset \R^n \to \R$, $f\in C^p(G)$
+  Пусть $f \colon G \subset \R^n \to \R$, $f\in C^p(G)$. Тогда
   \[  
     \del^p f(x) := \sum_{1 \leqslant i_1 \leqslant \dotsb \leqslant i_p \leqslant n}
-    \frac{\partial^p f}{\partial x_{i_p} \dotso \partial x_{i_p}} \, \del x_{i_1} \dotsm \del x_{i_p}
+    \frac{\partial^p f}{\partial x_{i_1} \dotso \partial x_{i_p}} \, \del x_{i_1} \dotsm \del x_{i_p}
+  \]
+  Или ещё можно вот так записать
+  \[
+    \left(\sum_i \del x_i\, \partial_i \right)^p f(x)
   \]
 \end{defn}
 
 \begin{stat}\label{stat:diffspace::highdiff::binom}
   Если частные производные можно переставлять, то
   \[
-    \del^p f(x) = \sum_{\substack{\alpha_i \geqslant 0 \\ \sum \alpha_i = p}} 
-    \frac{p!}{\alpha_1! \dotsm \alpha_n!} \, 
-    \frac{\partial^p f}{\partial x_1^{\alpha_1}\dotso \partial x_n} \,\del x_{i_1} \dotsm \del x_{i_p}
+    \del^p f(x) = \sum_{\substack{0 \leqslant \alpha_i \leqslant p \\ |\alpha_i| = p}} 
+    \frac{p!}{\alpha!} \, \partial_\alpha f(x) \,\del x ^ \alpha
   \]
 \end{stat}
 
-\paragraph{Формула Тейлора для функций многих переменных}
-\label{par:diffspace::taylor}
-
 \begin{thrm}\label{thrm:diffspace::taylor}
-  Пусть $f \in C^p(G), G\in \R^n$, $a\in G$. Пусть также $h\in \R^n \colon a+h \in G$.
+  Пусть $f \in C^{p+1}(G), G\in \R^n$,$G$~--выпуклая, $a\in G$. 
+  Пусть также $h\in \R^n \colon a+h \in G$.
   Тогда 
   \[
     f(a+h) = \sum_{k=0}^p \frac{1}{k!} \, \del^k f(a,h) + R_p(h)
@@ -149,10 +239,39 @@
     \item В форме Лагранжа: $R_p(h) = \dfrac{1}{(p+1)!}\, \del^{p+1} f(a + \theta h, h)$, 
       $\theta \in (0,1)$
   \end{enumerate}
-
 \end{thrm}
+\begin{ittproof}
+  Рассмотрим $\varphi(t) = a + t h$, $t\in [0,1]$, $F(t) = f(\varphi(t))$, $F\colon [0,1]\to \R$.
+  По одномерной теореме Тейлора 
+  \[
+    F(1) = F(0)+ 1\cdot F'(0) + \frac{1}{2!} F''(0) 1^2 + \dotsb + \frac{1}{p^2} F^{(p)}(0) \cdot
+    1^p + R_p
+  \]
+  Докажем, что $F^{(k)}(0) = \del ^k f(a,h)$.
+  Проще всего по индукции, давайте ещё такое нестандартное обозначение введём: 
+  $(k) = (1, \dotsc, k)$, и будем понимать под $i_{(k)}$ вектор индексов, а под 
+  $h_{i{(k)}}$~--- произведение соответствующих $h$.
+  \begin{description}
+    \item[база:] $F(0) = f(a)$
+    \item[переход:] Пусть $F^{(k-1)}(t) = \dsum_{1 \leqslant i_1, \dotsc, i_{k-1} \leqslant n } \,
+      \partial_{i_{(k-1)}} f(a + th) \, h_{i_{(k-1)}}$. При дифференцировании по t всякие
+      $h_{i_j}$ в каждом слагаемом вынесутся за знак производной, а частная производная от $f$
+      даст $\sum_{i_k} \partial_{i_{(k)}} f(a+ht) h_{i_k}$. Если скомпоновать все суммы и
+      подставить $t=0$, как раз получается $d^k f(a,h)$
+  \end{description}
 
-\paragraph{Экстремумы}
+  Теперь разберёмся с остатком
+  \[
+    R_p = \frac{1}{(p+1)!}F^{(p+1)}(\theta)\cdot1^{p+1}=\frac{1}{(p+1)!}\del^{(p+1)}f(a+h\,\theta, h) 
+  \]
+  Поскольку $\forall\, i\;\: |h_i| \leqslant \|h\|$
+  \[
+    d^{(p+1)} f(a+\theta\, h , h) = O(\|h\|^{p+1}) = o(\|h\|^p)
+  \]
+  Следовательно, $R_p = o(\|h\|^p)$
+\end{ittproof}
+
+\paragraph{Понятие экстремума, необходимое условие}
 \label{par:diffspace::extrema}
 
 \begin{defn}\label{defn:diffspace::extrema}
@@ -170,6 +289,11 @@
     \del f(a) = 0 \Leftrightarrow \forall\,i \;\: \partial_i f(a) = 0
   \]
 \end{thrm}
+\begin{ittproof}
+  Рассмотрим $\varphi_i(t) = f(a_1, \dotsc, a_{i-1}, t, a_{i+1}, \dotsc, a_n)$. Тогда у такой
+  функции есть экстремум в $a_i$. А тогда, из одномерной теоремы Ферма $d \varphi_i(t) = 0$. А
+  значит $\partial_i f =0$
+\end{ittproof}
 
 \begin{thrm}[Необходимое условие экстремума]\label{thrm:diffspace::extrema::suff}
   Пусть $a\in G \subset \R^n$, $a$~--- внутренняя точка, $f\in C^2(a)$.
@@ -549,7 +673,7 @@
     \det (F')(x_1, \dotsc, x_n) = C \prod_{i<j} (x_i - x_j) 
   \]
   А значит при условии неравенства корней он ненулевой.
-  \footnote{Этого, конечно, не было в курсе алгебры, но там не используется ничего страшнее
+  \note{Этого, конечно, не было в курсе алгебры, но там не используется ничего страшнее
   теоремы о делении с остатком. Вообще доказать бы надо, но лень.}
 
   Дальше можно воспользоваться теоремой о гладкости обратного отображения.

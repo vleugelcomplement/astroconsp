@@ -185,6 +185,40 @@
   {\footnote{#1}}%
 }
 
+% \patchcmd{\@addmarginpar}%
+%     {\box \@marbox}%
+%     {\hbox{%
+%         \ifmpar@rule@rside
+%         \hskip-\mparrulefactor\marginparsep\mparrule
+%         \hskip\mparrulefactor\marginparsep
+%         \fi
+%                           \box \@marbox
+%         \ifmpar@rule@lside
+%         \hskip\mparrulefactor\marginparsep\mparrule
+%         \fi}%
+%      \global\mpar@rule@lsidefalse
+%      \global\mpar@rule@rsidefalse
+%     }%
+%     {\typeout{*** SUCCESS ***}}{\typeout{*** FAIL ***}}
+
+% \patchcmd{\@addmarginpar}%
+%     {\global\setbox\@marbox\box\@currbox}%
+%     {\global\setbox\@marbox\box\@currbox
+%      \global\mpar@rule@lsidetrue
+%      \else
+%      \global\mpar@rule@rsidetrue
+%     }%
+%     {\typeout{*** SUCCESS ***}}{\typeout{*** FAIL ***}}
+
+% \newif\ifmpar@rule@lside
+% \newif\ifmpar@rule@rside
+
+% % \marginparrule generates the \vrule but should use no space horizontally
+% \newcommand\mparrule{\hskip-2pt\vrule width 4pt\hskip-2pt}
+
+% placement factor: .5 places the rule midway in the space made available 
+% by \marginparsep
+% \newcommand\mparrulefactor{.4}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % new formatting cmds
@@ -265,6 +299,7 @@
 
 \newcommand\del{\ensuremath\mathrm{d}}
 \newcommand\pder[2]{\ensuremath \frac{\partial #1}{\partial #2}}
+\newcommand\pdder[3]{\ensuremath \frac{\partial^2 #1}{\partial #2 \partial #3}}
 \endinput
 % vim: set sw=2 nofoldenable:
 
