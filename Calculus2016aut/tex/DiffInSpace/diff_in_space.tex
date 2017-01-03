@@ -201,7 +201,6 @@
   в каждое слагаемое входит каждый множитель, просто некоторые в нулевой степени.
 \end{itlproof}
 
-
 \paragraph{<<Многомерный>> дифференциал высоких порядков. Формула Тейлора для функций многих
 переменных}
 \label{par:diffspace::highdifftaylor}
@@ -272,7 +271,7 @@
 \end{ittproof}
 
 \paragraph{Понятие экстремума, необходимое условие}
-\label{par:diffspace::extrema}
+\label{par:diffspace::extrema::ness}
 
 \begin{defn}\label{defn:diffspace::extrema}
   Пусть $f\colon G \subset \R^n \to \R$, $a\in G$. Тогда говорят, что $f$ имеет в $a$ максимум (нестрогий), если
@@ -295,7 +294,81 @@
   значит $\partial_i f =0$
 \end{ittproof}
 
-\begin{thrm}[Необходимое условие экстремума]\label{thrm:diffspace::extrema::suff}
+
+\paragraph{Про квадратичные формы }
+\label{par:diffspace::quadforms}
+\begin{defn}\label{defn:diffspace::quadforms::bilin}\note{тут изложение больше по \cite{gelfand}} 
+  Функция $A\colon V \times V \to \R$, где $V$~--- векторное пространство,
+  называется \emph{билинейной формой}, если она линейна по обеим своим аргументам.
+\end{defn}
+
+\begin{defn}\label{defn:diffspace::quadforms::bilinsym}
+  Билинейная форма $A$ называется \emph{симметрической}, если $\forall\, x, y \;\: A(x,y)=A(y,x)$.
+\end{defn}
+
+\begin{defn}\label{defn:diffspace::quadforms::bilinmtx}
+  Пусть $A$~--- билинейная форма, $e_1, \dotsc, e_n$~--- базис в векторном пространстве.
+  Тогда \[
+    A (x,y) = \sum_{i,j=1}^n A(e_i, e_j) x^i y^j
+  \]
+  и матрица $A$, элементы которой $a_{ij} =  A(e_i, e_j)$ называется матрицой билинейной формы.
+\end{defn}
+
+\begin{defn}\label{defn:diffspace::quadforms::quad}
+  Пусть $A$~--- симметрическая билинейная форма. Тогда $A(x)=A(x,x)$~--- \emph{квадратичная форма}.
+  При этом $A(x,y)$ называется \emph{полярной формой} по отношению к $A(x)$.
+\end{defn}
+
+\begin{defn}\label{defn:diffspace::quadforms::quadmtx}
+  Матрица квадратичной формы~--- матрица соответствующей полярной формы.
+\end{defn}
+
+\begin{defn}[<<Определённость>> формы]\label{defn:diffspace::quadforms::sign}
+  Если что-то верно, то про форму $A(x,y)$ говорят:
+  \begin{itemize}
+    \item $\forall\, x,y \neq 0 \;\: A(x,y) > 0$~--- положительно определена
+    \item $\forall\, x,y \neq 0 \;\: A(x,y) < 0$~--- отрицательно определена
+    \item $\forall\, x,y \neq 0 \;\: A(x,y) \geqslant 0$~--- полуопределена в положительном смысле
+    \item $\forall\, x,y \neq 0 \;\: A(x,y) \leqslant 0$~--- полуопределена в отрицательном смысле
+  \end{itemize}
+\end{defn}
+
+\begin{exmp*}
+  Скалярное произведение~--- положительно определённая билинейная форма.
+\end{exmp*}
+
+\begin{thrm}\label{thrm:diffspace::quadforms::orthodiag}
+  Пусть в некотором базисе $f_1, \dotsc, f_n$ квадратичная форма $A$ имеет матрицу $(a_{ij})$.
+  Пусть к тому же все <<северо-западные>> миноры $\Delta_i$ отличны от нуля. 
+  Тогда существует базис $e_1, \dotsc,e_n$, в котором матрица $A$ имеет вид
+  \[
+    \begin{pmatrix}
+      \frac{1}{\Delta_1} & & &\\
+      & \frac{\Delta_1}{\Delta_2} & & \\
+      & & \ddots & \\
+      & &  & \frac{\Delta_{n-1}}{\Delta_n}
+    \end{pmatrix}
+  \]
+\end{thrm}
+\begin{ittproof}
+  По сути, нам нужно построить ортогональный базис, только вместо скалярного произведения
+  используется билинейная форма $A$(причём не обязательно положительно определённая).
+  За подробностями см.~\cite{gelfand}.
+\end{ittproof}
+
+\begin{thrm}[Правило Сильвестра]\label{thrm:diffspace::quadforms::silv}
+  Квадратичная форма положительно определена, если все миноры из
+  теоремы~\ref{thrm:diffspace::quadforms::orthodiag} положительны, и отрицательно определена, если
+  их знаки чередуются, начиная с <<->>.
+\end{thrm}
+\begin{ittproof}
+  Следствие предыдущей теоремы. Определённость формы не зависит от выбора базиса.
+\end{ittproof}
+
+\paragraph{Достаточное условие экстремума}
+\label{par:diffspace::extrema::suff}
+
+\begin{thrm}[Достаточное условие экстремума]\label{thrm:diffspace::extrema::suff}
   Пусть $a\in G \subset \R^n$, $a$~--- внутренняя точка, $f\in C^2(a)$.
   \begin{enumerate}
     \item $\del f(a) = 0$, $\del^2 f(a) > 0 \Rightarrow$ $f$ имеет в $a$ $\min$
@@ -1098,9 +1171,6 @@
   Тогда если в $a$ условный экстремум, то в $a$ стационарная точка ($\mathcal L'(a) = 0$) функции
   Лагража.
 \end{rem}
-
-
-
 
 
 \end{document}
