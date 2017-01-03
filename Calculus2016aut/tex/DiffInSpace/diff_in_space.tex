@@ -6,6 +6,7 @@
 \documentclass[12pt,timbord]{../../../notes}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
+\WarningFilter{latex}{Citation}
 \graphicspath{{../../img/}}
 
 \begin{document}
@@ -371,80 +372,188 @@
 \begin{thrm}[Достаточное условие экстремума]\label{thrm:diffspace::extrema::suff}
   Пусть $a\in G \subset \R^n$, $a$~--- внутренняя точка, $f\in C^2(a)$.
   \begin{enumerate}
-    \item $\del f(a) = 0$, $\del^2 f(a) > 0 \Rightarrow$ $f$ имеет в $a$ $\min$
-    \item $\del f(a) = 0$, $\del^2 f(a) < 0 \Rightarrow$ $f$ имеет в $a$ $\max$
-    \item $\del f(a) = 0$, $\del^2 f(a) \lessgtr 0 \Rightarrow$ ничего нет
-    \item $\del f(a) = 0$, $\del^2 f(a) \leqslant 0 \Rightarrow$ $f$ не имеет в $a$ $\min$
-    \item $\del f(a) = 0$, $\del^2 f(a) \geqslant 0 \Rightarrow$ $f$ не имеет в $a$ $\max$
+    \item $\del f(a) = 0$, $\del^2 f(a,h) > 0 \Rightarrow$ $f$ имеет в $a$ $\min$
+    \item $\del f(a) = 0$, $\del^2 f(a,h) < 0 \Rightarrow$ $f$ имеет в $a$ $\max$
+    \item $\del f(a) = 0$, $\del^2 f(a,h) \lessgtr 0 \Rightarrow$ ничего нет
+    \item $\del f(a) = 0$, $\del^2 f(a,h) \leqslant 0 \Rightarrow$ $f$ не имеет в $a$ $\min$
+    \item $\del f(a) = 0$, $\del^2 f(a,h) \geqslant 0 \Rightarrow$ $f$ не имеет в $a$ $\max$
   \end{enumerate}
-\end{thrm}
-
-\paragraph{Понятие о неявной функции}
-\label{par:diffspace::implicit2}
-
-\begin{defn}\label{defn:diffspace::implicit2}
-  Пусть $F\colon G \subset \R^2 \to \R$. Рассмотрим уравнение
-  \begin{equation}
-    \label{eq:diffspace::implicit2::base}
-    F(x, y) = 0
-  \end{equation}
-
-  Пусть $a =(x_0, y_0)$ удовлетворяет \eqref{eq:diffspace::implicit2::base}, 
-  а $U$~--- окрестность $a \colon$ $U = U_x \times U_y$.
-  Тогда будем говорить, что уравнение \eqref{eq:diffspace::implicit2::base} определяет неявную 
-  функцию $f$ в $U$, если
-  \[
-    \forall\, x\in P \; \exists!\, y\in Q \colon F(x,y) = 0 \hspace{1.5em} (y = f(x))
-  \]
-\end{defn}
-
-\begin{thrm}[О неявной функции]\label{thrm:diffspace::implicit2}
-  Пусть $F\colon G\subset \R^2 \to \R$, $F\in C^1(x_0,y_0)$, а $a=(x_0, y_0) \colon$
-  \begin{enumerate}
-    \item $F(x_0, y_0) = 0$
-    \item $F_y'(x_0, y_0) \neq 0$
-  \end{enumerate}
-  Тогда 
-  $\exists\, P(x_0), Q(y_0) \colon $ в $U = P\times Q$ уравнение \eqref{eq:diffspace::implicit2::base} 
-  задаёт неявную функцию $f\colon P\to Q$. При этом
-  \[
-    f\in C^1 \land f'(x) = - \frac{F_x'(x,y)}{F_y'(x,y)}
-  \]
 \end{thrm}
 \begin{ittproof}
-  \begin{enumerate}
-    \item (Доказательство существования) \\
-      Рассмотрим $\varphi(y) = F(x_0, y)$. Пусть НУО $F_y'(x_0, y_0) > 0$.
-      Тогда 
-      \[
-        \exists\, U_\varepsilon(x_0, y_0) \colon \forall\, x, y \in U \;\: F_y'(x, y) > 0
-      \]
-      Обозначим соответствующие проекции $U$ (шар) на координатные оси за $U_x, U_y$
-      Получается, что $\varphi \uparrow U_y = (y_0 - \varepsilon; y_0 + \varepsilon)$.
-      Тогда 
-      \[
-        \begin{split}
-          \exists\, V_1(x_0) &\colon \forall\, x\in V_1 F(x, y+\varepsilon) > 0 \\
-          \exists\, V_2(x_0) &\colon \forall\, x\in V_2 F(x, y-\varepsilon) < 0 \\
-                           P &= V_1 \cap V_2
-        \end{split}
-      \]
-      Тогда из теоремы Больцано-Коши и монотонности $\varphi$
-      \[
-        \forall\, x \in P \; \exists!\, y\in Q=U_y \colon F(x, y) = 0
-      \]
-      В итоге получилось определение неявной функции.
-    \item Непрерывность в $(x_0, y_0)$ вроде очевидна, мы же каждому $x$ из $P$ сопоставили 1
-      $y$ из $Q$. Принадлежность классу $C$ можно установить проведя аналогичные рассуждения
-      для $x\in P(x_0)$
-    \item С гладкостью что-то странное. Можно наверное сделать как в Зориче.
-    \item $F(x, f(x)) \equiv 0 \Rightarrow F_x'\cdot 1 + F_2'f'(x) = 0$
-  \end{enumerate}
+  Поскольку $\del f(a) = 0$,  $\Delta f(a) = \frac 1 2 (\del^2 f(a) + \alpha)$, 
+  где $\alpha = o(\|h\|)$. Для упрощения жизни примем $t=\frac{h}{\|h\|}$. Тогда приращение
+  функции можно переписать в виде
+  \[
+    \Delta f  = \|h\|^2 \left( \frac{1}{2} \sum b_{ij} t_i t_j + \frac\alpha{\|h\|^2} \right)
+  \]
+  Поскольку $\frac{\alpha}{\|h\|^2} \to 0$, существует $\overset{\circ}{U}_\varepsilon (a)$ в которой 
+  знак приращения определяется лишь первым слагаемым. Нетрудно заметитить, что все значения $t$
+  лежат на единичной сфере, которая компакт. Причём значения $t$ покрывают всю сферу, ведь
+  направление $h$ можно выбирать в окрестности $a$ произвольно. Так что можно просто сделать
+  второе слагаемое меньшим минимума квадратичной формы на единичной сфере.
+
+  Таким способом можно расправиться с пунктами 1--2. 
+
+  Для пункта 3 отыщем $h_1 \colon \del^2(a, h_1) > 0$, $h_2 \colon \del^2(a, h_1) < 0$. Заметим,
+  что если $A$~--- квадратичная форма, 
+  то $A(h)>0$ $\Rightarrow$ $ \forall\,s \;\: A(sh)=s^2\,A(h) > 0 $. По сути, мы считаем значение
+  формы вдоль прямой, проходящей через $a$. 
+  Если, как и выше, записать приращение в виде
+  \[
+    \Delta f  = s^2 \left(\frac 1 2 \,\del^2 (a, h_{1|2}) + \frac\alpha{s^2}\right)
+  \]
+  то видно, что можно получить в окрестности $\pneigh U (a) $ всё, что угодно, просто $s\to 0$.
+
+  4--5 легко доказываются от противного.
 \end{ittproof}
+%% не нужно нафиг, есть более общая теорема дальше. Тут костыли какие-то
+% \paragraph*{Понятие о неявной функции}
+% \label{par:diffspace::implicit2}
+
+% \begin{defn}\label{defn:diffspace::implicit2}
+%   Пусть $F\colon G \subset \R^2 \to \R$. Рассмотрим уравнение
+%   \begin{equation}
+%     \label{eq:diffspace::implicit2::base}
+%     F(x, y) = 0
+%   \end{equation}
+
+%   Пусть $a =(x_0, y_0)$ удовлетворяет \eqref{eq:diffspace::implicit2::base}, 
+%   а $U$~--- окрестность $a \colon$ $U = U_x \times U_y$.
+%   Тогда будем говорить, что уравнение \eqref{eq:diffspace::implicit2::base} определяет неявную 
+%   функцию $f$ в $U$, если
+%   \[
+%     \forall\, x\in P \; \exists!\, y\in Q \colon F(x,y) = 0 \hspace{1.5em} (y = f(x))
+%   \]
+% \end{defn}
+
+% \begin{thrm}[О неявной функции]\label{thrm:diffspace::implicit2}
+%   Пусть $F\colon G\subset \R^2 \to \R$, $F\in C^1(x_0,y_0)$, а $a=(x_0, y_0) \colon$
+%   \begin{enumerate}
+%     \item $F(x_0, y_0) = 0$
+%     \item $F_y'(x_0, y_0) \neq 0$
+%   \end{enumerate}
+%   Тогда 
+%   $\exists\, P(x_0), Q(y_0) \colon $ в $U = P\times Q$ уравнение \eqref{eq:diffspace::implicit2::base} 
+%   задаёт неявную функцию $f\colon P\to Q$. При этом
+%   \[
+%     f\in C^1 \land f'(x) = - \frac{F_x'(x,y)}{F_y'(x,y)}
+%   \]
+% \end{thrm}
+% \begin{ittproof}
+%   \begin{enumerate}
+%     \item (Доказательство существования) \\
+%       Рассмотрим $\varphi(y) = F(x_0, y)$. Пусть НУО $F_y'(x_0, y_0) > 0$.
+%       Тогда 
+%       \[
+%         \exists\, U_\varepsilon(x_0, y_0) \colon \forall\, x, y \in U \;\: F_y'(x, y) > 0
+%       \]
+%       Обозначим соответствующие проекции $U$ (шар) на координатные оси за $U_x, U_y$
+%       Получается, что $\varphi \uparrow U_y = (y_0 - \varepsilon; y_0 + \varepsilon)$.
+%       Тогда 
+%       \[
+%         \begin{split}
+%           \exists\, V_1(x_0) &\colon \forall\, x\in V_1 F(x, y+\varepsilon) > 0 \\
+%           \exists\, V_2(x_0) &\colon \forall\, x\in V_2 F(x, y-\varepsilon) < 0 \\
+%                            P &= V_1 \cap V_2
+%         \end{split}
+%       \]
+%       Тогда из теоремы Больцано-Коши и монотонности $\varphi$
+%       \[
+%         \forall\, x \in P \; \exists!\, y\in Q=U_y \colon F(x, y) = 0
+%       \]
+%       В итоге получилось определение неявной функции.
+%     \item Непрерывность в $(x_0, y_0)$ вроде очевидна, мы же каждому $x$ из $\tilde P \subset P$
+%       сопоставили 1 $y$ из $\tilde Q \in Q$. 
+%       Принадлежность классу $C$ можно установить проведя аналогичные рассуждения
+%       для $x\in P(x_0)$
+%     \item С гладкостью что-то странное. Можно наверное сделать как в Зориче (через приращения и
+%     теорему о среднем)
+%     \item $F(x, f(x)) \equiv 0 \Rightarrow F_x'\cdot 1 + F_2'f'(x) = 0$
+%   \end{enumerate}
+% \end{ittproof}
 
 \paragraph{Полнота пространства \texorpdfstring{$\R^n$}{}}
 \label{par:diffspace::banach}
 
+\begin{defn}\label{defn:diffspace::banach::cauchyseq}
+  Последовательность $(x_n)$ называется фундаментальной (последовательностью Коши),
+  если 
+  \[
+    \forall\, \varepsilon > 0 \;\: \exists\, N\colon \forall\,m,n>N \;\: \rho(x_n - x_m) < \varepsilon 
+  \]
+\end{defn}
+
+\begin{defn}\label{defn:diffspace::banach::comtmetspc}
+  Метрическое пространство $(X,\rho)$~--- полное, если всякая фундаментальная последовательность
+  в нём  сходится
+\end{defn}
+
+\begin{exmp*}
+  $\R \setminus 0$~--- не полное метрическое пространство, $x_n = \lfrac{1}{n}$ тому пример.
+\end{exmp*}
+
+\begin{rem}\label{rem:diffspace::banach::clos}
+  Если $(X, \rho)$~--- полно, то $X$ вообще-то замкнуто. Хорошо видно на примере выше.
+\end{rem}
+\begin{rem}\label{rem:diffspace::banach::closubset}
+  Если $(X, \rho)$~--- полно, $Y \subset X$~--- замкнуто. Тогда и $Y$~--- полно.
+\end{rem}
+
+\begin{stat}\label{stat:diffspace::banach::comtRn}
+  $\R^n$~--- полное метрическое пространство.
+\end{stat}
+\begin{itlproof}
+  $\sphericalangle$ произвольный $\varepsilon > 0$. Тогда 
+  \[
+    \rho(x_n - x_m) < \varepsilon 
+    \Rightarrow \forall\, i \;\: \rho(x_m^i e_i - x_n^i e_i) < \varepsilon
+    \Rightarrow \forall\, i \;\: |x_m^i - x_n^i| < \varepsilon
+  \]
+  Таким образом $(x_n^i)\in \R$~--- фундаментальная. 
+  А в $\R$ по теореме из первого семестра фундаментальные последовательности сходятся.
+  Тогда $\forall\, x_n^i \to a^i$. Значит и $x_n \to a$. 
+\end{itlproof}
+
+Кусок дальше не шибко нужен
+
+\begin{itaux}
+  Давайте введём метрику на пространстве непрерывных функций
+  \begin{defn}\label{defn:diffspace::banach::cont}
+    Пусть $f, g, h \in C\bigl([a;b]\bigr)$. Тогда 
+    \[
+      \rho(f,g) := \sup_{x\in [a;b]} |f(x) - g(x)| = \|f - g\|
+    \]
+  \end{defn}
+  Здесь супремум можно заменить на максимум по теореме Вейерштрасса.
+
+  Докажем что это правда расстояние:
+  \begin{itemize}
+    \item $\rho(f,g) =\rho (g,f)$~--- очевидно
+    \item $\rho(f,g) \geqslant 0$~--- тоже очевидно
+    \item $\rho(f,g) = \rho(f,h) + \rho(h,g) $~--- не так очевидно
+      \[
+        \begin{split}
+          \max_{x\in [a;b]}|f(x)-g(x)| = |f(x_0) - g(x_0) | 
+          &\leqslant |f(x_0) - h(x_0)| + |h(x_0)-g(x_0)|\\
+          &\leqslant \max_{x\in [a;b]}|f(x) - h(x)| + \max_{x\in [a;b]}|h(x)-g(x)|
+          = \rho(f,h) + \rho(h,g)
+        \end{split}
+      \]
+  \end{itemize}
+
+  \begin{prop}\label{prop:diffspace::banach::contcomp}
+    Пространство $C\bigl([a;b]\bigr)$ с указанной выше метрикой полно.
+  \end{prop}
+  \begin{itlproof}
+    Поточечная сходимость очевидна из полноты $\R$. А равномерную можно получить, устремив $m$ к
+    $\infty$, зафиксировав $n$. А из равномерной сходимости следует непрерывность предельной
+    функции.
+  \end{itlproof}
+  \begin{rem*}
+    Если взять в качестве метрики $\int_a^b |f-g|$, то полнота поломается. Пополнение будет
+    пространством суммируемых функций.
+  \end{rem*}
+\end{itaux}
 \paragraph{Теорема о сжимающем отображении}
 \label{par:diffspace::contrmap}
 
@@ -466,17 +575,90 @@
     \forall\, x_0 \in X \; \exists\, \lim_{n\to \infty} T^n x_0 = x_*
   \]
 \end{thrm}
+\begin{ittproof}
+  $\sphericalangle$ $x_n = T^n x_0$, где $x_0\in X$~--- произвольное. Докажем, что 
+  \begin{enumerate}
+    \item $x_n \to x_*$
+    \item $T x_* = x_*$
+    \item других таких $x_*$ нет.
+  \end{enumerate}
+
+  Поехали
+  \begin{enumerate}
+    \item $(x_n)$ сходится в себе, ведь $C\in (0,1)$.
+      \[
+        \rho(x_m, x_{m+p}) \leqslant \rho(x_m, x_{m+1}) + \dotsb + \rho(x_{m+p-1}, x_{m+p})
+        \leqslant \rho(x_0, x_1) C^m (1 + \dotsb + C^{p-1})
+          < \rho(x_0, x_1)\,\frac{C^m}{1-C} \xrightarrow[m\to \infty]{} 0
+      \]
+      раз пространство полное, $\exists\, \lim_{\infty} x_n$
+    \item отображение $T$ непрерывно $ \Rightarrow $ $T x_n \to T x_*$. Но по теореме о
+      подпоследовательности и единственности предела $T x_* = x_*$.
+    \item Пусть $x_{**}$~--- другая неподвижная точка. Но тогда 
+      % сгенереровано, нечитайте
+      \[
+        \rho \left( x_{\ast \ast} , x_{\ast} \right) = \rho \left( T x_{\ast
+        \ast} ,T x_{\ast} \right) \leqslant C \rho \left( x_{\ast \ast} ,
+        x_{\ast} \right) \Rightarrow \left( C - 1 \right) \rho \left( x_{\ast \ast}
+        , x_{\ast} \right) \geqslant 0 \xRightarrow[C < 1]{} \rho \left( x_{\ast
+        \ast} , x_{\ast} \right) = 0 
+      \]
+  \end{enumerate}
+
+\end{ittproof}
 
 \paragraph{Метод Ньютона}
 \label{par:diffspace::newtfindroot}
-потом
+
+Пусть $f\in C\bigl([a;b]\bigr)$, $f(a)\cdot f(b)$, $f(x_*) = 0$ , $f'(x_*) \neq 0$. 
+Сам метод выглядит как-то так:
+
+\noindent
+Проводится касательная к графику в текущей точке, ищется её пересечение с осью $x$, 
+оттуда восставляется перпендикуляр, пересечение которого с графиком~--- новая точка.
+\[
+  x - T x = \frac{f(x)}{f'(x)} \Leftrightarrow Tx = x - \frac{f(x)}{f'(x)}
+\]
+
+Докажем, что это вообще работает.
+\begin{thrm}\label{thrm:diffspace::newtfindroot}
+  Пусть $f\in C^2\left([a;b]\right)$, $x_* \in [a;b]$:
+  \begin{enumerate}[a)]
+    \item $f(x_*) = 0$
+    \item $f'(x_*) \neq 0$
+  \end{enumerate}
+  Тогда $\exists\, U(x_*) \colon \forall\, x_0 \in U$, такая что $T^n x_0 \to x_*$ и
+  $x_{n+1} - x_* = O\bigl((x_n -x_*)^2\bigr)$
+\end{thrm}
+\begin{ittproof}
+  Сначала оценим $T'$.
+  \[
+    T'(x) = 1 - \frac{f'(x)^2 - f(x)f''(x)}{f'(x)^2} = \frac{f(x)f''(x)}{f'(x)^2} 
+    \xrightarrow[n\to \infty]{(f\in C^2)} \frac{f(x_*)f''(x_*)}{f'(x_*^2)} 
+    = 0
+  \]
+  Так что $\exists\, U(x_*) \colon c \in \overline{U} \Rightarrow |T'(c)| \leqslant \lfrac 1 2$.
+  
+  Теперь покажем, что $T(\overline{U}) \subset \overline{U}$. Из вышесказанного
+  \begin{equation}
+    |Tx - Tx_*| \leqslant \frac{1}{2} |x-x_*|
+    \label{eq:diffspace::newtfindroot::contrnewt}
+  \end{equation}
+  Поскольку $Tx_* = x_* - 0 = x_*$, то \eqref{eq:diffspace::newtfindroot::contrnewt} равносильно
+  \[
+    | Tx - x_* | \leqslant \frac{1}{2} |x-x_*| 
+  \]
+  А это как раз то, что надо. 
+  Значит $T$ как раз сжимающее отображение, и  по теореме \ref{thrm:diffspace::contrmap::banach} 
+  такой $x_*\colon f(x_*) = 0$ единственный.
+
+  Вторая часть тривиально получается из разложения $f$ в ряд Тейлора в окрестности $x_*$.
+\end{ittproof}
 
 \paragraph{Теорема об обратном отображении(формулировка)}
 \label{par:diffspace::invmaphandwave}
 
 Пусть $F: G\subset \R^n \to \R^m$~--- гладкое. Порассуждаем, когда может существовать $F^{-1}$.
-
-\rule{\textwidth}{0.5pt}
 
 Рассмотрим, например, линейное отображение.
 \[
@@ -493,8 +675,6 @@
 \[
   m = n \land \det A \neq 0 
 \]
-
-\rule{\textwidth}{0.5pt}
 
 Теперь попытаемся обобщить на остальные функции. 
 

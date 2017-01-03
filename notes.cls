@@ -79,7 +79,7 @@
 \RequirePackage{titlesec}
 \RequirePackage{tocloft}
 \RequirePackage{calc}
-
+\RequirePackage{changepage}
 \RequirePackage[shortlabels]{enumitem}
 \RequirePackage{perpage}
 
@@ -158,6 +158,7 @@
 \renewcommand{\theparagraph}{\S\thinspace\arabic{paragraph}}
 \titleformat\paragraph[block]{\normalfont\bfseries}{\theparagraph}{2ex}{\normalfont\bfseries}{}  
 \titlespacing\paragraph{1ex}{1em plus 1ex minus 0.5ex}{0.7em plus 1ex minus 0.5ex}
+\titleformat{name=\paragraph,numberless}{\normalfont\bfseries}{\S*}{2ex}{\normalfont\bfseries}{}
 
 %setting up ToC and numbering
 \setcounter{secnumdepth}{4}
@@ -228,6 +229,8 @@
 \newenvironment{itlproof}[1][\noskip]{\noindent$\blacktriangledown$\ifx\noskip#1\relax\else~(\textit{#1})\fi\\* }%
 {\nopagebreak\par\noindent\nopagebreak$\blacktriangle$\par}
 
+\newenvironment{itaux}[1][1cm]{\begin{small}\begin{adjustwidth}{#1}{}}{\end{adjustwidth}\end{small}}
+
 \def\resetdefs{ \setcounter{defn}{0} }
 \def\resetthrm{ \setcounter{thrm}{0} }
 \def\resetrem{ \setcounter{rem}{0} }
@@ -297,9 +300,13 @@
 \newcommand\concave{\,\overline\cap\,}
 \newcommand\circlearound[1]{#1\hspace{\widthof{#1}*(-1)}$\bigcirc$}
 
+\newcommand{\pneigh}[1]{\overset{\circ}{#1}} 
+\providecommand{\xRightarrow}[2][]{\mathop{\Longrightarrow}\limits_{#1}^{#2}}
+\providecommand{\xequal}[2][]{\mathop{=}\limits_{#1}^{#2}}
+
 \newcommand\del{\ensuremath\mathrm{d}}
 \newcommand\pder[2]{\ensuremath \frac{\partial #1}{\partial #2}}
 \newcommand\pdder[3]{\ensuremath \frac{\partial^2 #1}{\partial #2 \partial #3}}
 \endinput
-% vim: set sw=2 nofoldenable:
+% vim: sw=2 nofoldenable:
 
