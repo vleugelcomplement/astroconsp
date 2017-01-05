@@ -74,6 +74,7 @@
 \RequirePackage{verbatim}
 \RequirePackage{epigraph}
 \RequirePackage{wasysym}
+\RequirePackage{marvosym}
 \RequirePackage{hyperref}
 
 \RequirePackage{titlesec}
@@ -86,8 +87,11 @@
 \RequirePackage{chngcntr} % tools for counters 
 \RequirePackage{bbm}      %} more math fonts
 \RequirePackage{mathrsfs} %}
+\RequirePackage{accents}  % extra dots over chars
 %\RequirePackage{xfrac} % better slashed fractions --> Font Warning --> Loads too many fonts --> not useful 
 
+%\RequirePackage{tikz}
+%\usetikzlibrary{calc}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % packages setup & fixes 
@@ -299,7 +303,7 @@
 \newcommand\convex{\,\underline\cup\,}
 \newcommand\concave{\,\overline\cap\,}
 \newcommand\circlearound[1]{#1\hspace{\widthof{#1}*(-1)}$\bigcirc$}
-
+\newcommand{\diffin}{\textit{дифференцируема в }} 
 \newcommand{\pneigh}[1]{\overset{\circ}{#1}} 
 \providecommand{\xRightarrow}[2][]{\mathop{\Longrightarrow}\limits_{#1}^{#2}}
 \providecommand{\xequal}[2][]{\mathop{=}\limits_{#1}^{#2}}
@@ -307,6 +311,32 @@
 \newcommand\del{\ensuremath\mathrm{d}}
 \newcommand\pder[2]{\ensuremath \frac{\partial #1}{\partial #2}}
 \newcommand\pdder[3]{\ensuremath \frac{\partial^2 #1}{\partial #2 \partial #3}}
+
+\newcommand{\gearmacro}[5]{%
+% #1 number of teeths
+% #2 radius intern
+% #3 radius extern
+% #4 angle from start to end of the first arc
+% #5 angle to decale the second arc from the first 
+  \foreach \i in {1,...,#1} {%
+    [rotate=(\i-1)*360/#1]  (0:#2)  arc (0:#4:#2) {[rounded corners=0pt]
+    -- (#4+#5:#3)  arc (#4+#5:360/#1-#5:#3)} --  (360/#1:#2)
+}}  
+
+% \newcommand{\gear}{\begin{tikzpicture}[scale=0.15]
+%     \fill[black] (0,0) circle (2em);
+%     \draw[thick,rotate=12,fill=black] \gearmacro{8}{1.8em}{2.4em}{20}{10};
+%     \draw[thick,fill=white] (0em,0em) circle(1.35em);
+% \end{tikzpicture}}
+% \newsavebox\gearbox
+% \sbox\gearbox{\raisebox{-0.1em}{\gear{}} }
+\newcommand{\underdev}{\texorpdfstring{\MineSign{}}{}} 
+% unfortunately tikz has problems with toc 
+
+\renewcommand*{\dot}[1]{\accentset{\mbox{\bfseries .}}{#1}}
+\renewcommand*{\ddot}[1]{\accentset{\mbox{\bfseries .\hspace{-0.1ex}.}}{#1}}
+\newcommand{\coori}{\mathop{\uparrow\!\uparrow}} 
+\newcommand{\conori}{\mathop{\uparrow\!\downarrow}} 
 \endinput
 % vim: sw=2 nofoldenable:
 

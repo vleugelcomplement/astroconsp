@@ -652,7 +652,7 @@
   Значит $T$ как раз сжимающее отображение, и  по теореме \ref{thrm:diffspace::contrmap::banach} 
   такой $x_*\colon f(x_*) = 0$ единственный.
 
-  Вторая часть тривиально получается из разложения $f$ в ряд Тейлора в окрестности $x_*$.
+  Вторая часть тривиально получается из разложения $f$ в ряд Тейлора в окрестности $x_n$.
 \end{ittproof}
 
 \paragraph{Теорема об обратном отображении(формулировка)}
@@ -695,19 +695,18 @@
 \end{align}
 
 Условие разрешимости \eqref{eq:diffspace::invmaphandwave::diff}~--- $\det\bigl(F'(a)\bigr) \neq 0$.
-Утверждается, что \eqref{eq:diffspace::invmaphandwave::diff} $\Rightarrow$
-\eqref{eq:diffspace::invmaphandwave::delta}
+Утверждается, что у \eqref{eq:diffspace::invmaphandwave::delta} условие разрешимости такое же.
 
 Соответственно, формулировка 
 \begin{thrm}\label{thrm:diffspace::invmap}
-  Пусть $F\colon G\subset \R^n \to \R^n$, $a\in G$, $b = F(a)$. Пусть ещё $F \in C^1$, 
+  Пусть $F\colon G\subset \R^n \to \R^n$, $a\in G$, $b = F(a)$. Пусть ещё $F \diffin a$, 
   $\det(F'(a)) \neq 0$
   
   Тогда 
   \[
     \begin{split}
       & \exists\, U(a), V(b) \,\colon\; F \colon U \leftrightarrow V \\
-      & \exists\, F^{-1} V\to U, \; F^{-1} \in C^1
+      & \exists\, F^{-1} \colon V\to U, \; F^{-1} \in C^0
     \end{split}
   \]
 \end{thrm}
@@ -721,36 +720,36 @@
     F'(a) &= \Gamma\\
     \Phi(x) &= x - \Gamma^{-1} (F(x) - y)
   \end{align*}
-  Нетрудно заметить, что $x$~--- неподвижная точка $\Phi$ (что $\Leftrightarrow F(x)=y$ ).
+  Нетрудно заметить, что $x$~--- неподвижная точка $\Phi$ $\Leftrightarrow F(x)=y$ .
   Очень хотелось бы подогнать всё под теорему Банаха (\ref{thrm:diffspace::contrmap::banach}).
   Тогда отображение в окрестности $a$ будет взаимно-однозначным.
 
   \begin{enumerate}
-    \item Сначала оценим $\|\Phi'\|$.
+    \item Сначала оценим $\|\Phi'\|$.\note{Тут $y$ фиксируется и от $x$ не зависит. 
+      Так что \mbox{$y'=0$}}
+      Попутно примем $\|y-b\| < \delta$, это потом поможет доказать непрерывность.
       \[
         \Phi'(x) = E - \Gamma^{-1} (F'(x)) = \Gamma^{-1} (F'(a) - F'(x))
       \]
-      Можно норму оценить
       \[
-        \|\Phi'(x)\| = \| \Gamma^{-1} \| \cdot \| (F'(a) - F'(x)) \|
+        \|\Phi'(x)\| \leqslant \| \Gamma^{-1} \| \cdot \| (F'(a) - F'(x)) \|
       \]
       Последний множитель явно $\xrightarrow[x\to a]{} 0$ (так как $F\in C^1$)
-      Тогда и $\|\Phi'(x)\|\to 0$. А значит найдётся $U_\varepsilon(a) \colon 
+      Тогда и $\|\Phi'(x)\|\to 0$. А значит найдётся $U_{\varepsilon_0}(a) \colon 
       \|\Phi'(x)\| \leqslant \frac{1}{2}$.
       
       Тогда по теореме \ref{thrm:diffspace::diffestim::diffestim} 
       \[
-        x, x' \in U_\varepsilon(a) \Rightarrow \| \Phi(x) - \Phi(a)\| \leqslant \frac{1}{2}
+        x, x' \in U_{\varepsilon_0}(a) \Rightarrow \| \Phi(x) - \Phi(a)\| \leqslant \frac{1}{2}
         \|x-x'\|
       \]
-      Собственно, почти победа. Осталось лишь выбрать внутри $U_\varepsilon$ компакт
+      Собственно, почти победа. Осталось лишь выбрать внутри $U_{\varepsilon_0}$ компакт
       $\overline{U_{\varepsilon_1}}$ (иначе множество не очень полное).
 
     \item Теперь покажем, что 
       \[
-        \exists\, \overline{U} \colon \Phi(U) \subset U  
+        \exists\, \overline{U} \colon \Phi(\overline{U}) \subset \overline{U}  
       \]
-      Попутно примем $\|y-b\| < \delta$, это потом поможет доказать непрерывность.
       \[
         \begin{split}
           \|\Phi(x) - a\| = \| x - a - \Gamma^{-1}(F(x)-y)\| 
@@ -790,9 +789,9 @@
       Видимо, осталось пересечь окрестность $a$ с прообразом $V(b)$ : $U = F^{-1}(V) \cap
       U_\varepsilon (a)$
       \item
-      Заодно получилась и непрерывность:
+      Заодно получилась и непрерывность, за счёт произвольно выбранного $\varepsilon$:
       \[
-        \forall\, U\; \exists\, V_\delta(b) \colon F^{-1}(V_\delta) \subset
+        \forall\, U_\varepsilon\; \exists\, V_\delta(b) \colon F^{-1}(V_\delta) \subset
         U_\varepsilon 
       \]
   \end{enumerate}
@@ -803,7 +802,7 @@
 
 \begin{thrm}[о дифференцируемости $F^{-1}$]\label{thrm:diffspace::invdiff}
   Пусть $U \subset \R^n$, $V \subset \R^n$, $F\colon U \leftrightarrow V$. Пусть также
-  $F$~--- дифференцируемо в $a\in U$, $F(a) = b$,  $\det F'(a) \neq 0$. 
+  $F \diffin a\in U$, $F(a) = b$,  $\det F'(a) \neq 0$. 
   Тогда $F^{-1}$ дифференцируемо в $b$.
 \end{thrm}
 \begin{ittproof}
@@ -811,8 +810,7 @@
   Отображение биективно, значит $h\neq 0 \Leftrightarrow k \neq 0$.
   Из дифференцируемости $F$
   \[
-    k = y - b = F(x) - F(a) = A h + \alpha \\
-    \alpha = o(h) \; (h\to 0)
+    k = y - b = F(x) - F(a) = A h + \alpha, \;\: \alpha = o(h) \; (h\to 0)
   \]
   $A = F'(a) \neq 0$, следовательно $\exists\, A^{-1}$
   \[
@@ -820,7 +818,7 @@
   \]
   Докажем, что $-A^{-1} \alpha =: \beta = o(k) \; (k\to 0) $
   \[
-    \beta \leqslant \frac{-\alpha}{\|k\|} = \frac{-\alpha}{\|h\|}\cdot \frac{\|h\|}{\|k\|}  
+    A\beta \leqslant \frac{-\alpha}{\|k\|} = \frac{-\alpha}{\|h\|}\cdot \frac{\|h\|}{\|k\|}  
   \]
   Покажем, что последний член~--- ограничен
   \[
@@ -858,7 +856,7 @@
   Следовательно, $\widetilde{b_{ij}} = b_{ij}(a_{11}, \dotsc, a_{kl}, \dotsc, a_{nn}) \in C^\infty$.
   С другой стороны
   \[
-    b_{ij}(y) = \frac{\partial F^{-1}}{\partial y_j}(y) = \frac{\partial F^{-1}}{\partial y_j}\bigl(F(x)\bigr)
+    b_{ij}(y) = \frac{\partial F_i^{-1}}{\partial y_j}(y) = \frac{\partial F_i^{-1}}{\partial y_j}\bigl(F(x)\bigr)
     \Leftrightarrow b_{ij}(y) = \widehat{b_{ij}}(x)
   \]
 
@@ -866,7 +864,7 @@
 
   Дальше немного магии. Введём ещё одну функцию
   \[
-    \overline{b_{ij}}(x) = b_{ij}(a_{11}(x), \dotsc, a{kl}(x), \dotsc, a_{nn}(x))   
+    \overline{b_{ij}}(x) = b_{ij}(a_{11}(x), \dotsc, a_{kl}(x), \dotsc, a_{nn}(x))   
   \]
   Заметим, что каждая $a_{ij}(x) \in C^{p-1} \Rightarrow \overline{b_{ij}} \in C^{p-1}$.
   Хорошо, тогда 
@@ -886,7 +884,8 @@
 \label{par:diffspace::smoothpolyroots}
 
 \begin{thrm}\label{thrm:diffspace::smoothpolyroots}
-  Пусть $P(x) \in \R[x]$ имеет $n$ корней $(x^0_j)$,  $x^0_j \in \R$, таких что $\forall\, i,j \; x^0_i \neq x^0_j$.  
+  Пусть $P(x) \in \R[x]$ имеет $n$ корней $(x^0_j)$,  $x^0_j \in \R$, таких что $\forall\, i,j \;
+  x^0_i \neq x^0_j$. Пусть ещё старший коэффициент = 1. 
   Тогда 
   \[
     x_i = x_i(a_0, \dotsc, a_{n-1}) \in C^\infty
@@ -922,28 +921,27 @@
   какая-то пара столбиков равны, то определитель равен нулю. Так что $\det(F')$ делится на
   всевозможные многочлены вида $x_i - x_j$. А их как раз $\frac{n(n-1)}{2}$ и они неприводимые.
   Следовательно, 
+  \note{Этого, конечно, не было в курсе алгебры, но там не используется ничего страшнее
+  теоремы о делении с остатком. Вообще доказать бы надо, но лень.}
   \[
     \det (F')(x_1, \dotsc, x_n) = C \prod_{i<j} (x_i - x_j) 
   \]
   А значит при условии неравенства корней он ненулевой.
-  \note{Этого, конечно, не было в курсе алгебры, но там не используется ничего страшнее
-  теоремы о делении с остатком. Вообще доказать бы надо, но лень.}
 
   Дальше можно воспользоваться теоремой о гладкости обратного отображения.
 \end{ittproof}
 
 \paragraph{Теорема о неявном отображении}
 \label{par:diffspace::implicit}
-
-\verb+20:07 2016-10-15+
-
+% \marginpar{\tt 20:07 2016-10-15 }
 \begin{defn}\label{defn:diffspace::implicit}
-  Пусть $F \colon \R^m\times\R^n \to \R^m$. Рассмотрим уравнение
+  Пусть $F \colon \R^m\times\R^n \to \R^m$\note{В доказательстве потом весомо пользуются, что
+  функция действует в пространство той же размерности, что и $y$}. Рассмотрим уравнение
   \begin{equation}
     F(x, y) = 0
     \label{eq:diffspace::impicit::baseeq}
   \end{equation}
-  Пусть $x^0\in \R^n$, $y^0\in \R^k$ такие, что $F(x^0, y^0) = 0$.
+  Пусть $x^0\in \R^n$, $y^0\in \R^m$ такие, что $F(x^0, y^0) = 0$.
  
   Тогда если $\exists\,P(x^0) \subset \R^n$, $Q(y^0) \subset \R^m$, такие что
   \[
@@ -973,10 +971,10 @@
   \Leftrightarrow 
   \begin{cases}
     \sum_{j=1}^m \frac{\partial F_1}{\partial y_j}\, \del y_j = 
-    \sum_{j=1}^m \frac{\partial F_1}{\partial x_j}\, \del x_j \\
+    -\sum_{j=1}^m \frac{\partial F_1}{\partial x_j}\, \del x_j \\
     \hdotsfor{1}\\
     \sum_{j=1}^m \frac{\partial F_k}{\partial y_j}\, \del y_j = 
-    \sum_{j=1}^m \frac{\partial F_k}{\partial x_j}\, \del x_j .\\
+    -\sum_{j=1}^m \frac{\partial F_k}{\partial x_j}\, \del x_j .\\
   \end{cases}\nolinebreak\label{eq:diffspace::impicit::diff}
 \end{equation}
 При этом $\del y_j$ мы хотим выразить через $\del x_j$.
@@ -1069,7 +1067,7 @@
 
 \begin{defn}\label{defn:diffspace::funcdep}
   Пусть $f_1, \dotsc, f_m, g \colon G \subset \R^n \to \R$~--- гладкие функции, $x_0 \in G$.
-  Тогда эти функции называются функционально зависимыми в $V(x_0)$, если
+  Тогда $g$ называются функционально зависимой от $f_1, \dotsc, f_m$ в $V(x_0)$, если
   \[
     \exists\, \varphi\colon U(f(x_0)) \to \R, \varphi \in C^1 \; \colon \; g(x) = \varphi(f(x)) 
     \text{ в } V(x_0)  
@@ -1078,11 +1076,8 @@
 \begin{defn}\label{defn:diffspace::funcindep}
   Пусть $f_1, \dotsc, f_m, g \colon G \subset \R^n \to \R$~--- гладкие функции. Тогда эти функции
   называются функционально \emph{не}зависимыми, если определение выше не выполняется ни для какой
-  $V \subset G$
+  $V \subset G$ ни для какой из функций из набора.
 \end{defn}
-\begin{rem*}
-  Тут лажа какая-то c определениями, не отрицание же нифига.
-\end{rem*}
 
 \begin{thrm}(о функциональной зависимости)\label{thrm:diffspace::funcdep}
   Пусть $f_1, \dotsc, f_m, g \colon G \subset \R^n \to \R$~--- гладкие функции. К тому же
@@ -1097,7 +1092,11 @@
     \rk \begin{pmatrix}
       f_1' \\ \vdots \\ f_m' \\ g' 
     \end{pmatrix} = m
-  $ в точке $x \in U(a)$, то $\exists\, V(a)$ в которой $g$ функционально зависит от $f_1, \dotsc,
+    $ в точке $a$, 
+    \note{тут тонкость. Если ранг равен $m$, то определитель не 0 и в некой
+    окрестности $a$ по непрерывности. А вот со вторым так не прокатит, там наоборот нужно
+    равенство 0 }
+  то $\exists\, V(a)$ в которой $g$ функционально зависит от $f_1, \dotsc,
   f_m$.
 \end{thrm}
 \begin{ittproof}
@@ -1172,6 +1171,10 @@
 \end{thrm}
 \begin{ittproof}
   Аккуратное следствие \ref{thrm:diffspace::funcdep} и \ref{thrm:diffspace::implicit}.
+  Единственное нетривиальное место~--- во второй половине, где нужно показать, почему из $m$
+  уравнений вида $F_i(x)=b_i$, можно оставить лишь $r$. Здесь можно сказать, что последние
+  уравнения не накладывают дополнительных ограничений на $\{x_i\}$, ведь там по сути написано,
+  что-то такое: $\varphi(\bar b) = \bbar b$. А эти уравнения точно верны из 1 пункта.  
 \end{ittproof}
 \begin{rem*}
   Ранг, собственно, показывает сколько есть степеней свободы у значений функции, причём в
@@ -1187,14 +1190,14 @@
 \label{par:diffspace::locsurfeqs}
 
 \begin{enumerate}
-  \item Параметрическое \\ 
+  \item Параметрическое  
     \[
-      f\colon D\subset\R^k \to \R^n \;\colon \; \rk f' = k \forall\, x\in D (\geqslant k) 
+      f\colon D\subset\R^k \to \R^n \;\colon \; \rk f' = k \:\forall\, x\in D (\geqslant k) 
     \]
     Тогда $M = f(D)$~--- поверхность размерности $k$. 
     
     Условие на ранг означает, что нигде нету изломов, параметр же по сути~--- скорость.
-  \item Задание графиком \\
+  \item Задание графиком
     \[
       D \subset \R^k, \; f\colon D \to \R^{n-k} \text{~--- гладкое}
     \]
@@ -1204,8 +1207,8 @@
       любой своей точки оно задаётся графиком гладкого отображения $f\colon D \subset \R^k \to
       \R^{n-k}$.
     \end{defn}
-  \item Неявное \\
-    Пусть $F\colon \R^n \to \R^{n-k}$. Тогда 
+  \item Неявное \par
+    Пусть $F\colon \R^n \to \R^{n-k}$, $\rk F = n-k$. Тогда 
     \[
       M = \left\{x\in \R^n \mid F(x) = 0\right\}
     \]
@@ -1218,10 +1221,11 @@
 \end{thrm}
 \begin{ittproof}
   \begin{description}
-    \item[$1\to 2$] см~\ref{thrm:diffspace::geomjacob}
+    \item[$1\to 2$] см~\ref{thrm:diffspace::geomjacob} (1)
     \item[$2\to 3$] $F(t,y) = f(t) - y$, $F' = (f_t' \mid -E) \Rightarrow \rk F' = n-k$
-    \item[$3\to 2$] см~\ref{thrm:diffspace::geomjacob}
-    \item[$2\to 1$] $(x, y)\mapsto (x(t), f(x(t))$, где $t=x$. С рангами очевидно проблем нет. 
+    \item[$3\to 2$] см~\ref{thrm:diffspace::geomjacob} (2)
+    \item[$2\to 1$] $(x, y)\mapsto (x(t), f(x(t))$, где $t=x$. С рангами очевидно проблем нет,
+      единичная матрица же.
   \end{description}  
 \end{ittproof}
 
@@ -1236,7 +1240,7 @@
   \]
 \end{defn}
 \begin{defn}[Экстремум на подмножестве]\label{defn:diffspace::condextremahandwave::subsetextrema}
-  Пусть $f\colon G \subset \R^n \to \R$, $M\subset\R^n$~---$k$-мерная поверхность,
+  Пусть $f\colon G \subset \R^n \to \R$, $M\subset\R^n$~--- $k$-мерная поверхность,
   $a\in G\cap M$~--- внутренняя точка. Тогда в точке $a$
   $\max/\min$ относительно $M$, если
   \[
@@ -1257,21 +1261,21 @@
 \end{defn}
 
 \begin{thrm}\label{thrm:diffspace::condextrema}
-  Пусть $f, F_1, \dotsc, F_m \in C^1(G)$, $a\in G$. Тогда если $f$ имеет в $a$ экстремум при условии
-  $F(a) = 0$, то $\nabla f(a), \nabla F_1(a), \dotsc, \nabla F_m(a)$~--- линейно зависимы.
+  Пусть $f, F_1, \dotsc, F_m \in C^1(G)$,  $a\in G$. 
+  
+  Тогда если $f$ имеет в $a$ экстремум при условии $F(a) = 0$, то 
+  $\nabla f(a), \nabla F_1(a), \dotsc, \nabla F_m(a)$~--- линейно зависимы.
 \end{thrm}
 
 \begin{exmp*}
   Можно двумерный случай рассмотреть.
   
   \begin{minipage}{0.48\linewidth}
+    \vspace{1em}
     \noindent\includegraphics[width=0.6\textwidth]{condextr2d}
   \end{minipage} \hfill
   \begin{minipage}{0.48\linewidth}
-    $\nabla f = \lambda \nabla F$
-  \end{minipage}
-\end{exmp*}
-
+    \[\nabla f = \lambda \nabla F\]
 \begin{cor}[Правило Лагранжа]
   $f$ имеет в $a$ экстремум при условии $F_1(a) = \cdots = F_m(a) = 0$, то
   \begin{enumerate}
@@ -1280,6 +1284,9 @@
       \sum_i \lambda_i \nabla F_i(a)$ 
   \end{enumerate}
 \end{cor}
+  \end{minipage}
+\end{exmp*}
+
 
 \paragraph{Доказательство теоремы об условном экстремуме}
 \label{par:diffspace::condextrema} 
@@ -1296,13 +1303,13 @@
           \nabla f(a) \\ \nabla F_1(a) \\ \vdots \\ \nabla F_m(a) 
         \end{pmatrix}, \; \det \Phi'(a) \neq 0
       \]
-      Пусть $b = \Phi(a) = (f(a), 0, \dotsc, 0)$. Тогда по теоеме об обратном отображении 
+      Пусть $b = \Phi(a) = (f(a), 0, \dotsc, 0)$. Тогда по теореме об обратном отображении 
       (\ref{thrm:diffspace::invsmooth}) 
       \[
         \exists\, U(a), V(b) \;\colon\; \Phi\colon U \to V \text{~--- диффеоморфизмъ}
       \]
       Пусть $V \supset B_\varepsilon(b)$, $y = (f(a)+ \frac{\varepsilon}{2}, 0, \dotsc, 0) \in V$, 
-    тогда $\exists!\, x\in U \colon \Phi(x) = y$. Получается, что $f(x) > f(a)$, $\forall\, i
+    тогда $\exists!\, x\in U \colon \Phi(x) = y$. Получается, что $f(x) > f(a)$, $\forall\, i\;
     F_i(x) = 0$, что немного противоречит тому, что в $a$ условный $\max$.
   \item Теперь рассмотрим случай $m < n - 1$ (всё остальное неинтересно, точно будет ЛЗ). \\
     Будем доказывать от противного. Пусть в $a$ условный $\max$, но
@@ -1346,10 +1353,10 @@
 \begin{rem}
   Можно рассматривать функцию Лагранжа:
   \[
-    \mathcal L (x) = f(x) - \sum_{i=1}^m \lambda_i F_i(x)
+    \mathcal L (x) = f(x, \lambda) - \sum_{i=1}^m \lambda_i F_i(x)
   \]
-  Тогда если в $a$ условный экстремум, то в $a$ стационарная точка ($\mathcal L'(a) = 0$) функции
-  Лагража.
+  Тогда если в $a$ условный экстремум, то в $(a,\lambda_)$ стационарная точка 
+  ($\mathcal L'(a) = 0$) функции Лагранжа.
 \end{rem}
 
 
