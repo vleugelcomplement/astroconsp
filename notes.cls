@@ -67,6 +67,7 @@
 \RequirePackage[intlimits]{amsmath}
 \RequirePackage{amsfonts, amssymb, amsthm}
 \RequirePackage{mathtools}
+% \RequirePackage{esint}
 
 \RequirePackage[pdftex]{graphicx}
 \RequirePackage{xcolor}
@@ -90,8 +91,8 @@
 \RequirePackage{accents}  % extra dots over chars
 %\RequirePackage{xfrac} % better slashed fractions --> Font Warning --> Loads too many fonts --> not useful 
 
-%\RequirePackage{tikz}
-%\usetikzlibrary{calc}
+\RequirePackage{tikz}
+\usetikzlibrary{calc,decorations.markings}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % packages setup & fixes 

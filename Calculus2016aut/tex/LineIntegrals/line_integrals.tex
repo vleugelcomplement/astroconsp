@@ -151,7 +151,7 @@
 \end{rem*}
 
 
-\paragraph{\underdev Точные формы}
+\paragraph{Точные формы}
 \label{par:lineint::precforms}
 
 \begin{defn}\label{defn:lineint::precforms::def}
@@ -226,6 +226,159 @@
   Аккуратно свести к теореме~\ref{thrm:lineint::precforms::critprec}, там всё будет работать и с
   путями, параллельными осям координат.
 \end{ittproof}
+
+\paragraph{Замкнутые формы}
+\label{par:lineint::closforms}
+Здесь уже окончательно забиваем на все $n \geqslant 2$. Там, в целом, понятно как обобщать.
+Тут всюду $\omega =  P(x,y) \del x + Q(x,y) \del y$
+\begin{defn}\label{defn:lineint::closforms::closform}
+  Форма $\omega$ замкнута в $G$, если
+  \[
+    \forall\, A \in G \; \exists U (A) \colon \exists\, \Phi_U\colon U\to R \;\:\: \omega = \del
+    \Phi_U
+  \]
+  короче, локально точна.
+\end{defn}
+
+\begin{thrm}\label{thrm:lineint::closforms::nessdiff}
+  Пусть $\omega$~--- гладкая форма в $G$. Тогда если $\omega$ замкнута,
+  $\partial_y P = \partial_x Q$ в $G$.
+\end{thrm}
+\begin{ittproof}
+  Очевидно следует из <<локальной точности>>.
+\end{ittproof}
+
+\begin{thrm}\label{thrm:lineint::closforms::suffdiff}
+  Пусть $\omega$~--- гладкая форма в $G$. Тогда если $\partial_y P = \partial_x Q$ в $G$, то
+  $\omega$ замкнута.  
+\end{thrm}
+\begin{ittproof}
+  Выберем произвольную $A$, тогда $U_\varepsilon(A) \subset G$. Надо попробовать построить
+  потенциал. Например так $\Phi(B) = \int_{\gamma_1 + \gamma_2} \omega$. 
+  Докажем, что $\partial_x \Phi = P$, $\partial_y \Phi = Q$.
+
+  \begin{minipage}{0.48\linewidth}
+    \begin{tikzpicture}[scale=2]
+      \coordinate[label=$A$] (A) at (0,0);
+      \coordinate[label=$B$] (B) at (0.7,1);
+      \coordinate[label=$C$] (C) at (1.1,1);
+      \coordinate (D) at (0.7,0);
+      \coordinate (E) at (1.1,0);
+      \draw (0,0) circle (2);
+      \begin{scope}[decoration={
+            markings,
+          mark=at position 0.5 with {\arrow{>}}}
+        ] 
+        \draw[postaction={decorate}] (A)-- node[below]{$\gamma_1$} (D);
+        \draw[postaction={decorate}] (D)-- node[left]{$\gamma_2$}(B);
+        \draw[postaction={decorate}] (D)-- node[below]{$\gamma_3$}(E);
+        \draw[postaction={decorate}] (E)-- node[right]{$\gamma_4$}(C);
+      \end{scope}
+    \end{tikzpicture}
+  \end{minipage}\hfill
+  \begin{minipage}{0.48\linewidth}
+    \[
+      \begin{split}
+        \Delta \Phi &= \Phi(C)-\Phi(B) = \int_{\gamma_4} \omega - \int_{\gamma_2} \omega +
+        \int_{\gamma_3} \omega \\
+        &= \int_{y_A}^y Q(x+\Delta x, t) \del t 
+        - \int_{y_A}^y Q(x, t) \del t + \int_{x}^{x+\Delta x} P(t, y_A) \del t
+      \end{split}
+    \]
+    Последний сходится к $P(x,y_0)\del x$, а первые два надо немного преобразовать
+    \[
+      \frac{1}{\Delta x} \left(\int_{\gamma_4} \omega 0 \int_{\gamma_2} \omega \right)
+      = \int_{y_0}^y \left(\frac{Q(x+\Delta x,t ) - Q(x,t)}{\Delta x}\right) \del t
+    \]
+    Подинтегральную функцию можно представить как последовательность $f_n \rightrightarrows Q'$.
+    \[
+      \left| \frac{Q(x+\lfrac 1 n )- Q(x)}{\frac 1 n} - Q'(x)\right| = |Q'(\xi) - Q(x) |
+      <\varepsilon
+    \]
+    а функция $Q'$ равномерно непрерывна на $[x, x+ \Delta x]$, ибо он отрезок. Так что можно
+    поменять местами предел и интеграл.
+    \[
+      \cdots = \int_{y_0}^y \pder{Q}{x}(x,y) \del t = \int_{y_0}^y \pder{P}{y} (x,y) = \Delta P
+    \]
+  \end{minipage}
+    Если сложить с оставшимся куском, то как раз и выйдет $P$. С равенством $Q$ вроде все
+    попроще, там нужно считать приращение всего лишь по одному пути.
+\end{ittproof}
+\begin{rem}
+  Бывают замкнутые, но не точные формы. Например $\omega = \dfrac{-y \del x + x \del y}{x^2 +
+  y^2}$. Она замкнута, а вот $\oint_\gamma w$ по окружности вокруг $0$ не 0.
+\end{rem}
+
+\paragraph{Первообразная замкнутой формы вдоль пути}
+\label{par:lineint::closintpath}
+
+Сначала можно отметить, что $\Gamma = \gamma\bigl([a;b]\bigr)$~--- компакт. Так что вроде можно
+пользоваться теоремой о конечном подпокрытии.
+\begin{lem}\label{thrm:lineint::closintpath::potdiff}
+    Пусть $G$~--- область, $\omega$~--- гладкая точная форма в $G$, 
+    а $\Phi, \Psi$~--- две её первообразные в $G$. Тогда $\Phi-\Psi\equiv C\in \R$.
+\end{lem}
+
+\begin{thrm}\label{thrm:lineint::closintpath}
+  Пусть $\omega$ замкнута в $G$, $\Gamma=\gamma([a;b])$. Тогда существует первообразная вдоль пути
+  $\gamma$ и  $\dint_\gamma \omega = f(b) - f(a)$.
+\end{thrm}
+
+\begin{ittproof}
+  Поскольку кривая компактна, в любом её покрытии можно выделить конечное подпокрытие. Собственно,
+  будем рассматривать покрытие открытыми кругами $U(p_i)$. Пусть $\Phi_i$~--- произвольная
+  первообразная в $U_i$. Заменим $\Phi_i$ $\widetilde{\Phi_i}$, так что 
+  $\widetilde{\Phi}_{i+1}= \widetilde{\Phi}_{i}$ на $U_{i+1} \cap U_i$, $\widetilde{U}_0=U_0$.
+
+  Выберем параметризацию, тогда $p_i$  соответствуют $t_0=a< t_1 <\cdots < t_n = b$
+  Теперь выберем $f(\gamma(t)) = \widetilde{\Phi}_k(\gamma(t))$, $\gamma(t) \in U_k$.
+  Здесь вроде можно прожить и без простоты пути.\note{вообще первообразную вдоль пути нигде не
+  определяли, так что можно считать конструкцию, построенную выше, определением}
+
+  Теперь ещё выберем $q_i \in U_{i+1} \cap U_i$, $\{\gamma_j\} =$ пути от $ p_i$ до $q_i \cap$
+  пути от $q_i$ до $p_{i+1}$. Тогда
+  \[
+    \in _\gamma \omega = \sum_j\int_{\gamma_j} =  \widetilde{\Phi}(p_n) - \widetilde{\Phi}{p_0} =
+    f(b) - f(a)
+  \]
+\end{ittproof}
+
+\paragraph{\underdev Гомотопия путей}
+\label{par:lineint::homotopy}
+
+\begin{defn}\label{defn:lineint::homotopy::set}
+  Непрерывным семейством путей называется непрерывная функция $g\colon [0;1]\times[a;b]\to \R^n$.
+  Часто обозначается так: $\gamma_s(t) = g(s,t)$. \note{По-хорошему там должны быть топологические
+  пространства, но не сегодня и не сейчас .}
+\end{defn}
+
+\begin{defn}[$\ddot\sim$]\label{defn:lineint::homotopy::paths}
+  Пусть $\gamma_1, \gamma_2\colon [a;b]\to G$, $\gamma_1(a)=
+  \gamma_2(a)$,$\gamma_1(b)=\gamma_2(b)$. Тогда утверждается, что пути гомотопны, если существует
+  семейство $\gamma_s(t)\colon$ $\gamma_{s_1} = \gamma_1$, $\gamma_{s_2} = \gamma_2$.
+\end{defn}
+\begin{rem*}
+  Таки отношение эквивалентности.
+\end{rem*}
+
+\begin{thrm}\label{thrm:lineint::homotopy::lineinteq}
+  Пусть $\omega$~--- замкнутая форма в области $G$, $\gamma_1 \sim \gamma_2$. Тогда
+  \[
+    \int _{\gamma_1} \omega = \int_{\gamma_2} \omega
+  \]
+\end{thrm} 
+\begin{thrm}\label{thrm:lineint::homotopy::loopinteq}
+  Пусть $\omega$~--- замкнутая форма в области $G$, $\gamma_1 \sim \gamma_2$~--- гомотопные петли.
+  Тогда
+  \[
+    \oint _{\gamma_1} \omega = \oint_{\gamma_2} \omega
+  \]
+\end{thrm} 
+\begin{rem*}
+  Доказывать я это пока не буду, иначе это будет выглядеть как-то так:\par
+  \includegraphics[width=0.7\linewidth]{overloaded}
+\end{rem*}
+
 
 
 \end{document}
