@@ -294,8 +294,14 @@
 \DeclareMathOperator\codim{codim}
 \DeclareMathOperator\Spec{Spec}
 
+\DeclareMathOperator\Res{Res}
+\DeclareMathOperator\Aut{Aut}
+\DeclareMathOperator\Stab{Stab}
+
 
 \renewcommand\C{\mathbbm{C}} 
+\newcommand\exC{\overline{\mathbbm{C}}} 
+\newcommand\D{\mathbbm{D}} 
 \newcommand\R{\mathbbm{R}} 
 \newcommand\Q{\mathbbm{Q}}
 \newcommand\Z{\mathbbm{Z}}
@@ -339,5 +345,5 @@
 \newcommand{\coori}{\mathop{\uparrow\!\uparrow}} 
 \newcommand{\conori}{\mathop{\uparrow\!\downarrow}} 
 \endinput
-% vim: sw=2 nofoldenable:
+% vim: setlocal nofoldenable
 

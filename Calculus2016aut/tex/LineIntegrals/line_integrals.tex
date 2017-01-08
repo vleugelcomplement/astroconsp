@@ -45,7 +45,8 @@
 
 \begin{defn}\label{defn:lineint::defs::curve}
   Образ $\Gamma = \gamma([a;b]) \subset \R^n$ называется \emph{кривой} в $\R^n$. Ещё говорят, что
-  $\Gamma$~--- носитель пути $\gamma$, а $\gamma$~--- параметризация $\Gamma$.
+  $\Gamma$~--- носитель пути $\gamma$, а $\gamma$~--- параметризация $\Gamma$. \note{здесь ещё
+  можно как в \cite{shabat} определять кривую как класс эквивалентности путей, так вроде проще}
 \end{defn}
 
 \begin{rem*}
@@ -379,7 +380,23 @@
   \includegraphics[width=0.7\linewidth]{overloaded}
 \end{rem*}
 
+\begin{cor}\label{imp:lineint::homotopy::loophomdot}
+  Пусть $\gamma$~--- петля в $G$ и $\gamma \mathop{\overset{G}{\sim}} \bullet$. Тогда
+  $\displaystyle\oint_\gamma w = 0$.
+\end{cor}
 
+
+
+\begin{defn}\label{defn:lineint::homotopy::simpconn}
+  Область в $G$ называется односвязной, если в ней всякая петля стягивается в точку.
+\end{defn}
+
+\begin{thrm}\label{thrm:lineint::homotopy::simpconn}
+  В односвязной области все замкнутые формы точны.
+\end{thrm}
+\begin{exmp*}
+  Далёкая, далёкая галактика~--- не односвязная область.
+\end{exmp*}
 
 \end{document}
 % vim: wrapmargin=3

@@ -3,12 +3,238 @@
 % Author      : taxus-d <iliya.t@mail.ru>
 % Created at  : Wed Jan  4 20:06:34 MSK 2017
 %------------------------------------------------------------
-\documentclass[12pt]{../../../notes}
+\documentclass[12pt,timbord]{../../../notes}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
 \graphicspath{{../../img/}}
 
 \begin{document}
 
-\end{document}
+\paragraph{\underdev Интеграл от комплексной дифференциальной формы}
+\label{par:tfcv::compint}
+\note{здесь надо сильно больше определений}
 
+\begin{defn}\label{defn:tfcv::compint::limit}
+  Определим <<шаровую>> окрестность комплексного числа как $\{z\mid |z-a|<\varepsilon\}$,
+  проколотую окрестность как $\{z\mid 0<|z-a|<\varepsilon\}$. Дальше
+  можно уже рассмотреть базу таких окрестностей и ввести топологию как в $\R^2$.
+  Аналогично вводятся пределы и непрерывности.
+\end{defn}
+\begin{defn}\label{defn:tfcv::compint::compintform}
+  Пусть $G\subset\C$~--- область, $f\colon G\to C$, непрерывна, $f = f_1 + i f_2$, 
+  $\omega(z,\del z) = f(z) \del
+  z$~--- комплексная дифференциальная форма. \note{Тут определение по cути такое же как и раньше,
+  дифференциал имеет символический смысл.} Пусть $\Gamma\subset G$~---  кривая, $\gamma$~--- её
+  параметризация, $\gamma = \gamma_1 + i\gamma_2$
+
+  Тогда 
+  \[
+    \int_\gamma := \int_a^b f(\gamma(t)) \dot\gamma(t) \, \del t 
+    := \int_a^b (f_1(\gamma(t))\gamma_1(t) - f_2(\gamma(t))\gamma_2)\del t
+    + \int_a^b (f_1(\gamma(t))\gamma_2(t) + f_2(\gamma(t))\gamma_1)\del t
+  \]
+\end{defn}
+
+\subparagraph{Свойства:}
+\begin{prop}\label{prop:tfcv::compint::intprop}
+  см~\ref{par:lineint::defs}
+\end{prop}
+  
+\begin{prop}\label{prop:tfcv::compint::intsum}
+  Пусть 
+  $\{t_i\}$~--- разбиение отрезка $[a;b]$, $z_i = \gamma(t_i)$, $\Delta z_i = z_{i+1} -
+  z{i}$, $\tau_i \in [t_i, t_{i+1}]$, $\xi_i = \gamma(\tau_i)$. Пусть ещё
+  \[
+    \begin{split}
+      \sigma = \sum_{i=0}^{n-1} f(\xi_i) \Delta z_i \\
+      r = \max {|\Delta z_i|}
+    \end{split}
+  \]
+  Тогда
+  \[
+    \displaystyle \int_\gamma f(z)\,\del z = \lim_{r\to 0} \sigma
+  \]
+\end{prop}
+\begin{itlproof}
+  Следует из вещественной теоремы Римана
+\end{itlproof}
+
+\begin{cor}\label{cor:tfcv::compint::length}
+  Пусть $|f(z)| \leqslant M\;\: \forall z \in \Gamma$
+  \[
+    \left|\int_\gamma f(z) \,\del z\right| \leqslant M  \cdot \ell(\Gamma)
+  \]
+\end{cor}
+\begin{itlproof}
+  \[
+    |\sigma| \leqslant \sum_{i} |f(\xi_i)| \cdot |\Delta z_i| \leqslant M \cdot \sum_i |\Delta
+    z_i|
+  \]
+  А дальше просто  предельный переход в неравенстве.
+\end{itlproof}
+
+\begin{verbatim}
+.........................
+{censored by galactic vimperor}
+.........................
+\end{verbatim}
+
+
+\setcounter{paragraph}{41}
+\paragraph{Классификация изолированных особых точек}
+\label{par:tfcv::singclass}
+
+\begin{defn}\label{defn:tfcv::singclass::sing}
+  Особой точкой функции $f$ называется точка, где $f$ не голоморфна или не определена.
+\end{defn}
+
+\begin{defn}\label{defn:tfcv::singclass::isolsing}
+  Изолированной особой точкой функции $f$ называется особая точка, в некоторой окрестности которой
+  нет других особых точек.
+\end{defn}
+
+\setcounter{paragraph}{45}
+
+\paragraph{Вычисление вычетов в полюсах}
+\label{par:tfcv::resuduepole}
+
+\begin{defn}\label{defn:tfcv::resuduepole::polord}
+  Пусть $f$ имеет в $a$ полюс.
+  Порядком полюса называется наименьшая отрицательная степень в разложении $f$ в ряд Лорана в
+  кольце с центром в $a$.
+\end{defn}
+
+\begin{thrm}\label{thrm:tfcv::resuduepole::firt}
+  Пусть $a$~--- полюс первого порядка функции $f$. Тогда
+  \[
+    \Res_a f =  \lim_{z\to a} f(z)
+  \]
+\end{thrm}
+\begin{thrm}\label{thrm:tfcv::resuduepole::frac}
+  Пусть $a$~--- ноль первого порядка для $\psi$, $\varphi(a) \neq 0$, $\varphi, \psi$ голоморфны в
+  $U(a)$, $f = \frac{\varphi}{\psi}$. Тогда
+  \[
+    \Res_a f =  \frac{\varphi(a)}{\psi'(a)}
+  \]
+\end{thrm}
+
+\begin{thrm}\label{thrm:tfcv::resuduepole::pirt}
+  Пусть $a$~--- полюс $p$-го порядка функции $f$. Тогда
+  \[
+    \Res_a f =  \frac{1}{(p-1)!} \Biggl((z-a)^p f(z)\Biggr)^{(p-1)}_{z=a}
+  \]
+\end{thrm}
+
+\paragraph{Вычисление интегралов с помощью вычетов}
+\label{par:tfcv::intresidue}
+
+\begin{enumerate}[I$\rangle$]
+  \item Интеграл по периоду от периодической функции. \par
+    Пусть $f\colon \R \to \C$. Тогда
+    \[
+      f = 2\pi i \, \sum_{a_k} \Res_{a_k} g,
+    \]
+    где $a_k$~--- вычеты функции $g(z)$, внутри единичной окружности. В функции $g$ $\sin/\cos$
+    заменены на $\frac{1}{2} \left(z \pm z^{-1}\right)$ 
+  \item Интеграл от рациональной функции на $\R$ \par
+    Пусть $R(x) = \frac{P(x)}{Q(x)}$, $P, Q \in \R[x]$, $\deg P \leqslant \deg Q-2 $.  Тогда 
+    \[
+      \int_{-\infty}^{\infty} R(x) \,\del x= 2 \pi i \sum_{\Im a_k > 0} \Res_{a_k} R(z)
+    \]
+  \item $\displaystyle \int_{-\infty}^{\infty} f(z) \, e^{i \lambda z} \, \del z = I$ \par
+  Пусть $f(z) \xrightarrow[z\to \infty]{}  0$, голоморфна всюду кроме $\{a_k\}$, нету особых точек
+  на $\R$. Тогда
+  \[
+    I = 2 \pi i \sum_{\Im a_k > 0} \Res_{a_k} f(z) e^{i\lambda z}
+  \]
+\end{enumerate}
+
+\begin{lem}[Жордана]\label{lem:tfcv::intresidue::jordan}
+  Пусть $f$ голоморфна всюду кроме счётного числа особых точек, $f(z) \xrightarrow[z\to \infty]{}  0$.
+  Тогда
+  \[
+    \int_{\Gamma_R} f(z) \, e^{i \lambda z} \, \del z \xrightarrow[R \to \infty]{} 0
+  \]
+\end{lem}
+
+\setcounter{paragraph}{54}
+\paragraph{Классические односвязные области. Теорема Римана}
+\label{par:tfcv::riemanaut}
+
+\begin{defn}\label{defn:tfcv::riemanaut::isom}
+  Комплексным изоморфизмом областей $G$ и $H$ называется однолистное конформное отображение
+  \note{Тут хватит и голоморфности с сюръективностью,
+  ведь из однолистности производная нигде не обращается в 0}
+  $f \colon G \to H$. Область $G$ и $H$ тогда называются и конформно эквивалентными (изоморфными).
+\end{defn}
+\begin{rem*}
+  $f\colon G \to G$ при условиях выше~--- автоморфизм.
+\end{rem*}
+
+\begin{prop}\label{prop:tfcv::riemanaut::autgroup}
+  Все автоморфизмы области $G$ с операцией композиции образуют группу $\Aut G$.
+\end{prop}
+\begin{itlproof}
+  Пусть $f, g, h\in \Aut G$. Тогда $f \circ g \colon G \to G$, композиция биекций~--- биекция. Так
+  что операция задана корректно.
+  \begin{itemize}
+    \item $\bigl(f \circ (g\circ h)\bigr)(x) = f(g(h(x))) = \bigl((f \circ g)\circ h\bigr)(x)$
+    \item $\forall\, f\; \exists\,f^{-1}$, обратное~--- голоморфно и биекция, $ \Rightarrow $
+      конформно и однолистно.
+    \item $\id\colon G\to G$~--- конформно и однолистно. 
+  \end{itemize}
+\end{itlproof}
+
+\subparagraph{Классические области}
+\begin{enumerate}
+  \item $\overline{\C}$
+  \item ${\C}$
+  \item $\D = \{z\mid |z| < 1\}$
+\end{enumerate}
+
+\begin{thrm}[Римана]\label{thrm:tfcv::riemanaut::rieman}
+  Пусть область $G \subset \exC $. Тогда $G\cong$ одной из классических областей
+  \begin{enumerate}
+    \item $G = \exC \Rightarrow G \cong \exC$
+    \item $G = \exC \ \{a\} \Rightarrow G \cong \C$
+    \item $G = \exC \ U \Rightarrow G \cong \D$, $|U| > 1$
+  \end{enumerate}
+\end{thrm}
+
+\paragraph{Лемма Шварца}
+\label{par:tfcv::shwartz}
+
+
+\paragraph{Лемма о подгруппе группы автоморфизмов}
+\label{par:tfcv::subautgr}
+
+\begin{defn}\label{defn:tfcv::subautgr::trans}
+  Пусть $\Gamma < \Aut G$. Тогда говорят, что $\Gamma$~--- транзитивна, если
+  \[\forall\, z_1, z_2 \in G\;\: \exists\, f \in \Gamma\colon f(z_1) = z_2\]
+\end{defn}
+\begin{rem*}
+  Лучше конечно говорить, что действие группы автоморфизмов на $G$ транзитивно.
+\end{rem*}
+
+\begin{lem}\label{lem:tfcv::subautgr::subgrp}
+  Пусть область $G\subset \exC$, $\Gamma$~--- транзитивна. Пусть к тому же $\exists\, z_0 \colon
+  \Stab(z_0) < \Gamma$. Тогда $\Gamma=\Aut G$.
+\end{lem}
+\begin{itlproof}
+  Выберем произвольный $f \in \Aut G$, пусть $z_1 = f(z_0)$. Из транзитивности $G$ 
+  $\exists\, \gamma\in \Gamma\colon \gamma(z_1) = z_0$. Тогда $h = \gamma\circ f\in \Stab (z_0)$.
+  Но из второго условия $\Stab (z_0) < \Gamma \Rightarrow h \in \Gamma$. Но тогда 
+  \[
+    \forall\, f\in \Aut G  \;\;f = \underbrace{\gamma^{-1}}_{\in \Gamma} \circ \underbrace{h}_{\in
+    \Gamma} \in \Gamma
+  \]
+\end{itlproof}
+
+\paragraph{Автоморфизмы классических областей}
+\label{par:tfcv::classaut}
+
+\begin{thrm}\label{thrm:tfcv::classaut::exC}
+  $\displaystyle \Aut \exC  = \{f \}$
+\end{thrm}
+\end{document}
+% vim:wrapmargin=3
