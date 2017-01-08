@@ -232,9 +232,102 @@
 
 \paragraph{Автоморфизмы классических областей}
 \label{par:tfcv::classaut}
-
+Здесь всё константы по умолчанию $\in \C$.
 \begin{thrm}\label{thrm:tfcv::classaut::exC}
-  $\displaystyle \Aut \exC  = \{f \}$
+  $\displaystyle \Aut \exC  = \{f \mid f(z) = \frac{az+b}{cz+d}, ad-bc \neq 0\}$
 \end{thrm}
+\begin{ittproof}
+  Пусть \[
+    \Gamma = {f\mid f(z) = \frac{{a z + b}}{cz+d}}, \Gamma < \Aut \exC
+  \]
+  Композиция дробно-линейных~--- дробно-линейна, обратное~--- тоже дробно-линейно. Так что
+  подгруппа. 
+
+  Она транзитивна, для $\C$ хватит и линейного (сдвиг), а как отправить что-то в бесконечность, понятно.
+  Давайте посмотрим, чему равен $\Stab \infty$. Нам нужно чтобы $\infty \mapsto \infty$. А значит
+  $\C \mapsto \C$. Но из теоремы~\ref{thrm:tfcv::classaut::C} это линейные функции. А они явно
+  входят в дробно-линейные. Так что $\Stab \infty < \Gamma$. А тогда по
+  лемме~\ref{lem:tfcv::subautgr::subgrp} $\Gamma = \Aut \exC$
+\end{ittproof}
+
+\begin{thrm}\label{thrm:tfcv::classaut::C}
+  $\displaystyle \Aut \C  = \{f \mid f(z) = {az+b}, a\neq 0\}$
+\end{thrm}
+\begin{ittproof}
+  Пусть $A = U(\infty)$. Бесконечность~--- явно особая точка, надо подумать только какая.
+  
+  Пусть $\infty$~--- существенно особая точка. Но тогда по теореме Сохоцкого $f(A)$ всюду плотно в
+  $\C$. А значит в $U(0) \subset \C\setminus U(\infty)$ есть точка из $f(A)$~--- проблемы с
+  однолистностью (она же инъективность).
+
+  Пусть $\infty$~--- устранимая особая точка. Но тогда в кольце $U(\infty)$
+  \[
+    f(z) = \frac{c_{-k}}{z^k} + \dotsb + c_0
+  \]
+  Но $f\in  \Aut G \Rightarrow f$ голоморфна в $0$. Беда
+
+  Выхода нет~--- в $\infty$~--- полюс. Но тогда $f(z)$~--- какой-то полином, ведь для полюса нужно
+  ограниченное число  членов в главной части ряда Лорана. Но любой полином степени $n
+  $ имеет в $\C$ ровно $n$ корней. А у нас функция однолистная. Так что подходят полиномы лишь
+  первой степени. Константу тоже нельзя, проблемы с однолистностью. \note{Все утверждения про
+  полюс в бесконечности можно получить, рассмотрев $f(\lfrac 1 z)$ в $U(0)$}
+\end{ittproof}
+
+\begin{thrm}\label{thrm:tfcv::classaut::D}
+  $\displaystyle \Aut \D  = \{f \mid f(z) = e^{i \theta}\frac{z-a}{1-\bar a z }, \theta \in \R,
+  |a|<1 \}$
+\end{thrm}
+\begin{ittproof}
+  Опять рассмотрим $\Gamma$ как в условии и покажем, что $\Gamma = \Aut \D$. Надо сначала показать
+  хотя бы, что $ \Gamma < \Aut \D$. 
+  \[
+    \left| e^{i\theta}\, \frac{z-a}{1 - \bar a z} \right|  
+  \]
+  Проще всего домножить на сопряжённое
+  \[
+    \begin{split}
+      \left| \frac{z-a}{1 - \bar a z} \right|^2
+      = \frac{(z-a)\,(\bar z -  \bar a)}{(1 - \bar a z)\,(1 - a \bar z) }
+      = \frac{|z|^2  -  a\bar z - z\bar a + |a|^2 }{1 - \bar a z - a \bar z + |a|^2|z|^2 } < 1
+      \Leftrightarrow |z|^2 + |a|^2 < 1 + |a|^2 |z|^2 \Leftrightarrow (|a|^2 - 1)(|z|^2 - 1)> 0
+    \end{split}
+  \]
+  Так что при $|z| < 1 \land |a| < 1$ это верно.
+  
+  Дальше легко найти обратное к $\gamma(z) = w$
+  \[
+  \gamma^{-1} (w) = \frac{w-e^{i\theta }}{w \bar a - e^{i\theta }} 
+  = e^{i\theta_1} \frac{a_1 - z}{1- \bar a_1 z} \;\; (a_1 = e^{i\theta} a \in \D)
+  \]
+
+  С композицией тоже несложно разобраться
+  \begin{align*}
+    f_1(z) &= \frac{z- a_1}{1 -\bar a_1 z} \\
+    f_2(z) &= \frac{z- a_2}{1 -\bar a_2 z} \\ 
+    a &= \frac{a_1e^{-i \theta} + a_2}{1 + a_1 \bar a_2 e^{-i\theta}} 
+      & \left| a \right| = |e^{-i\theta}f_1(-a_2e^{i\theta})|<1\\ 
+    f_2(f_1(z)) &= e^{i\theta_2}\frac{e^{i\theta} z- e^{i\theta} a_2 -a_1 + a_1\bar a_2 z}%
+    {1 + \bar a_1 a_2 e^{i\theta}  - \bar a_1e^{i\theta} z - \bar a_2 z}
+    = \frac{z -a }{1  - \bar a z}
+  \end{align*}
+  
+  Осталось показать оба условия из леммы~\ref{lem:tfcv::subautgr::subgrp}
+
+  \begin{enumerate}
+    \item Пусть $z_1, z_2\in \D$. Будем строить так: $z_1 \mapsto 0 \mapsto z_2$
+      \begin{align*}
+          f_1(z) &= \frac{z-z_1}{1-\bar z_1 z} & f_2^{-1} (z) &= \frac{z-z_2}{1-\bar z_2 z}
+                 & f &= f_2 \circ f_ 1
+      \end{align*}
+    \item Посмотрим на $f \in \Stab 0$. По лемме Шварца $\forall\, z \in D\; |f(z)| \leqslant |z|$.
+      Поскольку $\Stab 0$~--- группа, $\exists\, f^{-1}$ и 
+      \[
+        |z| = |f^{-1} (f(z)) | \leqslant |f(z)| \Rightarrow |f(z)| = |z|.
+      \]
+      А тогда по второму пункту леммы Шварца $f(z)= cz$, $|c|=1 \Rightarrow  c = e^{i\theta}$. 
+      Следовательно, $\Stab 0 < \Gamma$. Тогда по уже упомянутой лемме $\Gamma = \Aut \D$
+  \end{enumerate}
+\end{ittproof}
+
 \end{document}
 % vim:wrapmargin=3
