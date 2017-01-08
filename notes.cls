@@ -70,7 +70,7 @@
 }
 
 \RequirePackage[intlimits]{amsmath}
-\RequirePackage{amsfonts,amsthm}
+\RequirePackage{amsfonts,amsthm, amssymb}
 \RequirePackage{mathtools}
 % \RequirePackage{esint}
 
@@ -190,7 +190,8 @@
 % \setlength{\marginparwidth}{3cm}
 % due to their nature, notes are usually placed in free space. And free space
 %+ heavily depends on page orientation. Hence:
-\newcommand\note[1]{%
+
+\newcommand{\note}[1]{%
   \ifthenelse{\boolean{timbord}}%
   {\marginpar{\footnotesize #1}}%
   {\footnote{#1}}%
@@ -350,5 +351,4 @@
 \newcommand{\coori}{\mathop{\uparrow\!\uparrow}} 
 \newcommand{\conori}{\mathop{\uparrow\!\downarrow}} 
 \endinput
-% vim: setlocal nofoldenable
-
+% vim: nofoldenable
