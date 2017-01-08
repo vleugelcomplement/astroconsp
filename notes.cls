@@ -8,6 +8,11 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{notes}
 
+\newcommand\hmmax{0}
+\newcommand\bmmax{0}
+% \RequirePackage{stix}
+% \RequirePackage{cyravantgar}
+% \renewcommand{\familydefault}{\sfdefault}
 %pdf search
 \RequirePackage{cmap}
 \RequirePackage{ifthen}
@@ -65,7 +70,7 @@
 }
 
 \RequirePackage[intlimits]{amsmath}
-\RequirePackage{amsfonts, amssymb, amsthm}
+\RequirePackage{amsfonts,amsthm}
 \RequirePackage{mathtools}
 % \RequirePackage{esint}
 
