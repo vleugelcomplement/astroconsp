@@ -1,0 +1,279 @@
+%------------------------------------------------------------
+% Description : 
+% Author      : taxus-d <iliya.t@mail.ru>
+% Created at  : Thu Jan 12 14:26:44 MSK 2017
+%------------------------------------------------------------
+\documentclass[12pt,timbord]{../../../notes}
+\usepackage{silence}
+\WarningFilter{latex}{Reference}
+\graphicspath{{../../img/}}
+
+\begin{document}
+
+\paragraph{Случаные векторы}
+\label{par:stat::randvec}
+
+
+\begin{defn}[Случаная величина]\label{defn:prob::randvec::randscal}
+  Случайной величиной назовём произвольное хорошее отображение $X\colon \Omega \to \R^n$.
+  См. примечание про измеримость в \ref{par:prob::randscal}. Борелевские множества можно рассматривать 
+  и в $\R^n$, как наименьшую сигма-алгебру, содержащую все полуоткрытые параллелепипеды.
+
+  Так же можно считать, что случайный вектор~--- набор случайных величин.
+\end{defn}
+
+
+\begin{defn}[Функция распределения]\label{defn:prob::randvec::distrfun}
+  \[
+    F_X\colon \R^n\to [0;1] \colon\; F_X(x) = P(X^1 < x^1, \dotsc, X^n < x^n) 
+  \]
+  То есть вероятность попадания в параллелепипед, уходящий в бесконечность.
+\end{defn}
+\begin{rem}\label{rem:stat::randvec::distr}
+Тут как раз используется, что борелевские множества <<прямоугольные>>.
+\end{rem}
+
+
+\begin{prop}\label{prop:prob::randscal::distrfun}
+  Про $F(x)$ верно следущее:
+  \begin{enumerate}
+    \item $F$ не убывает по каждому аргументу.
+    \item $\displaystyle\lim_{x_i\to -\infty}F(x) = 0$
+    \item $\displaystyle\lim_{x\to +\infty}F(x) = 1$
+    \item $\displaystyle\lim_{x\to x_0-0}F(x) = F(x_0)$ (по совокупности переменных)
+      Это следует из непрерывности меры.
+  \end{enumerate}
+\end{prop}
+
+тоже важно, так что отдельно
+
+\begin{prop}\label{prop:stat::randvec::inc}
+  Пусть $a^1 < b^1, \dotsc, a^n < b^n$, тогда работает формула включений и исключений
+  \[
+    F(b^1, \dotsc, b^n) - \sum_i F(b^1, \dotsc, a^i, \dotsc, b^n) + \dotsb + F(a^1, \dotsc, a^n) = 
+  P(x \in [a^1, b^1)\times[a^n,b^n))
+  \]
+  По сути следствие формулки про вероятность объединения.
+\end{prop}
+
+
+\begin{defn}\label{defn:stat::randvec::disc}
+  Векторная случайная величина называется дискретной, если
+  \[
+    \exists\,(\{a_i\mid a_i \in \R^n \} \sim \N)\colon \left( \sum_{i} P(X = a_i) = 1 \right)
+  \]
+  то есть 
+  \[
+    P(X\in B) = \sum_{\{i\mid a_i\in B\}} p_i, \; p_i = P(X = a_i)
+  \]
+\end{defn}
+\begin{defn}\label{defn:stat::randvec::cony}
+  Векторная случайная величина называется непрерывной, если
+  \[
+    \exists\,(f_X\colon B\to \R )\colon \left( P(X\in B) = \int_{B} f_X(x^1, \dotsc, x^n)\, \del
+    x^1 \dotsm \del x^n \right)
+  \]
+\end{defn}
+\begin{rem}\label{rem:stat::randvec::distfun }
+  Для функций распределения:
+  \[
+    F(x^1, \dotsc, x^n) = \int_{-\infty}^{x^n}\dotsi\int_{-\infty}^{x^1} f_X(x^1, \dotsc, x^n)\,
+    \del x^1 \dotsm \del x^n 
+  \]
+\end{rem}
+
+\begin{prop}\label{prop:stat::randvec::ind}
+  Пусть $X, Y$~--- независимы. Тогда $p_{X+Y}(x,y)=p_X(x) \cdot p_Y(y)$
+\end{prop}
+\begin{itlproof}
+  По определению функции распределения
+  \[
+    F_{X,Y}(x,y) = \int_{-\infty}^x\int_{-\infty}^y p(x,y) \, \del x\del y
+  \]
+  Из независимости $X,Y$
+  \[
+    F_{X,Y} (x,y) = P(X<x,Y<y) = P({\omega\mid X(\omega)\in (-\infty;x]}\cap {\omega\mid
+      Y(\omega)\in (-\infty;y]} = P({\omega\mid X(\omega)\in (-\infty;x]})\cdot
+      P({\omega\mid Y(\omega)\in (-\infty;y]}) = P(X<x) \cdot P(Y<y) = F_X(x)\cdot F_Y(y)
+  \]
+  А тогда из независимости подынтегральных функций
+  \[
+    F_X(x)\cdot F_Y(y) = \int_{-\infty}^x p_X(x) \, \del x \cdot \int_{-\infty}^y p_Y(y) \, \del y 
+    = \int_{-\infty}^x\int_{-\infty}^y p_X(x)\cdot p_Y(y) \, \del x\del y
+  \]
+  А дальше можно заметить, что нам неважно по какому множеству интегрировать.
+  \[
+    \int_B (p(x,y) - p_X(x)\cdot p_Y(y)) \, \del x\del y = 0
+  \]
+  Здесь правда всё ломается на отсутствии непрерывности у $p$. Но если она есть, то дальше
+  стандартное рассуждение в окрестности точки где не 0.
+\end{itlproof}
+
+\paragraph{Функция от случайного вектора}
+\label{par:stat::funcrand}
+
+\begin{defn}[Функция от случайного вектора]\label{defn:stat::funcrand::funcrand}
+  $g \colon \R^n \to \R^m$. 
+  \begin{itaux}
+    Здесь нужно снова говорить про измеримость $g$~--- прообраз борелевского множества должен
+    быть борелевским множеством. Иначе $g(X)$ может не получиться случайной величиной. Но всякие
+    мерзкие отображения всё равно никому не нужны $\ddot\smile$.
+  \end{itaux}
+\end{defn}
+
+\begin{prop}\label{prop:stat::funcrand::disc}
+  Пусть $X$~--- дискретная случайная величина, $f$~--- обратима, $Y=g(X)$, $b_j= f(a_j)$.
+  Тогда $P(Y^i=b^i_j) =P(X^i=a^i_j)$.
+\end{prop}
+\begin{itlproof}
+  \[
+  P(Y^i=b^i_j) = P(f(X^i)= f(a^i_j)) = P({\omega \mid f(X^i(\omega))=f(a^i_j)}) 
+  \]
+  Поскольку $f$~--- обратима, она биективна. Значит $f(X) = f(a_j) \Leftrightarrow X = a_j$.
+  Собственно, всё.
+\end{itlproof}
+\begin{prop}\label{prop:stat::funcrand::cont}
+  Пусть $X$~--- непрерывная случайная величина, $f$~--- обратима, $Y=g(X), f^{-1} = g$.
+  Тогда $p_y(y) = p_X(g(y)) \left| \frac{\del g}{\del y} \right|$ .
+\end{prop}
+\begin{itlproof}
+  Пусть $D=f(B)$. Тогда $P(Y \in D) = P(X \in B)$ опять-таки в силу биективности $f$. Ну, ничего
+  нового туда попасть не может и у всего есть  прообраз. Так что (здесь будем рисовать один значок
+  интеграла из экономии размера пдф-ки, хотя в этом замечании данных может и больше)
+  \begin{align*}
+    \int_D \langle p_Y(y) \, \del y \rangle = \int_B \langle p_X(x) \del x \rangle
+    = \int_D \langle p_X(g(y)) \left| \frac{\del g}{\del y} \right|  \rangle
+  \end{align*}
+  Якобиан тут под модулем, так как множество неориентированное. Я верю, что нам ещё про это
+  расскажут на матане.
+\end{itlproof}
+
+\paragraph{Матожидание и дисперсия суммы случайных величин}
+\label{par:stat::randsum}
+
+\begin{prop}\label{prop:stat::randsum::discsum}
+  Пусть $X,Y,n\in(A\sim\N)$~--- две дискретные независимые случайные величины. Тогда 
+  \[
+    P(X+Y=n) = \sum_{k\in A} P(X=n-k)\cdot P(Y=k)
+  \]
+\end{prop}
+\begin{itlproof}
+  Из формулы полной вероятности ($Y=k, k\in A$ правда полная группа)
+  \[
+    P(X+Y =n) = \sum_{k\in A} P(X+Y =n \mid Y =k)\cdot P(Y = k) 
+    = \sum_{k\in A} P(X= n-k\mid Y=k)\cdot P(Y=k)
+  \]
+  А вот тут уже поможет независимость $X,Y$.
+  \[
+    \cdots = P(X=n-k)\cdot P(Y=k)
+  \]
+\end{itlproof}
+
+\begin{prop}\label{prop:stat::randsum::contsum}
+  Пусть $X_1,X_2,n\in\R$~--- две непрерывные независимые случайные величины. Тогда 
+  \[
+    p_{X_1+X_2}(y) = \int_{\R} p_1(y-t) p_2(t) \,\del t
+  \]
+\end{prop}
+\begin{itlproof}
+  Пусть $Y = X_1 + X_2$. Тут видно, что нет биекции, придется руками что-то делать.
+  \[
+    F_Y(y) = \displaystyle\iint_{x_1+x_2 < y} p(x_1, x_2) \, \del x_1 \del x_2
+    = \int_{-\infty}^\infty \del x_1\, \int_{-\infty}^{y-x_1} p(x_1, x_2) \, \del x_2 
+    = \int_{-\infty}^\infty \del x_1 \, \int_{-\infty}^y p(x_1, u - x_1) \, \del u
+  \]
+  Переменные независимы, так что можно поменять местами интегралы (ещё же по области интегрируем,
+  неважно как)\note{слишком много раз пользовались на физике, так что оставим на 4 семестр}
+  А тогда, убирая внешний интеграл из определения функции распределения, получаем
+  \[
+    p_Y(y) = \int_{-\infty}^\infty p(t, y-t)\, \del t
+  \]
+  Поскольку $X_1, X_2$ независимы, то $p(t, y-t) = p_1(t)\cdot p_2(y-t)$. Нумерация никого не
+  интересует, так что
+  \[
+    p_Y(y) =  \int_{-\infty}^\infty p_1(y-t)\cdot p_2(t)\, \del t
+  \]
+\end{itlproof}
+
+Теперь можно перейти и к содержанию билета
+\begin{prop}\label{prop:stat::randsum::exp}
+  $\Exp \left(\sum_i X_i\right) = \sum_i \Exp X_i $. Да и вообще оно линейно.
+\end{prop}
+\begin{itlproof}
+  Пусть $f(X,Y)= X+Y$
+  \[
+    \begin{split}
+      \Exp (X+Y) &= \intR f(x,y) p(x,y)\, \del x\del y 
+      = \intR x p(x,y)\, \del x \del y + \intR y p(x,y)\, \del x \del y \\
+      &= \intR x 
+      \left(\intR p(x,y) \del y\right)\, \del x + \intR y \left(\intR p(x,y) \del x\right)\,\del y \\
+      &= \Exp X + \Exp Y
+    \end{split}
+  \]
+  Покажем, что $\displaystyle\intR p(x,y) \,\del y = p_X(x)$
+  \[
+    \begin{split}
+      \int_{-\infty}^x \left(\intR p(x,y) \,\del x\right) \, \del y &= F(x, +\infty) = 
+      P(X<x, Y<+\infty) = P({\omega\mid X(\omega)\in (-\infty, x], Y\in \R\cup\{+\infty\}}) \\
+      &= P(X<x) = F_X(x) = \int_{-\infty}^x p_X(x) \, \del x
+    \end{split}
+  \]
+  Опять-таки интервал можно сжать как угодно, правда снова проблемы с непрерывностью.
+
+  Часть про константу слишком очевидна, не будем её доказывать. 
+\end{itlproof}
+
+\begin{prop}[Дисперсия суммы]\label{prop:stat::randsum::var}
+  $\Var \left(\sum_i X_i\right) = \sum_i \Var X_i$
+\end{prop}
+\begin{itlproof}
+  Сначала заметим, что $\Var X = \Exp (X- \Exp X)^2$, $\Exp (X - \Exp X) = \Exp X - \Exp X = 0$
+  \[
+    \begin{split}
+      \Var (X+Y) &= \Exp \bigl(X+Y - M(X+Y)\bigr)^2 = \Exp \bigl((X-\Exp X) +(Y-\Exp Y) \bigr)^2 = 
+      \Exp (X-\Exp X)^2 + \Exp (Y-\Exp Y)^2 + 2 \Exp (X-\Exp X) \Exp (Y - \Exp Y)\\ 
+      &= \Var X + \Var Y
+    \end{split}
+  \]
+\end{itlproof}
+
+\begin{prop}\label{prop:stat::randsum::expmul}
+  Если $X,Y$~--- независимы, то $\Exp XY = \Exp X \Exp Y$
+\end{prop}
+\begin{itlproof}
+  
+\end{itlproof}
+
+\paragraph{Матожидание функции случайной величины}
+\label{par:stat::expfun}
+
+\begin{defn}\label{defn:stat::expfun::expfun}
+  $\displaystyle \Exp f(X) = \intR f(x) p(x)\, \del x$. В случае чего он многомерный, просто
+  прикидывается. Существует, если есть абсолютная сходимость.
+\end{defn}
+\begin{prop}\label{prop:stat::expfun::lin}
+  Матожидание функции линейно
+\end{prop}
+\begin{prop}\label{prop:stat::expfun::mul}
+  Если $X,Y$~--- независимы, то $\Exp f_1(X_1)f_2(X_2) = \Exp f_1(X_1) \Exp f_2(X_2)$
+\end{prop}
+
+
+\paragraph{Неравенство Шварца}
+\label{par:stat::shwartz}
+
+\begin{prop}\label{prop:stat::shwartz}
+  $(\Exp  XY)^2 \leqslant \Exp X^2 \Exp Y^2$
+\end{prop}
+\begin{itlproof}
+  $\Exp (X+ tY)^2 = t^2\,\Exp Y^2 + 2 t \Exp XY + \Exp X^2 \geqslant 0$ из свойств матожидания. Ну
+  там и подынтегральная функция положительна. Тогда квадратное уравнение в правой части может
+  иметть не более одного корня.
+  \[
+    (2 \Exp XY)^2 - 4 \Exp X^2 \Exp Y^2 \leqslant 0 \Leftrightarrow 
+    (\Exp  XY)^2 \leqslant \Exp X^2 \Exp Y^2
+  \]
+\end{itlproof}
+
+\end{document}
+% vim:wrapmargin=3

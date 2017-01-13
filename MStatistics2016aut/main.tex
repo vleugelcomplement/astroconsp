@@ -1,0 +1,34 @@
+\documentclass[12pt,timbord]{../notes}
+\usepackage{docmute}
+\graphicspath{{img/}}
+% \usepackage[backend=biber]{biblatex}
+% \addbibresource{stat.bib}
+\title{Что-то про теорвер в 3 семестре}
+\date{\today}
+
+
+\author{Лектор: Р.~?.~Пусев \\
+Записал :\texttt{ta\lower 0.1em \hbox{x}us}}
+
+\begin{document}
+ 
+\maketitle
+\tableofcontents
+\clearpage
+
+\chapter{Элементарная теория вероятностей}
+\input{tex/Prob/prob}
+\input{tex/Stat/stat}
+% \input{tex/Proc/proc}
+
+% \printbibliography[
+%   heading=bibintoc,
+%   title={Использованная литература}
+% ]
+
+
+\addcontentsline{toc}{chapter}{Литература}
+\bibliographystyle{unsrt}
+\bibliography{stat}
+\end{document}
+
