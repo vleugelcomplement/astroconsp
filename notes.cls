@@ -110,6 +110,8 @@
 % styles setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\@definecounter{paragraph}
+
 \theoremstyle{plain}
 \newtheorem{thrm}{Теорема}[paragraph]
 \newtheorem{lem}[thrm]{Лемма}
@@ -164,7 +166,6 @@
   }{Глава \ \thechapter:}{1ex}{\normalfont\LARGE\bfseries}{}  
 \titlespacing\chapter{1em}{2em plus 1ex minus 0.5ex}{1.5em plus 1ex minus 0.5ex}
 
-\counterwithout{paragraph}{chapter}
 \renewcommand{\theparagraph}{\S\thinspace\arabic{paragraph}}
 \titleformat\paragraph[block]{\normalfont\bfseries}{\theparagraph}{2ex}{\normalfont\bfseries}{}  
 \titlespacing\paragraph{1ex}{1em plus 1ex minus 0.5ex}{0.7em plus 1ex minus 0.5ex}

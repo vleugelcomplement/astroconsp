@@ -56,7 +56,7 @@
 \begin{defn}\label{defn:lineint::defs::pathorient}
   Будем говорить, что простые пути имеют одинаковую ориентацию, если
   \[
-    \gamma_1(a_1)=\gamma_2(a_2)\; \gamma_1(b_1) = \gamma_2(b_2)
+    \gamma_1(a_1)=\gamma_2(a_2)\land \gamma_1(b_1) = \gamma_2(b_2)
   \]
   и противоположную, если всё наоборот.
   Тут ещё введу нестандартное обозначение, но так жить проще $\ddot\smile$.
@@ -108,7 +108,7 @@
   Если $\gamma_1 \conori \gamma_2$, то $I_2 = - I_1$.
 \end{rem}
 \begin{rem}
-  Если рассматривать только одинаково ориентированые пути, то
+  Если рассматривать только одинаково ориентированные пути, то
   \[
     \int_{\gamma} \omega = \int_{\Gamma} \omega
   \]
@@ -147,7 +147,7 @@
 \end{itlproof}
 
 \begin{rem*}
-  Чтобы посчитать интегралы по всем остальным путям, их нужно разбивать на прострые пути и
+  Чтобы посчитать интегралы по всем остальным путям, их нужно разбивать на простые пути и
   простые петли
 \end{rem*}
 
@@ -181,7 +181,7 @@
   $\gamma_{1,2}(a)=A$, $\gamma_{1|2}(b)=B$.
   Тогда
   \[
-    \int_\gamma \omega = \Phi(B) - \Phi(A)
+    \int_{\gamma_1} \omega  = \int_{\gamma_2} \omega 
   \]
 \end{thrm}
 
@@ -199,8 +199,13 @@
 \end{thrm}
 
 \begin{ittproof}
+  Пусть 
+  \[
+    \Phi(x) := \int_A^B \omega = \int_{(x_0, y_0}^{(x,y)} \omega
+  \]
   Надо показать, что $\partial_i \Phi = P^i$. В этом месте можно забить на общности и объявить
-  $n=2$. Докажем, что $\partial_x \Phi = P^1$. Поскольку от пути ничего не зависит,
+  $n=2$. 
+  Докажем, что $\partial_x \Phi = P^1$. Поскольку от пути ничего не зависит,
   \[
     \pder{\Phi}{x}(x,y) = \lim_{\Delta x\to 0}\frac{\Phi(x+\Delta x)- \Phi(x,y)}{\Delta x} = 
     \lim_{\Delta x\to 0} \frac{1}{\Delta x} \left(\int_A^{{(x+\Delta x,y)}} \omega - 
@@ -209,6 +214,10 @@
   А это по сути интеграл по пути, соединяющем $(x+\Delta x, y)$ и $(x, y)$. А здесь уже можно
   взять приличную кривую (прямую) с правильной параметризацией, и воспользоваться теоремой о
   среднем.
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.3\linewidth]{precformcrit}
+  \end{figure}
   \[
     \cdots = \lim_{\Delta x \to 0} \frac{1}{\Delta x} \int_{x}^{x+\Delta x} P(t, y) \del t = 
     \lim_{\Delta x \to 0} P(\xi, y) = P(x,y)
@@ -246,7 +255,7 @@
   $\partial_y P = \partial_x Q$ в $G$.
 \end{thrm}
 \begin{ittproof}
-  Очевидно следует из <<локальной точности>>.
+  Очевидно следует из <<локальной точности>> и дифференцируемости $\Phi$ в окрестности любой точки из $G$.
 \end{ittproof}
 
 \begin{thrm}\label{thrm:lineint::closforms::suffdiff}
@@ -286,20 +295,20 @@
         - \int_{y_A}^y Q(x, t) \del t + \int_{x}^{x+\Delta x} P(t, y_A) \del t
       \end{split}
     \]
-    Последний сходится к $P(x,y_0)\del x$, а первые два надо немного преобразовать
+    Последний сходится к $P(x,y_A)\del x$, а первые два надо немного преобразовать
     \[
-      \frac{1}{\Delta x} \left(\int_{\gamma_4} \omega 0 \int_{\gamma_2} \omega \right)
+      \frac{1}{\Delta x} \left(\int_{\gamma_4} \omega - \int_{\gamma_2} \omega \right)
       = \int_{y_0}^y \left(\frac{Q(x+\Delta x,t ) - Q(x,t)}{\Delta x}\right) \del t
     \]
     Подинтегральную функцию можно представить как последовательность $f_n \rightrightarrows Q'$.
     \[
-      \left| \frac{Q(x+\lfrac 1 n )- Q(x)}{\frac 1 n} - Q'(x)\right| = |Q'(\xi) - Q(x) |
+      \left| \frac{Q(x+\lfrac 1 n )- Q(x)}{\frac 1 n} - Q'(x)\right| = |Q'(\xi) - Q'(x) |
       <\varepsilon
     \]
     а функция $Q'$ равномерно непрерывна на $[x, x+ \Delta x]$, ибо он отрезок. Так что можно
     поменять местами предел и интеграл.
     \[
-      \cdots = \int_{y_0}^y \pder{Q}{x}(x,y) \del t = \int_{y_0}^y \pder{P}{y} (x,y) = \Delta P
+      \cdots = \int_{y_A}^y \pder{Q}{x}(x,y) \del t = \int_{y_A}^y \pder{P}{y} (x,y) = \Delta P
     \]
   \end{minipage}
     Если сложить с оставшимся куском, то как раз и выйдет $P$. С равенством $Q$ вроде все
@@ -310,7 +319,7 @@
   y^2}$. Она замкнута, а вот $\oint_\gamma w$ по окружности вокруг $0$ не 0.
 \end{rem}
 
-\paragraph{Первообразная замкнутой формы вдоль пути}
+\paragraph{ \underdev Первообразная замкнутой формы вдоль пути}
 \label{par:lineint::closintpath}
 
 Сначала можно отметить, что $\Gamma = \gamma\bigl([a;b]\bigr)$~--- компакт. Так что вроде можно
@@ -339,7 +348,7 @@
   Теперь ещё выберем $q_i \in U_{i+1} \cap U_i$, $\{\gamma_j\} =$ пути от $ p_i$ до $q_i \cap$
   пути от $q_i$ до $p_{i+1}$. Тогда
   \[
-    \in _\gamma \omega = \sum_j\int_{\gamma_j} =  \widetilde{\Phi}(p_n) - \widetilde{\Phi}{p_0} =
+    \int _\gamma \omega = \sum_j\int_{\gamma_j} =  \widetilde{\Phi}(p_n) - \widetilde{\Phi}{p_0} =
     f(b) - f(a)
   \]
 \end{ittproof}
