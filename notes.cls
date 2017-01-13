@@ -68,11 +68,11 @@
     {\RequirePackage{geometry}}
   }
 }
-
+% 
 \RequirePackage[intlimits]{amsmath}
 \RequirePackage{amsfonts,amsthm, amssymb}
 \RequirePackage{mathtools}
-% \RequirePackage{esint}
+% \RequirePackage[intlimits]{esint}
 
 \RequirePackage[pdftex]{graphicx}
 \RequirePackage{xcolor}
@@ -92,7 +92,7 @@
 
 \RequirePackage{chngcntr} % tools for counters 
 \RequirePackage{bbm}      %} more math fonts
-\RequirePackage{mathrsfs} %}
+% \RequirePackage{mathrsfs} %}
 \RequirePackage{accents}  % extra dots over chars
 %\RequirePackage{xfrac} % better slashed fractions --> Font Warning --> Loads too many fonts --> not useful 
 
@@ -334,7 +334,8 @@
   \foreach \i in {1,...,#1} {%
     [rotate=(\i-1)*360/#1]  (0:#2)  arc (0:#4:#2) {[rounded corners=0pt]
     -- (#4+#5:#3)  arc (#4+#5:360/#1-#5:#3)} --  (360/#1:#2)
-}}  
+  }
+}  
 
 % \newcommand{\gear}{\begin{tikzpicture}[scale=0.15]
 %     \fill[black] (0,0) circle (2em);
@@ -350,5 +351,10 @@
 \renewcommand*{\ddot}[1]{\accentset{\mbox{\bfseries .\hspace{-0.1ex}.}}{#1}}
 \newcommand{\coori}{\mathop{\uparrow\!\uparrow}} 
 \newcommand{\conori}{\mathop{\uparrow\!\downarrow}} 
+% probability theory
+ \DeclareMathOperator{\Exp}{\mathrm M} 
+ \DeclareMathOperator{\Var}{\mathrm D} 
+ \newcommand{\intR}{\int_{-\infty}^{+\infty}} 
+
 \endinput
 % vim: nofoldenable

@@ -1,8 +1,11 @@
-\documentclass[12pt,ebook]{../notes}
+\documentclass[12pt,timbord]{../notes}
 \usepackage{docmute}
 \graphicspath{{img/}}
-\title{Конспект по анализу за 3 семестр}
+% \usepackage[backend=biber]{biblatex}
+% \addbibresource{stat.bib}
+\title{Что-то про теорвер в 3 семестре}
 \date{\today}
+
 
 \author{Лектор: Р.~?.~Пусев \\
 Записал :\texttt{ta\lower 0.1em \hbox{x}us}}
@@ -17,10 +20,15 @@
 \input{tex/Prob/prob}
 \input{tex/Stat/stat}
 % \input{tex/Proc/proc}
-\addcontentsline{toc}{chapter}{Bibliography}
-\medskip
- 
-\bibliographystyle{plain}
-\bibliography{stat}
 
+% \printbibliography[
+%   heading=bibintoc,
+%   title={Использованная литература}
+% ]
+
+
+\addcontentsline{toc}{chapter}{Литература}
+\bibliographystyle{unsrt}
+\bibliography{stat}
 \end{document}
+

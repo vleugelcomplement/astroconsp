@@ -58,6 +58,25 @@
     \item $ P(A\cup B) = P(A) + P(B) - P(A\cap B)$
   \end{enumerate}
 \end{prop}
+А это очень важное и будет в отдельном утверждении.
+\begin{prop}[Непрерывность меры]\label{prop:prob::ax::cont}
+  Пусть $A_1 \subset \cdots A_n \subset \cdot$, $\bigcup\limits_i A_i = A$. Тогда $P(A) =
+  \lim\limits_{n\to \infty} P(A_n)$.
+\end{prop}
+\begin{itlproof}
+  Пусть
+  \begin{align*}
+    B_1 &= A_1 \\
+    B_2 &= A_2 \setminus A_1 \\
+    \cdots&\cdots\cdots 
+    \intertext{Тогда} 
+    A &= \bigcup_{i=1}^\infty B_i;\; A_n = \bigcup_{i=1}^n B_n
+    \intertext{Следовательно,}
+    P(A) = \sum_{i=1}^\infty P(B_i) = \lim_{n\to\infty} \sum_{i=1}^n P(B_i) = \lim_{n\to\infty}
+    P(A_n)
+  \end{align*}
+  Всё работает, потому что в $\sigma$-алгебре можно объединять счётное число множеств.
+\end{itlproof}
 
 \paragraph{Формула полной вероятности}
 \label{par:prob::compl}
@@ -116,7 +135,7 @@
 \begin{defn}[Случаная величина]\label{defn:prob::randscal::randscal}
   Случайной величиной назовём произвольное хорошее отображение $X\colon \Omega \to \R$.
   
-  \begin{itaux}
+  \begin{itaux}\label{rem:prob::randscal::meas}
     Тут нужно бы сказать про измеримость, это потребуется, чтобы говорить о вероятности попадания в
     интервал на прямой. Так что \[
       X\colon \bigl(X^{-1} (B) =\{\omega \mid X(\omega)\in B\}\bigr)\in \mathcal F,
@@ -270,7 +289,7 @@
   \underset{t}{\rightrightarrows} \Phi_X(t)$.
   Здесь на самом деле всё сложно. В разных книжках пишут равномерную сходимость на разных
   интервалах. У нас вроде было на всей вещественной прямой, но тогда это слишком сильное
-  утверждение. К слову так же в \cite{chernova} и \cite{shiriaev}. А вот в \cite{msu} требуют
+  утверждение. К слову так же в \cite{chernova1} и \cite{shiriaev}. А вот в \cite{msu} требуют
   только сходимости в каждом конечном интервале. Можно взять экспоненту, и понять, что эти
   условия разные. 
 \end{thrm}
