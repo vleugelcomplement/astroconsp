@@ -139,10 +139,10 @@
 \begin{itlproof}
   Пусть $D=f(B)$. Тогда $P(Y \in D) = P(X \in B)$ опять-таки в силу биективности $f$. Ну, ничего
   нового туда попасть не может и у всего есть  прообраз. Так что (здесь будем рисовать один значок
-  интеграла из экономии размера пдф-ки, хотя в этом замечании данных может и больше)
+  интеграла и дифференциала из экономии размера пдф-ки, хотя в этом замечании данных может и больше)
   \begin{align*}
-    \int_D \langle p_Y(y) \, \del y \rangle = \int_B \langle p_X(x) \del x \rangle
-    = \int_D \langle p_X(g(y)) \left| \frac{\del g}{\del y} \right|  \rangle
+    \int_D p_Y(y) \, \del y  = \int_B  p_X(x) \del x 
+    = \int_D  p_X(g(y)) \left| \frac{\del g}{\del y} \right|  
   \end{align*}
   Якобиан тут под модулем, так как множество неориентированное. Я верю, что нам ещё про это
   расскажут на матане.
@@ -247,10 +247,14 @@
 \paragraph{Матожидание функции случайной величины}
 \label{par:stat::expfun}
 
-\begin{defn}\label{defn:stat::expfun::expfun}
+\begin{defn}[$\ddot\sim$]\label{defn:stat::expfun::expfun}
+  Пусть $f(X)$~--- функция от случаной величины. Тогда 
   $\displaystyle \Exp f(X) = \intR f(x) p(x)\, \del x$. В случае чего он многомерный, просто
   прикидывается. Существует, если есть абсолютная сходимость.
 \end{defn}
+\begin{rem*}
+  я ещё подумаю, может это всё же утверждение.
+\end{rem*}
 \begin{prop}\label{prop:stat::expfun::lin}
   Матожидание функции линейно
 \end{prop}

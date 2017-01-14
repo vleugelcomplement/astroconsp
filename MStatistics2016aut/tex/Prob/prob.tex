@@ -129,6 +129,26 @@
   Если $A,B$ несовместны, то нетривиальные $A,B$~--- зависимы.
 \end{prop}
 
+\begin{defn}\label{defn:prob::indep::pair}
+  Случайные величины $\{X_i\}$ попарно независимы, если $\forall\,i,j\;\; P(X_i\cap X_j) =
+  P(X_i)\cdot P(X_j)$. 
+\end{defn}
+\begin{defn}\label{defn:prob::indep::set}
+  Случайные величины $\{X_i\}_{i=1}^n$ независимы по совокупности , если \[
+    \forall\,\{i_k\mid i_k,k \in (\Z\cap[1;n]) \}\;\; P\left(\bigcap_{i_k} X_{i_k}\right) 
+    = \prod_{i_k}  P(X_{i_k})
+  \] 
+\end{defn}
+\begin{rem}\label{rem:prob::indep::bern}
+  Определения \ref{defn:prob::indep::set} и \ref{defn:prob::indep::set} правда разные.
+  Конечно попарная независимость следует из независимости по совокупности, но обратное неверно.
+\end{rem}
+\begin{exmp}\label{exmp:stat::shwartz::bern}
+  Тетраэдр Бернштейна:
+  \includegraphics[scale=0.5]{berntetragon}. Здесь вероятность выпадения всех 3 цветов~--- $\lfrac
+  1 4$, а через попарные~--- $\lfrac 1 8$
+\end{exmp}
+
 \paragraph{Случайные величины и их распределения}
 \label{par:prob::randscal}
 
@@ -293,5 +313,8 @@
   только сходимости в каждом конечном интервале. Можно взять экспоненту, и понять, что эти
   условия разные. 
 \end{thrm}
+\paragraph{Теорема Муавра-Лапласа}
+\label{par:prob::laplace}
+
 \end{document}
 % vim:wrapmargin=3
