@@ -1,5 +1,5 @@
 %------------------------------------------------------------
-% Description : 
+% Description : Matstatistics 
 % Author      : taxus-d <iliya.t@mail.ru>
 % Created at  : Thu Jan 12 14:26:44 MSK 2017
 %------------------------------------------------------------
@@ -92,9 +92,12 @@
   \]
   Из независимости $X,Y$
   \[
-    F_{X,Y} (x,y) = P(X<x,Y<y) = P({\omega\mid X(\omega)\in (-\infty;x]}\cap {\omega\mid
-      Y(\omega)\in (-\infty;y]} = P({\omega\mid X(\omega)\in (-\infty;x]})\cdot
-      P({\omega\mid Y(\omega)\in (-\infty;y]}) = P(X<x) \cdot P(Y<y) = F_X(x)\cdot F_Y(y)
+    \begin{split}
+      F_{X,Y} (x,y) &= P(X<x,Y<y) = P({\omega\mid X(\omega)\in (-\infty;x]}\cap {\omega\mid
+        Y(\omega)\in (-\infty;y]} \\
+        &= P({\omega\mid X(\omega)\in (-\infty;x]})\cdot
+        P({\omega\mid Y(\omega)\in (-\infty;y]}) = P(X<x) \cdot P(Y<y) = F_X(x)\cdot F_Y(y)
+      \end{split}
   \]
   А тогда из независимости подынтегральных функций
   \[
@@ -230,9 +233,9 @@
   Сначала заметим, что $\Var X = \Exp (X- \Exp X)^2$, $\Exp (X - \Exp X) = \Exp X - \Exp X = 0$
   \[
     \begin{split}
-      \Var (X+Y) &= \Exp \bigl(X+Y - M(X+Y)\bigr)^2 = \Exp \bigl((X-\Exp X) +(Y-\Exp Y) \bigr)^2 = 
-      \Exp (X-\Exp X)^2 + \Exp (Y-\Exp Y)^2 + 2 \Exp (X-\Exp X) \Exp (Y - \Exp Y)\\ 
-      &= \Var X + \Var Y
+      \Var (X+Y) &= \Exp \bigl(X+Y - M(X+Y)\bigr)^2 = \Exp \bigl((X-\Exp X) +(Y-\Exp Y) \bigr)^2 \\
+                 &= \Exp (X-\Exp X)^2 + \Exp (Y-\Exp Y)^2 + 2 \Exp (X-\Exp X) \Exp (Y - \Exp Y)\\ 
+                 &= \Var X + \Var Y
     \end{split}
   \]
 \end{itlproof}
@@ -279,5 +282,306 @@
   \]
 \end{itlproof}
 
+\paragraph{Характеристическая функция суммы случайных величин}
+\label{par:stat::charfunsum}
+
+\begin{prop}\label{prop:stat::charfunsum}
+  Пусть $X,Y$~--- независимые случайные величины. Тогда 
+  \[
+    \Phi_{X+Y}(t) = \Phi_X(t) \cdot \Phi_Y(t)
+  \]
+\end{prop}
+\begin{itlproof}
+  Из~\ref{prop:stat::charfunsum::sum}  
+  \[
+    \Phi_{X+Y}(t) = \Exp e^{itX} e^{itY} = \Exp e^{itX} \cdot \Exp e^{itY} = \Phi_{X}(t) \cdot
+    \Phi_Y (t)
+  \]
+\end{itlproof}
+\begin{cor}\label{conj:stat::charfunsum::sumn}
+  Если все величины одинаково распределены, то $\Phi_{X_1 + \dotsb + X_n}(t) =
+  \bigl(\Phi(t)\bigr)^n$, \[
+    p_{X_1 + \dotsb + X_n} = \frac{1}{2\pi} \intR \bigl(\Phi(t)\bigr)^n \, \del t 
+  \]
+\end{cor}
+
+\paragraph{Суммирование большого числа случайных величин}
+\label{par:stat::randlimsum}
+\flame\underdev\sour
+
+\begin{thrm}[ЦПТ Линдберга-Леви-Агекяна \sour]\label{prop:stat::randlimsum::sum}
+  Пусть $X_1, \dotsc, X_n$~--- независимые одинаково распределённые случайные величины. Пусть к
+  тому же $S_n = X_1, \dotsc, X_n$, $0 < \Var X_k < \infty$.
+  Пусть $\Exp X_k = a, \Var X_k = \sigma$. Тогда при $n\to \infty$ $Z_n \sim N(0,1)$,
+  в вариации из Агекяна $S_n \sim N(na,n\sigma^2)$
+\end{thrm}
+\begin{itlproof}
+  Пусть $\Exp X_k = a, \Var X_k = \sigma^2$.
+  Рассмотрим характеристическую функцию $\Phi(t) = \Exp e^{itX_k}$. Введём замену (которая
+  z-преобразование.):
+  \[
+    z_n = \frac{S_n - a n}{\sigma \sqrt n}
+  \]
+  Давайте ещё немного схитрим и положим $X_k \gets X_k- a$. А то потом будет много возни с бедным
+  $a$. При этом $z_n = \frac{S_n}{\sigma \sqrt n}$
+  Тогда
+  \[
+    \Phi_{z_n} (t) = \Exp \left(e^{\frac{itS_n}{\sigma\sqrt n}} \right)=
+    \left(\Phi\left(\frac{t}{\sigma \sqrt n} \right)\right)^n 
+  \]
+  А характеристическая функция дифференцируема дважды из существования дисперсии.
+  \begin{align*}
+    \Phi'(0) &= 0 \\
+    \Phi''(0) &= - \sigma^2 \\
+    \Phi\left(\frac{t}{\sigma \sqrt n} \right) 
+    &= \Phi(0) + \Phi'(0) \frac{t}{\sigma \sqrt n} + \Phi''(0)\, \frac{t^2}{2\sigma^2 n} 
+      + o\left(\frac{1}{n}\right)
+    = 1  - \frac{1}{2}\,\frac{t^2}{n} +  o\left(\frac{1}{n}\right) \\
+  \end{align*}
+  А при $n\to \infty$ \[
+    \Phi\left(\frac{t}{\sigma \sqrt n} \right)^n 
+    = \left(1  - \frac{1}{2}\,\frac{t^2}{n} +  o\left(\frac{1}{n}\right)\right) ^n
+    \rightrightarrows e^{-\lfrac{t^2}{2}}
+  \]
+  Здесь сходимость есть на любом конечном интервале, но вот про всю прямую этого уже не скажешь.
+  Так что снова поднимается вопрос какой теоремой о непрерывном соответствии пользоваться.
+  Но если ей воспользоваться (тут по-тихому применили обратное преобразование Фурье), то
+  \begin{align*}
+    p_{z_n}&= \frac{1}{2\pi} \intR \exp{\frac{- s^2 + s^2 - 2its - t^2}{2}}  =
+    \frac{e^{-s^2/2}}{\sqrt{2}\pi } 
+    \intR \exp\left(-\left(\underbrace{\frac{t+is}{\sqrt 2}}_\eta \right)^2\right) \del \eta 
+    =\frac{e^{-s^2/2}}{\sqrt{2\pi} } \\
+    F_{Z_n} (x) &= \int_{-\infty}^x \frac{1}{\sqrt{2\pi}} e^{-s^2/2} \, \del s 
+  \end{align*}
+
+  Дальше~--- вариация из Агекяна.
+  Используя утверждение \ref{prop:stat::funcrand::cont} про замену переменной как раз получаем
+  нормальное распределение. Только тут нужно поменять в процессе $\sigma$
+  \begin{align*}
+    Z_n &= \frac{S_n}{\sigma \sqrt n} \\
+    F_{S_n} (x) &= \int_{-\infty}^x \frac{1}{\sqrt{2\pi}} \frac{1}{\sigma\sqrt n} 
+    e^{-\frac{u^2}{2\sigma^2 n} } \, \del u
+  \intertext{Вернёмся обратно к ненулевому $a$ }
+    S_n &\gets S_n - n a \\
+    F_{S_n} &= \frac{1}{\sqrt{2\pi}} \frac{1}{\sigma\sqrt n}\int_{-\infty}^x  
+    e^{-\frac{(u-n a)^2}{2\sigma^2 n} } \, \del u \\
+    S_n \sim N (na, n \sigma^2) (n \to \infty)
+  \end{align*}
+\end{itlproof}
+
+
+\paragraph{Центральная предельная теорема}
+\label{par:stat::cpt}
+\begin{thrm}[ЦПТ Ляпунова\sour]\label{thrm:stat::cpt::lyap}
+  Пусть $ \{ X_k\}$~--- независимые случаные величины (тут нет одинаковости расределений!).
+  Введём гору обозначений:
+  \begin{align*}
+    S_n &= \sum_i x_i \\
+    a_k &= \Exp X_k & \sigma^2_k &= \Var x_k & \gamma_k &= \Exp |X_k - a_k|^3 \\
+    A_n &= \sum_{k=1}^n a_k & B_n^2 &= \sum_{k=1}^n \sigma_k^2 & C_n &= \sum_{k=1}^n \gamma_k
+  \end{align*}
+  Тогда \[
+    \frac{C_N}{B_n^3} \xrightarrow[n\to\infty]{} 0  \Rightarrow \frac{S_n - A_n}{B_n}  \xrightarrow[n\to\infty]{d} \mathcal N (0,1)
+  \]
+\end{thrm}
+\begin{rem*}
+  Тут какая-то жесть. Она мало где формулируется и нигде не доказывается. Что-то есть
+  тут:\cite{msu}, а здесь~\cite{chernova1} так другую теорему обозвали
+
+  \flame
+\end{rem*}
+
+\paragraph{Обобщённая теорема Муавра-Лапласа}
+\label{par:stat::genmuavr}
+
+\begin{defn}\label{defn:stat::genmuavr::chi}
+  Пусть $X_1, \dotsc, X_n \sim \mathcal N (0,1)$ и независимы. Тогда говорят, что случайная
+  величина $\displaystyle \chi_n^2 = \sum_{k=1}^n X_k^2$ имеет распределение $\chi^2$ c $n$
+  степенями свободы.
+\end{defn}
+\begin{prop}\label{prop:stat::genmuavr::chi}
+  $\displaystyle p_{\chi_b}(z) = \frac{1}{2^{n/2}\cdot \Gamma (\frac{n}{2} )} z^{n/2 -1} e^{-z/2} $
+\end{prop}
+\begin{itlproof}
+  Характеристическая функция $\chi$ может быть найдена из~\ref{conj:stat::charfunsum::sumn}
+  Найдём сначала характеристическую функцию $X_k^2$. Для этого было бы недурно найти плотность
+  соответвующего распределения
+  \[
+    \begin{split}
+      P(y < X^2 < y+ \del y) &= P(\sqrt y < X < \sqrt{y + \del y})+ P(-\sqrt y>X >-\sqrt{y+\del y}) 
+      = \frac{2}{\sqrt{2\pi}}  \int_{\sqrt y}^{\sqrt{y+\del y}} e^{-u^2/2} \, \del u \\
+      &= \sqrt{\frac{2}{\pi} } \frac{e^{-y/2}}{2\sqrt y} 
+    \end{split}
+  \]
+  А теперь можно и фурье-образ найти
+  \[
+    \intR\frac{e^{-y/2}}{2\sqrt y}\del y = \int_{0}^{+\infty}\frac{e^{-y/2}}{2\sqrt y}\del y
+    = \int_{0}^{+\infty} \exp\left(\frac{-\eta^2(1-2it)}{2}\right)\,\del\eta
+    = (1-2it)^{-1/2} \, \sqrt{\frac\pi 2}
+  \]
+  Вспоминая про коэффициент получим $\Phi_k(t) = (1-2it)^{-1/2}$.
+  \[
+    \Phi_\chi(t) = \left(\Phi_k(t)\right)^n =  (1-2it)^{-n/2}
+  \]
+  Тогда \[
+    p_\chi(z) = \frac{1}{2\pi} \intR (1-2it)^{-n/2}\, e^{-itz}\del t
+  \]
+  Дальше немного жесть
+  \begin{align*}
+    \intR (1-2it)^{-n/2}\, e^{-itz}\del t &= \intR e^{-l} \left(1-2\, \frac{l}{z} \right)^{-n/2}
+    \frac{1}{iz} \, \del l 
+    = 2\cdot\frac{z^{n/2-1} e^{-z/2}}{2^{n/2}} \int_{0}^{\infty} s^{-n/2} e^{-s} \del s \\
+    &= 2\frac{z^{n/2-1} e^{-z/2}}{2^{n/2}} \cdot \Gamma\left(1-\frac{n}{2} \right)
+  \end{align*}
+  Из правила отражения для $\Gamma$-функции 
+  $\Gamma(1-n/2)\, \Gamma(n/2) = \frac{\pi}{\sin\frac{\pi n}{2} } $. А это почти что надо.
+  \underdev
+  там надо интеграл поаккуратнее брать.
+\end{itlproof}
+
+\begin{thrm}[Обобщённая теорема Муавра-Лапласа]\label{thrm:stat::genmuavr}
+  Пусть $X_1, \dotsc, X_n$~--- независимые случайные величины с дискретным распределением:
+  \[
+    X_k \colon
+    \begin{array}{c|c|c}
+      1 & \cdots & r \\ \hline
+      p_1 & \cdots & p_r
+    \end{array}
+  \]
+  Рассмотрим $\nu_k = \# \{ 1 \leqslant i \leqslant n \mid X_i =k\},\; 1\leqslant k \leqslant r$.
+  Тогда 
+  \[
+    \sum_{k=1}^r \left( \frac{\nu_k - n p_k}{\sqrt{n p_k}}  \right) \xrightarrow{d} \chi_{r-1}^2
+  \]
+\end{thrm}
+
+\paragraph{Метод моментов}
+\label{par:stat::mom}
+
+Здесь походу нужно все статистические определения в одном параграфе \flame
+
+\subparagraph{Вводные слова}
+В отличие от теорвера, матстатистике неизвестно распределение случайной величины. И нужно
+придумать, как его восстановить по конкретной реализации. Пусть $X$~--- та самая величина,
+про распределение которой очень хочется узнать
+
+Главная героиня матстатистики~--- выборка
+\begin{defn}\label{defn:stat::mom::chosen}
+  Выборка объёма $n$~--- 
+  \begin{enumerate}
+    \item $n$ независимых случайных величин, распределённых так же, как и $X$
+    \item набор чисел $X_i(\omega)$, $\omega \in \Omega$~--- какой-то исход. Ещё называется
+      реализацией выборки.
+  \end{enumerate}
+  Собственно, первое определение~--- это до испытания, а второе~--- уже после.
+\end{defn}
+
+\subparagraph{Основные задачи}
+Пусть $X_1, \dotsc, X_n \sim F(x,\theta)$, $\theta \in \Theta \subset \R^d$~--- множество
+параметров.
+
+\begin{enumerate}
+  \item Оценивание параметров:
+    \begin{itemize}
+      \item Точечные оценки: $\hat\theta = T(X_1, \dotsc, X_n)$
+      \item Доверительные интервалы: $P_\alpha (T_1 < \theta < T_2) = \alpha$
+    \end{itemize}
+  \item Проверка гипотез\par
+    Пусть $\Theta = \Theta_0 \cup \Theta_1$. А мы хотим узнать чему принадлежит $\theta$. 
+    \begin{description}
+      \item[$H_0$:] $\theta\in \Theta_0$~--- основная гипотеза 
+      \item[$H_1$:] $\theta\in \Theta_1$~--- альтернативная гипотеза 
+    \end{description}
+\end{enumerate}
+
+\subparagraph{Выборочные характеристики}
+Выберем реализацию случайной величины (выборку во втором смысле) $X_1, \dotsc, X_n$.
+Рассмотрим новую случайную величину:\[
+  \widetilde{X} \colon 
+  \begin{array}{c|c|c}
+    X_1 & \cdots & X_n \\ \hline
+    \frac{1}{n} & \cdots & \frac{1}{n}  
+  \end{array}
+\]
+
+Ну а дальше все выборочные характеристики определяются уже для этой случайной величины.
+Напомним следующее
+\begin{defn}[Индикатор]\label{defn:stat::mom::ind}
+  $\displaystyle I_A(X) = \begin{cases}
+    1, &X\in A\\
+    0, & X \not\in A
+  \end{cases}, 
+  I(X < x) = \begin{cases}
+    1, &X < x\\
+    0, & X \geqslant x
+  \end{cases}
+  $
+\end{defn}
+\begin{defn}\label{defn:stat::mom::varser}
+  Если $X_1, \dotsc, X_n$ можно упорядочить, то $X_{(1)} \leqslant \cdots \leqslant X_{(n)}$
+  называется вариационным рядом.
+\end{defn}
+{\def\arraystretch{1.5}
+\begin{table}[h] \underdev
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    & \bf Генеральная совокупность & \bf Выборка &  \\ \hline
+    Матожидание & $\Exp X$ & $\overline{X} = \frac{1}{n} \sum_k X_k$ & Выборочное среднее\\
+    Дисперсия & $\Var X$ & $S^2 = \frac{1}{n} \sum_k (X_k - \overline X)$ & Выборочная дисперсия\\
+    Момент порядка $l$ & $\Exp X^k$ & $m_l = \frac{1}{n} \sum_k X_k^l$ & \\
+
+    Ковариация & $\Exp (X-\Exp X) (Y-\Exp Y)$ & $\frac{1}{n} \sum_k (X_k - \overline X) (Y_k -
+    \overline Y)$ & \\
+    Ассиметрия ($\gamma_3$) & $\Exp (X- \Exp X)^3/\sigma^3$  
+                                      & $\frac 1 n \sum (X- \overline X)^3/S^3$ & \\
+    Эксцесс ($\gamma_4$) & $\frac{\Exp (X - \Exp X)^4}{\sigma^4} - 3 $& & \\
+    Функция распределения & & $\frac 1 n \sum_k I(X_k < y)$ & \\
+    Квантиль порядка $p\in(0;1)$ & $\sup \{x \mid F(x) \leqslant p \}$ & $X_{([pn]+1)}$ 
+                                                & член вариационного ряда\\
+    \hline
+  \end{tabular}
+\end{table}}
+
+\subparagraph{\plholdev{Большой кусок про свойства оценок} \flame}
+\subparagraph{Метод моментов}
+
+\begin{defn}\label{defn:stat:mom:method}
+
+  Пусть $F(x,\theta)$~--- семейство распределений, $m(x) = \Exp g(x)$~--- какой-то момент этого
+  распределения. Пусть известно, что $h(\theta) = m(x)$. Тогда собственно сам метод состоит в том,
+  чтобы оценить $\theta$ как решение уравнения выше.
+  \[
+    \hat \theta = h^{-1} (m(x))
+  \]
+  В случае чего там векторы, но особо не страшно.
+
+\end{defn}
+
+\begin{exmp}\label{exmp:stat::mom::norm}
+  \plholdev{примеры про непрерывные распределения}
+\end{exmp}
+
+\paragraph{Метод максимального правдоподобия}
+\label{par:stat::maklike}
+надо как-то уметь получать хорошие  оценки, для этого этого будет сейчас введён Метод.этого будет
+сейчас введён Метод.
+
+\begin{defn}\label{defn:stat::maxlike::dens}
+  За $f_\theta (x) $ обозначим плотность функции распределения $F(x,\theta)$ в точке $x$ в случае
+  непрерывного распределения и $P(X=x)$ в случае дискретного
+\end{defn}
+\begin{defn}\label{defn:stat::maxlike::fun}
+  $\displaystyle L(\theta):= \prod_{k=1}^n f_\theta(X_k)$~--- функция правдоподобия.
+  Ещё иногда берут её логарифм.
+\end{defn}
+
+\begin{defn}\label{defn:stat::maxlike::method}
+  Сам метод состоит в следующем:
+  \[
+    \hat \theta \colon L(\hat \theta) = \max_\theta L (\theta)
+  \]
+\end{defn}
+
+\plholdev{гора примеров}
 \end{document}
 % vim:wrapmargin=3

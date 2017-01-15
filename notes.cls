@@ -76,10 +76,10 @@
 
 \RequirePackage[pdftex]{graphicx}
 \RequirePackage{xcolor}
-
+% 🔥
 \RequirePackage{verbatim}
 \RequirePackage{epigraph}
-\RequirePackage{wasysym}
+\RequirePackage[nointegrals]{wasysym}
 \RequirePackage{marvosym}
 \RequirePackage{hyperref}
 
@@ -344,8 +344,11 @@
 % \end{tikzpicture}}
 % \newsavebox\gearbox
 % \sbox\gearbox{\raisebox{-0.1em}{\gear{}} }
-\newcommand{\underdev}{\texorpdfstring{\MineSign{}}{}} 
 % unfortunately tikz has problems with toc 
+\newcommand{\underdev}{\texorpdfstring{\MineSign{}}{}} 
+\newcommand{\flame}{\texttt{:set aflame}} 
+\newcommand{\sour}{$\ddot\sim$} 
+\newcommand{\plholdev}[1]{\texttt{<+{#1}+>}} 
 
 \renewcommand*{\dot}[1]{\accentset{\mbox{\bfseries .}}{#1}}
 \renewcommand*{\ddot}[1]{\accentset{\mbox{\bfseries .\hspace{-0.1ex}.}}{#1}}
