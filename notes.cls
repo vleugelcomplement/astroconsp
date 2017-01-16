@@ -355,8 +355,10 @@
 \newcommand{\coori}{\mathop{\uparrow\!\uparrow}} 
 \newcommand{\conori}{\mathop{\uparrow\!\downarrow}} 
 % probability theory
- \DeclareMathOperator{\Exp}{\mathrm M} 
- \DeclareMathOperator{\Var}{\mathrm D} 
+ \DeclareMathOperator{\Exp}{M} 
+ \DeclareMathOperator{\Var}{D} 
+ \DeclareMathOperator{\cov}{cov} 
+ \newcommand{\av}[1]{\overline{#1}} 
  \newcommand{\intR}{\int_{-\infty}^{+\infty}} 
 
 \endinput

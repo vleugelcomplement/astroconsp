@@ -285,7 +285,7 @@
 \paragraph{Характеристическая функция суммы случайных величин}
 \label{par:stat::charfunsum}
 
-\begin{prop}\label{prop:stat::charfunsum}
+\begin{prop}\label{prop:stat::charfunsum::sum}
   Пусть $X,Y$~--- независимые случайные величины. Тогда 
   \[
     \Phi_{X+Y}(t) = \Phi_X(t) \cdot \Phi_Y(t)
@@ -309,13 +309,13 @@
 \label{par:stat::randlimsum}
 \flame\underdev\sour
 
-\begin{thrm}[ЦПТ Линдберга-Леви-Агекяна \sour]\label{prop:stat::randlimsum::sum}
+\begin{thrm}[ЦПТ Линдберга-Леви-Агекяна \sour]\label{thrm:stat::randlimsum::sum}
   Пусть $X_1, \dotsc, X_n$~--- независимые одинаково распределённые случайные величины. Пусть к
   тому же $S_n = X_1, \dotsc, X_n$, $0 < \Var X_k < \infty$.
   Пусть $\Exp X_k = a, \Var X_k = \sigma$. Тогда при $n\to \infty$ $Z_n \sim N(0,1)$,
   в вариации из Агекяна $S_n \sim N(na,n\sigma^2)$
 \end{thrm}
-\begin{itlproof}
+\begin{ittproof}
   Пусть $\Exp X_k = a, \Var X_k = \sigma^2$.
   Рассмотрим характеристическую функцию $\Phi(t) = \Exp e^{itX_k}$. Введём замену (которая
   z-преобразование.):
@@ -367,7 +367,7 @@
     e^{-\frac{(u-n a)^2}{2\sigma^2 n} } \, \del u \\
     S_n \sim N (na, n \sigma^2) (n \to \infty)
   \end{align*}
-\end{itlproof}
+\end{ittproof}
 
 
 \paragraph{Центральная предельная теорема}
@@ -542,7 +542,7 @@
   \end{tabular}
 \end{table}}
 
-\subparagraph{\plholdev{Большой кусок про свойства оценок} \flame}
+\subparagraph{\underdev {Свойства оценок}}
 \subparagraph{Метод моментов}
 
 \begin{defn}\label{defn:stat:mom:method}
@@ -563,16 +563,15 @@
 
 \paragraph{Метод максимального правдоподобия}
 \label{par:stat::maklike}
-надо как-то уметь получать хорошие  оценки, для этого этого будет сейчас введён Метод.этого будет
-сейчас введён Метод.
 
 \begin{defn}\label{defn:stat::maxlike::dens}
-  За $f_\theta (x) $ обозначим плотность функции распределения $F(x,\theta)$ в точке $x$ в случае
-  непрерывного распределения и $P(X=x)$ в случае дискретного
+  За $p(x,\theta) $ обозначим плотность функции распределения $F(x,\theta)$ в точке $x$ в случае
+  непрерывного распределения и $P(X=x)$ в случае дискретного.
 \end{defn}
 \begin{defn}\label{defn:stat::maxlike::fun}
+  Пусть $\{X_k\}$~---$n$ независимых случайных величин. Тогда
   $\displaystyle L(\theta):= \prod_{k=1}^n f_\theta(X_k)$~--- функция правдоподобия.
-  Ещё иногда берут её логарифм.
+  Ещё берут её логарифм.
 \end{defn}
 
 \begin{defn}\label{defn:stat::maxlike::method}
@@ -580,8 +579,151 @@
   \[
     \hat \theta \colon L(\hat \theta) = \max_\theta L (\theta)
   \]
+  Однако проще искать максимум у $\ln L(\theta)$. Так можно в силу монотонности логарифма.
+  \[
+    \bigl( \ln L (\theta)\bigr)' = \frac{L'(\theta)}{L(\theta)} 
+  \]
 \end{defn}
 
 \plholdev{гора примеров}
+
+
+\paragraph*{Эффективные оценки}\label{par:stat::eff}
+
+\begin{prop}[Неравенство Рао-Крамера]\label{prop:stat::eff::rao}
+  Пусть $\theta, \hat\theta$~--- параметр и его оценка, $b(\theta) = \Exp (\hat\theta -
+  \theta)$~--- смещение оценки, $I(\theta)$~--- информация Фишера, $F(x,\theta)$~---
+  параметрическое семейство распределений.
+  \[
+    I(\theta) = \Exp \left( \pder{}{\theta} \ln p(X, \theta)\right)^2,
+  \]
+  где $p(X,\theta)$ из определения~\ref{defn:stat::maxlike::dens}. Если выполнены условия
+  регулярности
+  \begin{enumerate}
+    \item Существует $C\subset\R \colon \forall\, \theta\in \Theta P(X_1 \in C) =1 $ и $\forall\,
+      y \in C \sqrt{p(X, \theta)} \in C^1_\theta (\Theta)$
+    \item $I(\theta) \in C_\theta(\Theta)$, $I \geqslant 0$
+  \end{enumerate}
+  и $\Var \hat \theta $ ограничена на любом компакте $\subset \Theta$, 
+  
+  то
+  \[
+    \Exp (\hat\theta - \theta)^2 \geqslant \frac{(1+b'(\theta))}{n I(\theta)} + b^2(\theta) 
+  \]
+\end{prop}
+\begin{rem}\label{rem:stat::eff::reg}
+  Всякая регулярность нужна, чтобы можно было законно запихивать производную по параметру по
+  интеграл. 
+\end{rem}
+
+\begin{defn}\label{defn:stat::eff::eff}
+  Оценка называется эффективной, если для неё неравенство Рао-Крамера обращатся в равенство.
+\end{defn}
+
+\paragraph{Лемма Фишера}
+\label{par:stat::fishlem}
+
+\begin{defn}\label{defn:stat::fishlem::chi}
+  Пусть $X_1, \dotsc, X_n$~--- независимые случайные величины с распределением $\mathcal N(0,1)$.
+  Тогда $\sum_i X_i^2$ имеет распределение $\chi^2$ c $n$ степенями свободы. 
+\end{defn}
+\begin{prop}\label{prop:stat::fishlem::chidens}
+  Плотность распределения $\chi^2_n$ ищется по формуле $\displaystyle k_n = \frac{z^{n/2-1}
+  e^{-z/2}}{2^{n/2} \Gamma \left(\frac{n}{2} \right)} $
+\end{prop}
+
+\begin{defn}\label{defn:stat::fishlem::student}
+  Пусть $X_1, \dotsc, X_n$~--- независимые случайные величины с распределением $\mathcal N(0,1)$.
+  Тогда $\displaystyle \frac{x}{\sqrt{\frac{1}{n} \sum_i X_i^2}}$ имеет распределение Стьюдента 
+  c $n$ степенями свободы. 
+\end{defn}
+\begin{prop}\label{prop:stat::fishlem::studens}
+  Плотность распределения $\chi^2_n$ ищется по формуле 
+  $\displaystyle s_n = \dfrac{\Gamma(\frac{n+1}{2})}{\Gamma(\frac{n}{2}) \sqrt{\pi n}} 
+  \left(1+\dfrac {x^2} n\right)^{-\frac{n+1}{2} } $
+\end{prop}
+
+
+\begin{defn}\label{defn:stat::fishlem::orth}
+  Пусть $C\colon V_1 \to V_1$. Тогда $C$~--- ортгональный, если $C C^T = E$
+\end{defn}
+\begin{cor}\label{cor:stat::fishlem::orth1}
+  $\det C = 1$
+\end{cor}
+\begin{cor}\label{cor:stat::fishlem::orthsavelen}
+  $\|Cx\| = \|x\|$
+\end{cor}
+
+\begin{prop}\label{prop:stat::fishlem::orthmtx}
+  Оператор ортогональный $ \Leftrightarrow $ строки его матрицы 
+  (как векторы линейного пространсва наборов чисел) образуют ортонормированный базис.
+\end{prop}
+
+\begin{prop}\label{prop:stat::fishlem::orthnorm}
+  Пусть $\{X_i\} \sim \mathcal N(0,1)$, $C$~--- ортогональный линейный оператор. 
+  Тогда и $Y = CX \sim \mathcal N (0,1)$.
+\end{prop}
+\begin{itlproof}
+  Докажется через утверждение о пребразовании плотности при замене 
+  переменных~\ref{prop:stat::funcrand::cont} 
+  и следствие~\ref{cor:stat::fishlem::orthsavelen}. Независимость получится просто из того, что
+  вышло нормальное распределение. А $\sigma$-у можно сначала засунуть в случайные величины, а
+  потом вытащить обратно.
+\end{itlproof}
+
+\begin{lem}[Фишера]\label{lem:stat::fishlem::fishlem}
+  Пусть $X_1, \dotsc, X_n$ независимы и $X_i \sim \mathcal N (\theta,\sigma^2)$. Тогда
+  \begin{enumerate}
+    \item 
+      $\displaystyle\sqrt n \frac{\overline X - \theta}{\sigma} \sim \mathcal N(0,1)$
+    \item $\overline{X}, S^2$ независимы \note{Здесь смещённая дисперсия}
+    \item $\displaystyle \frac{n S^2}{\sigma^2} \sim \chi_{n-1}^2 $
+    \item $\displaystyle \sqrt{n-1}\, \frac{\overline X - \theta }{S}  \sim S_{n-1}$
+  \end{enumerate}
+\end{lem}
+\begin{ittproof}
+  \begin{enumerate}
+    \item Заменим $Z_i = \frac{X-\theta }{\sigma}$, $Z_i \sim \mathcal N(0,1)$
+      Найдем распределение $\sum_i Z_i= \Sigma$. 
+      \begin{align*}
+        \Phi_i (t) &= e^{-t^2/2} \\
+        \Phi_{S_n} (t) &= \frac 1 n \cdot \exp \left( -n\,\frac{t^2}{2} \right) 
+        = \exp \left( -\left(\frac{\sqrt n\, t}{\sqrt 2} \right)^2\right)
+        \Rightarrow 
+        p_{\Sigma}(z) = \frac{1}{\sqrt{2\pi}\sqrt n} \exp \left( -\frac{x^2}{2 n}\right)\\
+        \frac{S_n - n\theta}{\sigma} &\sim \mathcal N (0, \sqrt n) \Rightarrow 
+        \frac{n}{\sqrt n} \,  \frac{\av X - \theta}{\sigma} = \sqrt n\,\frac{\av X -\theta}{\sigma}
+        \sim \mathcal N(0,1)
+      \end{align*}
+    \item Пусть
+      \[
+        C = \begin{pmatrix}
+          \frac{1}{\sqrt n} & \cdots & \frac{1}{\sqrt n} \\
+          \hdotsfor{3} \\
+          \hdotsfor{3}
+        \end{pmatrix}
+      \]
+      Первая строка как вектор имеет норму 1. А значит можно вспомнить процесс Грамма-Шмидта и
+      набрать ортогональный базис. Тогда $C$ будет ортогональным. Пусть $Y = CX$. Из горы
+      утверждений выше мы получим:
+      \begin{align*}
+        Y_1 &= \frac{X_1 + \dotsb + X_n}{\sqrt n} = \av X \sqrt n \\
+        \|Y\| &= \|X\| \Rightarrow \sum_i X_i^2 = \sum_i Y_i^2 \\
+        S^2 &= \frac{1}{n} \sum_i X_i^2 - (\av X)^2 = \frac{1}{n} \sum_{i=2}^n Y_i
+      \end{align*}
+      А дальше надо честно посчитать $\cov \left(\frac{Y_1}{\sqrt n}, \sum_{i=2}^n Y_i \right) $.
+      Правда ноль получается.
+      Если что, \[
+        \cov (X,Y) = \Exp (X-\Exp X)(Y - \Exp Y) = \Exp (XY) - \Exp X \Exp Y
+      \]
+    \item $\displaystyle \frac{n S^2}{\sigma^2}  = \sum_{i=2}^n \left(\frac{Y_i}{\sigma} \right) =
+      \chi^2_{n-1}$
+    \item Мы там порешили,что $\theta=0$, так что  \[
+        \displaystyle \sqrt{n-1} \,\frac{\av X }{S} = \frac{Y_1}{ 
+        \sqrt{\frac{n}{n(n-1)}\sum_{i=2}^n Y_i}}=\frac{Y_1}{\sqrt{\frac{1}{n-1}\sum_{i=2}^n Y_i}}
+        \sim S_{n-1}
+      \]
+  \end{enumerate}
+\end{ittproof}
 \end{document}
 % vim:wrapmargin=3
