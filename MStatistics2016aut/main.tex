@@ -1,13 +1,16 @@
-\documentclass[12pt,timbord]{../notes}
+\documentclass[12pt,ebook]{../notes}
 \usepackage{docmute}
 \graphicspath{{img/}}
 % \usepackage[backend=biber]{biblatex}
 % \addbibresource{stat.bib}
-\title{Что-то про теорвер в 3 семестре}
+\title{ТЕОРВЕ{\tt R} \\
+  МАТСТАТИ{\tt S}ТИКА\\
+  и тщетные попытки понять что-нибудь из вышеперечисленного
+}
 \date{\today}
 
 
-\author{Лектор: Р.~?.~Пусев \\
+\author{Лектор: Р.~C.~Пусев \\
 Записал :\texttt{ta\lower 0.1em \hbox{x}us}}
 
 \begin{document}
@@ -18,8 +21,16 @@
 
 \chapter{Элементарная теория вероятностей}
 \input{tex/Prob/prob}
+\chapter{Матстатистика}
 \input{tex/Stat/stat}
-% \input{tex/Proc/proc}
+\chapter{Случайные процессы}
+\input{tex/Proc/proc}
+
+\clearpage
+
+\appendix
+\chapter{Обозначения}
+\input{tex/nomenclature}
 
 % \printbibliography[
 %   heading=bibintoc,

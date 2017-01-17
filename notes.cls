@@ -8,9 +8,9 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{notes}
 
-\newcommand\hmmax{0}
-\newcommand\bmmax{0}
-% \RequirePackage{stix}
+% \newcommand\hmmax{0}
+% \newcommand\bmmax{0}
+% % \RequirePackage{stix}
 % \RequirePackage{cyravantgar}
 % \renewcommand{\familydefault}{\sfdefault}
 %pdf search
@@ -76,12 +76,14 @@
 
 \RequirePackage[pdftex]{graphicx}
 \RequirePackage{xcolor}
-
+% 🔥
 \RequirePackage{verbatim}
 \RequirePackage{epigraph}
-\RequirePackage{wasysym}
+\RequirePackage[nointegrals]{wasysym}
 \RequirePackage{marvosym}
 \RequirePackage{hyperref}
+\RequirePackage{array}
+\RequirePackage{tabulary}
 
 \RequirePackage{titlesec}
 \RequirePackage{tocloft}
@@ -304,7 +306,7 @@
 \DeclareMathOperator\Res{Res}
 \DeclareMathOperator\Aut{Aut}
 \DeclareMathOperator\Stab{Stab}
-
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 \renewcommand\C{\mathbbm{C}} 
 \newcommand\exC{\overline{\mathbbm{C}}} 
@@ -345,16 +347,21 @@
 % \end{tikzpicture}}
 % \newsavebox\gearbox
 % \sbox\gearbox{\raisebox{-0.1em}{\gear{}} }
-\newcommand{\underdev}{\texorpdfstring{\MineSign{}}{}} 
 % unfortunately tikz has problems with toc 
+\newcommand{\underdev}{\texorpdfstring{\MineSign{}}{}} 
+\newcommand{\flame}{\texttt{:set aflame}} 
+\newcommand{\sour}{$\ddot\sim$} 
+\newcommand{\plholdev}[1]{\texttt{<+{#1}+>}} 
 
 \renewcommand*{\dot}[1]{\accentset{\mbox{\bfseries .}}{#1}}
 \renewcommand*{\ddot}[1]{\accentset{\mbox{\bfseries .\hspace{-0.1ex}.}}{#1}}
 \newcommand{\coori}{\mathop{\uparrow\!\uparrow}} 
 \newcommand{\conori}{\mathop{\uparrow\!\downarrow}} 
 % probability theory
- \DeclareMathOperator{\Exp}{\mathrm M} 
- \DeclareMathOperator{\Var}{\mathrm D} 
+ \DeclareMathOperator{\Exp}{M} 
+ \DeclareMathOperator{\Var}{D} 
+ \DeclareMathOperator{\cov}{cov} 
+ \newcommand{\av}[1]{\overline{#1}} 
  \newcommand{\intR}{\int_{-\infty}^{+\infty}} 
 
 \endinput
