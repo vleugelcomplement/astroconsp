@@ -34,7 +34,7 @@
 \end{rem}
 
 
-\begin{prop}\label{prop:prob::randscal::distrfun}
+\begin{prop}\label{prop:stat::randscal::distrfun}
   Про $F(x)$ верно следущее:
   \begin{enumerate}
     \item $F$ не убывает по каждому аргументу.
@@ -878,12 +878,24 @@
   параметры.
 \end{defn}
 
-Основной метод поиска оптимальных параметров~--- по  функции максимального правдоподобия. Если не
+Основной метод поиска оптимальных параметров~--- по  функции максимального правдоподобия.
+Если не
 сильно расписывать, то это выльется в $\argmin\limits_{\hat\theta} (Y-X\hat\theta)^T(Y-X\hat\theta)$
+
+\begin{itaux}
+  А если расписывать, то получается следущее: раз все $\varepsilon_i$ независимы и нормально
+  распределены, то функция максимального правдоподобия  будет выглядеть так:\[
+    L(\theta_1, \dotsc, \theta_m) = \left( \frac{1}{\sqrt{2\pi} \sigma} \right)^n
+    \exp \left(
+      -\frac{1}{2\sigma^2}\sum_{j=1}^n\left(y_j-\textstyle\sum_{k=1}^m x_{jk}\theta_k \right)^2
+    \right)
+  \]
+  Как видно, условие максимума такой функции совпадает с минимумом суммы квадратов.
+\end{itaux}
 
 При этом нужны условия Гаусса-Маркова:
 \begin{enumerate}
-  \item $X^T X$ обратима
+  \item $X^TX$ обратима
   \item $\varepsilon_i \sim \mathcal N(0,\sigma^2)$ и независимы
 \end{enumerate}
 
@@ -929,7 +941,7 @@
 \begin{thrm}\label{thrm:stat::guasmark}
   Пусть 
   \begin{enumerate}
-    \item $X^T X$ обратима
+    \item $X^TX$ обратима
     \item $\varepsilon_i \sim \mathcal N(0,\sigma^2)$ и независимы
   \end{enumerate}
   Тогда 
@@ -969,6 +981,103 @@
   Пусть $\displaystyle S^2 = \frac{1}{n-m} (Y - X \hat \theta) ( Y - X \hat\theta)^T$. Тогда
   $S^2$~--- несмещённая оценка $\sigma^2$
 \end{thrm}
+\begin{ittproof}
+  \[
+    Y - X\hat\theta = (E_n - X (X^T X)^{-1} X^T ) (X\theta + \varepsilon) = (E_n - X (X^T X)^{-1} X^T
+    ) \varepsilon = B \varepsilon
+  \]
+  Тогда $S^2 = \frac{1}{n-m} \varepsilon^2 B^T B \varepsilon$, причём $B$~--- симметрична. Так
+  что $B^TB =B^2 = B$ (лень расписывать). Так что 
+  \[
+    \Exp S^2 = \frac{1}{n-m} \Exp (\varepsilon^T B \varepsilon)  = \frac{\sigma^2}{n-m} \Tr B
+  \]
+  потому что всё, что не на главной диагонали обратится в ноль в силу независимости
+  $\varepsilon_i$.
 
+  Осталось доказать, что $\Tr (X (X^T X)^{-1} X^T$. Покажем, что след произведения матриц не
+  зависит от порядка сомножителей. 
+  \[
+    \Tr AB = (ab)_i =  a_{is}\, b{si} = b_{si} a_{is} = (ba)_s
+  \]
+  Так что просто переставим $X^T$ в самое начало и получим $E_m$.
+\end{ittproof}
+
+\paragraph{Критерий согласия Пирсона}
+\label{par:stat::pirson}
+
+\begin{defn}\label{defn:stat::pirson}
+  Пусть $X_1, \dotsc, X_n \sim F$. Будем проверять гипотезу \[
+  H_0\colon F = F_0 \\
+  H_1\colon F \neq F_0
+\]
+Пусть существует функция $\rho(X)$, такая что
+\begin{enumerate}
+  \item $H_0$ верна $ \Rightarrow \rho(X) \xrightarrow{d} G$, $G$~--- некоторое непрерывное
+    распределение.
+  \item если $H_0$ неверна, то $|\rho(X)| \xrightarrow{p} \infty$
+\end{enumerate}
+
+Выберем критическую область по распределению $G$ из равенства $P(|x
+g| \geqslant C) = \gamma$, $g \sim G$.
+Тогда критерий введём так: будум отвергать $H_0$, если $|\rho(X)| \geqslant C$. 
+\end{defn}
+
+
+\begin{defn}[Критерий согласия Пирсона]\label{defn:stat::pirson::crit}
+  Разобъем всю область значений $X_i$ на интервалы $I_i$,
+  с заданными вроятностями~--- $p_i$, $\sum_i p_i = 0$.
+  Будем проверять гипотезу $\forall\, i P(X_1 \in I_i) = p_i$. Этакая дискретизация распределения.
+
+  Ещё обозначим $\nu_k = \# \{i \mid X_i \in I_k\}$. Пусть
+  \[
+    \rho = \sum_{k=1}^r \frac{( \nu_k - np_k )^2}{n p_k} 
+  \]
+
+  А сам критерий основывается на сходимости распределения выше к распределению $\chi^2$, и
+  критическая область выбирается из этого распределения.
+\end{defn}
+
+\begin{thrm}\label{thrm:stat::pirson::chi}
+  При справедливости $H_0$ $\rho(X) \xrightarrow[n\to \infty]{d} \chi_{r-1}^2$.
+\end{thrm}
+
+\paragraph{Непараметрические критерии}
+\label{par:stat::nonparcrit}
+Условия на $X_1, \dotsc, X_n$ те же
+
+\begin{prop}[Критерий Колмогорова-Смирнова]\label{prop:stat::nonparcrit::kolm}
+  Пусть $F_n$~--- эмпирическая функция распределения, 
+  \begin{align*}
+    D_n^+ &= \sup_x (F_n(x) - F_0(x)) \\
+    D_n^- &= \sup_x (F_0(x) - F_n(x)) 
+  \end{align*}
+  Тогда $P(\sqrt n D_n^+  < z) \to \displaystyle\begin{cases}
+    \sum_{k\in \Z} (-1)^k e^{-2k^2 z^2}, &z \geqslant 0 \\
+    0, &z < 0 \\
+  \end{cases}$
+
+  Здесь функция $\rho = D_n^+$. Чтобы доказать, что она~--- критерий согласия, можно
+  воспользоваться теоремой Гливенко-Кантелли
+  \[
+    P(|F_n(x) - F_0(x) | \to 0 ) = 1
+  \]
+
+  Распределение в которому всё сошлось~--- распределение Колмогорова.
+\end{prop}
+
+\begin{prop}[Критерий Смирнова]\label{prop:stat::nonparcrit::smir}
+  $\rho = \max (D_n^+, D_n^-)$
+\end{prop}
+\begin{prop}[Критерий Койгера]\label{prop:stat::nonparcrit::koyg}
+  $\rho = (D_n^+ + D_n^-$
+\end{prop}
+\begin{prop}[Критерий Крамера--фон-Мизеса]\label{prop:stat::nonparcrit::omega}
+  $\rho = w^2  = \displaystyle\intR (F_n(x) - F_0(x))^2 \, \del F_0(x)$
+\end{prop}
+\begin{prop}[Критерий Андерсона-Дарлинга]\label{prop:stat::nonparcrit::andar}
+  $\rho =  \displaystyle\intR \frac{(F_n(x) - F_0(x))^2}{F_n(x) (1-F_0(x))} \, \del F_0(x)$
+\end{prop}
+
+Здесь ещё была теорема почему они непараметрические, но на неё похоже забили.
 \end{document}
 % vim:wrapmargin=3
