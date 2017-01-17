@@ -3,19 +3,19 @@
 % Author      : taxus-d <iliya.t@mail.ru>
 % Created at  : Thu Jan 12 14:26:44 MSK 2017
 %------------------------------------------------------------
-\documentclass[12pt,timbord]{../../../notes}
+\documentclass[12pt,ebook]{../../../notes}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
 \graphicspath{{../../img/}}
 
 \begin{document}
 
-\paragraph{Случаные векторы}
+\paragraph{Случайные векторы}
 \label{par:stat::randvec}
 
 
-\begin{defn}[Случаная величина]\label{defn:prob::randvec::randscal}
-  Случайной величиной назовём произвольное хорошее отображение $X\colon \Omega \to \R^n$.
+\begin{defn}[Случайный вектор]\label{defn:prob::randvec::randscal}
+  Случайным вектором назовём произвольное хорошее отображение $X\colon \Omega \to \R^n$.
   См. примечание про измеримость в \ref{par:prob::randscal}. Борелевские множества можно рассматривать 
   и в $\R^n$, как наименьшую сигма-алгебру, содержащую все полуоткрытые параллелепипеды.
 
@@ -40,8 +40,8 @@
     \item $F$ не убывает по каждому аргументу.
     \item $\displaystyle\lim_{x_i\to -\infty}F(x) = 0$
     \item $\displaystyle\lim_{x\to +\infty}F(x) = 1$
-    \item $\displaystyle\lim_{x\to x_0-0}F(x) = F(x_0)$ (по совокупности переменных)
-      Это следует из непрерывности меры.
+    \item $\displaystyle\lim_{x\to x_0-0}F(x) = F(x_0)$ (по совокупности переменных).
+      Это просто следует из непрерывности меры.
   \end{enumerate}
 \end{prop}
 
@@ -96,7 +96,8 @@
       F_{X,Y} (x,y) &= P(X<x,Y<y) = P({\omega\mid X(\omega)\in (-\infty;x]}\cap {\omega\mid
         Y(\omega)\in (-\infty;y]} \\
         &= P({\omega\mid X(\omega)\in (-\infty;x]})\cdot
-        P({\omega\mid Y(\omega)\in (-\infty;y]}) = P(X<x) \cdot P(Y<y) = F_X(x)\cdot F_Y(y)
+        P({\omega\mid Y(\omega)\in (-\infty;y]}) \\
+        &= P(X<x) \cdot P(Y<y) = F_X(x)\cdot F_Y(y)
       \end{split}
   \]
   А тогда из независимости подынтегральных функций
@@ -217,7 +218,8 @@
   \[
     \begin{split}
       \int_{-\infty}^x \left(\intR p(x,y) \,\del x\right) \, \del y &= F(x, +\infty) = 
-      P(X<x, Y<+\infty) = P({\omega\mid X(\omega)\in (-\infty, x], Y\in \R\cup\{+\infty\}}) \\
+      P(X<x, Y<+\infty) \\
+      &= P({\omega\mid X(\omega)\in (-\infty, x], Y\in \R\cup\{+\infty\}}) \\
       &= P(X<x) = F_X(x) = \int_{-\infty}^x p_X(x) \, \del x
     \end{split}
   \]
@@ -243,9 +245,9 @@
 \begin{prop}\label{prop:stat::randsum::expmul}
   Если $X,Y$~--- независимы, то $\Exp XY = \Exp X \Exp Y$
 \end{prop}
-\begin{itlproof}
-  
-\end{itlproof}
+% \begin{itlproof}
+%
+% \end{itlproof}
 
 \paragraph{Матожидание функции случайной величины}
 \label{par:stat::expfun}
@@ -347,7 +349,7 @@
   Так что снова поднимается вопрос какой теоремой о непрерывном соответствии пользоваться.
   Но если ей воспользоваться (тут по-тихому применили обратное преобразование Фурье), то
   \begin{align*}
-    p_{z_n}&= \frac{1}{2\pi} \intR \exp{\frac{- s^2 + s^2 - 2its - t^2}{2}}  =
+    p_{z_n}= \frac{1}{2\pi} \intR \exp{\frac{- s^2 + s^2 - 2its - t^2}{2}}  &=
     \frac{e^{-s^2/2}}{\sqrt{2}\pi } 
     \intR \exp\left(-\left(\underbrace{\frac{t+is}{\sqrt 2}}_\eta \right)^2\right) \del \eta 
     =\frac{e^{-s^2/2}}{\sqrt{2\pi} } \\
@@ -372,7 +374,7 @@
 
 \paragraph{Центральная предельная теорема}
 \label{par:stat::cpt}
-\begin{thrm}[ЦПТ Ляпунова\sour]\label{thrm:stat::cpt::lyap}
+\begin{thrm}[ЦПТ Ляпунова]\label{thrm:stat::cpt::lyap}
   Пусть $ \{ X_k\}$~--- независимые случаные величины (тут нет одинаковости расределений!).
   Введём гору обозначений:
   \begin{align*}
@@ -408,9 +410,10 @@
   соответвующего распределения
   \[
     \begin{split}
-      P(y < X^2 < y+ \del y) &= P(\sqrt y < X < \sqrt{y + \del y})+ P(-\sqrt y>X >-\sqrt{y+\del y}) 
-      = \frac{2}{\sqrt{2\pi}}  \int_{\sqrt y}^{\sqrt{y+\del y}} e^{-u^2/2} \, \del u \\
-      &= \sqrt{\frac{2}{\pi} } \frac{e^{-y/2}}{2\sqrt y} 
+      P(y < X^2 < y+ \del y) &= P(\sqrt y < X < \sqrt{y + \del y})+ P(-\sqrt y>X >-\sqrt{y+\del y})
+      \\
+      &= \frac{2}{\sqrt{2\pi}}  \int_{\sqrt y}^{\sqrt{y+\del y}} e^{-u^2/2} \, \del u 
+      = \sqrt{\frac{2}{\pi} } \frac{e^{-y/2}}{2\sqrt y} 
     \end{split}
   \]
   А теперь можно и фурье-образ найти
@@ -522,10 +525,11 @@
   называется вариационным рядом.
 \end{defn}
 {\def\arraystretch{1.5}
-\begin{table}[h] \underdev
-  \begin{tabular}{|c|c|c|c|}
+\begin{table}[h]
+  \raggedleft\noindent
+  \begin{tabulary}{1.0\linewidth}{|C|c|c|C|}
     \hline
-    & \bf Генеральная совокупность & \bf Выборка &  \\ \hline
+    \multicolumn{2}{|c|}{\bf Генеральная  совокупность} & \multicolumn{2}{|c|}{\bf Выборка}\\ \hline
     Матожидание & $\Exp X$ & $\overline{X} = \frac{1}{n} \sum_k X_k$ & Выборочное среднее\\
     Дисперсия & $\Var X$ & $S^2 = \frac{1}{n} \sum_k (X_k - \overline X)$ & Выборочная дисперсия\\
     Момент порядка $l$ & $\Exp X^k$ & $m_l = \frac{1}{n} \sum_k X_k^l$ & \\
@@ -535,11 +539,11 @@
     Ассиметрия ($\gamma_3$) & $\Exp (X- \Exp X)^3/\sigma^3$  
                                       & $\frac 1 n \sum (X- \overline X)^3/S^3$ & \\
     Эксцесс ($\gamma_4$) & $\frac{\Exp (X - \Exp X)^4}{\sigma^4} - 3 $& & \\
-    Функция распределения & & $\frac 1 n \sum_k I(X_k < y)$ & \\
+    Функция распределения & & $\frac 1 n \sum_k I(X_k < y)$ & эмпирическая \\
     Квантиль порядка $p\in(0;1)$ & $\sup \{x \mid F(x) \leqslant p \}$ & $X_{([pn]+1)}$ 
                                                 & член вариационного ряда\\
     \hline
-  \end{tabular}
+  \end{tabulary}
 \end{table}}
 
 \subparagraph{\underdev {Свойства оценок}}
@@ -625,11 +629,12 @@
 
 \begin{defn}\label{defn:stat::fishlem::chi}
   Пусть $X_1, \dotsc, X_n$~--- независимые случайные величины с распределением $\mathcal N(0,1)$.
-  Тогда $\sum_i X_i^2$ имеет распределение $\chi^2$ c $n$ степенями свободы. 
+  Тогда $\sum_i X_i^2$ имеет распределение $\chi^2$ c $n$ степенями свободы. Ещё так обозначается:
+  $K_n$
 \end{defn}
 \begin{prop}\label{prop:stat::fishlem::chidens}
-  Плотность распределения $\chi^2_n$ ищется по формуле $\displaystyle k_n = \frac{z^{n/2-1}
-  e^{-z/2}}{2^{n/2} \Gamma \left(\frac{n}{2} \right)} $
+  Плотность распределения $\chi^2_n$ ищется по формуле \[\displaystyle k_n = \frac{z^{n/2-1}
+  e^{-z/2}}{2^{n/2} \Gamma \left(\frac{n}{2} \right)} \]
 \end{prop}
 
 \begin{defn}\label{defn:stat::fishlem::student}
@@ -638,9 +643,9 @@
   c $n$ степенями свободы. 
 \end{defn}
 \begin{prop}\label{prop:stat::fishlem::studens}
-  Плотность распределения $\chi^2_n$ ищется по формуле 
-  $\displaystyle s_n = \dfrac{\Gamma(\frac{n+1}{2})}{\Gamma(\frac{n}{2}) \sqrt{\pi n}} 
-  \left(1+\dfrac {x^2} n\right)^{-\frac{n+1}{2} } $
+  Плотность распределения $T_n$ ищется по формуле 
+  \[\displaystyle t_n = \dfrac{\Gamma(\frac{n+1}{2})}{\Gamma(\frac{n}{2}) \sqrt{\pi n}} 
+  \left(1+\dfrac {x^2} n\right)^{-\frac{n+1}{2} } \]
 \end{prop}
 
 
@@ -678,7 +683,7 @@
       $\displaystyle\sqrt n \frac{\overline X - \theta}{\sigma} \sim \mathcal N(0,1)$
     \item $\overline{X}, S^2$ независимы \note{Здесь смещённая дисперсия}
     \item $\displaystyle \frac{n S^2}{\sigma^2} \sim \chi_{n-1}^2 $
-    \item $\displaystyle \sqrt{n-1}\, \frac{\overline X - \theta }{S}  \sim S_{n-1}$
+    \item $\displaystyle \sqrt{n-1}\, \frac{\overline X - \theta }{S}  \sim t_{n-1}$
   \end{enumerate}
 \end{lem}
 \begin{ittproof}
@@ -691,7 +696,7 @@
         = \exp \left( -\left(\frac{\sqrt n\, t}{\sqrt 2} \right)^2\right)
         \Rightarrow 
         p_{\Sigma}(z) = \frac{1}{\sqrt{2\pi}\sqrt n} \exp \left( -\frac{x^2}{2 n}\right)\\
-        \frac{S_n - n\theta}{\sigma} &\sim \mathcal N (0, \sqrt n) \Rightarrow 
+        &\frac{S_n - n\theta}{\sigma} \sim \mathcal N (0, \sqrt n) \Rightarrow 
         \frac{n}{\sqrt n} \,  \frac{\av X - \theta}{\sigma} = \sqrt n\,\frac{\av X -\theta}{\sigma}
         \sim \mathcal N(0,1)
       \end{align*}
@@ -704,7 +709,7 @@
         \end{pmatrix}
       \]
       Первая строка как вектор имеет норму 1. А значит можно вспомнить процесс Грамма-Шмидта и
-      набрать ортогональный базис. Тогда $C$ будет ортогональным. Пусть $Y = CX$. Из горы
+      набрать ортонормированный базис. Тогда $C$ будет ортогональным. Пусть $Y = CX$. Из горы
       утверждений выше мы получим:
       \begin{align*}
         Y_1 &= \frac{X_1 + \dotsb + X_n}{\sqrt n} = \av X \sqrt n \\
@@ -721,9 +726,180 @@
     \item Мы там порешили,что $\theta=0$, так что  \[
         \displaystyle \sqrt{n-1} \,\frac{\av X }{S} = \frac{Y_1}{ 
         \sqrt{\frac{n}{n(n-1)}\sum_{i=2}^n Y_i}}=\frac{Y_1}{\sqrt{\frac{1}{n-1}\sum_{i=2}^n Y_i}}
-        \sim S_{n-1}
+        \sim t_{n-1}
       \]
   \end{enumerate}
 \end{ittproof}
+
+\paragraph{Доверительны интервалы нормального распределения}
+\label{par:stat::trintnorm}
+
+Здесь собственно перешли к более интересной части~--- от точечных оценок параметров к построению
+для доверительных интервалов.
+
+\begin{defn}\label{defn:stat::trintnorm::trint}
+  $(T_1, T_2)$~--- доверительный интервал уровня $\gamma$, если $P(T_1 < \theta < T_2) = \gamma$
+\end{defn}
+
+Дальше всюду ведутся рассуждения про доверительные интервалы (уровня $\gamma$)
+параметров нормального распределения.
+
+\begin{prop}\label{prop:stat::trintnorm::qdispkn}
+  Доверительный интервал для $\theta$ при известном $\sigma$ равен 
+  $\displaystyle \left( \av X - \sigma \, \frac{z_{(1+\gamma)/2}}{\sqrt n} ; 
+  \av X + \sigma \, \frac{z_{(1+\gamma)/2}}{ \sqrt n} \right)$
+\end{prop}
+\begin{itlproof}
+  Интервал ищем явно симметричный, так что посчитаем \[
+    P\left(\sqrt n \, \frac{|\av X - \theta|}{\sigma} < z \right) 
+  \]
+  Поскольку величина внутри подчиняется стандартному нормальному распределению, 
+  \[
+  P\left(-z < \sqrt n \, \frac{(\av X - \theta)}{\sigma} < z \right) = F_n(z) - F_n(-z) = 
+  2 F_n(z) - 1 = \gamma
+  \]
+  По дороге сделали замену переменной, не пугайтесь.
+  А дальше $z = F_n(\frac{1+\gamma}{2} $, что как раз соответствует определению
+  $\frac{1+\gamma}{2} $ квантили. Ну а дальше всё уже очевидно из преобразования неравенства
+  выше. Мы умеем это делать, можно порассматривать $\{\omega \mid X(\omega) \cdots \}$ как уже
+  делали раньше.
+\end{itlproof}
+
+\begin{prop}\label{prop:stat::trintnorm::qdispukn}
+  Доверительный интервал для $\theta$ при неизвестном $\sigma$ равен 
+  $\displaystyle \left( \av X - S \, \frac{t_{n-1,(1+\gamma)/2}}{ \sqrt n} ;
+  \av X + S \, \frac{t_{n-1,(1+\gamma)/2}}{\sqrt n} \right)$
+\end{prop}
+\begin{itlproof}
+  аналогично~\ref{prop:stat::trintnorm::dispqkn}, только пользуемся 4 пунктом леммы
+  Фишера~\ref{lem:stat::fishlem::fishlem}.
+\end{itlproof}
+
+\begin{prop}\label{prop:stat::trintnorm::dispqukn}
+  Доверительный интервал для $\sigma^2$ при неизвестном $\theta$ равен 
+  $\displaystyle \left( \frac{n S^2}{v^2} ; \frac{n S^2}{u} \right)$. Чиселки $u,v$ определяются
+  с помощью $\chi^2$.
+\end{prop}
+
+\begin{prop}\label{prop:stat::trintnorm::dispqkn}
+  Доверительный интервал для $\sigma^2$ при неизвестном $\theta$ нормально не выражается. Проще
+  численно.
+  \begin{enumerate}
+    \item $\displaystyle \frac{\sum_{i=1}^n (X_i - \theta)^2}{\sigma^2} \sim \chi_n^2 $
+    \item $\displaystyle \frac{n\, (\av X - \theta)^2}{\sigma^2} \sim \chi_1^2 $
+  \end{enumerate}
+\end{prop}
+
+\paragraph{Проверка гипотез по параметрам нормального распределения}
+\label{par:stat::hypnorm}
+
+Будем рассматривать здесь простую гипотезу:
+
+\[
+  \begin{split}
+    H_0 & \colon \theta = \theta_0 \\
+    H_1 & \colon \theta \neq \theta_0 
+  \end{split}
+  \]
+
+\begin{enumerate}
+  \item Пусть $X_1, \dotsc, X_n \sim \mathcal N(\theta,\sigma^2)$, $\sigma^2$ известно.
+    Примем $H_0 \colon \theta = \theta_0$. Но тогда \[
+      \sqrt n\, \frac{\av X -\theta_0}{\sigma}\sim \mathcal N(0,1)
+    \]
+    из 1 пункта леммы Фишера (\ref{lem:stat::fishlem::fishlem}). 
+
+    Рассмотрим $\alpha$~--- уровень значимости~--- какое-нибудь маленькое число. 
+    Часто берут $0.05$. 
+    \[
+      P\left(\sqrt n\, \frac{|\av X -\theta_0|}{\sigma} > z \right) = \alpha \Leftrightarrow 
+      \sqrt n\, \frac{|\av X -\theta_0|}{\sigma} > z_{1-\alpha/2}
+    \]
+    Таким образом можно найти границы критической области. 
+
+    Если $H_0$ верна, то $\displaystyle P\left(\sqrt n\, \frac{|\av X - \theta|}{\sigma} >
+    z_{1-\alpha/2}\right)$ мала. Можно выбрать, меньше чего мы хотим её сделать, и объявить сие
+      критерием проверки. Собственно, так и делали на практике.
+  \item $\sigma^2$ неизвестна. Здесь всё то же самое, только с распределением Стьюдента. 
+\end{enumerate}
+А здесь такую
+\[
+  \begin{split}
+    H_0 & \colon \theta_1 = \theta_2 \\
+    H_1 & \colon \theta_1 \neq \theta_2 
+  \end{split} 
+\]
+Будем считать, что $X_i$, $Y_i$ независимы, и нормально распеделены:\[
+  \begin{split}
+    X_1, \dotsc, X_{n_1} \sim \mathcal N (\theta_1, \sigma_1^2) \\
+    Y_1, \dotsc, Y_{n_2} \sim \mathcal N(\theta_2, \sigma_2^2) \\
+  \end{split}
+\]
+\begin{enumerate}
+  \item $\sigma_1^2, \sigma_2^2$~--- известны.
+    \[
+      \frac{\av X - \av Y}{\sqrt{\frac{\sigma_1^2}{n_1^2} + \frac{\sigma_2^2}{n_2^2} }} \sim
+      \mathcal N (0,1) 
+    \]
+  \item $\sigma_1^2 = \sigma_2^2$, но не известны
+    \[
+      \sqrt{\frac{n_1n_2(n_1 + n_2  -2)}{n_1 + n_2} } \cdot \frac{\av X - \av Y}{\sqrt{n_1 S_1^2
+      + n_2 S_2^2}} \sim S_{n_1 + n_2 - 2}
+    \]
+    Это как раз тот самый \texttt{t-тест}
+  \item $\sigma_1^2, \sigma_2^2$ неизвестны. Тут вообще ничего не понятно. (Проблемы
+    Беренса-Фишера)
+\end{enumerate}
+
+
+\paragraph{Линейная регрессия}
+\label{par:stat::regr}
+
+\begin{defn}\label{defn:stat::reg::cov2}
+  Ковариационная матрица случайных векторов $X$, $Y$~--- матрица ковариаций их компонент
+  \[
+    \cov (X,Y)_{ij} = \cov (X_i, Y_j) = \Exp (X-\Exp X) (Y - \Exp Y)^T
+  \]
+\end{defn}
+\begin{defn}\label{defn:stat::reg::cov}
+  $\cov X = \cov (X,X)$
+\end{defn}
+
+\begin{defn}[Эффективность оценок]\label{defn:stat::reg::eff}
+  Оценка параметра $\hat\theta_1$ эффективнее оценки $\hat\theta_2$, если матрица $\cov
+  \hat\theta_1 - \cov \hat\theta_2$ отрицательно определена.
+\end{defn}
+
+\begin{defn}[Регрессия]\label{defn:stat::regr::reg}
+  Пусть $Y, X_1, \dotsc, X_m$~--- случайные векторы. 
+  Тогда если определено уравнение $y(x_1, \dotsc, x_m) = \Exp (Y \mid X_1 = x_1, \dotsc, X_m =
+  x_m)$,  то $y$ называется регрессией $Y$ по $X_1, \dotsc, X_n$.
+\end{defn}
+
+\begin{defn}[Линейная регрессия]\label{defn:stat::regr::lin}
+  Пусть $Y, X_1, \dotsc, X_m$~--- случайные векторы. 
+  Тогда если определено уравнение $y(x) = \Exp (Y \mid X_i =  x_i \:\forall\, i)$, 
+  и $y(x) = x\cdot\theta $ то $y$ называется линейной регрессией $Y$ по $X$.
+
+  Здесь $x$~--- матрица $n\times m$, $\theta\in R^m$, $\epsilon\in \R^n$, $y\in \R^n$
+\end{defn}
+\begin{rem}\label{rem:stat::regr::funran}
+  Можно с тем же успехом написать $Y = y(X)+ \varepsilon$, если $\Exp \varepsilon =0$
+\end{rem}
+
+\begin{defn}\label{defn:stat::reg::memb}
+  $Y$ называется откликом, $X$~--- регрессоры (предикторы), $\varepsilon$~--- шум, $\theta$~---
+  параметры.
+\end{defn}
+
+Основной метод поиска оптимальных параметров~--- по  функции максимального правдоподобия. Если не
+сильно расписывать, то это выльется в $\argmin\limits_{\theta} (Y-X\theta)(Y-X\theta)^T$
+
+При этом нужны условия Гаусса-Маркова:
+\begin{enumerate}
+  \item $X^T X$ обратима
+  \item $\Exp \varepsilon_i =0$ (нет систематической ошибки), $\Exp \varepsilon_i^2 = \sigma^2$,
+    $\Exp \varepsilon_i\varepsilon_j= 0$. Последние 2 равносильны $\cov\varepsilon = \sigma^2 E_n$
+\end{enumerate}
 \end{document}
 % vim:wrapmargin=3

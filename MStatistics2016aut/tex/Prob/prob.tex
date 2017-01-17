@@ -3,7 +3,7 @@
 % Author      : taxus-d <iliya.t@mail.ru>
 % Created at  : Thu Jan 12 14:26:18 MSK 2017
 %------------------------------------------------------------
-\documentclass[12pt,timbord]{../../../notes}
+\documentclass[12pt,hardcopy]{../../../notes}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
 \graphicspath{{../../img/}}
@@ -72,7 +72,7 @@
     \intertext{Тогда} 
     A &= \bigcup_{i=1}^\infty B_i;\; A_n = \bigcup_{i=1}^n B_n
     \intertext{Следовательно,}
-    P(A) = \sum_{i=1}^\infty P(B_i) = \lim_{n\to\infty} \sum_{i=1}^n P(B_i) = \lim_{n\to\infty}
+    P(A) = \sum_{i=1}^\infty P(B_i) &= \lim_{n\to\infty} \sum_{i=1}^n P(B_i) = \lim_{n\to\infty}
     P(A_n)
   \end{align*}
   Всё работает, потому что в $\sigma$-алгебре можно объединять счётное число множеств.
@@ -130,8 +130,8 @@
 \end{prop}
 
 \begin{defn}\label{defn:prob::indep::pair}
-  Случайные величины $\{X_i\}$ попарно независимы, если $\forall\,i,j\;\; P(X_i\cap X_j) =
-  P(X_i)\cdot P(X_j)$. 
+  Случайные величины $\{X_i\}$ попарно независимы, если 
+  \[\forall\,i,j\;\; P(X_i\cap X_j) = P(X_i)\cdot P(X_j)\]. 
 \end{defn}
 \begin{defn}\label{defn:prob::indep::set}
   Случайные величины $\{X_i\}_{i=1}^n$ независимы по совокупности , если \[

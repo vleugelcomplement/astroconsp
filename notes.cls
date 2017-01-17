@@ -82,6 +82,8 @@
 \RequirePackage[nointegrals]{wasysym}
 \RequirePackage{marvosym}
 \RequirePackage{hyperref}
+\RequirePackage{array}
+\RequirePackage{tabulary}
 
 \RequirePackage{titlesec}
 \RequirePackage{tocloft}
@@ -303,7 +305,7 @@
 \DeclareMathOperator\Res{Res}
 \DeclareMathOperator\Aut{Aut}
 \DeclareMathOperator\Stab{Stab}
-
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 \renewcommand\C{\mathbbm{C}} 
 \newcommand\exC{\overline{\mathbbm{C}}} 
