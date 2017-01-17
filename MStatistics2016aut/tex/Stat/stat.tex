@@ -3,7 +3,7 @@
 % Author      : taxus-d <iliya.t@mail.ru>
 % Created at  : Thu Jan 12 14:26:44 MSK 2017
 %------------------------------------------------------------
-\documentclass[12pt,ebook]{../../../notes}
+\documentclass[12pt,timbord]{../../../notes}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
 \graphicspath{{../../img/}}
@@ -855,20 +855,6 @@
 \paragraph{Линейная регрессия}
 \label{par:stat::regr}
 
-\begin{defn}\label{defn:stat::reg::cov2}
-  Ковариационная матрица случайных векторов $X$, $Y$~--- матрица ковариаций их компонент
-  \[
-    \cov (X,Y)_{ij} = \cov (X_i, Y_j) = \Exp (X-\Exp X) (Y - \Exp Y)^T
-  \]
-\end{defn}
-\begin{defn}\label{defn:stat::reg::cov}
-  $\cov X = \cov (X,X)$
-\end{defn}
-
-\begin{defn}[Эффективность оценок]\label{defn:stat::reg::eff}
-  Оценка параметра $\hat\theta_1$ эффективнее оценки $\hat\theta_2$, если матрица $\cov
-  \hat\theta_1 - \cov \hat\theta_2$ отрицательно определена.
-\end{defn}
 
 \begin{defn}[Регрессия]\label{defn:stat::regr::reg}
   Пусть $Y, X_1, \dotsc, X_m$~--- случайные векторы. 
@@ -893,13 +879,96 @@
 \end{defn}
 
 Основной метод поиска оптимальных параметров~--- по  функции максимального правдоподобия. Если не
-сильно расписывать, то это выльется в $\argmin\limits_{\theta} (Y-X\theta)(Y-X\theta)^T$
+сильно расписывать, то это выльется в $\argmin\limits_{\hat\theta} (Y-X\hat\theta)^T(Y-X\hat\theta)$
 
 При этом нужны условия Гаусса-Маркова:
 \begin{enumerate}
   \item $X^T X$ обратима
-  \item $\Exp \varepsilon_i =0$ (нет систематической ошибки), $\Exp \varepsilon_i^2 = \sigma^2$,
-    $\Exp \varepsilon_i\varepsilon_j= 0$. Последние 2 равносильны $\cov\varepsilon = \sigma^2 E_n$
+  \item $\varepsilon_i \sim \mathcal N(0,\sigma^2)$ и независимы
 \end{enumerate}
+
+\begin{prop}\label{prop:stat::reg::form}
+  Явное выражение для $\hat\theta$ при минимизации выражения выше выглядит так: 
+  $\hat\theta = (X^TX)^{-1} X^T Y$
+\end{prop}
+\begin{itlproof}
+  Пусть \[
+    Q(\theta) = (Y-X\theta)^T(Y-X\theta) = Y^T Y - \theta^T X^T Y - Y^T X \theta + 
+    \theta^T X^T X \theta  \in \R
+  \]
+  В координатах это перепишется так (как обычно, суммирование по повторяющимся индексам) \[
+    Q(\theta) = y_i y_i - 2\,y_j \theta_i X_{ji}  + (X_{si} \theta_i)\,(X_{sj} \theta_j)
+  \]
+  Тогда можно и продифференцировать
+  \begin{align*}
+    \pder{Q}{\theta_j}&= 2 X_{si} X_{sj} \theta_j - 2 X_{ji} y_j = 0 \Leftrightarrow 
+    2 X^T X \theta - 2 X^T Y = 0 \Leftrightarrow \hat\theta = (X^T X)^{-1} X^T Y \\
+    \pdder{Q}{\theta_j}{\theta_i} &= X_{si} X_{sj} \delta_{ij}
+  \end{align*}
+  Как видно, там и правда мимимум. Здесь второй дифференциал просто сразу приведён к
+  диагональному виду, и все числа на диагонали его матрицы положительны.
+\end{itlproof}
+
+\paragraph{Теорема Гаусса-Маркова}
+\label{par:stat::gausmark}
+\begin{defn}\label{defn:stat::reg::cov2}
+  Ковариационная матрица случайных векторов $X$, $Y$~--- матрица ковариаций их компонент
+  \[
+    \cov (X,Y)_{ij} = \cov (X_i, Y_j) = \Exp (X-\Exp X) (Y - \Exp Y)^T
+  \]
+\end{defn}
+\begin{defn}\label{defn:stat::reg::cov}
+  $\cov X = \cov (X,X)$
+\end{defn}
+
+\begin{defn}[Эффективность оценок]\label{defn:stat::reg::eff}
+  Оценка параметра $\hat\theta_1$ эффективнее оценки $\hat\theta_2$, если матрица $\cov
+  \hat\theta_1 - \cov \hat\theta_2$ отрицательно определена.
+\end{defn}
+
+\begin{thrm}\label{thrm:stat::guasmark}
+  Пусть 
+  \begin{enumerate}
+    \item $X^T X$ обратима
+    \item $\varepsilon_i \sim \mathcal N(0,\sigma^2)$ и независимы
+  \end{enumerate}
+  Тогда 
+  \begin{enumerate}
+    \item $\hat \theta = (X^T X)^{-1} X^T Y$~--- несмещённая оценка $\theta$,
+    \item $\hat\theta$~--- наиболее эффективная среди линейных несмещённых оценок
+  \end{enumerate}
+\end{thrm}
+\begin{ittproof}
+  \begin{enumerate}
+    \item $\hat \theta = (X^TX)^{-1} X^T (X\theta + \varepsilon) = \theta + (X^TX)^{-1} X^T
+      \varepsilon $. Так как $\Exp \varepsilon = 0$, $\varepsilon$ не зависит от $X$, последнее
+      слагаемое обращается в ноль
+    \item Пусть $\widetilde{\theta} = HY$. Такая оценка тоже будет несмещённой, если $HX = E$.
+      Тогда\[
+        \cov HY = (\Exp HY - \theta ) (HY - \theta )^T 
+        = \Exp ( (HX-E)\, \theta + \varepsilon)\,( (HX-E)\, \theta + \varepsilon)^T
+        = \Exp H \varepsilon \varepsilon^T H^T = \sigma^2 HH^T
+      \]
+      Для изначальной оценки $H_0 = (X^T X)^{-1}X^T$, так что 
+      $H_OH_O^T =(X^T X)^{-1}X^T \, X \, (X^T X)^{-1} = (X^TX)^{-1}$.
+
+      Покажем, что матрица $HH^T - (X^T X)^{-1} $ положительно определена. Пусть 
+      $C = H - (X^T X)^{-1}$. Тогда 
+      \begin{align*}
+        CX &= CH - E = 0\\
+        HH^T &= (C + (X^T X)^{-1} X^T)\, (C^T + X\,(X^T X)^{-1}) = CC^T + (X^TX)^{-1}
+      \end{align*}
+      А матрицы вида $CC^T$ обычно (над $\R$) положительно определены.
+  \end{enumerate}
+\end{ittproof}
+
+\paragraph{Оценка лисперсии погрешностей}
+\label{par:stat::estdispLSM}
+
+\begin{thrm}\label{thrm:stat::estdispLSM::est}
+  Пусть $\displaystyle S^2 = \frac{1}{n-m} (Y - X \hat \theta) ( Y - X \hat\theta)^T$. Тогда
+  $S^2$~--- несмещённая оценка $\sigma^2$
+\end{thrm}
+
 \end{document}
 % vim:wrapmargin=3

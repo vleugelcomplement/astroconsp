@@ -8,9 +8,9 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{notes}
 
-\newcommand\hmmax{0}
-\newcommand\bmmax{0}
-% \RequirePackage{stix}
+% \newcommand\hmmax{0}
+% \newcommand\bmmax{0}
+% % \RequirePackage{stix}
 % \RequirePackage{cyravantgar}
 % \renewcommand{\familydefault}{\sfdefault}
 %pdf search
