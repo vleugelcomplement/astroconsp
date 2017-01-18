@@ -3,12 +3,199 @@
 % Author      : taxus-d <iliya.t@mail.ru>
 % Created at  : Thu Jan 12 14:26:52 MSK 2017
 %------------------------------------------------------------
-\documentclass[12pt]{../../../notes}
+\documentclass[12pt, timbord]{../../../notes}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
 \graphicspath{{../../img/}}
 
 \begin{document}
+\paragraph{Процессы с независимыми приращениями}
+\label{par:proc::indep}
 
+\begin{defn}\label{defn:proc::indep}
+  Случайный процесс~--- измеримое отображение $X \colon \Omega \to L(T)$, $L(T)$~--- пространство функций над $T$
+\end{defn}
+\begin{exmp}\label{exmp:proc::indep::point}
+  $T = {t_0}$, тогда $X$~--- случайная величина
+\end{exmp}
+
+\begin{defn}\label{defn:proc::indep::ind}
+  $X$~--- процесс с независимыми приращениями, если $\forall\, t_0 < \cdots t_n \in T$ случайные величины 
+  \[
+    X(t_0), X(t_1) - X(t_0), \dotsc, X(t_n) - X(t_n - t_{n-1})
+  \]
+\end{defn}
+
+\begin{exmp}\label{exmp:proc::indep::N}
+  $T = \N$, а сам независимый процесс $X(n) = \sum_{i=1}^n Y_i$, $Y_i$~--- независимы.
+\end{exmp}
+
+\begin{defn}\label{defn:proc::indep::pois}
+  Пусть $T = \R$ (время) и при этом:
+  \begin{align*}
+    X(0) &= 0 \\
+    X(t) - X(s) &\sim \Pi(\lambda(t-s)) \\
+                &X \text{~--- процесс с независимыми приращениями}
+  \end{align*}
+\end{defn}
+\begin{defn}[Винеровский процесс(броуновское движение)]\label{defn:proc::indep::viner}
+  Пусть $T = \R$ (время) и при этом:
+  \begin{align*}
+    X(0) &= 0 \\
+    X(t) - X(s) &\sim \mathcal N (0, t-s) \\
+                &X \text{~--- процесс с независимыми приращениями}
+  \end{align*}
+\end{defn}
+
+\paragraph{Стационарные процессы}
+\label{par:proc::const}
+
+
+\begin{defn}[Стационарные в узком смысле]\label{defn:proc::const::narr}
+  $X(t)$ называется стационарным в узком смысле, если
+  \[
+    \begin{split}
+      &\forall\, t_1, \dotsc, t_n \in T, \forall\, \tau>0\;\; \bigl( t_1 + \tau, \dotsc, t_n + \tau \in T \bigr) \\
+      & \Rightarrow 
+      \bigl(X(t_1 + \tau), \dotsc, X(t_n + \tau)\bigr) \overset{d}{=} \left( X(t_1), \dotsc, X(t_n)\right)
+    \end{split}
+  \]
+  Короче, можно двигать начало отсчёта времени, распределение не изменится.
+\end{defn}
+
+\begin{cor}\label{cor:proc::const::exp}
+  \begin{align*}
+    m(t) &= \Exp X(t) = \mathrm{const} \\
+    \sigma^2(t) &= \Var X(t) = \mathrm{const} \\
+    \cov (X(s), X(t)) &= \cov (X(0), X(t-s) ) =: R(t-s)
+  \end{align*}
+  Здесь определена величина $R(t-s)$, если что.
+\end{cor}
+
+\begin{defn}[Стационарные в широком смысле]\label{defn:proc::const::wide}
+  $X(t)$ называется стационарным в широком смысле, если
+  $\Exp X(t) = \mathrm{const}$ и $\cov \bigl(X(s), X(t)\bigr) = R(t-s)$.
+\end{defn}
+
+Сделаем теперь из процессов (пока любых) линейное пространство со скалярным произведением.
+\begin{align}
+  H_0 &= \left\{\sum_{k=1}^{n} c_k X(t_k) \middle| n \in \N, t_i \in T, c_i \in \R\right\} \\
+  \langle X(s), X(t) \rangle &= \cov (X(s), X(t)) 
+\end{align}
+
+Теперь сделаем из него гильбертово пространство, пополнив по метрике, соотвествующей скалярному произведению
+Дальше надо бы доказать, что оно вообще расстояние
+
+\plholdev{Здесь дальше какая-то жесть про спектральную меру. Я её не понимаю}
+
+\paragraph{Цепи Маркова}
+\label{par:proc::markchain}
+
+\begin{defn}\label{defn:proc::markchain::chain}
+  Пусть $\mathfrak X$~--- дискретное множество состояний. Тогда $\xi_i$ образуют цепь Маркова, если 
+  \[
+    P(\xi_n = i_n \mid \xi_{n-1} = i_{n-1}, \xi_1 = i_1) = P(\xi_n = i_n \mid \xi_{n-1} = i_{n-1})
+  \]
+  (Цепь помнит только свое предыдущее состояние)
+\end{defn}
+
+\begin{defn}\label{defn:proc::markchain::def}
+  Если известны $q_i = P(\xi_1=i)$ и $p_{ij} = \frac{1}{n} P(\xi_n = j \mid \xi_{n-1} = i) $, то
+  цепь называется полностью определённой. $P = (p_{ij})$ ещё называется стохастической матрицей. 
+\end{defn}
+
+\begin{defn}\label{defn:proc::markchain::homo}
+  Если $n p_{ij}$ не зависит от $n$, то цепь называется однородной. 
+\end{defn}
+
+\begin{defn}\label{defn:proc::markchain::trannstep}
+  $p^{(n)}_{ij} = P(\xi_{k+n} = j \mid \xi_{k} =k) $ (вероятность перейти за $n$ шагов). 
+\end{defn}
+
+\begin{prop}\label{prop:proc::markchain::trmul}
+  Для однородной цепи:
+  \begin{align*}
+    p^{(n+m)}_{ij} = \sum_k p_{ik}^{(m)} \cdot p_{kj}^{(n)}
+    P^(n) = P^n
+  \end{align*}
+  Оно всё следует из независимости от старых состояний и формулы полной 
+  вероятности~\ref{prop:prob::compl::form}.
+\end{prop}
+
+\begin{exmp}\label{exmp:proc::markchain::ind}
+  Если $\xi_i$ независимы, то они образуют цепь Маркова  
+\end{exmp}
+\begin{exmp}\label{exmp:proc::markchain::func}
+  Если $\xi_i$ независимы, то $\eta_n \colon \eta_n = f(\eta_{n-1}, \xi_n)$ образуют цепь Маркова.
+\end{exmp}
+
+\begin{defn}[Случайные блуждания]\label{exmp:proc::markchain::randomwalk}
+  Случайное блуждание~--- процесс с дискретным временем вида $\eta_0 + \sum_i \xi_i$, где
+   $\xi_n \in \R^d$~--- независимые случайные величины , $\xi_k$ принимает значения $\pm e_i$~---
+   ортонорморованный базис $\Z^d$
+\end{defn}
+Случайные блуждания тоже можно считать цепью Маркова
+
+\begin{defn}\label{defn:proc::markchain::ret}
+  $f_{ii}^{(n)} = P(\xi_{n+1} = i \mid \xi_{n} \neq i, \dotsc, \xi_1 = i) $. Состояние $i$
+  возратное, если $\sum_{n=1}^\infty f_{ii}^n = 1$ и невозратное иначе.
+\end{defn}
+
+Но надо ещё подумать над вероятностью вернуться в какое-то состояние, идя не важно как.
+\[
+  p_{ii}^{(n)} = f_{ii}^{(n)} + f_{ii}^{(n-1)} p_{ii} + \dotsb + f_{ii}^{(1)}p_{ii}^{(n-1)}
+\]
+
+С таким можно разобраться при помощи производящих функций
+\begin{align*}
+  P(z) &= \sum_{n=0}^\infty p_{ii}^{(n)} z^n, \; p_{ii} (0) = 1 \\
+  F(z) &= \sum_{n=1}^\infty f_{ii}^{(n)} z^n\\
+  P(z) &= P(z) F(z) + 1 
+\end{align*}
+
+Получить последнюю формулу можно честно перемножив два ряда. Только нужно ещё не забыть, что один из
+них начинается с $z^1$. А дальше член при $z^n$ как раз и оказывается суммой выше
+
+\begin{prop}[Критерий возрата]\label{prop:proc::markchain::retcrit}
+  $i$~--- возратное $ \Leftrightarrow \dsum_{n=0}^\infty p_{ii}^{(n)} = + \infty$
+\end{prop}
+\begin{itlproof}
+  Из формулы выше
+  \[
+    P(z) = \frac{1}{1-F(z)}
+  \]
+  а $F(1) = \dsum_{n=1}^\infty f_{ii}^{(n)} = 1$
+\end{itlproof}
+
+
+
+
+
+\paragraph{Марковские процессы} \label{par:proc::mark}
+
+Здесь будем брать и сурово строить сигма-алгебры на заданных множествах.
+\begin{defn}\label{defn:proc::mark::gensigma}
+  $\sigma(Y_1, \dotsc, Y_n)$~--- наименьшая сигма-алгебра, относительно которой $Y_i$ измеримы. 
+  Короче, порождённая набором $\{Y_i\}$.
+\end{defn}
+\begin{rem*}
+  Индекс $i$ может быть и непрерывным: $\sigma(X(t) \mid t \in T)$
+\end{rem*}
+
+\begin{exmp}\label{exmp:proc::mark::sigint}
+  $F_a^b = \sigma(X(t), t\in[a,b])$~--- сигма-алгебра интервала.
+\end{exmp}
+\begin{exmp}\label{exmp:proc::mark::sigpast}
+  $F_\infty^t = \sigma(X(\zeta), \zeta\in(-\infty, t])$~--- сигма-алгебра прошлого. Можно так же и
+  будущего. И настоящего $(\zeta\in\{t\}$.
+\end{exmp}
+\begin{defn}[Марковский процесс]\label{exmp:proc::mark::mark}
+  $X(t)$~--- марковский процесс, если 
+  \[
+    \forall\, A\in F_{-\infty}^{t}, B \in F_{t}^\infty \;\: P(AB) = P(A) P(B)
+  \]
+  Короче говоря, прошлое не зависит от будущего.
+\end{defn}
 \end{document}
 
+% vim: tw=100
