@@ -38,8 +38,8 @@
   Про $F(x)$ верно следущее:
   \begin{enumerate}
     \item $F$ не убывает по каждому аргументу.
-    \item $\displaystyle\lim_{x_i\to -\infty}F(x) = 0$
-    \item $\displaystyle\lim_{x\to +\infty}F(x) = 1$
+    \item $\displaystyle\lim_{\exists\, i\; x_i\to -\infty}F(x) = 0$
+    \item $\displaystyle\lim_{\forall\,i \; x_i\to +\infty}F(x) = 1$
     \item $\displaystyle\lim_{x\to x_0-0}F(x) = F(x_0)$ (по совокупности переменных).
       Это просто следует из непрерывности меры.
   \end{enumerate}
@@ -56,11 +56,16 @@
   По сути следствие формулки про вероятность объединения.
 \end{prop}
 
+\begin{rem}\label{rem:stat::randvec::exvaldist}
+  Если для многомерной функции верны 3 свойства и ещё вероятность попасть в прямоугольничек вообще определена как вероятность
+  ($P\in [0,1]$).
+\end{rem}
+
 
 \begin{defn}\label{defn:stat::randvec::disc}
   Векторная случайная величина называется дискретной, если
   \[
-    \exists\,(\{a_i\mid a_i \in \R^n \} \sim \N)\colon \left( \sum_{i} P(X = a_i) = 1 \right)
+    \exists\,(\{a_i\mid a_i \in \R^n \} \sim A \subset \N)\colon \left( \sum_{i} P(X = a_i) = 1 \right)
   \]
   то есть 
   \[
@@ -70,20 +75,42 @@
 \begin{defn}\label{defn:stat::randvec::cony}
   Векторная случайная величина называется непрерывной, если
   \[
-    \exists\,(f_X\colon B\to \R )\colon \left( P(X\in B) = \int_{B} f_X(x^1, \dotsc, x^n)\, \del
+    \exists\,(f_X\colon B\to \R )\colon \left( P(X\in B) = \int_{B} p_X(x^1, \dotsc, x^n)\, \del
     x^1 \dotsm \del x^n \right)
   \]
 \end{defn}
 \begin{rem}\label{rem:stat::randvec::distfun }
   Для функций распределения:
   \[
-    F(x^1, \dotsc, x^n) = \int_{-\infty}^{x^n}\dotsi\int_{-\infty}^{x^1} f_X(x^1, \dotsc, x^n)\,
+    F(x^1, \dotsc, x^n) = \int_{-\infty}^{x^n}\dotsi\int_{-\infty}^{x^1} p_X(x^1, \dotsc, x^n)\,
     \del x^1 \dotsm \del x^n 
   \]
 \end{rem}
 
+\begin{prop}\label{prop:stat::randvec::reduce}
+  $p({x_1, \dotsc, x_{n-1}}) = \displaystyle\intR p({x_1, \dotsc, x_{n-1}, x_n})\, \del x_n$
+\end{prop}
+\begin{itlproof}
+  Покажем, что $\displaystyle\intR p(x,y) \,\del y = p_X(x)$
+  \[
+    \begin{split}
+      \int_{-\infty}^x \left(\intR p(x,y) \,\del x\right) \, \del y &= F(x, +\infty) = 
+      P(X<x, Y<+\infty) \\
+      &= P(\{\omega\mid X(\omega)\in (-\infty, x), Y\in \R\}) \\
+      &= P(X<x) = F_X(x) = \int_{-\infty}^x p_X(x) \, \del x
+    \end{split}
+  \]
+  Опять-таки интервал можно сжать как угодно, правда снова проблемы с непрерывностью.
+
+\end{itlproof}
+
+\begin{defn}[Независимые случайные величины]\label{defn:stat::randvec::ind}
+  Слйчаные величины $\{X_i\}$ независимые, если \[
+    \forall\, \{B_i\} \;\; P(X_1 \in B_1, \dotsc, X_n \in B_n) = P(X_1\in B_1) \dotsm P(X_n \in B_n)
+  \]
+\end{defn}
 \begin{prop}\label{prop:stat::randvec::ind}
-  Пусть $X, Y$~--- независимы. Тогда $p_{X+Y}(x,y)=p_X(x) \cdot p_Y(y)$
+  Пусть $X, Y$~--- независимы. Тогда $p_{X,Y}(x,y)=p_X(x) \cdot p_Y(y)$
 \end{prop}
 \begin{itlproof}
   По определению функции распределения
@@ -93,10 +120,10 @@
   Из независимости $X,Y$
   \[
     \begin{split}
-      F_{X,Y} (x,y) &= P(X<x,Y<y) = P({\omega\mid X(\omega)\in (-\infty;x]}\cap {\omega\mid
-        Y(\omega)\in (-\infty;y]} \\
-        &= P({\omega\mid X(\omega)\in (-\infty;x]})\cdot
-        P({\omega\mid Y(\omega)\in (-\infty;y]}) \\
+      F_{X,Y} (x,y) &= P(X<x,Y<y) = P(\{\omega\mid X(\omega)\in (-\infty;x)\}\cap \{\omega\mid
+        Y(\omega)\in (-\infty;y)\} \\
+        &= P(\{\omega\mid X(\omega)\in (-\infty;x)\})\cdot
+        P(\{\omega\mid Y(\omega)\in (-\infty;y)\}) \\
         &= P(X<x) \cdot P(Y<y) = F_X(x)\cdot F_Y(y)
       \end{split}
   \]
@@ -207,25 +234,14 @@
   Пусть $f(X,Y)= X+Y$
   \[
     \begin{split}
-      \Exp (X+Y) &= \intR f(x,y) p(x,y)\, \del x\del y 
-      = \intR x p(x,y)\, \del x \del y + \intR y p(x,y)\, \del x \del y \\
+      \Exp (X+Y) &= \intR\intR f(x,y) p(x,y)\, \del x\del y 
+      = \intR\intR x p(x,y)\, \del x \del y + \intR\intR y p(x,y)\, \del x \del y \\
       &= \intR x 
       \left(\intR p(x,y) \del y\right)\, \del x + \intR y \left(\intR p(x,y) \del x\right)\,\del y \\
       &= \Exp X + \Exp Y
     \end{split}
   \]
-  Покажем, что $\displaystyle\intR p(x,y) \,\del y = p_X(x)$
-  \[
-    \begin{split}
-      \int_{-\infty}^x \left(\intR p(x,y) \,\del x\right) \, \del y &= F(x, +\infty) = 
-      P(X<x, Y<+\infty) \\
-      &= P({\omega\mid X(\omega)\in (-\infty, x], Y\in \R\cup\{+\infty\}}) \\
-      &= P(X<x) = F_X(x) = \int_{-\infty}^x p_X(x) \, \del x
-    \end{split}
-  \]
-  Опять-таки интервал можно сжать как угодно, правда снова проблемы с непрерывностью.
-
-  Часть про константу слишком очевидна, не будем её доказывать. 
+    Часть про константу слишком очевидна, не будем её доказывать. 
 \end{itlproof}
 
 \begin{prop}[Дисперсия суммы]\label{prop:stat::randsum::var}
@@ -294,7 +310,7 @@
   \]
 \end{prop}
 \begin{itlproof}
-  Из~\ref{prop:stat::charfunsum::sum}  
+  Из~\ref{prop:stat::randsum::exp}  
   \[
     \Phi_{X+Y}(t) = \Exp e^{itX} e^{itY} = \Exp e^{itX} \cdot \Exp e^{itY} = \Phi_{X}(t) \cdot
     \Phi_Y (t)
@@ -313,7 +329,7 @@
 
 \begin{thrm}[ЦПТ Линдберга-Леви-Агекяна \sour]\label{thrm:stat::randlimsum::sum}
   Пусть $X_1, \dotsc, X_n$~--- независимые одинаково распределённые случайные величины. Пусть к
-  тому же $S_n = X_1, \dotsc, X_n$, $0 < \Var X_k < \infty$.
+  тому же $S_n = X_1 + \dotsb +  X_n$, $0 < \Var X_k < \infty$.
   Пусть $\Exp X_k = a, \Var X_k = \sigma$. Тогда при $n\to \infty$ $Z_n \sim N(0,1)$,
   в вариации из Агекяна $S_n \sim N(na,n\sigma^2)$
 \end{thrm}
@@ -322,7 +338,7 @@
   Рассмотрим характеристическую функцию $\Phi(t) = \Exp e^{itX_k}$. Введём замену (которая
   z-преобразование.):
   \[
-    z_n = \frac{S_n - a n}{\sigma \sqrt n}
+    Z_n = \frac{S_n - a n}{\sigma \sqrt n}
   \]
   Давайте ещё немного схитрим и положим $X_k \gets X_k- a$. А то потом будет много возни с бедным
   $a$. При этом $z_n = \frac{S_n}{\sigma \sqrt n}$
@@ -364,10 +380,10 @@
     F_{S_n} (x) &= \int_{-\infty}^x \frac{1}{\sqrt{2\pi}} \frac{1}{\sigma\sqrt n} 
     e^{-\frac{u^2}{2\sigma^2 n} } \, \del u
   \intertext{Вернёмся обратно к ненулевому $a$ }
-    S_n &\gets S_n - n a \\
+    S_n &= S_n - n a \\
     F_{S_n} &= \frac{1}{\sqrt{2\pi}} \frac{1}{\sigma\sqrt n}\int_{-\infty}^x  
     e^{-\frac{(u-n a)^2}{2\sigma^2 n} } \, \del u \\
-    S_n \sim N (na, n \sigma^2) (n \to \infty)
+    S_n \sim N (na, n \sigma^2)\;\; (n \to \infty)
   \end{align*}
 \end{ittproof}
 
@@ -383,7 +399,7 @@
     A_n &= \sum_{k=1}^n a_k & B_n^2 &= \sum_{k=1}^n \sigma_k^2 & C_n &= \sum_{k=1}^n \gamma_k
   \end{align*}
   Тогда \[
-    \frac{C_N}{B_n^3} \xrightarrow[n\to\infty]{} 0  \Rightarrow \frac{S_n - A_n}{B_n}  \xrightarrow[n\to\infty]{d} \mathcal N (0,1)
+    \frac{C_n}{B_n^3} \xrightarrow[n\to\infty]{} 0  \Rightarrow \frac{S_n - A_n}{B_n}  \xrightarrow[n\to\infty]{d} \mathcal N (0,1)
   \]
 \end{thrm}
 \begin{rem*}
@@ -402,10 +418,10 @@
   степенями свободы.
 \end{defn}
 \begin{prop}\label{prop:stat::genmuavr::chi}
-  $\displaystyle p_{\chi_b}(z) = \frac{1}{2^{n/2}\cdot \Gamma (\frac{n}{2} )} z^{n/2 -1} e^{-z/2} $
+  $\displaystyle p_{\chi_b}(z) = \frac{z^{n/2 -1} e^{-z/2}}{2^{n/2}\cdot \Gamma (\frac{n}{2} )}  $
 \end{prop}
 \begin{itlproof}
-  Характеристическая функция $\chi$ может быть найдена из~\ref{conj:stat::charfunsum::sumn}
+  Характеристическая функция $\chi$ может быть найдена из~\ref{conj:stat::charfunsum::sumn}.
   Найдём сначала характеристическую функцию $X_k^2$. Для этого было бы недурно найти плотность
   соответвующего распределения
   \[
@@ -454,7 +470,7 @@
   Рассмотрим $\nu_k = \# \{ 1 \leqslant i \leqslant n \mid X_i =k\},\; 1\leqslant k \leqslant r$.
   Тогда 
   \[
-    \sum_{k=1}^r \left( \frac{\nu_k - n p_k}{\sqrt{n p_k}}  \right) \xrightarrow{d} \chi_{r-1}^2
+    \sum_{k=1}^r \left( \frac{\nu_k - n p_k}{\sqrt{n p_k}}  \right)^2 \xrightarrow[n\to \infty]{d} \chi_{r-1}^2
   \]
 \end{thrm}
 
@@ -487,7 +503,7 @@
   \item Оценивание параметров:
     \begin{itemize}
       \item Точечные оценки: $\hat\theta = T(X_1, \dotsc, X_n)$
-      \item Доверительные интервалы: $P_\alpha (T_1 < \theta < T_2) = \alpha$
+      \item Доверительные интервалы: $P_\alpha (T_1 < \hat\theta < T_2) = \alpha$
     \end{itemize}
   \item Проверка гипотез\par
     Пусть $\Theta = \Theta_0 \cup \Theta_1$. А мы хотим узнать чему принадлежит $\theta$. 
@@ -499,21 +515,23 @@
 
 \subparagraph{Выборочные характеристики}
 Выберем реализацию случайной величины (выборку во втором смысле) $X_1, \dotsc, X_n$.
-Рассмотрим новую случайную величину:\[
+Рассмотрим новую случайную величину:
+{\def\arraystretch{1.5}
+  \[
   \widetilde{X} \colon 
   \begin{array}{c|c|c}
     X_1 & \cdots & X_n \\ \hline
     \frac{1}{n} & \cdots & \frac{1}{n}  
   \end{array}
 \]
-
+}
 Ну а дальше все выборочные характеристики определяются уже для этой случайной величины.
 Напомним следующее
 \begin{defn}[Индикатор]\label{defn:stat::mom::ind}
   $\displaystyle I_A(X) = \begin{cases}
     1, &X\in A\\
     0, & X \not\in A
-  \end{cases}, 
+  \end{cases},\; 
   I(X < x) = \begin{cases}
     1, &X < x\\
     0, & X \geqslant x
@@ -526,7 +544,7 @@
 \end{defn}
 {\def\arraystretch{1.5}
 \begin{table}[h]
-  \raggedleft\noindent
+  \noindent
   \begin{tabulary}{1.0\linewidth}{|C|c|c|C|}
     \hline
     \multicolumn{2}{|c|}{\bf Генеральная  совокупность} & \multicolumn{2}{|c|}{\bf Выборка}\\ \hline
@@ -538,8 +556,8 @@
     \overline Y)$ & \\
     Ассиметрия ($\gamma_3$) & $\Exp (X- \Exp X)^3/\sigma^3$  
                                       & $\frac 1 n \sum (X- \overline X)^3/S^3$ & \\
-    Эксцесс ($\gamma_4$) & $\frac{\Exp (X - \Exp X)^4}{\sigma^4} - 3 $& & \\
-    Функция распределения & & $\frac 1 n \sum_k I(X_k < y)$ & эмпирическая \\
+    Эксцесс ($\gamma_4$) & $\frac{\Exp (X - \Exp X)^4}{\sigma^4} - 3 $& $\frac 1 n \sum_{k} (X-\av X)^4/S^4 - 3$ & \\
+    Функция распределения & $P(X<x)$ & $\frac 1 n \sum_k I(X_k < y)$ & эмпирическая \\
     Квантиль порядка $p\in(0;1)$ & $\sup \{x \mid F(x) \leqslant p \}$ & $X_{([pn]+1)}$ 
                                                 & член вариационного ряда\\
     \hline
@@ -547,15 +565,21 @@
 \end{table}}
 
 \subparagraph{\underdev {Свойства оценок}}
+
+\begin{enumerate}
+  \item Несмещённость: $\Exp \hat\theta = \theta$
+  \item Асимпотическая несмещённость: $\Exp \hat\theta \xrightarrow[n\to \infty]{} \theta$
+\end{enumerate}
+
 \subparagraph{Метод моментов}
 
 \begin{defn}\label{defn:stat:mom:method}
 
-  Пусть $F(x,\theta)$~--- семейство распределений, $m(x) = \Exp g(x)$~--- какой-то момент этого
+  Пусть $F(x,\theta)$~--- семейство распределений, $m(x) = \Exp g(X)$~--- какой-то момент этого
   распределения. Пусть известно, что $h(\theta) = m(x)$. Тогда собственно сам метод состоит в том,
   чтобы оценить $\theta$ как решение уравнения выше.
   \[
-    \hat \theta = h^{-1} (m(x))
+    \hat \theta = h^{-1} (m), \; m\text{~--- эмпирический момент}
   \]
   В случае чего там векторы, но особо не страшно.
 
@@ -574,7 +598,7 @@
 \end{defn}
 \begin{defn}\label{defn:stat::maxlike::fun}
   Пусть $\{X_k\}$~---$n$ независимых случайных величин. Тогда
-  $\displaystyle L(\theta):= \prod_{k=1}^n f_\theta(X_k)$~--- функция правдоподобия.
+  $\displaystyle L(\theta):= \prod_{k=1}^n p(X_k, \theta)$~--- функция правдоподобия.
   Ещё берут её логарифм.
 \end{defn}
 
@@ -639,7 +663,7 @@
 
 \begin{defn}\label{defn:stat::fishlem::student}
   Пусть $X_1, \dotsc, X_n$~--- независимые случайные величины с распределением $\mathcal N(0,1)$.
-  Тогда $\displaystyle \frac{x}{\sqrt{\frac{1}{n} \sum_i X_i^2}}$ имеет распределение Стьюдента 
+  Тогда $\displaystyle \frac{X_1}{\sqrt{\frac{1}{n} \sum_i X_i^2}}$ имеет распределение Стьюдента 
   c $n$ степенями свободы. 
 \end{defn}
 \begin{prop}\label{prop:stat::fishlem::studens}
@@ -688,11 +712,11 @@
 \end{lem}
 \begin{ittproof}
   \begin{enumerate}
-    \item Заменим $Z_i = \frac{X-\theta }{\sigma}$, $Z_i \sim \mathcal N(0,1)$
+    \item Заменим $Z_i = \frac{X-\theta }{\sigma}$, $Z_i \sim \mathcal N(0,1)$.
       Найдем распределение $\sum_i Z_i= \Sigma$. 
       \begin{align*}
-        \Phi_i (t) &= e^{-t^2/2} \\
-        \Phi_{S_n} (t) &= \frac 1 n \cdot \exp \left( -n\,\frac{t^2}{2} \right) 
+        \Phi_{Z_i} (t) &= e^{-t^2/2} \\
+        \Phi_{\Sigma} (t) &= \exp \left( -n\,\frac{t^2}{2} \right) 
         = \exp \left( -\left(\frac{\sqrt n\, t}{\sqrt 2} \right)^2\right)
         \Rightarrow 
         p_{\Sigma}(z) = \frac{1}{\sqrt{2\pi}\sqrt n} \exp \left( -\frac{x^2}{2 n}\right)\\
@@ -714,16 +738,16 @@
       \begin{align*}
         Y_1 &= \frac{X_1 + \dotsb + X_n}{\sqrt n} = \av X \sqrt n \\
         \|Y\| &= \|X\| \Rightarrow \sum_i X_i^2 = \sum_i Y_i^2 \\
-        S^2 &= \frac{1}{n} \sum_i X_i^2 - (\av X)^2 = \frac{1}{n} \sum_{i=2}^n Y_i
+        S^2 &= \frac{1}{n} \sum_i X_i^2 - (\av X)^2 = \frac{1}{n} \sum_{i=2}^n Y_i^2
       \end{align*}
-      А дальше надо честно посчитать $\cov \left(\frac{Y_1}{\sqrt n}, \sum_{i=2}^n Y_i \right) $.
+      А дальше надо честно посчитать $\cov \left(\frac{Y_1}{\sqrt n}, \sum_{i=2}^n Y_i^2 \right) $.
       Правда ноль получается.
       Если что, \[
         \cov (X,Y) = \Exp (X-\Exp X)(Y - \Exp Y) = \Exp (XY) - \Exp X \Exp Y
       \]
-    \item $\displaystyle \frac{n S^2}{\sigma^2}  = \sum_{i=2}^n \left(\frac{Y_i}{\sigma} \right) =
+    \item $\displaystyle \frac{n S^2}{\sigma^2}  = \sum_{i=2}^n \left(\frac{Y_i}{\sigma} \right)^2 =
       \chi^2_{n-1}$
-    \item Мы там порешили,что $\theta=0$, так что  \[
+    \item Из всего предыдущего  \[
         \displaystyle \sqrt{n-1} \,\frac{\av X }{S} = \frac{Y_1}{ 
         \sqrt{\frac{n}{n(n-1)}\sum_{i=2}^n Y_i}}=\frac{Y_1}{\sqrt{\frac{1}{n-1}\sum_{i=2}^n Y_i}}
         \sim t_{n-1}
@@ -731,7 +755,7 @@
   \end{enumerate}
 \end{ittproof}
 
-\paragraph{Доверительны интервалы нормального распределения}
+\paragraph{Доверительные интервалы нормального распределения}
 \label{par:stat::trintnorm}
 
 Здесь собственно перешли к более интересной части~--- от точечных оценок параметров к построению
@@ -759,7 +783,7 @@
   2 F_n(z) - 1 = \gamma
   \]
   По дороге сделали замену переменной, не пугайтесь.
-  А дальше $z = F_n(\frac{1+\gamma}{2} $, что как раз соответствует определению
+  А дальше $z = F_n\left(\frac{1+\gamma}{2}\right) $, что как раз соответствует определению
   $\frac{1+\gamma}{2} $ квантили. Ну а дальше всё уже очевидно из преобразования неравенства
   выше. Мы умеем это делать, можно порассматривать $\{\omega \mid X(\omega) \cdots \}$ как уже
   делали раньше.
@@ -867,7 +891,7 @@
   Тогда если определено уравнение $y(x) = \Exp (Y \mid X_i =  x_i \:\forall\, i)$, 
   и $y(x) = x\cdot\theta $ то $y$ называется линейной регрессией $Y$ по $X$.
 
-  Здесь $x$~--- матрица $n\times m$, $\theta\in R^m$, $\epsilon\in \R^n$, $y\in \R^n$
+  Здесь $x$~--- матрица $n\times m$, $\theta\in \R^m$, $\varepsilon\in \R^n$, $y\in \R^n$
 \end{defn}
 \begin{rem}\label{rem:stat::regr::funran}
   Можно с тем же успехом написать $Y = y(X)+ \varepsilon$, если $\Exp \varepsilon =0$
@@ -878,12 +902,11 @@
   параметры.
 \end{defn}
 
-Основной метод поиска оптимальных параметров~--- по  функции максимального правдоподобия.
-Если не
-сильно расписывать, то это выльется в $\argmin\limits_{\hat\theta} (Y-X\hat\theta)^T(Y-X\hat\theta)$
+Основной метод поиска оптимальных параметров, если шумы нормальные~--- по  функции максимального правдоподобия.
+Если не сильно расписывать, то это выльется в $\argmin\limits_{\hat\theta} (Y-X\hat\theta)^T(Y-X\hat\theta)$
 
 \begin{itaux}
-  А если расписывать, то получается следущее: раз все $\varepsilon_i$ независимы и нормально
+  А если расписывать, то получается следущее: если все $\varepsilon_i$ независимы и нормально
   распределены, то функция максимального правдоподобия  будет выглядеть так:\[
     L(\theta_1, \dotsc, \theta_m) = \left( \frac{1}{\sqrt{2\pi} \sigma} \right)^n
     \exp \left(
@@ -896,7 +919,7 @@
 При этом нужны условия Гаусса-Маркова:
 \begin{enumerate}
   \item $X^TX$ обратима
-  \item $\varepsilon_i \sim \mathcal N(0,\sigma^2)$ и независимы
+  \item $\Exp \varepsilon_i  = 0$, $\Var \varepsilon_i = \sigma^2$, $\cov \varepsilon_i \varepsilon_j = 0$
 \end{enumerate}
 
 \begin{prop}\label{prop:stat::reg::form}
@@ -942,7 +965,7 @@
   Пусть 
   \begin{enumerate}
     \item $X^TX$ обратима
-    \item $\varepsilon_i \sim \mathcal N(0,\sigma^2)$ и независимы
+    \item $\Exp \varepsilon_i  = 0$, $\Var \varepsilon_i = \sigma^2$, $\cov \varepsilon_i \varepsilon_j = 0$
   \end{enumerate}
   Тогда 
   \begin{enumerate}
@@ -954,27 +977,31 @@
   \begin{enumerate}
     \item $\hat \theta = (X^TX)^{-1} X^T (X\theta + \varepsilon) = \theta + (X^TX)^{-1} X^T
       \varepsilon $. Так как $\Exp \varepsilon = 0$, $\varepsilon$ не зависит от $X$, последнее
-      слагаемое обращается в ноль
-    \item Пусть $\widetilde{\theta} = HY$. Такая оценка тоже будет несмещённой, если $HX = E$.
+      слагаемое обращается в ноль. Ну $\Exp \hat\theta = \Exp\theta = \theta $, ибо $\theta$~--- константа.
+    \item Пусть $\widetilde{\theta} = HY$. Такая оценка тоже будет несмещённой, если $HX = E$. Ну 
+      для несмещённости, 
+    \[
+        \Exp HY = \Exp H(X\theta + \varepsilon) = \Exp H X \theta  = \theta
+    \]а это как раз единичность этой матрицы.
       Тогда\[
-        \cov HY = (\Exp HY - \theta ) (HY - \theta )^T 
-        = \Exp ( (HX-E)\, \theta + \varepsilon)\,( (HX-E)\, \theta + \varepsilon)^T
+        \cov HY = \Exp (HY - \theta ) (HY - \theta )^T 
+        = \Exp ( \underbrace{(HX-E)}_0\, \theta + H\varepsilon)\,( \underbrace{(HX-E)}_0\, \theta + H\varepsilon)^T
         = \Exp H \varepsilon \varepsilon^T H^T = \sigma^2 HH^T
       \]
       Для изначальной оценки $H_0 = (X^T X)^{-1}X^T$, так что 
-      $H_OH_O^T =(X^T X)^{-1}X^T \, X \, (X^T X)^{-1} = (X^TX)^{-1}$.
+      $H_0H_0^T =(X^T X)^{-1}X^T \, X \, (X^T X)^{-1} = (X^TX)^{-1}$.
 
       Покажем, что матрица $HH^T - (X^T X)^{-1} $ положительно определена. Пусть 
-      $C = H - (X^T X)^{-1}$. Тогда 
+      $C = H - (X^T X)^{-1}X^T$. Тогда 
       \begin{align*}
-        CX &= CH - E = 0\\
+        CX &= HX - E = 0\\
         HH^T &= (C + (X^T X)^{-1} X^T)\, (C^T + X\,(X^T X)^{-1}) = CC^T + (X^TX)^{-1}
       \end{align*}
       А матрицы вида $CC^T$ обычно (над $\R$) положительно определены.
   \end{enumerate}
 \end{ittproof}
 
-\paragraph{Оценка лисперсии погрешностей}
+\paragraph{Оценка дисперсии погрешностей}
 \label{par:stat::estdispLSM}
 
 \begin{thrm}\label{thrm:stat::estdispLSM::est}
@@ -983,10 +1010,10 @@
 \end{thrm}
 \begin{ittproof}
   \[
-    Y - X\hat\theta = (E_n - X (X^T X)^{-1} X^T ) (X\theta + \varepsilon) = (E_n - X (X^T X)^{-1} X^T
+    Y - X\hat\theta = Y -  (E_n - X (X^T X)^{-1} X^T ) (X\theta + \varepsilon) = (E_n - X (X^T X)^{-1} X^T
     ) \varepsilon = B \varepsilon
   \]
-  Тогда $S^2 = \frac{1}{n-m} \varepsilon^2 B^T B \varepsilon$, причём $B$~--- симметрична. Так
+  Тогда $S^2 = \frac{1}{n-m} \varepsilon^T B^T B \varepsilon$, причём $B$~--- симметрична. Так
   что $B^TB =B^2 = B$ (лень расписывать). Так что 
   \[
     \Exp S^2 = \frac{1}{n-m} \Exp (\varepsilon^T B \varepsilon)  = \frac{\sigma^2}{n-m} \Tr B
@@ -994,10 +1021,10 @@
   потому что всё, что не на главной диагонали обратится в ноль в силу независимости
   $\varepsilon_i$.
 
-  Осталось доказать, что $\Tr (X (X^T X)^{-1} X^T$. Покажем, что след произведения матриц не
+  Осталось доказать, что $\Tr (X (X^T X)^{-1} X^T) = m$. Покажем, что след произведения матриц не
   зависит от порядка сомножителей. 
   \[
-    \Tr AB = (ab)_i =  a_{is}\, b{si} = b_{si} a_{is} = (ba)_s
+    \Tr AB = (ab)_i =  a_{is}\, b_{si} = b_{si} a_{is} = (ba)_s
   \]
   Так что просто переставим $X^T$ в самое начало и получим $E_m$.
 \end{ittproof}
@@ -1007,7 +1034,7 @@
 
 \begin{defn}\label{defn:stat::pirson}
   Пусть $X_1, \dotsc, X_n \sim F$. Будем проверять гипотезу \[
-  H_0\colon F = F_0 \\
+  H_0\colon F = F_0 \;\;
   H_1\colon F \neq F_0
 \]
 Пусть существует функция $\rho(X)$, такая что
@@ -1017,16 +1044,15 @@
   \item если $H_0$ неверна, то $|\rho(X)| \xrightarrow{p} \infty$
 \end{enumerate}
 
-Выберем критическую область по распределению $G$ из равенства $P(|x
-g| \geqslant C) = \gamma$, $g \sim G$.
+Выберем критическую область по распределению $G$ из равенства $P(|g| \geqslant C) = \gamma$, $g \sim G$.
 Тогда критерий введём так: будум отвергать $H_0$, если $|\rho(X)| \geqslant C$. 
 \end{defn}
 
 
 \begin{defn}[Критерий согласия Пирсона]\label{defn:stat::pirson::crit}
   Разобъем всю область значений $X_i$ на интервалы $I_i$,
-  с заданными вроятностями~--- $p_i$, $\sum_i p_i = 0$.
-  Будем проверять гипотезу $\forall\, i P(X_1 \in I_i) = p_i$. Этакая дискретизация распределения.
+  с заданными вроятностями~--- $p_i$, $\sum_i p_i = 1$.
+  Будем проверять гипотезу $\forall\, i\;\; P(X_1 \in I_i) = p_i$. Этакая дискретизация распределения.
 
   Ещё обозначим $\nu_k = \# \{i \mid X_i \in I_k\}$. Пусть
   \[
@@ -1052,11 +1078,12 @@ g| \geqslant C) = \gamma$, $g \sim G$.
     D_n^- &= \sup_x (F_0(x) - F_n(x)) 
   \end{align*}
   Тогда $P(\sqrt n D_n^+  < z) \to \displaystyle\begin{cases}
-    \sum_{k\in \Z} (-1)^k e^{-2k^2 z^2}, &z \geqslant 0 \\
+    \sum\limits_{k\in \Z} (-1)^k e^{-2k^2 z^2}, &z \geqslant 0 \\
     0, &z < 0 \\
   \end{cases}$
 
-  Здесь функция $\rho = D_n^+$. Чтобы доказать, что она~--- критерий согласия, можно
+  Здесь функция $\rho = \sqrt n D_n^+$. 
+  Чтобы доказать, что она~--- критерий согласия, можно
   воспользоваться теоремой Гливенко-Кантелли
   \[
     P(|F_n(x) - F_0(x) | \to 0 ) = 1
@@ -1066,10 +1093,10 @@ g| \geqslant C) = \gamma$, $g \sim G$.
 \end{prop}
 
 \begin{prop}[Критерий Смирнова]\label{prop:stat::nonparcrit::smir}
-  $\rho = \max (D_n^+, D_n^-)$
+  $\rho = \sqrt n\max (D_n^+, D_n^-)$
 \end{prop}
 \begin{prop}[Критерий Койгера]\label{prop:stat::nonparcrit::koyg}
-  $\rho = (D_n^+ + D_n^-)$
+  $\rho = \sqrt n(D_n^+ + D_n^-)$
 \end{prop}
 \begin{prop}[Критерий Крамера--фон-Мизеса]\label{prop:stat::nonparcrit::omega}
   $\rho = \omega^2  = \displaystyle\intR (F_n(x) - F_0(x))^2 \, \del F_0(x)$
@@ -1078,6 +1105,6 @@ g| \geqslant C) = \gamma$, $g \sim G$.
   $\rho =  \displaystyle\intR \frac{(F_n(x) - F_0(x))^2}{F_n(x) (1-F_0(x))} \, \del F_0(x)$
 \end{prop}
 
-Здесь ещё была теорема почему они непараметрические, но на неё похоже забили.
+Здесь ещё была теорема почему они непараметрические, но я уже немного параметризован.
 \end{document}
 % vim:wrapmargin=3

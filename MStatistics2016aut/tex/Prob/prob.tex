@@ -3,7 +3,7 @@
 % Author      : taxus-d <iliya.t@mail.ru>
 % Created at  : Thu Jan 12 14:26:18 MSK 2017
 %------------------------------------------------------------
-\documentclass[12pt,hardcopy]{../../../notes}
+\documentclass[12pt,timbord]{../../../notes}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
 \graphicspath{{../../img/}}
@@ -130,13 +130,13 @@
 \end{prop}
 
 \begin{defn}\label{defn:prob::indep::pair}
-  Случайные величины $\{X_i\}$ попарно независимы, если 
-  \[\forall\,i,j\;\; P(X_i\cap X_j) = P(X_i)\cdot P(X_j)\]. 
+  Случайные события $\{A_i\}$ попарно независимы, если 
+  \[\forall\,i,j\;\; P(A_i\cap A_j) = P(A_i)\cdot P(A_j)\]. 
 \end{defn}
 \begin{defn}\label{defn:prob::indep::set}
-  Случайные величины $\{X_i\}_{i=1}^n$ независимы по совокупности , если \[
-    \forall\,\{i_k\mid i_k,k \in (\Z\cap[1;n]) \}\;\; P\left(\bigcap_{i_k} X_{i_k}\right) 
-    = \prod_{i_k}  P(X_{i_k})
+  Случайные события $\{A_i\}_{i=1}^n$ независимы по совокупности , если \[
+    \forall\,\{i_k\mid i_k,k \in (\Z\cap[1;n]) \}\;\; P\left(\bigcap_{i_k} A_{i_k}\right) 
+    = \prod_{i_k}  P(A_{i_k})
   \] 
 \end{defn}
 \begin{rem}\label{rem:prob::indep::bern}
