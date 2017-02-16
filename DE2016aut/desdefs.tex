@@ -6,6 +6,24 @@
 \author{Лектор: В.~В.~Басов \\
         Записал: \texttt{taxus}}
 
+\DeclareMathOperator{\Lip}{Lip}
+\newcommand{\liploc}[1]{\Lip_{#1}^{\mathrm{loc}}} 
+\newcommand{\lipgl}[1]{\Lip_{#1}^{\mathrm{gl}}} 
+\usepackage{xstring}
+
+\newcommand*\ov[2]{
+  \IfEqCase{#1}{%
+    {~}{\widetilde{#2}}%
+    {-}{\overline{#2}}%
+    {^}{\widehat{#2}}%
+  }[\PackageError{tmath}{Undefined option to ov: #1}{}]%
+}
+\newcommand*\und[2]{
+  \IfEqCase{#1}{%
+    {-}{\underline{#2}}%
+  }[\PackageError{tmath}{Undefined option to und: #1}{}]%
+}
+
 \begin{document}
 
 \maketitle
@@ -118,4 +136,22 @@
   \]
 \end{thrm}
 
+\chapter{Нормальные и не очень системы диффуров}
+\paragraph{Условия Липшица}
+
+
+\begin{lem}[Лемма Адамара]\label{lem:sys::ad}
+  Пусть $f(x,y) \colon \R^l \times \R^m \to \R^n$, $G$~--- область, выпуклая по $y$.
+  Пусть также $f(x,y), \pder{f}{y^i} \in C(G)$. Тогда \[
+    \exists\, h(x,y_1, y_2) \colon \R^l\times\R^m\times\R^m \to \R^m\times\R^n \;\:
+    f(x,y_2) - f(x, y_1) = h(x, y_1, y_2)^T (y_2 - y_1) 
+  \]
+  где $\displaystyle h(x, y_1, y_2) = \int_0^1 \frac{\partial f(x, u(s))}{\partial y} \, \del s$, \
+  а $u(s) = y_1 + s(y_2 - y_1)$
+\end{lem}
+
+\begin{lem}\label{lem:sys::lipcon}
+  Пусть $f(x,y) \in \liploc{y}(G)$, $G$~--- область. Тогда $\forall \overline{H} \subset G 
+  \;\: f\in \lipgl{y}$. 
+\end{lem}
 \end{document}
