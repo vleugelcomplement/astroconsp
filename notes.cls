@@ -94,7 +94,7 @@
 
 \RequirePackage{chngcntr} % tools for counters 
 \RequirePackage{bbm}      %} more math fonts
-% \RequirePackage{mathrsfs} %}
+\RequirePackage{mathrsfs} %}
 \RequirePackage{accents}  % extra dots over chars
 %\RequirePackage{xfrac} % better slashed fractions --> Font Warning --> Loads too many fonts --> not useful 
 
@@ -352,17 +352,29 @@
 \newcommand{\flame}{\texttt{:set aflame}} 
 \newcommand{\sour}{$\ddot\sim$} 
 \newcommand{\plholdev}[1]{\texttt{<+{#1}+>}} 
+\newcommand{\intrng}{\mathbin{..}} 
 
 \renewcommand*{\dot}[1]{\accentset{\mbox{\bfseries .}}{#1}}
 \renewcommand*{\ddot}[1]{\accentset{\mbox{\bfseries .\hspace{-0.1ex}.}}{#1}}
 \newcommand{\coori}{\mathop{\uparrow\!\uparrow}} 
 \newcommand{\conori}{\mathop{\uparrow\!\downarrow}} 
 % probability theory
- \DeclareMathOperator{\Exp}{M} 
- \DeclareMathOperator{\Var}{D} 
- \DeclareMathOperator{\cov}{cov} 
- \newcommand{\av}[1]{\overline{#1}} 
- \newcommand{\intR}{\int_{-\infty}^{+\infty}} 
+\DeclareMathOperator{\Exp}{M} 
+\DeclareMathOperator{\Var}{D} 
+\DeclareMathOperator{\cov}{cov} 
+\newcommand{\av}[1]{\overline{#1}} 
+\newcommand{\intR}{\int_{-\infty}^{+\infty}} 
+
+% measure theory
+
+\newcommand{\pset}{\mathpzc P} 
+\newcommand{\alg}{\mathpzc A} 
+\edef\bigcup{\bigcup\limits}
+\edef\bigcap{\bigcap\limits}
+\DeclareFontFamily{OT1}{pzc}{}
+\DeclareFontShape{OT1}{pzc}{m}{it}{<-> s * [1.200] pzcmi7t}{}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+\newcommand{\Cell}{\mathpzc{Cell}} 
 
 \endinput
 % vim: nofoldenable

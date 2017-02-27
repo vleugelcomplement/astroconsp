@@ -1,0 +1,85 @@
+%------------------------------------------------------------
+% Description : 
+% Author      : Iliya Tikhonenko <iliya.t@mail.ru>
+% Created at  : Tue Feb 21 00:00:16 MSK 2017
+%------------------------------------------------------------
+\documentclass[12pt, timbord]{../../../notes}
+\usepackage{silence}
+\WarningFilter{latex}{Reference}
+\graphicspath{{../../img/}}
+
+\begin{document}
+\paragraph{Системы множеств}
+\label{par:meas::setsys}
+
+\begin{defn}\label{defn:meas::setsys::sub}
+  Пусть здесь (и дальше) $X$~--- проивольное множество. Тогда $\pset(X) \equiv 2^X$~--- множество
+  всех подмножеств $X$.
+\end{defn}
+\begin{exmp*}
+  $X = \{1 \intrng n\} \Rightarrow \# \pset (X) = 2^n$ (это количество элементов, если что)
+\end{exmp*}
+
+\begin{defn}[Алгебра]\label{defn:meas::setsys::alg}
+  Пусть $\alg \subset \pset (X)$. Тогда $\alg$~--- алгебра множеств, если
+  \begin{enumerate}
+    \item $\varnothing \in \alg$
+    \item $X \in \alg$
+    \item $A,B\in \alg \Rightarrow A \cap B, A \cup B, A \setminus B \in \alg$
+  \end{enumerate}
+\end{defn}
+\begin{rem*}
+  Заметим, что в алгебре пересечение (или объединение) \emph{конечного} числа её элементов лежит в
+  алгебре.  Это можно доказать простой индукцией. А вот для бесконечных объединений пользоваться
+  индукцией уже нельзя, ведь $\infty \not\in \N$. 
+\end{rem*}
+
+\begin{defn}[$ \sigma $-алгбера]\label{defn:meas::setsys::sigalg}
+  Пусть $\alg \in \pset(X)$. Тогда $\alg$~--- $ \sigma $-алгебра, если 
+  \begin{enumerate}
+    \item $\alg$~--- алгебра
+    \item $A_1, \dotsc, A_n \in \alg \Rightarrow \bigcup_{k=1}^ \infty A_k \in\alg, 
+      \bigcap_{k=1}^{ \infty } A_k \in \alg $
+  \end{enumerate}     
+\end{defn}
+
+\begin{defn}\label{defn:meas::setsys::sigshell}
+  Пусть $\mathcal E \subset \pset(X)$. Тогда 
+  \[
+  \sigma(\mathcal E) := \bigcap\,\{\alg \mid \alg\text{~--- $\sigma$-алгебра, $\alg \supset
+  \mathcal E $}\}
+  \]
+  эта конструкция~--- сигма-алгебра, просто аксиомы проверить.
+\end{defn}
+
+\begin{defn}\label{defn:meas::setsys::borel}
+  Пусть $\mathcal O$~--- все открытые множества в $\R^n$. Тогда $\mathpzc B_n = \sigma(\mathcal O)
+  $~--- борелевская $\sigma$-алгебра в $\R^n$.
+\end{defn}
+
+\begin{defn}[Ячейка в $\R^n$ ]\label{defn:meas::setsys::cell}
+  Обозначать её будем $\Delta^n$, по размерности соответствующего пространства.
+  \[
+    \Delta^1 = \begin{cases}
+      [a;b) \\
+      (-\infty;b) \\
+      [a;+\infty) \\
+      (-\infty;+\infty)
+    \end{cases} \quad
+    \forall\, n \;\: \Delta = \prod_{k=1}^n \Delta^1 _k 
+  \]
+  Ещё введём алгебру $\alg = \Cell_n = \{ A \mid A = \bigcup_{k=1}^p \Delta_k\}$
+\end{defn} 
+
+\begin{lem}\label{lem:meas::setsys::algsubset}
+  Пусть $\mathcal E_1, \mathcal E_2 \subset \pset(X)$, $\sigma(\mathcal E_1) \supset \mathcal E_2$.
+  Тогда $\sigma(\mathcal E_1) \supset \sigma(\mathcal E_2)$
+\end{lem}
+\begin{thrm}\label{thrm:meas::setsys::borelcell}
+  $\mathpzc B_n = \sigma(\Cell_n)$.
+\end{thrm}
+
+
+
+\end{document}
+% vim: tw=100 cc=100

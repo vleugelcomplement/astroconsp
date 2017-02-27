@@ -1,4 +1,4 @@
-\documentclass[10pt]{../notes}
+\documentclass[10pt, timbord]{../notes}
 \usepackage{docmute}
 
 \title{Определения из дифуров}
@@ -125,6 +125,16 @@
 
 \paragraph{Существование решения задачи Коши}
 
+\begin{defn}[Ломаная Эйлера]\label{defn:eulerlin}
+  \[
+    \begin{cases}
+      \forall\, x\in (x_j, x_{j+1}], j\in 0\mathbin{..} {N-1}  \\
+      \forall\, x\in [x_{j-1}, x_{j}), j\in {1-N} \mathbin{..} 0
+    \end{cases}
+    \psi(x) = \psi(x_j) + f(x_j, \psi(x_j))(x-x_j)
+  \]
+\end{defn}
+
 \begin{thrm}[Теорема Пеано]\label{thrm:peanothrm}
   Пусть $f\in C(G)$. Тогда
   \[
@@ -151,7 +161,9 @@
 \end{lem}
 
 \begin{lem}\label{lem:sys::lipcon}
-  Пусть $f(x,y) \in \liploc{y}(G)$, $G$~--- область. Тогда $\forall \overline{H} \subset G 
+  Пусть $f(x,y) \in \liploc{y}(G)$, $G$~--- область. Тогда $\forall \ov-{H} \subset G 
   \;\: f\in \lipgl{y}$. 
 \end{lem}
+
+
 \end{document}
