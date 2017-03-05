@@ -94,7 +94,7 @@
 
 \RequirePackage{chngcntr} % tools for counters 
 \RequirePackage{bbm}      %} more math fonts
-% \RequirePackage{mathrsfs} %}
+\RequirePackage{mathrsfs} %}
 \RequirePackage{accents}  % extra dots over chars
 %\RequirePackage{xfrac} % better slashed fractions --> Font Warning --> Loads too many fonts --> not useful 
 
@@ -367,8 +367,14 @@
 
 % measure theory
 
-\newcommand{\pset}{\mathcal P} 
-\newcommand{\alg}{\mathcal A} 
+\newcommand{\pset}{\mathpzc P} 
+\newcommand{\alg}{\mathpzc A} 
+\edef\bigcup{\bigcup\limits}
+\edef\bigcap{\bigcap\limits}
+\DeclareFontFamily{OT1}{pzc}{}
+\DeclareFontShape{OT1}{pzc}{m}{it}{<-> s * [1.200] pzcmi7t}{}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+\newcommand{\Cell}{\mathpzc{Cell}} 
 
 \endinput
 % vim: nofoldenable
