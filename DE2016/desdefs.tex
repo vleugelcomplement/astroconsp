@@ -1,4 +1,4 @@
-\documentclass[10pt]{../notes}
+\documentclass[10pt, timbord]{../notes}
 \usepackage{docmute}
 
 \title{Определения из дифуров}
@@ -18,10 +18,20 @@
     {^}{\widehat{#2}}%
   }[\PackageError{tmath}{Undefined option to ov: #1}{}]%
 }
+
 \newcommand*\und[2]{
   \IfEqCase{#1}{%
     {-}{\underline{#2}}%
   }[\PackageError{tmath}{Undefined option to und: #1}{}]%
+}
+
+\newcommand*\arr[1]{
+  \IfEqCase{#1}{%
+    {<=}{\Leftarrow}%
+    {=>}{\Rightarrow}%
+    {<=>}{\Leftrightarrow}%
+    {<==>}{\Longleftrightarrow}%
+  }[\PackageError{tmath}{Undefined option to arr: #1}{}]%
 }
 
 \begin{document}
@@ -123,7 +133,18 @@
   \]
 \end{defn}
 
+
 \paragraph{Существование решения задачи Коши}
+
+\begin{defn}[Ломаная Эйлера]\label{defn:eulerlin}
+  \[
+    \begin{cases}
+      \forall\, x\in (x_j, x_{j+1}], j\in 0\mathbin{..} {N-1}  \\
+      \forall\, x\in [x_{j-1}, x_{j}), j\in {1-N} \mathbin{..} 0
+    \end{cases}
+    \psi(x) = \psi(x_j) + f(x_j, \psi(x_j))(x-x_j)
+  \]
+\end{defn}
 
 \begin{thrm}[Теорема Пеано]\label{thrm:peanothrm}
   Пусть $f\in C(G)$. Тогда
@@ -135,6 +156,68 @@
     \end{cases} \text{(решение \ref{defn:cauchyprobl})}
   \]
 \end{thrm}
+
+\begin{lem}[Лемма Гронуолла]\label{lem:gron}
+  Пусть $h\in C\bigl(\langle a;b\rangle\bigr)$. Тогда 
+  \[
+    \exists\, \lambda, \mu \geqslant 0 \colon \forall\, x_0, x \in \langle a;b\rangle \;\:\: 
+    0 \leqslant h(x) \leqslant \lambda + \mu \left| \int_{x_0}^x h(s) \, \del s \right| 
+    \arr {=>} h(x) \leqslant \lambda e^{\mu |x-x_0|} 
+  \]
+\end{lem}
+
+\chapter{Диффуры в симметричной форме}
+\label{cha:simm}
+
+
+\begin{defn}\label{defn:simaccept}
+  Пусть $G$~--- область единственности. Тогда $U\colon G\to \R$, $U \in C(G)$~--- допустимая
+  функция, если $U(x,y) - U(x_0, y_0)$ задаёт единственную неявную функцию $y = \varphi(x)$ или $x =
+  \psi(y)$.
+\end{defn}
+
+\begin{defn}\label{defn:simint}
+  Допустимая функция называется интегралом уравнения, если неявная функция которую она задаёт~---
+  решение ЗК с начальными данными $(x_0; y_0)$.
+\end{defn}
+
+
+\begin{thrm}\label{thrm:constsol}
+  Если допустимая функция постоянна вдоль любого решения в области единственности , то она~---
+  интеграл. Обратное тоже верно.
+\end{thrm}
+
+\begin{defn}\label{defn:smoothacc}
+  Гладкая допустимая функция~--- $U\in C^1(G)\colon (U_x')^2 + (U_y')^2 > 0$ 
+\end{defn}
+
+\begin{thrm}\label{thrm:smoothint}
+  $U$~--- гладкий интеграл в области единственности $G$ $\Leftrightarrow$
+  \[
+    N(x,y)U_x'(x,y) - M (x, y) U_y' (x, y) \overset{G}{\equiv} 0.
+  \]
+  и $U$~--- гадкая допустимая функция.
+\end{thrm}
+
+\begin{defn}\label{defn:genint}
+  Если $U$~--- интеграл, то $U(x,y) = C$~--- общий интеграл.
+\end{defn}
+
+ещё теормемы:
+\begin{thrm}\label{thrm:simintexist}
+  Все эти интегралы~--- существуют.
+\end{thrm}
+\begin{ittproof}
+  Ну, это же почти общее решение.
+\end{ittproof}
+
+\begin{thrm}\label{thrm:intconn}
+  Пусть $U$~--- интеграл, $U_1$~--- допустимая функция. Тогда $U_1$~--- интеграл $\Leftrightarrow$
+  \[
+    \exists\, \Phi, A\colon U_1 \overset A \equiv \Phi(U)
+  \]
+\end{thrm}
+
 
 \chapter{Нормальные и не очень системы диффуров}
 \paragraph{Условия Липшица}
@@ -151,7 +234,50 @@
 \end{lem}
 
 \begin{lem}\label{lem:sys::lipcon}
-  Пусть $f(x,y) \in \liploc{y}(G)$, $G$~--- область. Тогда $\forall \overline{H} \subset G 
+  Пусть $f(x,y) \in \liploc{y}(G)$, $G$~--- область. Тогда $\forall \ov-{H} \subset G 
   \;\: f\in \lipgl{y}$. 
 \end{lem}
+
+\paragraph{Пикаровские приближения}
+\label{par:pik}
+
+
+\begin{defn}[Пикаровские приближения]\label{defn:pik}
+  \begin{align*}
+    y^{(0)} &\equiv y_0 \\
+    y^{(k+1)} &= y_0  + \int_{x_0}^x f(s, y^{(k-1)}(s))\, \del s 
+  \end{align*}
+\end{defn}
+
+\begin{thrm}[Пикара]\label{thrm:pik}
+  Пусть $f(x,y) \in \liploc{y}(G)$ и 
+  \[
+    \forall\, (x_0, y_0) \in G, k \;\:\: \exists\, \ov{-} H \subset G, y^{(k)}(x) \colon [a;b] 
+    \to \R^n \:\colon \: (x, y^{(k)}(x)) \in \ov{-} H  \land y^{(k)}(x) \to y(x)
+  \]
+  которое уже и является решением задачи Коши с НД $(x_0, y_0)$ на $[a;b]$. Здесь $y^{(k)}$~--- пикаровские
+  приближения.
+\end{thrm}
+\begin{ittproof}
+  В процессе последовательность заменяют рядом $\varphi^{(k)}$, а потом доказывают, что 
+  \[
+    \|\varphi^{(k)}(x)\| \leqslant \frac{M}{L} \frac{(L|x-x_0|)}{k!}
+  \]
+\end{ittproof}
+
+\begin{thrm}\label{thrm:pikex}
+  Пусть $f\in \liploc{y}(G)$. Тогда отрезок Пеано покатит в качестве отрезка $[a;b]$ в теореме выше,
+  а компакт можно выбрать так : $\ov{-} H = \{(x,y) \mid x\in [a;b], \|y-y_0\| \leqslant b\}$ .
+\end{thrm}
+
+\paragraph{Почти линейные системы}
+
+\begin{defn}\label{defn:plin}
+  Пусть $f(x,y) \in C(G)$, $G = (a;b) \times \R^n$, $L,M$~--- непрерывны и неотрицательны. Тогда
+  почти линейная система выглядит так:
+  \[
+    \forall\,(x,y) \in G \quad \|f(x,y)\| \leqslant L(x) + M(x) \|y\|
+  \]
+\end{defn}
+
 \end{document}

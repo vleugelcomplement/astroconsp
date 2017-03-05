@@ -38,7 +38,7 @@
                 &X \text{~--- процесс с независимыми приращениями}
   \end{align*}
 \end{defn}
-\begin{defn}[Винеровский процесс(броуновское движение)]\label{defn:proc::indep::viner}
+\begin{defn}[Винеровский процесс (броуновское движение)]\label{defn:proc::indep::viner}
   Пусть $T = \R$ (время) и при этом:
   \begin{align*}
     X(0) &= 0 \\
@@ -100,12 +100,12 @@
 \end{defn}
 
 \begin{defn}\label{defn:proc::markchain::def}
-  Если известны $q_i = P(\xi_1=i)$ и $p_{ij} = \frac{1}{n} P(\xi_n = j \mid \xi_{n-1} = i) $, то
+  Если известны $q_i = P(\xi_1=i)$ и $^np_{ij} =  P(\xi_n = j \mid \xi_{n-1} = i) $, то
   цепь называется полностью определённой. $P = (p_{ij})$ ещё называется стохастической матрицей. 
 \end{defn}
 
 \begin{defn}\label{defn:proc::markchain::homo}
-  Если $n p_{ij}$ не зависит от $n$, то цепь называется однородной. 
+  Если $^n p_{ij}$ не зависит от $n$, то цепь называется однородной. 
 \end{defn}
 
 \begin{defn}\label{defn:proc::markchain::trannstep}
@@ -115,8 +115,8 @@
 \begin{prop}\label{prop:proc::markchain::trmul}
   Для однородной цепи:
   \begin{align*}
-    p^{(n+m)}_{ij} = \sum_k p_{ik}^{(m)} \cdot p_{kj}^{(n)}
-    P^(n) = P^n
+    p^{(n+m)}_{ij} = \sum_k p_{ik}^{(m)} \cdot p_{kj}^{(n)} \Rightarrow 
+    P^{(n)} = P^n
   \end{align*}
   Оно всё следует из независимости от старых состояний и формулы полной 
   вероятности~\ref{prop:prob::compl::form}.
@@ -132,12 +132,12 @@
 \begin{defn}[Случайные блуждания]\label{exmp:proc::markchain::randomwalk}
   Случайное блуждание~--- процесс с дискретным временем вида $\eta_0 + \sum_i \xi_i$, где
    $\xi_n \in \R^d$~--- независимые случайные величины , $\xi_k$ принимает значения $\pm e_i$~---
-   ортонорморованный базис $\Z^d$
+   ортонормированный базис $\Z^d$
 \end{defn}
 Случайные блуждания тоже можно считать цепью Маркова
 
 \begin{defn}\label{defn:proc::markchain::ret}
-  $f_{ii}^{(n)} = P(\xi_{n+1} = i \mid \xi_{n} \neq i, \dotsc, \xi_1 = i) $. Состояние $i$
+  $f_{ii}^{(n)} = P(\xi_{n+1} = i \mid \xi_{n} \neq i, \dotsc,\xi_2 \neq i, \xi_1 = i) $. Состояние $i$
   возратное, если $\sum_{n=1}^\infty f_{ii}^n = 1$ и невозратное иначе.
 \end{defn}
 
@@ -167,9 +167,47 @@
   а $\dsum_{n=1}^\infty f_{ii}^{(n)} = F(1) = 1$ в случае возратного состояния.
 \end{itlproof}
 
-\begin{defn}\label{defn:proc::markchain::}
-  
+\begin{defn}\label{defn:proc::markchain::conn}
+  Состояния $i,j$ сообщаются, если $\exists\, n\colon p_{ij}^{(n)} > 0$.
 \end{defn}
+\begin{rem}\label{rem:proc::indep::conn}
+  Это отношение эквивалентности
+\end{rem}
+
+\begin{prop}\label{prop:proc::indep::eqret}
+  Если состояние связанные, то они имеют одинаковую возратность.
+\end{prop}
+
+\begin{thrm}\label{thrm:proc::indep::time}
+  $\displaystyle \lim_{n\to \infty} p_{ii}^{(n)} = \frac{1}{\dsum\limits_{n=1}^\infty n
+  f_{ii}^{(n)}}$
+\end{thrm}
+
+\paragraph{Марковские процессы} \label{par:proc::mark}
+ 
+ Здесь будем брать и сурово строить сигма-алгебры на заданных множествах.
+ \begin{defn}\label{defn:proc::mark::gensigma}
+   $\sigma(Y_1, \dotsc, Y_n)$~--- наименьшая сигма-алгебра, относительно которой $Y_i$ измеримы. 
+   Короче, порождённая набором $\{Y_i\}$.
+ \end{defn}
+ \begin{rem*}
+   Индекс $i$ может быть и непрерывным: $\sigma(X(t) \mid t \in T)$
+ \end{rem*}
+ 
+ \begin{exmp}\label{exmp:proc::mark::sigint}
+   $F_a^b = \sigma(X(t), t\in[a,b])$~--- сигма-алгебра интервала.
+ \end{exmp}
+ \begin{exmp}\label{exmp:proc::mark::sigpast}
+   $F_{-\infty}^t = \sigma(X(\zeta), \zeta\in(-\infty, t])$~--- сигма-алгебра прошлого. Можно так же и
+   будущего. И настоящего $(\zeta\in\{t\})$.
+ \end{exmp}
+ \begin{defn}[Марковский процесс]\label{exmp:proc::mark::mark}
+   $X(t)$~--- марковский процесс, если 
+   \[
+     \forall\, A\in F_{-\infty}^{t}, B \in F_{t}^\infty \;\: P(AB) = P(A) P(B)
+   \]
+   Короче говоря, прошлое не зависит от будущего.
+ \end{defn}
 \end{document}
 
 % vim: tw=100

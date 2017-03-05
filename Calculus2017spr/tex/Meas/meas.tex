@@ -1,0 +1,36 @@
+%------------------------------------------------------------
+% Description : 
+% Author      : Iliya Tikhonenko <iliya.t@mail.ru>
+% Created at  : Tue Feb 21 00:00:16 MSK 2017
+%------------------------------------------------------------
+\documentclass[12pt, timbord]{../../../notes}
+\usepackage{silence}
+\WarningFilter{latex}{Reference}
+\graphicspath{{../../img/}}
+
+\begin{document}
+\paragraph{Системы множеств}
+\label{par:meas::setsys}
+
+\begin{defn}\label{defn:meas::setsys::sub}
+  Пусть здесь (и дальше) $X$~--- проивольное множество. Тогда $\pset P(X) \equiv 2^X$~--- множество всех 
+  подмножеств $X$.
+\end{defn}
+\begin{exmp*}
+  $X = \{1 \intrng n\} \Rightarrow \# \pset (X) = 2^n$ (это количество элементов, если что)
+\end{exmp*}
+
+\begin{defn}[Алгебра]\label{defn:meas::setsys::alg}
+  Пусть $\alg \subset \pset (X)$. Тогда $\alg$~--- алгебра множеств, если
+  \begin{enumerate}
+    \item $\varnothing \in \alg$
+    \item $X \in \alg$
+    \item $A,B\in \alg \Rightarrow A \cap B, A \cup B, A \setminus B \in \alg$
+  \end{enumerate}
+\end{defn}
+\begin{rem*}\underdev
+  Заметим, что в алгебре пересечение (или объединение) \emph{конечного} числа её элементов лежит в алгебре. 
+  Это можно доказать простой индукцией. А вот для бесконечных объединений пользоваться индукцией уже нельзя.
+\end{rem*}
+\end{document}
+

@@ -1,0 +1,16 @@
+
+\usepackage{xstring}
+
+\newcommand*\ov[2]{
+  \IfEqCase{#1}{%
+    {~}{\widetilde{#2}}%
+    {-}{\overline{#2}}%
+    {^}{\widehat{#2}}%
+  }[\PackageError{tmath}{Undefined option to ov: #1}{}]%
+}
+\newcommand*\und[2]{
+  \IfEqCase{#1}{%
+    {-}{\underline{#2}}%
+  }[\PackageError{tmath}{Undefined option to und: #1}{}]%
+}
+
