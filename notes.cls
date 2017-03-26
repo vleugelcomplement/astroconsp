@@ -101,6 +101,8 @@
 \RequirePackage{tikz}
 \usetikzlibrary{calc,decorations.markings}
 
+\RequirePackage{xstring}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % packages setup & fixes 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -280,6 +282,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % various niceties                      
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% shortcuts
+\newcommand*\ov[2]{
+  \IfEqCase{#1}{%
+    {~}{\widetilde{#2}}%
+    {-}{\overline{#2}}%
+    {^}{\widehat{#2}}%
+  }[\PackageError{tmath}{Undefined option to ov: #1}{}]%
+}
+\newcommand*\und[2]{
+  \IfEqCase{#1}{%
+    {-}{\underline{#2}}%
+  }[\PackageError{tmath}{Undefined option to und: #1}{}]%
+}
+
+
+
 \def\lfrac#1#2{{}^{#1}\!/_{\!#2}}
 %\renewcommand\lfrac[2]{\sfrac{#1}{#2}}
 
@@ -348,6 +367,8 @@
 % \newsavebox\gearbox
 % \sbox\gearbox{\raisebox{-0.1em}{\gear{}} }
 % unfortunately tikz has problems with toc 
+
+
 \newcommand{\underdev}{\texorpdfstring{\MineSign{}}{}} 
 \newcommand{\flame}{\texttt{:set aflame}} 
 \newcommand{\sour}{$\ddot\sim$} 
@@ -374,7 +395,10 @@
 \DeclareFontFamily{OT1}{pzc}{}
 \DeclareFontShape{OT1}{pzc}{m}{it}{<-> s * [1.200] pzcmi7t}{}
 \DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
-\newcommand{\Cell}{\mathpzc{Cell}} 
+\newcommand{\Cell}{\ensuremath \mathpzc{Cell}} 
+\newcommand{\borel}{\ensuremath \mathpzc B} 
+\newcommand{\open}{\ensuremath \mathcal O} 
+\newcommand{\closed}{\ensuremath \mathcal F} 
 
 \endinput
 % vim: nofoldenable
