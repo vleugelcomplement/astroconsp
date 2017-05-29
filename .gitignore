@@ -1,4 +1,4 @@
-# thanks octocat to that useful classification!
+# thanks to octocat for that useful classification!
 # Compiled source #
 ###################
 *.o
@@ -23,10 +23,17 @@
 *.log
 *.sql
 *.sqlite
-# by latex generated
+# by latex[mk] generated
 *.toc
 *.aux
 *.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+# bib[la]tex stuff
+*.bbl
+*.blg
+
 
 # OS generated files #
 ######################
