@@ -3,7 +3,9 @@
 % Author      : Iliya Tikhonenko <iliya.t@mail.ru>
 % Created at  : Tue Feb 21 00:00:16 MSK 2017
 %------------------------------------------------------------
-\documentclass[12pt, timbord]{../../../notes}
+\documentclass[12pt, timbord]{longnotes}
+\usepackage{tmath}
+\usepackage{cussymb}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
 \graphicspath{{../../img/}}
@@ -53,7 +55,7 @@
 \end{defn}
 
 \begin{defn}\label{defn:meas::setsys::borel}
-  Пусть $\mathcal O$~--- все открытые множества в $\R^n$. Тогда $\mathpzc B_n = \sigma(\mathcal O)
+  Пусть $\open$~--- все открытые множества в $\R^n$. Тогда $\mathpzc B_n = \sigma(\open)
   $~--- борелевская $\sigma$-алгебра в $\R^n$.
 \end{defn}
 
@@ -76,10 +78,107 @@
   Тогда $\sigma(\mathcal E_1) \supset \sigma(\mathcal E_2)$
 \end{lem}
 \begin{thrm}\label{thrm:meas::setsys::borelcell}
-  $\mathpzc B_n = \sigma(\Cell_n)$.
+  $\borel_n = \sigma(\Cell_n)$.
 \end{thrm}
 
+\begin{exmp}\label{exmp:meas::setsys::borel}
+%   \everymath{\displaystyle}
+  Все множества нижё~--- борелевские.
+  \begin{enumerate}[$\langle$1$\rangle$]
+    \item $\open $.
+    \item $\closed =\{A \mid \ov-{A} \in \open \}$.
+    \item $\Biggl(A 
+      = \bigcap_{\substack{{k=1}\\[0.12em]\mathclap{ G_k \in \open}}}^\infty G_k \Biggr)\in G_\delta$.
+    \item $\Biggl(B 
+      = \bigcup_{\substack{{k=1}\\[0.12em]\mathclap{ F_k \in \closed}}}^\infty F_k \Biggr)\in
+      F_\sigma$.
+    \item $\Biggl(C 
+      = \bigcup_{\substack{{k=1}\\[0.12em]\mathclap{ A_k \in G_{\delta}}}}^\infty A_k \Biggr)
+      \in G_{\delta\sigma}$.
+  \end{enumerate}
+  У всех этих множеств со сложными индексами $\delta$~--- пересечение, $\sigma$~--- объединение,
+  $G$~--- операция над открытыми в самом начале, $F$~--- над замкнутыми.
+\end{exmp}
 
+\paragraph{Мера}
+\label{par:meas::meas}
+
+\begin{defn}\label{defn:meas::meas}
+  Пусть задано $X$, $\alg \subset \pset (X)$, $A_k \in \alg$. Тогда $\mu \colon \alg \to [0;
+  +\infty]$~--- мера, если 
+  \begin{enumerate}
+    \item $\mu(\varnothing) = 0$
+    \item $\displaystyle\mu\underbrace{\left(\bigsqcup_{k=1}^\infty A_k\right)}_{\in \alg} 
+      = \sum_{k=1}^\infty \mu(A_k)$. Здесь никто не обещает, что будет именно $\sigma$-алгебра.
+  \end{enumerate}
+\end{defn}
+
+\begin{exmp}\label{exmp:meas::meas::delta}
+  $a \in X$, $\displaystyle\mu(A) = \begin{cases}
+    1, & a\in A \\
+    0, & a \not\in A
+  \end{cases}$ ~--- $\delta$-мера Дирака.
+\end{exmp}
+\begin{exmp}\label{exmp:meas::meas::mol}
+  $a_k \in x$, $m_k \geqslant 0$, $\displaystyle\mu(a) := \sum_{\mathclap {k\colon a_k \in a}} m_k$~---
+  <<молекулярная>> мера.
+\end{exmp}
+
+\begin{exmp}\label{exmp:meas::meas::cnt}
+  $\mu(A) = \# A$~--- считающая мера. \note{она считает, не считывает $\ddot\smile$}
+\end{exmp}
+
+\subparagraph{Свойства меmы:}
+
+Здесь всюду будем рассматривать тройку $(X, \alg \subset \pset (X), \mu)$
+
+\begin{prop}[Монотонность меры]\label{prop:meas::meas::monot}
+  Пусть $A,B \in \alg$, $A \subset B$. \par Тогда $\mu(A) \leqslant \mu(B)$.
+\end{prop}
+\begin{prop}\label{prop:meas::meas::diff}
+  Пусть $A,B \in \alg$, $A \subset B$, $\mu(B) < +\infty$.  \par 
+  Тогда $ \mu(B\setminus A) = \mu(B) - \mu(A)$.
+\end{prop}
+\begin{prop}[Усиленная монотонность]\label{prop:meas::meas::enfmont}
+  Пусть $A_{1 \intrng n}, B \in \alg$, $A_{1 \intrng n} \subset B$ и дизъюнктны. \par
+  Тогда $\displaystyle\sum_{k=1}^n \mu(A_k) \leqslant \mu B$
+\end{prop}
+
+\begin{prop}[Полуаддитивность меры]\label{prop:meas::meas::semiadd}
+  Пусть $B_{1 \intrng n}, A \in \alg$, $A \subset \displaystyle \bigcup_{k=1}^n B_k$. \par
+  Тогда $\displaystyle\mu A \leqslant \sum_{k=1}^n \mu(B_k)$.
+\end{prop}
+\begin{lproof}
+  Сделать $B_k$ дизъюнктными: $C_k = B_k \setminus \bigcup_{j <k} B_k$. Затем представить $A$ как
+  дизъюнктное объединение $D_k \colon D_k = C_k \cap A$. Так можно сделать, потому что
+  \[
+    A = A \cap \bigcup_{k=1}^n B_k = A \cap \bigcup_{k=1}^n C_k = \bigcup_{k=1}^n A \cap C_k
+  \]
+  Ну а тогда
+  \[
+    \mu (A) = \sum_k \mu D_k \leqslant \sum_k \mu C_k \leqslant \sum_k \mu B_k
+  \]
+\end{lproof}
+
+
+\begin{prop}[Непрерывность меры снизу]\label{prop:meas::meas::bcont}
+  Пусть $A_1 \subset A_2 \subset \cdots$, $A_k \in \alg$,
+  $\displaystyle A = \bigcup_{k=1}^\infty A_k \in \alg$.
+  \note{Опять-таки никто не сказал, что $\alg$~--- $\sigma$-алгебра.} \par
+  Тогда $\displaystyle \mu A = \lim_{n\to \infty} \mu A_n$
+\end{prop}
+\begin{prop}[Непрерывность меры сверху]\label{prop:meas::meas::ucont}
+  Пусть $A_1 \supset A_2 \supset \cdots$, $A_k \in \alg$, 
+  $\displaystyle A = \bigcap_{k=1}^\infty A_k \in \alg$, $\mu A_1 < +\infty $.
+  \par
+  Тогда $\displaystyle \mu A = \lim_{n\to \infty} \mu A_n$
+\end{prop}
+
+\plholdev{Тут будет картинка про метод исчерпывания Евдокса}
+
+
+\paragraph{Объём в \texorpdfstring{$\R^n$}{}}
+\label{par:meas::vol}
 
 \end{document}
 % vim: tw=100 cc=100
