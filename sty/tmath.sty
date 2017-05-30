@@ -30,12 +30,14 @@
   \case{-}{\overline{#2}}     { 
   \case{^}{\widehat{#2}}      {
   \case{0}{\overset\circ{#2}} {
-{\PackageError{tmath}{Undefined option to ov: #1}} }}}}}
+{\PackageError{tmath}{Undefined option to ov: #1}} }}}}
+}
 
 \newcommand*\und[2]{
   \newcommand\case[3]{\ifstrequal{#1}{##1}{##2}{##3}}
   \case{-}{\underline{#2}}     { 
-{\PackageError{tmath}{Undefined option to ov: #1}} }}
+{\PackageError{tmath}{Undefined option to ov: #1}} }
+}
 
 % causes long compilation time
 %\RequirePackage{xstring}
@@ -101,7 +103,7 @@
 
 % make dots a bit more visible
 \renewcommand*{\dot}[1]{\accentset{\mbox{\bfseries .}}{#1}}
-\renewcommand*{\ddot}[1]{\accentset{\mbox{\bfseries .\hspace{-0.2ex}.}}{#1}}
+\renewcommand*{\ddot}[1]{\accentset{\mbox{\bfseries .\hspace{-0.1ex}.}}{#1}}
 % probability theory
 \DeclareMathOperator{\Exp}{M} 
 \DeclareMathOperator{\Var}{D} 
@@ -118,7 +120,10 @@
 \DeclareFontFamily{OT1}{pzc}{}
 \DeclareFontShape{OT1}{pzc}{m}{it}{<-> s * [1.200] pzcmi7t}{}
 \DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
-\newcommand{\Cell}{\ensuremath \mathpzc{Cell}} 
+\newcommand{\Cell}{\ensuremath \mathpzc{Cell}\!} 
 \newcommand{\borel}{\ensuremath \mathpzc B} 
+\newcommand{\lebesgue}{\ensuremath \mathpzc M} 
 \newcommand{\open}{\ensuremath \mathcal O} 
 \newcommand{\closed}{\ensuremath \mathcal F} 
+\newcommand\ind{\ensuremath \mathbbm{1}}
+\newcommand\summb{\ensuremath \mathpzc L}

@@ -3,7 +3,9 @@
 % Author      : taxus-d <iliya.t@mail.ru>
 % Created at  : Sat Jan 14 17:39:43 MSK 2017
 %------------------------------------------------------------
-\documentclass[12pt]{../../notes}
+\documentclass[12pt,timbord]{longnotes}
+\usepackage{tmath}
+\usepackage{cussymb}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
 \graphicspath{{../../img/}}
@@ -14,7 +16,8 @@
 \section*{Обозначения с лекции}
 \begin{description}
   \item[$a:= b$]~--- определение $a$.
-  \item[$\displaystyle \bigsqcup_k A_k$]~--- дизъюнктное объединение множеств.
+  \item[$\displaystyle \bigsqcup_k A_k$]~--- объединение дизъюнктных множеств.
+  \item[$\alg$] Алгебра множеств
 \end{description}
 
 \section*{Нестандартные обозначения}
@@ -27,10 +30,12 @@
   \item[\sour]~--- кривоватая формулировка
   \item[\flame]~--- набирающему зело не нравится билет
   \item[\plholdev{что-то}]~--- тут будет \texttt{что-то}, но попозже
-  \item[$a\intrng b$]~--- для $a,b \in \Z$ это просто $[a;b]\cap \Z$
+  \item[$a\intrng b$]~--- $[a;b]\cap \Z$
   \item[$\equiv$]~--- штуки эквивалентны. Часто используется в этом смысле в
     определениях, когда вводится два разных обозначения одного и того же
     объекта.
+  \item[$\that$] В кванторах, <<верно, что>>
+  \item[$\alg_\sigma$] Сигма-алгебра множеств
 \end{description}
 \end{document}
 

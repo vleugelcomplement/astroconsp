@@ -115,8 +115,10 @@
 {2em plus 1ex minus 0.5ex}%
 {1.5em plus 1ex minus 0.5ex}
 
+\RequirePackage{chngcntr} % tools for counters 
+\@definecounter{paragraph}
 % still a bit hacky
-\renewcommand{\thesection}{\arabic{section}.}
+% \renewcommand{\thesection}{\arabic{section}.}
 \renewcommand{\theparagraph}{\S\thinspace\arabic{paragraph}}
 
 \titleformat {\paragraph}[block]%
@@ -168,11 +170,8 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% counters setup
+% math envs setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\RequirePackage{chngcntr} % tools for counters 
-\@definecounter{paragraph}
 
 \RequirePackage{amsthm}
 \theoremstyle{plain}
@@ -212,7 +211,7 @@
 
 \renewcommand*{\do}[1]{
   \expandafter\edef\csname p@#1\endcsname{%
-\noexpand\arabic\noexpand{section}.%
+    \noexpand\arabic\noexpand{chapter}.\noexpand\arabic\noexpand{paragraph}.%
 \expandafter\noexpand\csname the#1\endcsname\noexpand\expandafter\noexpand\@gobble}
 }
 \docsvlist{thrm,defn,exmp}

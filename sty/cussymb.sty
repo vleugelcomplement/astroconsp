@@ -7,6 +7,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{cussymb}[2017/05/28 Custom symbols package]
 
+\RequirePackage{amsmath,amssymb}
 \RequirePackage[nointegrals]{wasysym}
 \RequirePackage{marvosym}
 
@@ -15,8 +16,11 @@
 \newcommand{\sour}{$\ddot\sim$} 
 \newcommand{\plholdev}[1]{\texttt{<+{#1}+>}} 
 \newcommand{\intrng}{\mathbin{..}} 
+\newcommand{\that}{\:::\:}
+\let\holds\that
 \newcommand\convex{\,\underline\cup\,}
 \newcommand\concave{\,\overline\cap\,}
+\RequirePackage{calc}
 \newcommand\circlearound[1]{#1\hspace{\widthof{#1}*(-1)}$\bigcirc$}
 \newcommand{\coori}{\mathop{\uparrow\!\uparrow}} 
 \newcommand{\conori}{\mathop{\uparrow\!\downarrow}} 

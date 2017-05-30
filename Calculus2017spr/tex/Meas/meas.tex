@@ -54,6 +54,7 @@
   эта конструкция~--- сигма-алгебра, просто аксиомы проверить.
 \end{defn}
 
+\paragraph{Борелевская сигма-алгебра}
 \begin{defn}\label{defn:meas::setsys::borel}
   Пусть $\open$~--- все открытые множества в $\R^n$. Тогда $\mathpzc B_n = \sigma(\open)
   $~--- борелевская $\sigma$-алгебра в $\R^n$.
@@ -111,6 +112,7 @@
     \item $\displaystyle\mu\underbrace{\left(\bigsqcup_{k=1}^\infty A_k\right)}_{\in \alg} 
       = \sum_{k=1}^\infty \mu(A_k)$. Здесь никто не обещает, что будет именно $\sigma$-алгебра.
   \end{enumerate}
+  Множества $A \in \alg$ в таком случае называются $\mu$-измеримыми.
 \end{defn}
 
 \begin{exmp}\label{exmp:meas::meas::delta}
@@ -128,7 +130,7 @@
   $\mu(A) = \# A$~--- считающая мера. \note{она считает, не считывает $\ddot\smile$}
 \end{exmp}
 
-\subparagraph{Свойства меmы:}
+\paragraph{Свойства меmы}
 
 Здесь всюду будем рассматривать тройку $(X, \alg \subset \pset (X), \mu)$
 
@@ -176,9 +178,294 @@
 
 \plholdev{Тут будет картинка про метод исчерпывания Евдокса}
 
+\begin{defn}\label{defn:meas::ledeg::compl}
+  Пусть задана тройка $(X, \alg_\sigma, \mu)$. Тогда $\mu$~--- полная, если 
+  \[
+    \forall\, \in \alg \colon \mu A = 0 \; \forall\, B \subset A, B \in \alg \;::\; \mu B = 0
+  \]
+\end{defn}
 
-\paragraph{Объём в \texorpdfstring{$\R^n$}{}}
-\label{par:meas::vol}
+\begin{defn}\label{defn:meas::ledeg::sfin}
+  Мера $\mu$  на $\alg$ называется $\sigma$-конечной, если 
+  \[
+    \exists\, X_n \in \alg, \mu X_n < + \infty \that \bigcup_{n=1}^\infty X_n = X
+  \]
+\end{defn}
+
+\begin{defn}\label{defn:meas::ledeg::mcont}
+  Пусть $\alg_1, \alg_2$~--- сигма-алгебры подмножеств $X$, $\alg_1 \subset \alg_2$,
+  $\mu_1 \colon A_1 \to [0;+\infty] $, $\mu_2 \colon A_2 \to [0;+\infty]$. 
+  Тогда $\mu_2$ называется продолжением $\mu_1$.
+\end{defn}
+
+\begin{thrm}[Лебега-Каратеодора]\label{thrm:meas::ledeg::dist}
+  Пусть $\mu$~--- сигма-конечная мера на $\alg$. Тогда
+  \begin{enumerate}
+    \item Существуют её полные сигма-конечные продожения
+    \item Среди них есть наименьшее: $\ov-\mu$. 
+      Её ещё называют стандартным продолжением.
+  \end{enumerate}
+\end{thrm}
+\plholdev{идея доказательства}
+Пока надо запомнить, что стандратное продолжение~--- сужение внешней <<меры>> 
+на хорошо разбивающие множества.
+
+
+\paragraph{Объём в \texorpdfstring{\(\R^n\)}{R\^{}n}. Мера Лебега }
+\label{par:meas::lebeg}
+
+\begin{defn}\label{defn:meas::lebeg::cell}
+  Пусть $\Delta = \Delta_1 \times \dotsm \times \Delta_n$, $\Delta_k = [a_k, b_k)$.
+  Тогда
+  \[
+    \begin{split}
+      v_1 \Delta_k \equiv | \Delta_k| &:= \begin{cases}
+        b_k - a_k, & a_k \in \R \land b_k \in \R \\
+        \infty, & \text{иначе}
+      \end{cases} \\ 
+      v \Delta \overset{(\in R^n)}\equiv v_n \Delta &:= |\Delta_1| \dotsm |\Delta_n|
+    \end{split}
+  \]
+  Для всего, что $\in \Cell_n$, представим его в виде дизъюнктного объединения $\Delta_j$.
+  Тогда $vA := \sum_{j=1}^q v \Delta_j $.
+\end{defn}
+
+\begin{rem*}
+  Здесь радикально всё равно, входят ли концы~--- у них мера ноль. 
+\end{rem*}
+
+\begin{thrm}\label{thrm:meas::ledeg::finadd}
+  $v$~--- конечно-аддитивен, то есть \[
+    \forall\, A, A_{1 \intrng p} \in \Cell\, , A = \bigsqcup_{k=1}^p A_k
+    \:\; \Rightarrow  vA = \sum_{k=1}^p v A_k
+  \]
+\end{thrm}
+
+\begin{thrm}\label{thrm:meas::ledeg::infadd}
+  $v$~--- счётно-аддитивен, то есть \[
+    \forall\, A, A_{1 \intrng } \in \Cell\, , A = \bigsqcup_{k=1}^\infty  A_k
+    \:\; \Rightarrow  vA = \sum_{k=1}^ \infty  v A_k
+  \]
+\end{thrm}
+\begin{tproof}
+  Здесь в конспекте лишь частный случай про ячейки.
+\end{tproof}
+
+
+
+\begin{defn}[Мера Лебега]\label{defn:meas::ledeg::lebeg}
+  $X=\R^n$, $\alg= \Cell_n$. Тогда $\lambda_n = \ov-{v_n}$, $\mathpzc M = \ov-{\alg}$~--- мера
+  Лебега и алгебра множеств, измеримых по Лебегу, соответственно.
+\end{defn}
+
+\subparagraph{Свойства меры Лебега}
+
+\begin{enumerate}[(1) $\triangleright$]
+  \item $\lambda \{x\} = 0$
+  \item $\lambda \bigl(\{x_k\}_{k}\bigr) = 0$
+  \item $\borel \subset \lebesgue$
+  \item $L \subset \R^m, m<n \Rightarrow \lambda_n L  = 0$
+\end{enumerate}
+
+А это уже целая теормема.
+\begin{thrm}[Регулярность меры Лебега]\label{thrm:meas::ledeg::reg}
+  Пусть $A \in \lebesgue$, $\varepsilon > 0$. Тогда 
+  \[
+    \exists\, G \in \open, F \in \closed \that F \subset A \subset G \land 
+    \begin{cases}
+      \lambda(G \setminus A) < \varepsilon \\
+      \lambda(A \setminus F) < \varepsilon 
+    \end{cases}
+  \]
+\end{thrm}
+\begin{tproof}
+  куча скучных оценок квадратиками.
+\end{tproof}
+
+
+\paragraph{Измеримые функции}
+\label{par:meas::mfun}
+
+\begin{defn}\label{defn:meas::mfun}
+  Пусть задана тройка $(X, \alg_\sigma, \mu)$. Пусть ещё $f\colon X \to \R$. Тогда 
+  $f$ называется измеримой относительно $\alg$, если 
+  \[
+    \forall\, \Delta \subset \R  \holds f^{-1} (\Delta) \in \alg
+  \]
+\end{defn}
+
+\begin{thrm}\label{thrm:meas::mfun::diftyps}
+  Пусть $f$ измеримо относительно $\alg$. Тогда измеримы и следующие (Лебеговы) множества
+  \begin{description}
+    \item[1 типа] $\{x \in X \mid f(x) < a\} \equiv X [f < a]$
+    \item[2 типа] $\{x \in X \mid f(x) \leqslant a\} \equiv X [f \leqslant a]$
+    \item[3 типа] $\{x \in X \mid f(x) > a\} \equiv X [f > a]$
+    \item[4 типа] $\{x \in X \mid f(x) \geqslant a\} \equiv X [f \geqslant a]$
+  \end{description}
+  При этом верно и обратное: если измеримы множества какого-то отдного типа, то
+  $f$ измерима.
+\end{thrm}
+
+\begin{thrm}\label{thrm:meas::mfun::sp}
+  Пусть $f_1, \dotsc, f_n$ измеримы относительно $\alg$ и $g\colon \R^n \to R$~--- 
+  непрерывна. Тогда измерима $\varphi(x) = g(f_1(x), \dotsc, f_n(x))$.
+\end{thrm}
+\begin{rem*}
+  В частности, $f_1 + f_2$ измеримы.
+\end{rem*}
+
+\begin{thrm}\label{thrm:meas::mfun::lims}
+  Пусть $f_1,f_2, \dotsc $ измеримы относительно $\alg$ .
+  Тогда измеримы $\sup f_n, \inf f_n, \liminf f_n, \limsup f_n, \lim f_n $.
+  Последний, правда, может не существовать.
+\end{thrm}
+\begin{tproof}
+  Следует из непрерывности меры.
+\end{tproof}
+
+\begin{defn}\label{defn:meas::mfun::simp}
+  Пусть $f \colon X \to \R$~--- измерима. Тогда она называется простой, если
+  принимает конечное множество значений.
+\end{defn}
+
+\begin{defn}[Индикатор множества]\label{defn:meas::mfun::ind}
+  \[
+    E \subset X , \ind_E := \begin{cases}
+      1, & x\in E \\
+      0, & x\not\in E
+    \end{cases}
+  \]
+  Он, как видно совсем простая функция.
+\end{defn}
+
+\begin{stat}\label{stat:meas::mfun::simpind}
+  $f$~--- простая $ \Rightarrow f= \dsum_{k=1}^p c_k \ind_{E_k}$ 
+\end{stat}
+
+\begin{thrm}\label{thrm:meas::mfun::simpseq}
+  Пусть $f\colon X \to \R$, измерима, $f \geqslant 0$. Тогда 
+  \[
+    \exists\, (\varphi_n)\colon 0 \leqslant \varphi_1 \leqslant \varphi_2 \leqslant \cdots
+    \that \varphi_n \nearrow f \text{ (поточечно)}
+  \]
+\end{thrm}
+
+\paragraph{Интеграл по мере}
+\label{par:meas::int}
+
+\begin{defn}\label{defn:meas::int}
+  Пусть задана тройка $(X, \alg_\sigma, \mu)$, $f$~--- измерима.
+\begin{enumerate}[{[1]}]
+    \item $f$~--- простая. 
+      \[
+        \int _X f \, \del \mu := \sum_{k=1}^p c_k \mu E_k 
+      \]
+    \item $f \geqslant 0$.
+      \[
+        \int_X f \, \del \mu := \sup \Biggl\{ \int_X g \, \del \mu \:\Biggl|\: g\text{-простая},
+          0 \leqslant g \leqslant f \Biggr\}
+      \] 
+    \item $f$ общего вида.
+      \[
+         \begin{split}
+           f_+ &= \max \{f(x),0\} \\
+           f_- &= \max \{-f(x),0\} \\
+           \int _X f \, \del \mu = \int _X f_+ \, \del \mu - \int _X f_- \, \del \mu
+         \end{split}
+      \]
+      Здесь нужно, чтобы хотя бы один из интегралов в разности существовал.
+  \end{enumerate}
+\end{defn}
+\begin{rem*}
+  $\displaystyle
+    \int _A f \, \del \mu := \sum_{k=1}^p c_k \mu (E_k \cap A)
+  $
+\end{rem*}
+
+
+\begin{prop}\label{prop:meas::mfun::intind}
+  $\displaystyle \int_A f \, \del \mu = \int _X f \cdot \ind _A \, \del \mu$.
+\end{prop}
+
+\subparagraph{Свойства интеграла от неотрицательных функций}
+
+Здесь всюду функции неотрицательны и измеримы, что не лишено отсутствия внезапности.
+\begin{enumerate}[\fbox{$\text{А}_{\arabic*}$}]
+  \item $0 \leqslant f \leqslant g$. Тогда
+    $\displaystyle \int_X f\, \del \mu  \leqslant \int_X g\, \del \mu$.
+  \item $A \subset B \subset X$, $A , B \in \alg$, $f \geqslant 0$, измерима.
+    Тогда $\displaystyle \int_A f \, \del \mu \leqslant \int_B f\, \del \mu$
+  \item см теорему \ref{thrm:meas::levi}.
+  \item $\displaystyle \int_X (f+g)\, \del \mu = \int_X f\,\del mu + \int_X g\,\del mu $
+  \item $\displaystyle \int_X (\lambda g)\, \del \mu =  \lambda \int_X f\,\del mu $
+\end{enumerate}
+
+\paragraph{Теорема Беппо \texorpdfstring{Л\'eви}{Леви}}
+\label{par:meas::levi}
+
+\begin{thrm}\label{thrm:meas::levi}
+  Пусть $(f_n)$~--- измеримы на $X$, $0 \leqslant f_1 \leqslant \cdots $, 
+  $f = \lim_n f_n$. Тогда 
+  \[
+    \int_X f \, \del \mu  = \lim_{n\to \infty} \int_X f_n \, \del \mu 
+  \]
+\end{thrm}
+
+\paragraph{Свойства интеграла от суммируемых функций}
+\label{par:meas::summprop}
+
+\begin{defn}\label{defn:meas::summprop::summ}
+  $f$~--- суммируемая (на $X,\mu$), если $\displaystyle \int _X f \, \del \mu < \infty$.
+  Весь класс суммируемых (на $X,\mu$) функций обозначается через $\summb (X,\mu)$.
+\end{defn}
+
+Здесь всюду функции $\in \summb$
+\begin{enumerate}[\fbox{$\text{B}_{\arabic*}$}]
+  \item $\displaystyle
+    f \leqslant g \Rightarrow \int_X f \, \del \mu \leqslant \int_X g \, \del \mu$.
+  
+  \item $\displaystyle
+    \int_X (f \pm g)\, \del \mu =  \int_X f \, \del \mu \pm \int_X g \, \del \mu$.
+
+  \item $\displaystyle
+    \int_X \lambda f \, \del \mu =  \lambda \int_X f \, \del \mu$.
+  
+  \item $\displaystyle
+    |f| \leqslant g  \Rightarrow \left| \int_X f \, \del\mu \right|\leqslant \int_X g \, \del \mu$.
+
+  \item $\displaystyle
+    \left| \int_X f \, \del \mu \right| \leqslant \int_X |f| \, \del \mu$.
+  
+  \item $\displaystyle
+    f \in \summb \Leftrightarrow |f| \in \summb$
+
+  \item $\displaystyle
+    |f| \leqslant M \leqslant +\infty 
+    \Rightarrow \left| \int_X f \, \del\mu \right| \leqslant M \mu X$
+\end{enumerate}
+
+\paragraph{Счётная аддитивность интеграла}
+\begin{thrm}\label{thrm:meas::infadd}
+  Пусть задана тройка $(X,\alg,\mu)$, $f$~--- измерима и $f \geqslant 0 \lor f \in \summb$. 
+  Пусть к тому же 
+  \[
+    A, A_{1\intrng} \subset X, A = \bigcup_{n=1}^\infty A_n
+  \]
+  Тогда 
+  \[
+    \int _A f \, \del \mu = \sum_{n=1}^\infty \int _{A_n} f\, \del \mu 
+  \]
+\end{thrm}
+
+\paragraph{Абсолютная непрерывность интеграла}
+\begin{thrm}\label{thrm:meas::abscont}
+  Пусть $f\in \summb(X,\alg,\mu)$. Тогда
+  \[
+    \forall\, \varepsilon > 0 \; \exists\, \delta > 0 \that \forall\, A \in \alg , A \subset X
+    \colon \mu A < \delta \holds \left| \int_A f \, \del \mu \right| < \varepsilon 
+  \]
+\end{thrm}
+
 
 \end{document}
 % vim: tw=100 cc=100
