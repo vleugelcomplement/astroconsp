@@ -282,6 +282,8 @@
   куча скучных оценок квадратиками.
 \end{tproof}
 
+\plholdev{Пример неизмеримого множества на окружности}
+
 
 \paragraph{Измеримые функции}
 \label{par:meas::mfun}
@@ -719,13 +721,13 @@
 \end{thrm}
 \plholdev{много букв}
 
-\begin{defn}[График]\label{defn:meas::almev::subplot}
+\begin{defn}[График]\label{defn:meas::almev::plot}
   $\Gamma^f = \{ (x,t) \in \R^{n+1} \mid t = f(x)\}$.
 \end{defn}
 \begin{defn}[Подграфик]\label{defn:meas::almev::subplot}
   $\Gamma_-^f = \{ (x,t) \in \R^{n+1} \mid 0 \leqslant t \leqslant f(x)\}$.
 \end{defn}
-\begin{defn}[Надграфик]\label{defn:meas::almev::subplot}
+\begin{defn}[Надграфик]\label{defn:meas::almev::supplot}
   $\Gamma_+^f = \{ (x,t) \in \R^{n+1} \mid t \geqslant f(x)\}$.
 \end{defn}
 
@@ -761,6 +763,141 @@ $\del x\del y$.
     = \int_{\R^m} \del x \int_{\R^n} f(x,y) \, \del y
   \]
 \end{thrm}
+
+\paragraph{Мера Лебега и аффинные преобразования}
+\label{par:meas::aff}
+
+Главные герои этого параграфа:
+
+\begin{itemize}[$\bigcirc$]
+  \item Сдвиг: $T \colon \R^n \to \R^n$, $Tx = x+a$, $a\in \R^n$.
+  \item Поворот с растяжением: $L \colon \R^n \to \R^n$, $L$~--- линейный император.
+\end{itemize}
+
+\begin{stat}\label{stat:meas::aff::shiftmeas}
+  $E \in \lebesgue \Rightarrow T(E) \in \lebesgue$. 
+\end{stat}
+\begin{stat}\label{stat:meas::aff::linmeas}
+  $E \in \lebesgue \Rightarrow L(E) \in \lebesgue$. 
+\end{stat}
+
+\begin{stat}\label{stat:meas::aff::disturb}
+  Пусть $L \colon \R^n \to \R$, линейно. Тогда 
+  \[
+    \exists\, C \geqslant 0 \forall\, E \in \lebesgue \holds \lambda L(E) = C \lambda E
+  \]
+\end{stat}
+
+\begin{thrm}\label{thrm:meas::aff::deter}
+  $C$ из прошлой теоремы равно $\bigl|\det [L]\bigr|$.
+\end{thrm}
+\plholdev{тут декомпозиция на ортогональный и диагональные операторы и 2 леммы}
+
+\paragraph{Мера образа при гладком отображении}
+\label{par:meas::smoothimgmeas}
+
+{\denot $J_F(x) \equiv \det F'(x)$}
+
+\begin{thrm}\label{thrm:meas::smoothimgmeas}
+  Пусть $E \in \lebesgue$, $F \colon G \subset \R^n \to R^n$, гладкая биекция.
+  Тогда $F(E) \in \lebesgue$ и $\lambda F(E) = \dint_E |\det F'(x) |\del x$.
+\end{thrm}
+\begin{tproof}
+  \sour\underdev
+\end{tproof}
+
+
+\paragraph{Глакая замена переменной в интеграле}
+\label{par:meas::smoothvarch}
+
+\begin{thrm}\label{thrm:meas::smoothvarch}
+  Пусть $F \colon G \subset \R^n \to R^n$, гладкая биекция.
+  Пусть к тому же $E \subset F(G) \in \lebesgue$, $f\colon E \to \R$ с обычными условиями.
+
+  Тогда\[
+    \int_E f(y) \, \del y = \int_{F^{-1}(E)} f(F(x)) \cdot| J_F(x) | \, \del x
+  \]
+\end{thrm}
+
+\begin{exmp}[Полярные координаты]\label{exmp:meas::smoothvarch::polar}
+  \underdev
+  $|J| = r$
+\end{exmp}
+
+\begin{exmp}[Сферические координаты]\label{exmp:meas::smoothvarch::sph}
+  \underdev
+  $|J| = r^2 \cos \psi $
+\end{exmp}
+
+\paragraph{Предельный переход под знаком интеграла}
+\label{par:meas::limint}
+
+\begin{defn}[Всякие сходимости]\label{defn:meas::limint::conv}
+  Пусть $(f_n) \colon X \to \R$, $f \colon X \to \R$, $\mu$~--- мера на $X$.
+  \begin{align*}
+    & f_n \to f       & &:= & &\forall\, x \in X \holds f_n(x) \to f(x)      \\
+    & f_n \unito^X f  & &:= & &\sup\limits_X |f_n-f| \to 0                   \\
+    & f_n \to f \alev & &:= &&\exists\, N \subset X \colon \mu(N) = 0 
+    \that \forall\, x\in X \setminus N \holds f_n(x) \to f(x).            \\
+    & f_n \to^\mu f & &:= &&\forall\, \sigma > 0 \holds \mu X [ |f_n - f| \geqslant \sigma ]\to 0
+    \end{align*}
+\end{defn}
+
+\begin{rem}\label{rem:meas::limint::convseq}
+  $ f \unito^X f \Rightarrow f_n \to f \Rightarrow f_n \to f \alev$.
+\end{rem}
+\begin{rem}\label{rem:meas::limint::convmeas}
+  Пусть $\mu X < \infty $, тогда
+  $ f_n \to f \alev \Rightarrow f_n \to^\mu f$.
+\end{rem}
+
+\begin{rem}[Теорема Рисса]\label{rem:meas::limint::convpv}
+  $ f_n \to^\mu  f \alev \Rightarrow \exists\, (n_k) \that f_{n_k} \to f \alev $.
+\end{rem}
+
+\begin{thrm}\label{thrm:meas::limint::uniint}
+  $f_n \unito^X f, \mu X < \infty \Rightarrow \dint_X f_n \, \del \mu \to \int _X f$
+\end{thrm}
+
+\begin{thrm}
+  см теорему Беппо-Леви (\ref{thrm:meas::levi}) или её вариацию \ref{lem:meas::almev::blov}.
+\end{thrm}
+
+\begin{thrm}[Фату]\label{thrm:meas::limint::fatu}
+  Пусть заданы $(X,\mu)$, $f_n \geqslant 0$, измеримы. Тогда
+  \[
+    \int_X \varliminf f_n \, \del \mu \leqslant \varliminf \int_X f_n \, \del \mu 
+  \]
+\end{thrm}
+
+\paragraph{Теорема Лебега об ограниченной сходимости}
+\label{par:meas::bndconv}
+
+\begin{thrm}\label{thrm:meas::bndconv}
+  Пусть снова заданы $(X,\mu)$, $(f_n)$ измерима, $f_n \to f \alev$. К тому же
+  \[
+    \exists\, \varphi \in \summb \that \forall\, n |f_n| \leqslant \varphi
+  \]
+  Тогда
+  \[
+    \lim_{n\to \infty} \int _X f_n \, \del \mu = \int_X f\, \del \mu 
+  \]
+\end{thrm}
+
+{\denot $(\mathcal L)$~--- условия теоремы Лебега об ограниченной сходимости.}
+
+\begin{cor}
+  Её ещё можно формулировать локально и для семейства функций зависящих от вещественного
+  параметра. \underdev
+\end{cor}
+
+{\denot $(\mathcal L_{\rm loc})$~--- условия локальной теормемы Лебега об ограниченной сходимости.}
+
+\begin{cor}
+  Непрерывность по параметру при выполнении $(\mathcal L_{\rm loc})$ \underdev
+\end{cor}
+
+
 
 \end{document}
 % vim: tw=100 cc=100

@@ -185,6 +185,7 @@
 
 \theoremstyle{definition}
 \newtheorem{defn}{Определение}[paragraph]
+\newtheorem*{denot}{Обозначение}
 \newtheorem{exmp}{Пример}[defn]
 \newtheorem*{exmp*}{E.g}
 
@@ -197,7 +198,7 @@
 \counterwithin*{rem}{thrm}
 \counterwithin*{equation}{paragraph}
 
-% hoped to be fastest
+% hoped to be fastest loop
 % if have any proofs of contrary, make me know 
 \renewcommand*{\do}[1]{
   \expandafter\def\csname the#1\endcsname{\arabic{#1}}%
