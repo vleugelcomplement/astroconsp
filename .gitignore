@@ -1,10 +1,11 @@
-# thanks to octocat for that useful classification!
+# thanks to octocat for this useful classification!
 # Compiled source #
 ###################
 *.o
 *.pyc
 *.pyo
-pdf/
+*.pdf
+!/*/img/*.pdf
 
 # Packages #
 ############

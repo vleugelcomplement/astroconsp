@@ -11,49 +11,43 @@ MAINT   = main_t
 
 PDFDIR  = pdf
 $(shell mkdir -p $(PDFDIR) &>/dev/null)
-TMPDIR  = /tmp/consp/
+TMPDIR  = /tmp/consp
 $(shell mkdir -p $(TMPDIR) &>/dev/null)
+$(shell mkdir -p $(TMPDIR)/$(PDFDIR) &>/dev/null)
 MESSAGE = $(shell git log -1 --pretty=%B)
 
+@%:
+	@echo ====================
+	@echo ::  $*
+	@echo ===================
+	@cp $(MAIN).tex $(MAINT).tex
+	@$(SETTYPE) $(MAINT).tex $*
+	@$(BUILDER) $(MAINT).tex
+	@mv $(MAINT).pdf $(PDFDIR)/$(MAIN)_$*.pdf
 
-pdfs: ebook timbord hardcopy
+
+pdfs: @ebook @timbord @hardcopy distclean
 
 product: pdfs post
 
-
-ebook:
-	@cp $(MAIN).tex $(MAINT).tex
-	$(SETTYPE) $(MAINT).tex $@
-	$(BUILDER) $(MAINT).tex
-	@mv $(MAINT).pdf $(PDFDIR)/$(MAIN)_ebook.pdf
-
-timbord:
-	@cp $(MAIN).tex $(MAINT).tex
-	$(SETTYPE) $(MAINT).tex $@ 
-	$(BUILDER) $(MAINT).tex
-	@mv $(MAINT).pdf $(PDFDIR)/$(MAIN)_$@.pdf
-
-hardcopy:
-	@cp $(MAIN).tex $(MAINT).tex
-	$(SETTYPE) $(MAINT).tex $@
-	$(BUILDER) $(MAINT).tex
-	@mv $(MAINT).pdf $(PDFDIR)/$(MAIN)_$@.pdf
-
 post:
-	@cp -r pdf $(TMPDIR)
+	@cp -r $(PDFDIR) $(TMPDIR)
 	@git checkout gh-pages
-	@cp -r $(TMPDIR)/pdf .
-	@git add pdf
+	@cp -r $(TMPDIR)/$(PDFDIR) .
+	@git add $(PDFDIR)
 	@git commit -m "$(MESSAGE)"
 	@git checkout master
 	
 
 plain:	
-	$(BUILDER) main.tex
+	$(BUILDER) $(MAIN).tex
 
 
 clean:
-	$(CLEANER) main.tex
+	$(CLEANER) $(MAIN).tex
+	$(CLEANER) $(MAINT).tex
 
 distclean:
-	$(DISTCLEANER) main.tex
+	$(DISTCLEANER) $(MAIN).tex
+	$(DISTCLEANER) $(MAINT).tex
+	@rm $(MAINT).tex
