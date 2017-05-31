@@ -376,11 +376,15 @@
       Здесь нужно, чтобы хотя бы один из интегралов в разности существовал.
   \end{enumerate}
 \end{defn}
-\begin{rem*}
+\begin{rem}
   $\displaystyle
     \int _A f \, \del \mu := \sum_{k=1}^p c_k \mu (E_k \cap A)
   $
-\end{rem*}
+\end{rem}
+\begin{rem}
+  Дальше измеримость и неотрицательность или суммируемость $f$ будет периодически 
+  называться <<обычными>> условиями.
+\end{rem}
 
 
 \begin{prop}\label{prop:meas::mfun::intind}
@@ -466,6 +470,297 @@
   \]
 \end{thrm}
 
+\paragraph{Интеграл от непрерывной функции по мере Лебега}
+\label{par:meas::contint}
+
+\begin{thrm}\label{thrm:meas::contint}
+  Пусть $f \in C([a;b])$, $\lambda$~--- мера Лебега на $X = [a;b]$. Тогда
+  \[
+    f \in \summb , \; \int_{[a;b]} f \, \del \mu = \int_a ^b f = F(b) - F(a),
+  \]
+  где $F$~--- первообразная $f$.
+\end{thrm}
+
+\paragraph{Сравнение подходов Римана и Лебега}
+\label{par:meas::rimleb}
+
+Сначала вспомним определения того, о чём собираемся рассуждать.
+
+% нет метки, а то бы и здесь сослался
+\begin{defn}[Интеграл Римана]\label{defn:meas::rimleb::rim}
+  Пусть $f\in C([a;b])\,\; a < x_1 < \dots < x_{n-1} < x_n = b,\; 
+  \xi_i\in[x_i;x_{i+1}]$. Тогда 
+    \begin{itemize}
+      \item $\tau = \{x_1,\dots,x_{n-1}\}$~--- разбиение отрезка $[a;b]$
+      \item $\xi = \{\xi_1,\dots,\xi_{n-1}\}$~--- оснащение разбиения $\tau$
+      \item $\Delta x_i = x_{i+1}-x_i$~--- длина $i$-го отрезка
+      \item $r=r(\tau) = \max\limits_i\{\Delta x_i\}$~--- ранг разбиения
+      \item $\sigma = \sigma(\tau,\xi,f):= \dsum\limits_{i=0}^{n-1}f(\xi_i)\cdot\Delta x_i$ ~---
+        сумма Римана
+    \end{itemize}
+    Сам интеграл определяется как-то так 
+    \[
+      \int_a^b f \, \del x = \lim_{r(\tau)\to 0} \sigma(\tau,\xi,f)
+    \]
+\end{defn}
+
+\begin{defn}[Интеграл Лебега]\label{defn:meas::rimleb::leb}
+  см.~\ref{defn:meas::int}. В качестве множества $X$ понятное дело, отрезок $[a;b]$.
+\end{defn}
+
+\begin{exmp}\label{exmp:meas::rimleb::notrim}
+  Пусть $X=[0;1]$. Тогда $f(x) = \begin{cases}
+    0, & x\not\in \Q \\
+    1, & x\in \Q 
+  \end{cases}$ интегрируема по Лебегу, но не по Риману.
+\end{exmp}
+
+\plholdev{картиночка с обоими интегралами}
+
+
+\paragraph{Сравнение несобственного интеграла и интеграла Лебега}
+\label{par:meas::impleb}
+
+\begin{thrm}\label{thrm:meas::impleb}
+  Пусть $f \geqslant 0 \lor f \in \summb\bigl([a;b\bigr),\lambda)$. Тогда
+  $\displaystyle \int_{[a;b)} f \, \del \lambda = \int _a ^{\to b} f$.
+\end{thrm}
+\begin{tproof}\underdev
+  Cвести к собственному, а дальше непрерывность меры.
+\end{tproof}
+
+\paragraph{Интеграл по дискретной мере и мере, задаваемой плотностью}
+\label{par:meas::discint}
+
+\begin{thrm}\label{thrm:meas::discint::mol}
+  Пусть $\mu = \sum_{k} m_k \delta_{a_k}$, $\{a_k\} \in X$ и  $f\colon X \to \R$, 
+  $f \geqslant 0$ или $f\in \summb (X,\mu)$.
+  Тогда \[
+    \int_X f \, \del \mu = \sum_{k} f(a_k) \cdot \underbrace{m_k}_{\mu \{a_k\}}
+  \]
+\end{thrm}
+
+\begin{tproof}\underdev
+  Счётная аддитивность интеграла поможет. \ref{thrm:meas::infadd}
+\end{tproof}
+
+
+\begin{exmp}\label{exmp:meas::discint::series}
+  Пусть $\mu A=\#A$. Тогда \[
+    \sum_{m,n\in\N} = \int _{\N^2} f(m,n) \, \del \mu
+  \]
+  Причем условия суммируемости \note{ 
+  здесь объявим бесконечность приличным значением суммы ряда } 
+  ряда такие же, как у интеграла Лебега: 
+  \[
+    \left[\;
+    \begin{split}
+      \forall\, m,n\in \N \holds a_{m,n} &\geqslant 0 \\
+      \sum_{m,n\in\N} |a_{m,n}| &< \infty \\
+    \end{split} \right.
+  \]
+\end{exmp}
+
+
+\begin{defn}\label{defn:meas::discint::dens}
+  Пусть задана пара \note{тройка, но все же поняли, что сигма-алгебра имелась в виду} 
+  $(X, \mu)$, $\rho \colon X \to \R$, измерима, $\rho \geqslant 0$. 
+  Тогда 
+  \begin{itemize}
+    \item $\displaystyle \nu(E) := \int_E \rho \, \del \mu $~--- мера, задаваемая плотностью
+      $\rho$
+    \item $\rho$~--- плотность меры $\nu$ относительно меры $\mu$.
+  \end{itemize}
+\end{defn}
+
+\begin{rem*}
+  Она правда мера, интеграл счётно-аддитивен.
+\end{rem*}
+
+\begin{thrm}\label{thrm:meas::discint::intchg}
+  Пусть выполнены <<обычные>> условия на $f$. Тогда 
+  $\displaystyle \int_X f \, \del \nu = \int_X f \rho \, \del \mu$.
+\end{thrm}
+
+\paragraph{Мера Лебега-Стилтьеса. Интеграл по распределению}
+\label{par:meas::lebstil}
+
+\begin{defn}\label{defn:meas::lebstil::meas}
+  Пусть $I \subset \R$, $F \colon I \to \R$, $F \nearrow$, $F(x) = F(x-0)$ 
+  (непрерывна слева).\note{А можно и без. Тогда $\nu([a;b)) = F(b-0) - F(a-0)$,
+  см.~\ref{makpodk}}.
+  Рассмотрим порождённую полуинтервалами $[a;b) \subset I$ $\sigma$-алгебру.
+  Введём <<объём>> $\nu_F \colon \nu([a;b)) = F(b) - F(a)$.
+  
+  Тогда мера Лебега-Стилтьеса $\mu_F$~--- стандартное продолжение $\nu_F$ на некоторую
+  $\sigma$-алгебру $\mathcal M_F$.
+\end{defn}
+
+\begin{rem}
+  Здесь надо доказывать \emph{счётную} аддитивность, а то как продолжать $\nu$, если она~--- не
+  мера?
+\end{rem}
+
+\subparagraph{Свойства мемы Лебега-Стилтьеса}
+
+\begin{prop}\label{prop:meas::lebstil::clos}
+  Пусть $\Delta = [a;b]$. Тогда $\mu \Delta  = F(b+0) - F(a)$.
+\end{prop}
+
+\begin{prop}\label{prop:meas::lebstil::point}
+  Пусть $\Delta = \{a\}$. Тогда $\mu \Delta  = F(a+0) - F(a)$.
+\end{prop}
+
+\begin{prop}\label{prop:meas::lebstil::open}
+  Пусть $\Delta = (a;b)$. Тогда $\mu \Delta  = F(b) - F(a+0)$.
+\end{prop}
+
+\begin{lem}\label{lem:meas::lebstil::smoothF}
+  Пусть $F \in C(I)$, $\Delta \subset I$.
+  Тогда $\mu_F (\Delta) = \dint_\Delta F'(t) \, \del \lambda$.
+\end{lem}
+
+\begin{thrm}\label{thrm:meas::lebstil::int}
+  Пусть $F\nearrow$, кусочно-гладка на $I \subset \R$, а для $f$ выполнены обычные
+  условия ($X = \borel$, $\mu = \mu_F$). Промежутки гладкости $F$ обозначим за $(c_k, c_{k+1})$.
+  Тогда 
+  \[
+    \int_X f\, \del \mu_F = \sum_k \int_{c_k}^{c_{k+1}} f F' \, \del \lambda +
+\sum_k f(c_k) \, \underbrace{\Delta_{c_k} F}_{\mathclap{\text{скачок в $c_k$}}}
+  \]
+\end{thrm}
+
+\begin{defn}[Образ мемы]\label{defn:meas::lebstil::imag}
+  Пусть $(X,\alg,\mu)$~--- пространство с мемой, $f\colon X \to Y$. 
+  Превратим и $Y$ в пространство с мемой.
+  \begin{enumerate}
+    \item $\alg' = \{E \subset Y \mid f^{-1} (E) \in \alg\}$.
+    \item $\mu' \equiv \nu = \mu \circ f^{-1} $.
+  \end{enumerate}
+\end{defn}
+
+\begin{thrm}\label{thrm:meas::lebstil::imfun}
+  Пусть для $g\colon Y \to \R$ выполнены обычные условия ($\alg = \alg'$, $\mu=\nu$).
+  Тогда $\displaystyle \int_Y g \, \del \nu  = \int_X (g \circ f)\, \del \mu$.
+\end{thrm}
+
+\begin{defn}[Функция распределения]\label{defn:meas::lebstil::distr}
+  Пусть задано $(X, \mu)$, $\mu X < + \infty$, $f\colon X \to \R$. Тогда
+  $F(t) := \mu X  [f <t]$. Как видно, она возрастает и непрерывна слева.
+\end{defn}
+
+\begin{thrm}\label{thrm:meas::lebstil::distint}
+  Пусть задано $(X, \mu)$, $\mu X < + \infty$, выполнены обычные условия для $f$.
+  Тогда $\displaystyle \int_X f \, \del \mu = \intR t \, \del \mu_F$.
+\end{thrm}
+
+\paragraph{Интеграл Эйлера-Пуассона}
+\label{par:meas::eulpuass}
+
+\begin{prop}\label{prop:meas::eulpuass}
+  $\displaystyle \int_{\R^2} e^{-(x^2 + y^2)}\, \del \lambda_2 = \pi $ 
+\end{prop}
+
+\paragraph{Вероятностный смысл мемы}
+\label{par:meas::prob}
+
+\plholdev{Табличка с соответствием}
+
+\paragraph{Геометрический смысл меры Лебега. Принцип Кавальери}
+\label{par:meas::geomleb}
+
+\begin{defn}\label{defn:meas::almev}
+  Пусть задано $(X,\mu)$, $P(x)$~--- предикат. Говорят, что $P(x) = 1$ почти везде (\alev),
+  если $\mu \{x \mid P(x) = 0\} = 0$.
+\end{defn}
+
+\begin{defn}\label{defn:meas::almev::eq}
+  $f \sim g \Leftrightarrow f(x) = g(x) \alev$.
+\end{defn}
+
+\begin{lem}[Беппо-Леви для рядов]\label{lem:meas::almev::blseries}
+  Пусть заданы $(X,\mu)$, $u_n \colon X \to \R$, $n\in \N$, $u_n$ измеримы, $u_n \geqslant 0$.
+  Тогда 
+  \begin{enumerate}[a)]
+    \item $\displaystyle \int _x \sum_{n=1}^\infty u_n \, \del \mu  
+      = \sum_{n=1}^\infty \int _x  u_n \, \del \mu$.
+    \item Если эти числа конечны, то ряд $\sum_n u_n \conv \alev$
+  \end{enumerate}
+  
+\end{lem}
+\begin{lem}[Беппо-Леви <<вверх ногами>>]\label{lem:meas::almev::blov}
+  Пусть задано $(X,\mu)$, $(f_n)$, измеримы, $f_1 \geqslant f_2 \geqslant \cdots \geqslant 0$.
+  Пусть ещё $f_1 \in \summb$. Тогда
+  \[
+    \lim_{n\to \infty} \int_X f_n \, \del \mu = \int_X \lim_{n\to \infty} f_n \, \del \mu 
+  \]
+\end{lem}
+
+\plholdev{Здесь была ещё пара лемм, но они не особо используются дальше. Вроде}
+
+\begin{defn}\label{defn:meas::almev::proj}
+  Пусть $E \subset \R^m \times \R^n \in \lebesgue_{m+n}$.
+  \begin{itemize}[$\triangleright$]
+    \item $E_x      = \{ y\in \R^n \mid (x,y) \in E\}$~--- <<срез>>
+    \item $\Pi_1(E) = \{ x\in \R^m \mid E_x \neq \varnothing\}$~--- <<проекция>>
+  \end{itemize}
+\end{defn}
+
+\plholdev{картиночка для $\R^2$}
+
+\begin{thrm}\label{thrm:meas::almev::cav}
+  Пусть $E \in \lebesgue_{m+n}$, $E_x \in \lebesgue_{n} \alev x$,
+  $\varphi(x) = \lambda_n(E_x)$ измерима относительно $\lebesgue_{m}$.
+
+  Тогда 
+  \[
+    \lambda_{m+n} (E) = \int_{\R^m} \lambda_n (E_x) \, \del \lambda_m
+  \]
+\end{thrm}
+\plholdev{много букв}
+
+\begin{defn}[График]\label{defn:meas::almev::subplot}
+  $\Gamma^f = \{ (x,t) \in \R^{n+1} \mid t = f(x)\}$.
+\end{defn}
+\begin{defn}[Подграфик]\label{defn:meas::almev::subplot}
+  $\Gamma_-^f = \{ (x,t) \in \R^{n+1} \mid 0 \leqslant t \leqslant f(x)\}$.
+\end{defn}
+\begin{defn}[Надграфик]\label{defn:meas::almev::subplot}
+  $\Gamma_+^f = \{ (x,t) \in \R^{n+1} \mid t \geqslant f(x)\}$.
+\end{defn}
+
+\begin{thrm}[Геометрический смысл интеграла]\label{thrm:meas::almev::geomsense}
+  Пусть $f\colon \R^n \to \R$, измерима, $ \geqslant 0$. Тогда
+  \begin{enumerate}
+    \item $\Gamma_-^f$ измеримо.
+    \item $\lambda_{n+1}\Gamma_-^f = \int_{\R^n} f\, \del \lambda_n$ измеримо.
+  \end{enumerate}
+\end{thrm}
+
+\paragraph{Сведение кратного интеграла к повторному}
+\label{par:meas::mult}
+
+Будем в дальнейшем обозначать интегрирование по мере Лебега через $\del x$ (ну или
+$\del y$), размерность определяется из размерности $x$. Еще обозначим $\del (x,y)$ через
+$\del x\del y$.
+
+\begin{thrm}[Тонелли]\label{thrm:meas::mult::tonn}
+  Пусть $f\colon \R^{m+n} \to \R$, измерима, $ \geqslant 0$, $x\in \R^m$, $y \in \R^n$.
+  Тогда
+  \[
+    \iint_{\R^m \times \R^n} f(x,y) \, \del x\del y 
+    = \int_{\R^m} \del x \int_{\R^n} f(x,y) \, \del y
+  \]
+\end{thrm}
+
+\begin{thrm}[Фубини]\label{thrm:meas::mult::fub}
+  Пусть $f\colon \R^{m+n} \to \R$, измерима, $\in \summb(\R^{n+m}, \lambda_{m+n})$,
+  $x\in \R^m$, $y \in \R^n$. Тогда
+  \[
+    \iint_{\R^m \times \R^n} f(x,y) \, \del x\del y 
+    = \int_{\R^m} \del x \int_{\R^n} f(x,y) \, \del y
+  \]
+\end{thrm}
 
 \end{document}
 % vim: tw=100 cc=100
