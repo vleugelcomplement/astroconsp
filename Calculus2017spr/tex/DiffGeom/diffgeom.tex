@@ -1,0 +1,329 @@
+%------------------------------------------------------------
+% Description : Differential Geometry
+% Author      : Iliya Tikhonenko <iliya.t@mail.ru>
+% Created at  : Thu Jun  1 18:33:27 MSK 2017
+%------------------------------------------------------------
+\documentclass[12pt,timbord]{longnotes}
+\usepackage{tmath} 
+\usepackage{cussymb} 
+\usepackage{silence}
+\WarningFilter{latex}{Reference}
+\graphicspath{{../../img/}}
+
+\begin{document}
+\paragraph{Регулярная кривая и её естественная параметризация}
+\label{par:dg::curve}
+
+\begin{defn}[Кривая, как отображение]\label{defn:dg::curve::map}
+  Пусть задано гладкое отображение $t\in [a;b] \mapsto r(t) \in \R^3$, регулярное, то есть
+  $rk r'(t) \equiv 1$. $t$~--- параметр, само отображение ещё можно
+  называть параметризацией.
+
+\end{defn}
+
+\begin{defn}[Кривая, как класс отображений]\label{defn:dg::curve::class}
+  Введём отношение эквивалентности отображений:
+  \[
+    r(t) \sim \rho(\tau) \Leftrightarrow 
+    \exists\, \delta \colon [a;b] \leftrightarrow [\alpha, \beta ] \that \rho (\delta (t)) = r(t)
+  \]
+\end{defn}
+
+А теперь будем их путать. \flame
+
+\begin{defn}[Естественная параметризация]\label{defn:dg::curve::nat}
+  Пусть $[a;b] = [t_0, t_1]$.
+  Рассмотрим $\ov~s(t) = \dint_{t_0}^t | r'(t) | \, \del \tau $. Она, как видно, является 
+  пройденным путём и неубывает  $ \Rightarrow $ годится на роль $\delta$.
+
+  Так что можно рассматривать $s$ как параметр,  это собственно и есть
+  естественная (натуральная) параметризация.
+\end{defn}
+
+
+\begin{prop}\label{prop:dg::curve::repar}
+  Пусть есть две разных параметризации: $r(t)$ и $r(s)$ одной кривой. Тогда 
+  \[
+    \dot r \equiv \pder{r(s)}{s} = \Bigl(r'(t) \cdot (s'(t))^{-1}\Bigr)(t) = \frac{r'}{|r'|} 
+  \]
+  Как видно, натуральная почему-то обозначается точкой.
+\end{prop}
+
+\paragraph{Кривизна кривой}
+\label{par:dg::curvature}
+
+\begin{defn}[Касатальный вектор]\label{defn:dg::curvature::tang}
+  $\tau := \dot r(s)$.
+\end{defn}
+
+\begin{defn}[Кривизна]\label{defn:dg::curvature}
+  $k_1 = |\dot \tau |$
+\end{defn}
+\begin{defn}[Радиус кривизны]\label{defn:dg::curvature}
+  $R = k_1 ^{-1}$
+\end{defn}
+
+\begin{prop}\label{prop:dg::curvature::orth}
+  $\tau \perp \dot \tau$
+\end{prop}
+
+\begin{thrm}\label{thrm:dg::curvature::repar}
+  $\displaystyle k_1 = \frac{| r' \times r''|}{|r'|^3} $
+\end{thrm}
+
+\paragraph{Кручение и нормаль}
+\label{par:dg::norm}
+
+\begin{defn}[Нормаль]\label{defn:dg::norm::norm}
+  Пусть $k_1 \neq 0$. Тогда $\nu  := \frac{\dot \tau } {k_1}$.
+\end{defn}
+\begin{defn}[Бинормаль]\label{defn:dg::norm::binorm}
+  $\beta = \tau \times \nu $.
+\end{defn}
+
+\begin{rem*}
+  $(\tau,\nu,\beta)$~--- хороший кандидат для репера в какой-нибудь точке $P$.
+\end{rem*}
+\begin{defn}[Соприкасающаяся плоскость]\label{defn:dg::norm::tangpl}
+  Пусть $k_1 > 0$, $P = r(s_0)$, $T$~--- плоскость, $T \ni P$, $N \perp T$~--- нормаль к ней.
+  Допустим, $r(s+\Delta s) \cdot N  = h$, $h = o(\Delta s^2)$. Тогда $T$~--- соприкасающаяся
+  плоскость.
+\end{defn}
+\begin{prop}\label{prop:dg::norm::tangpl}
+  $ \tau , \nu \perp N  $;
+  $(r-r_0, \dot r_0 , \ddot r_0)=0$~--- её уравнение
+\end{prop}
+
+\begin{defn}[Абсолютное кручение]\label{defn:dg::norm::abscrvn}
+  $|k_2| := | \dot\beta|$
+\end{defn}
+\begin{thrm}\label{defn:dg::norm::abscrvn}
+  $|k_2| = \left|\dfrac{(\dot r, \ddot r, \dddot r\,)}{k_1^2}\right|$
+\end{thrm}
+
+\begin{defn}[Кручение]\label{defn:dg::norm::crvn}
+  $k_2 := \dfrac{-(\dot r, \ddot r, \dddot r\,)}{k_1^2}$
+\end{defn}
+
+\paragraph{Формулы Френе}
+\label{par:dg::frene}
+
+\begin{thrm}\label{thrm:dg::frene}
+  \begin{equation}
+    \label{eq:dg::frene}
+    \begin{pmatrix}
+      \dot\tau \\\dot\nu \\ \dot\beta
+    \end{pmatrix}
+    = 
+    \begin{pmatrix}
+      0 & k_1 & 0 \\
+      -k_1 & 0 & -k_2 \\
+      0 & k_2 & 0
+    \end{pmatrix}\cdot
+    \begin{pmatrix}
+      \tau \\ \nu \\ \beta
+    \end{pmatrix}
+  \end{equation}
+\end{thrm}
+
+\begin{thrm}\label{thrm:dg::frene::reconst}
+  Пусть $r(s)$~--- гладкая кривая с заданными $k_1$ и $k_2$, $k_1>0$. 
+  Тогда система \eqref{eq:dg::frene} определит её с точностью до движения.
+\end{thrm}
+
+\paragraph{Регулярная поверхность. Касательная плоскость. Первая квадратичная форма}
+\label{par:dg::tangplane}
+
+\begin{defn}[Поверзность (двумерная)]\label{defn:dg::tangplane::manifold}
+  Пусть задано гладкое отображение \[
+    \varphi \colon (u,v) \in D \subset \R^2 \mapsto r=(x,y,z) \in \R^3
+  \]
+  Добавим условие регулярности $\rk \varphi' \equiv 2$ и условимся путать отображение и класс 
+  оных.
+\end{defn}
+
+\begin{defn}\label{defn:dg::tangplane::tanv}
+  \[
+    \begin{split}
+      r_u &:= (x_u', y_u', z_u') \\
+      r_v &:= (x_v', y_v', z_v') \\
+      n &:= \frac{r_u \times r_v}{|r_u \times r_v|} = \frac{N}{|N|} 
+    \end{split}
+  \]
+  Отметим, что условие регулярности не дает векторному произведению обращаться в 0.
+  
+  Касательную плоскость можно было бы здесь определить через нормаль, но лучше пока ещё подумать.
+  Может, абстракций добавить.
+\end{defn}
+
+
+
+\begin{defn}[Первая квадратичная форма]\label{defn:dg::tangplane::I}
+  \[
+    \begin{split}
+      I :&= |\del r|^2  = r_u^2\, \del u^2 + 2r_u r_v\, \del u \,\del v + r_v^2\, \del v^2 \\
+        &= E \, \del u^2 + 2F\, \del u \,\del v + G\, \del v^2 
+    \end{split}
+  \]
+\end{defn}
+
+\paragraph{Вычисление длин и площадей на поверхности}
+\label{par:dg::area}
+
+\begin{thrm}\label{thrm:dg::area::len}
+  Пусть $M$~--- поверхность, $\gamma \colon t \to r \in M$.
+  Тогда \[
+    \ell(\gamma)= \dint_{t_0}^{t_1} \sqrt I.\; (\del s = I)
+  \]
+\end{thrm}
+
+\begin{thrm}\label{thrm:dg::area::area}
+  Пусть $M$~--- поверхность, $u,v\in D$, $I = E \, \del u^2 + 2F\, \del u \,\del v + G\, \del v^2$.
+  Тогда
+  \[
+    S(M) = \iint_D \sqrt{EG - F^2}\, \del u\,\del v
+  \]
+\end{thrm}
+
+
+\quest\plholdev{вкусный абстрактный кусок про меру на многообразии}
+
+\begin{defn}\label{thrm:dg::area::manifold}
+  Пусть $M$~--- подмногообразие $\R^n$.  Тогда 
+  \[
+      \lambda_k := \int _D \sqrt {\det g(t)} \, \del t, \quad
+      g(t)_{ij} = \left(\pder{x}{t_i} \cdot \pder{x}{t_j}\right)\, (t)
+  \]
+\end{defn}
+
+\begin{rem}
+  Как видно, в $\R^2$, $g$ очень похож на матрицу 1ой квадратичной формы
+\end{rem}
+
+\begin{defn}\label{defn:dg::area::isom}
+  Пусть $M_1$, $M_2$~--- пара поверхностей. Допустим, $\exists\, F \colon M_1 \to M_2$, 
+  сохраняющее длины кривых. Тогда они называются  изометричными.
+\end{defn}
+
+\begin{thrm}\label{thrm:dg::area::Iisom}
+  Пусть $M_1$, $M_2$~--- пара поверхностей. Допустим, что существуют их параметризации, 
+  при которых $I_1= I_2$. Тогда они изометричны.
+\end{thrm}
+
+\paragraph{Вторая квадратичная форма}
+\label{par:dg::II}
+
+\begin{defn}\label{defn:dg::II}
+  Снова рассмотрим поверхность с  какой-то параметризацией. Тогда 
+  ${\rm II} := - \del r \, \del n = L \, \del u^2 + 2N\, \del u \,\del v + M\, \del v^2$.
+\end{defn}
+
+\begin{prop}\label{prop:dg::II}
+  ${\rm II} = n \cdot \del^2 r$
+\end{prop}
+
+\begin{prop}[Типы точек на поверхности]\label{prop:dg::II::ptypes}
+  Здесь названия связаны с типом соприкасающегося параболоида. Его можно добыть, рассматривая
+  $\Delta r \cdot n$.
+  \begin{description}
+    \item[${\rm II} > 0$:] Эллиптический
+    \item[${\rm II} < 0$:] Он же
+    \item[${\rm II} \lessgtr 0$:] Гиперболический
+    \item[${\rm II} \geqslant 0 \lor {\rm II} \leqslant 0$:] Параболический (вроде цилиндра)
+    \item[${\rm II} = 0$:] Точка уплощения
+  \end{description}
+\end{prop}
+
+
+\paragraph{Нормальная кривизна в данном направлении. Главные кривизны}
+\label{par:meas::curfctr}
+
+\begin{defn}\label{defn:meas::curfctr::normsec}
+  Нормальное сечение поверхности~--- сечение плоскостью, 
+  содержащей нормаль к поверхности (в точке).
+\end{defn}
+
+\begin{lem}\label{lem:meas::curfctr::normsec}
+  Нормальное сечение~--- кривая.
+\end{lem}
+
+Сначала рассмотрим несколько более общий случай
+
+\begin{thrm}[Менье]\label{thrm:meas::curfctr::menie}
+  Пусть $\gamma$~--- кривая $ \subset M$, $ \gamma \ni P$.
+  Тогда $k_0 = k_1 \cos (\underbrace{\nu \,\text{\^;}\, n}_\theta) = \frac{\rm II}{\rm I} $.
+\end{thrm}
+
+\begin{rem}\label{rem:meas::curfctr::menie::ref}
+  Ещё можно сформулировать так: для всякой кривой на повехности, проходящей через точку 
+  в заданном направлении $k_0 = \rm const$
+\end{rem}
+
+а теперь сузим обратно.
+\begin{defn}\label{defn:meas::curfctr::normcrvf}
+  Нормальная кривизна~--- кривизна нормального сечения.
+\end{defn}
+
+Для нормального сечения $\cos\theta = \pm 1$.
+
+Если немного переписать и ввести параметр $t= \del v /\del u $
+\[
+  k_1(t) = |k_0(t)| = \left|\frac{L + 2Nt + Mt^2}{E + 2Ft +Gt^2} \right|
+\]
+Этот параметр $t$ и задаёт <<направление>> нормального сечения. 
+Так что $k_0(t)$ и есть та самая <<кривизна в данном направлении>>.
+
+Теперь найдем экстремумы $\frac{\rm II}{\rm I} (t)$. 
+\begin{thrm}\label{thrm:meas::curfctr::minmax}
+  $\exists\, k_{\min}, k_{\max}$, $k_{\min} \cdot k_{\max} = \frac{LM - N^2}{EG - F^2}$.
+\end{thrm}
+
+\begin{defn}\label{defn:meas::curfctr::main}
+  $k_{\min}, k_{\max}$~--- главные кривызны.
+\end{defn}
+
+
+\paragraph{Гауссова кривизна поверхности. Теорема Гаусса}
+\label{par:meas::gauss}
+
+\begin{defn}[Гауссова кривизна]\label{defn:meas::gauss::crvf}
+  $K = k_{\min} \cdot k_{\max}$.
+\end{defn}
+
+\begin{defn}[Гауссово отображение]\label{defn:meas::gauss::map}
+  Пусть $M$~--- поверхность, $n$~--- нормаль к ней в точке $P$, $S$~--- единичная сфера.
+  Тогда $G: n \mapsto C \in S$ ($C$~--- точка на сфере).
+\end{defn}
+
+\begin{thrm}\label{thrm:meas::gauss::lim}
+  Пусть $U$~--- окрестность $P \subset M$, $M$~--- поверхность, $\mathcal N$~--- поле нормалей
+  на $U$. Допустим, что $V = G(\mathcal N)$, она вроде как окрестность $G(n_P)$. 
+
+  Тогда \[
+    |K| = \lim_{U \to P} \frac{\iint_V |n_u \times n_v|}{\iint_U|r_u \times r_v|} 
+  \]
+\end{thrm}
+
+\paragraph{Геодезическая кривизна. Теорема Гаусса-Бонне.}
+\label{par:meas::bonnet}
+
+\begin{defn}[Геодезическая кривизна]\label{defn:meas::bonnet::geodcurv}
+  Пусть $M$~--- поверхность, $T$~--- касательная к ней в точке $P$. Допустим,
+  $\gamma \subset M$ проходит через $P$. Рассмотрим проекцию $\gamma$ на $T$.
+  Тогда $\varkappa := k_\gamma $~--- и есть геодезическая кривизна.
+\end{defn}
+
+\begin{defn}\label{defn:meas::bonnet::geodcurv}
+  Если для кривой $\varkappa(s) \equiv 0$, то она называется геодезической.
+\end{defn}
+
+\begin{thrm}[Гаусса-Бонне]\label{thrm:meas::bonnet}
+  Пусть $M$~--- гладкая поверхность, $P_1, \dotsc, P_n$~--- вершины криволинейного многоугольника,
+  $P_i, P_{i+1} = \gamma $, $\alpha_i$~--- углы при вершинах. Тогда \[
+    \sum_i \alpha_i + \sum_i \int _{\gamma_i} \kappa \, \del s  = 2 \pi - \iint_P K \, \del s
+  \]
+\end{thrm}
+
+\end{document}
+% vim: tw=100 cc=100
+
