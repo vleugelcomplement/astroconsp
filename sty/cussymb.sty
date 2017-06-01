@@ -11,9 +11,9 @@
 \RequirePackage[nointegrals]{wasysym}
 \RequirePackage{marvosym}
 
-\newcommand{\underdev}{\protect{\MineSign{}}}
-\newcommand{\flame}{\texttt{:set aflame}} 
-\newcommand{\sour}{$\ddot\sim$} 
+\newcommand{\underdev}{\texorpdfstring{\thinspace$\langle${\MineSign{}}$\rangle$\thinspace}{(underdev)}}
+\newcommand{\flame}{$\langle$\texttt{:set aflame}$\rangle$} 
+\newcommand{\sour}{\texorpdfstring{$\langle\ddot\sim\rangle$}{(sour)}}
 \newcommand{\plholdev}[1]{\texttt{<+{#1}+>}} 
 \newcommand{\intrng}{\mathbin{..}} 
 \newcommand{\that}{\:::\:}

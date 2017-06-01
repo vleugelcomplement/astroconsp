@@ -742,9 +742,9 @@
 \paragraph{Сведение кратного интеграла к повторному}
 \label{par:meas::mult}
 
-Будем в дальнейшем обозначать интегрирование по мере Лебега через $\del x$ (ну или
+Будем в дальнейшем обозначать интегрирование по мере через $\del x$ (ну или
 $\del y$), размерность определяется из размерности $x$. Еще обозначим $\del (x,y)$ через
-$\del x\del y$.
+$\del x\del y$. 
 
 \begin{thrm}[Тонелли]\label{thrm:meas::mult::tonn}
   Пусть $f\colon \R^{m+n} \to \R$, измерима, $ \geqslant 0$, $x\in \R^m$, $y \in \R^n$.
@@ -876,7 +876,7 @@ $\del x\del y$.
 \begin{thrm}\label{thrm:meas::bndconv}
   Пусть снова заданы $(X,\mu)$, $(f_n)$ измерима, $f_n \to f \alev$. К тому же
   \[
-    \exists\, \varphi \in \summb \that \forall\, n |f_n| \leqslant \varphi
+    \exists\, \varphi \in \summb \that \forall\, n \holds |f_n|  \leqslant |\varphi|
   \]
   Тогда
   \[
@@ -887,17 +887,191 @@ $\del x\del y$.
 {\denot $(\mathcal L)$~--- условия теоремы Лебега об ограниченной сходимости.}
 
 \begin{cor}
-  Её ещё можно формулировать локально и для семейства функций зависящих от вещественного
-  параметра. \underdev
+  Пусть $f\colon T \times X \to \R$, $T \subset \R^k$, $f_t \xto{t\to t_0}{} f \alev$,
+  и \[
+    \exists\, V(t^0), \varphi \in \summb \that \forall\, t \in \punct V \cap T
+    \holds |f_t| \leqslant |\varphi| 
+  \]
+  Тогда
+  \[
+    \int _X f_t \, \del \mu \xto{t\to t_0}{} \int_X f\, \del \mu 
+  \] 
 \end{cor}
 
 {\denot $(\mathcal L_{\rm loc})$~--- условия локальной теормемы Лебега об ограниченной сходимости.}
 
 \begin{cor}
-  Непрерывность по параметру при выполнении $(\mathcal L_{\rm loc})$ \underdev
+  Непрерывность интеграла по параметру при выполнении $(\mathcal L_{\rm loc})$ и 
+  непрерывности $f_t$.
 \end{cor}
 
+\paragraph*{Интеграл по меме с параметром}
 
+Здесь часто придётся подчёркивать, что является параметром, а что~--- определяет функцию
+В таких случаях параметр будет записан, как индекс
+
+\begin{defn}[Собственный интеграл с параметром]\label{defn:meas::paruniconv::prop}
+  Пусть $f\colon X \times T \to \R$, $f_t(x)\in \summb([a,b],\mu) \; \forall\, t \in T$. 
+  Тогда, 
+  \[
+    I(t) = \int_a^{b} f(x,t) \, \del x 
+  \]
+  Мы здесь определяем некоторую функцию от $t$, как видно $\dom_I = T$.
+\end{defn}
+
+По идее, надо здесь переформулировать все-все-все утверждения про последовательности функций.
+Надо бы узнать, что с этим делать.
+\flame 
+У нас в конспекте этот кусок почему-то написан про несобственные интегралы, но всюду полагается
+$(\mathcal L_{\rm loc})$. Так что по сути они~--- просто интегралы по меме.
+
+Здесь тоже есть непрерывность, дифференциируемость и интегрирование по параметру, но
+все тривиально\note{ну..} следует из \ref{thrm:meas::bndconv} и \ref{thrm:meas::mult::fub}.
+
+\paragraph{Равномерная сходимость несобственного параметрического интеграла. Признаки}
+\label{par:meas::paruniconv}
+
+
+\begin{defn}[Несобственный интеграл с параметром]\label{defn:meas::paruniconv::improp}
+  Пусть $f\colon X \times T \to \R$,
+  $f\in \summb([a,B],\mu) \;\forall\, B <b$. Тогда,
+  \[
+    I(t) = \int_a^{\to b} f(x,t) \, \del x := \lim_{B\to b-0} \int_a^B f(x,t) \, \del x 
+    = \lim_{B\to b-0} I^B(t)
+  \]
+  Предполагается, что $\forall\, t \in T$ интеграл сходится поточечно. А вот суммируемость
+  никто не обещал.
+\end{defn}
+
+
+\begin{defn}\label{defn:meas::paruniconv::uniconv}
+  Говорят, что $I^B(t) \unito^T I(t)$ (сходится равномерно относительно $t, t\in T$), если 
+  \note{Никто же не любит $\varepsilon$-$\delta$-определения?}
+  \[
+    \sup_{t\in T} \left| \int_B^{\to b} f(x,t)\right| \xto{B\to b} 0
+  \]
+\end{defn}
+
+Здесь дальше всюду предполагается поточечная сходимость интеграла $\forall\, t \in T$.
+
+\begin{thrm}[Признак Больцано-Коши]\label{thrm:meas::paruniconv::bk}
+  \[
+    I^B(t) \unito^T I(t) \Leftrightarrow 
+    \sup_{T} \left| \int_{B_1}^{B_2} f(x,t)\, \del x \right| \xto{B_1, B_2 \to b} 0
+  \]
+\end{thrm}
+
+\begin{thrm}[Признак Вейерштрасса]\label{thrm:meas::paruniconv::wei}
+  Пусть $\exists\, \varphi\in \summb([a;b))\that |f(x,t)| \leqslant \varphi (x)\; \forall\, t$.
+  Тогда $I^B(t) \unito^T I(T)$.
+\end{thrm}
+
+\begin{thrm}[Признак Дирихле]\label{thrm:meas::paruniconv::dir}
+  Пусть $I(t) = \dint_{a}^{\to b} f(x,t) \cdot g(x,t) \, \del x$ и
+  \begin{enumerate}[a)]
+    \item $f(x,t) \unito^T 0$, $f(x,t) \searrow^x$ ($x\to b-0$)
+    \item $G(x,t) = \dint_a^x g(\xi, t) \, \del \xi$
+      \[
+        \exists\, M \colon \forall\, x \in [a;b), t\in T \that | G(x,t) | \leqslant M   
+      \]
+  \end{enumerate}
+  Тогда $I^B(t) \unito^T I(T)$.
+\end{thrm}
+
+\begin{thrm}[Признак Абеля]\label{thrm:meas::paruniconv::abel}
+  Пусть $I(t) = \dint_{a}^{\to b} f(x,t) \cdot g(x,t) \, \del x$ и
+  \begin{enumerate}[a)]
+    \item $\exists\, M \colon \forall\, t\in T \holds f(x,t) \leqslant M$,
+      $f(x,t) \searrow^x$.
+    \item 
+      $\displaystyle
+      \int_a^{B} g(x,t) \, \del x \unito^T_{B\to b} \int_a^{\to b} g(x,t) \, \del x 
+      $
+  \end{enumerate}
+  Тогда $I^B(t) \unito^T I(T)$.
+\end{thrm}
+
+\paragraph{Несобственные интегралы с параметром и операции анализа над параметром \underdev}
+\label{par:meas::parimpconv}
+
+\begin{thrm}\label{thrm:meas::parimpconv::lim}
+  Пусть $f(x,t) \to f(x,t_0)$ для \alev $x \in [a;b)$ и $I^B(t) \unito^{V(t^0)} I(t)$.
+  \note{Это не очень докажется без конечности меры $V(t_0)$ ,а то интеграл может сходится, а
+  функция не быть суммируемой}
+  Тогда $I \xto{t\to t_0} I(t_0)$.
+\end{thrm}
+
+\begin{thrm}\label{thrm:meas::parimpconv::diff}
+  Пусть для $\alev x \; \exists\, f_t'(x,t)$, непрерывна на $[a;b) \times \underbrace{[c;d)}_T$. 
+  Допустим,
+  \begin{enumerate}[a)]
+    \item $I(t) = \dint_a^{\to b} f (x,t)\, \del x$ сходится $\forall\, t \in T$
+    \item $\dint_a^{\to b} f_t' (x,t)\, \del x$ равномерно сходится относительно $t \in T$
+  \end{enumerate}
+  Тогда $\exists\, I'(t_0) = \dint_a^{\to b} f_t'(x,t_0)\, \del x$
+\end{thrm}
+\begin{rem*}
+  Здесь нужна сходимость $I$, чтобы хоть где-то были конечные значения $I(t)$, нам их
+  разность считать.
+\end{rem*}
+
+\begin{thrm}\label{thrm:meas::parimpconv::diff}
+  Пусть для $\alev x \; \exists\, f(x,t)$, непрерывна на $[a;b) \times \underbrace{[c;d)}_T$. 
+  Допустим,
+  $I(t) = \dint_a^{\to b} f (x,t)\, \del x$ равномерно сходится относительно $t \in T$
+  
+  Тогда \[
+    \dint_c^d I(t)\, \del t = \dint_a^{\to b} \del x \int_c^d f(x,t)\, \del t
+  \]
+\end{thrm}
+
+
+\paragraph{\texorpdfstring{$\Gamma$}{Г}-функция Эйлера}
+\label{par:meas::gamma}
+
+\begin{defn}\label{defn:meas::gamma}
+  $\displaystyle \Gamma(t) = \int_0^\infty x^{t-1} e^{-x} \, \del x$
+\end{defn}
+
+\subparagraph{Свойства}
+
+\begin{enumerate}[$1^\circ$]
+  \item Определена для всех $t>0$.
+  \item $\Gamma (1) = 1$
+  \item $\forall\, t \Gamma (t+1) = t \Gamma (t)$
+  \item $n\in \N$ $\Gamma(n+1) = n!$
+  \item $\Gamma$-выпукла
+  \item $\Gamma \sim \frac{1}{t} $ при $t\to 0$
+  \item $\Gamma(t+1) \sim \sqrt{2\pi} \sqrt{t} t^t e^{-t}$ при $t\to \infty$.
+  \item $\Gamma(t) \cdot \Gamma(1-t) = \frac{\pi}{\sin \pi t}$. (формула отражения)
+\end{enumerate}
+
+Гамма-функцию можно продолжить на отрицательную область, через формулу отражения.
+И на комплексную, там будет сходимость при $\Im z > 0$.
+
+\paragraph{B-функция}
+\label{par:meas::beta}
+
+\begin{defn}\label{defn:meas::beta}
+  $\displaystyle B(y,z) = \int_0^1 x^{y-1} (1-x)^{z-1} \, \del x$.
+\end{defn}
+
+\subparagraph{Свойства}
+\begin{enumerate}[$1^\circ$]
+  \item $B(y,z) = B(z,y)$.
+  \item $B(y,z) = \dfrac{\Gamma(y) \Gamma(z)}{\Gamma(y+z)}$.
+\end{enumerate}
+
+\paragraph{Объём $n$-мерного шара}
+\label{par:meas::ball}
+
+\begin{thrm}\label{thrm:meas::ball}
+  Пусть $B_n(R) = \{x \in \R^n \mid \|x\| \leqslant R \}$~-- $n$-мерный шар.
+  Тогда 
+  \[
+    \lambda_n B_n(R) = \frac{\pi ^{n/2} R^n}{\tfrac{n}{2} \cdot \Gamma(\tfrac{n}{2})} 
+  \]
+\end{thrm}
 
 \end{document}
 % vim: tw=100 cc=100

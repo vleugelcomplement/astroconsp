@@ -91,7 +91,6 @@
 \newcommand\N{\mathbbm{N}}
 
 \newcommand{\diffin}{\textit{дифференцируема в }} 
-\newcommand{\pneigh}[1]{\overset{\circ}{#1}} 
 \providecommand{\xRightarrow}[2][]{\mathop{\Longrightarrow}\limits_{#1}^{#2}}
 \providecommand{\xequal}[2][]{\mathop{=}\limits_{#1}^{#2}}
 
@@ -130,4 +129,8 @@
 \newcommand\alev{\relax\ifmmode\text{~п.в.~}\else п.в.\fi}
 \let\@to\to \let\to\relax
 \newcommand\to{\ensuremath \mathop{\@to}\limits}
+\newcommand\xto[1]{\ensuremath \xrightarrow[#1]{}}
 \newcommand\unito{\ensuremath \mathop{\rightrightarrows}\limits}
+\newcommand{\punct}[1]{\overset{\circ}{#1}} 
+
+\DeclareMathOperator\dom{\mathcal D}
