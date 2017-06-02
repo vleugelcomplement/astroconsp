@@ -7,14 +7,39 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{cussymb}[2017/05/28 Custom symbols package]
 
+\RequirePackage{etoolbox}
+\providetoggle{draft}
+\DeclareOption{draft}{\toggletrue{draft}}
+\ProcessOptions\relax
+
 \RequirePackage{amsmath,amssymb}
 \RequirePackage[nointegrals]{wasysym}
 \RequirePackage{marvosym}
 
-\newcommand{\underdev}{\texorpdfstring{\thinspace$\langle${\MineSign{}}$\rangle$\thinspace}{(underdev)}}
-\newcommand{\flame}{$\langle$\texttt{:set aflame}$\rangle$} 
-\newcommand{\sour}{\texorpdfstring{$\langle\ddot\sim\rangle$}{(sour)}}
-\newcommand{\quest}{\texorpdfstring{$\langle?\rangle$}{(?)}}
+\newcommand\create@subst@sign[3]{
+  \expandafter\newcommand\csname #1@\endcsname{#2}
+  \expandafter\newcommand\csname #1@subst\endcsname{#3}
+}
+
+\create@subst@sign{underdev}{\thinspace$\langle${\MineSign}$\rangle$\thinspace}{(underdev)}
+\create@subst@sign{sour}{$\langle\ddot\sim\rangle$}{(sour)}
+\create@subst@sign{quest}{$\langle?\rangle$}{(?)}
+\create@subst@sign{flame}{$\langle$\texttt{:set aflame}$\rangle$}{(:set aflame)}
+
+\newcommand*\subst@at@pdf@toc[1]{
+  \iftoggle{draft}{
+    \expandafter\newcommand\csname #1\endcsname{\csname #1@\endcsname}
+  }%else
+  {\expandafter\newcommand\csname #1\endcsname{%
+\texorpdfstring{\csname #1@\endcsname}{\csname #1@subst\endcsname}}
+}}
+\forcsvlist{\subst@at@pdf@toc}{underdev,sour,flame,quest}
+
+
+% \newcommand{\underdev}{\texorpdfstring{\thinspace$\langle${\MineSign}$\rangle$\thinspace}{(underdev)}}
+% \newcommand{\flame}{$\langle$\texttt{:set aflame}$\rangle$}
+% \newcommand{\sour}{\texorpdfstring{$\langle\ddot\sim\rangle$}{(sour)}}
+% \newcommand{\quest}{\texorpdfstring{$\langle?\rangle$}{(?)}}
 \newcommand{\plholdev}[1]{\texttt{<+{#1}+>}} 
 \newcommand{\intrng}{\mathbin{..}} 
 \newcommand{\that}{\:::\:}

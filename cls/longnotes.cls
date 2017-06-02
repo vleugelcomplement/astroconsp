@@ -4,11 +4,11 @@
 %+ и настроены(вроде) перекрёстные ссылки
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \NeedsTeXFormat{LaTeX2e}
 % plain notes have only sections
 % long notes are more like a report, with chapters and paragraphs
 \ProvidesClass{longnotes}[2017/05/27 Long version of notes]
+\def\@baseclass{report}
 
 %language setting to handle cyrrilic in expansions
 
@@ -20,26 +20,24 @@
 \RequirePackage[english,russian]{babel}
 \RequirePackage[a4paper]{geometry}
 
-\def\@baseclass{report}
 
-\renewcommand*\do[1]{
+\newcommand*\set@bool@opt[1]{
   \newtoggle{#1}
   \DeclareOption{#1}{\toggletrue{#1}}
 }
-\docsvlist{hardcopy,timbord,ebook,tikz}
+\forcsvlist{\set@bool@opt}{hardcopy,timbord,ebook,tikz,draft}
 
-
-% baseclass options
-\DeclareOption{10pt}{\PassOptionsToClass{\CurrentOption}{\@baseclass}}
-\DeclareOption{12pt}{\PassOptionsToClass{\CurrentOption}{\@baseclass}}
+\newcommand*\set@passing@opt[1]{
+  \DeclareOption{#1}{\PassOptionsToClass{\CurrentOption}{\@baseclass}}
+}
+\forcsvlist{\set@passing@opt}{10pt,12pt}
 
 %% Fallback                                  
 \DeclareOption*{
     \ClassWarning{notes}{'Notes' class don't know about '\CurrentOption'}
-    \PassOptionsToClass{\@baseclass}
+    \PassOptionsToClass{\CurrentOption}{\@baseclass}
 }
 
-% \ExecuteOptions{10pt}
 \ProcessOptions\relax
 
 \LoadClass{\@baseclass}
@@ -97,6 +95,9 @@
   \usetikzlibrary{arrows,decorations.markings,quotes,angles}
 }{}
 
+\iftoggle{draft}{
+  \newcommand\texorpdfstring[2]{#1}
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Sectioning styles (ToC, numbering,etc)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -145,17 +146,18 @@
 \RequirePackage{perpage}
 \MakePerPage{footnote}
 
-% nice hyperlinks
-\RequirePackage{hyperref}
-% fixes bookmark level
-\RequirePackage{bookmark}
-\hypersetup{%
-  colorlinks=true,
-  linkcolor=blue, 
-  citecolor=green!50!black
-  %linkbordercolor=blue,% hyperlink borders will be red
-  %pdfborderstyle={/S/U/W 1}% border style will be underline of width 1pt
-}
+\iftoggle{draft}{}{
+  % nice hyperlinks
+  \RequirePackage{hyperref}
+  % fixes bookmark level
+  \RequirePackage{bookmark}
+  \hypersetup{%
+    colorlinks=true,
+    linkcolor=blue, 
+    citecolor=green!50!black
+    %linkbordercolor=blue,% hyperlink borders will be red
+    %pdfborderstyle={/S/U/W 1}% border style will be underline of width 1pt
+}}
 
 \reversemarginpar
 %for margin notes
@@ -198,16 +200,16 @@
 \counterwithin*{rem}{thrm}
 \counterwithin*{equation}{paragraph}
 
-% hoped to be fastest loop
-% if have any proofs of contrary, make me know 
-\renewcommand*{\do}[1]{
-  \expandafter\def\csname the#1\endcsname{\arabic{#1}}%
-}
 % % we are redefining a macro that is used by a loop
 % % to redefine 9 another macros that have been defined
 % % when have defined them by a macro from amsmath
 % % which uses 4 another nested macros, last of which
 % % finally defines this evil counter we are trying to redefine
+\renewcommand*{\do}[1]{
+  \expandafter\def\csname the#1\endcsname{\arabic{#1}}%
+}
+% hoped to be fastest loop
+% if have any proofs of contrary, make me know 
 \docsvlist{thrm,lem,stat,prop,imp,cor,defn,exmp,rem}
 
 \renewcommand*{\do}[1]{
@@ -220,12 +222,12 @@
 \renewcommand{\p@equation}{\theequation\expandafter\@gobble}
 
 %manual resetting
-\newcommand*{\resetter}[1]{
+\newcommand*{\re@setter}[1]{
   \expandafter\newcommand\csname reset#1\endcsname{
     \setcounter{#1}{0}
   }
 }
-\forcsvlist{\resetter}{defn,thrm,rem}
+\forcsvlist{\re@setter}{defn,thrm,rem}
 \newcommand\resetall{\resetdefs \resetthrm \resetrem}
 
 
