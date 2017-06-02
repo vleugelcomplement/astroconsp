@@ -1,0 +1,314 @@
+%------------------------------------------------------------
+% Description : Fourier series
+% Author      : Iliya Tikhonenko <iliya.t@mail.ru>
+% Created at  : Fri Jun  2 12:47:32 MSK 2017
+%------------------------------------------------------------
+\documentclass[12pt,draft,timbord]{longnotes}
+\usepackage{tmath}
+\usepackage{cussymb}
+\usepackage{silence}
+\WarningFilter{latex}{Reference}
+\graphicspath{{../../img/}}
+
+\begin{document}
+
+\paragraph{Гильбертово пространство. \texorpdfstring{$\summb_2$}{L2}}
+\label{par:fourier::hilb}
+
+\begin{defn}\label{defn:fourier::hilb}
+  Пусть $H$~--- линейное пространство над полем $\C$. Введём на нём (эрмитово) скалярное
+  произведение, связанную с ним норму и метрику. Допустим, оно полно по введённой метрике.
+  Тогда $H$~--- гильбертово пространство.
+\end{defn}
+
+\begin{rem}
+  Если полноты нет, то пространство называется предгильбертовым.
+\end{rem}
+
+\begin{stat}\label{stat:fourier::hilb::contscm}
+  Скалярное произведение~--- непрерывно.
+\end{stat}
+\begin{exmp}\label{exmp:fourier::hilb::L2}
+  Пусть $(X,\mu)$~--- пространство  с мерой. Рассмотрим пространство $\ov~{L}$
+  \[
+    \ov~{L}:= \left\{f ~\middle|~ f\colon X \to \C, \text{ измерима}, \int_X |f|^2 \, \del \mu < \infty\right\}
+  \]
+  Скалярное произведение зададим так:
+  \[
+    \langle f,g \rangle = \int_X f \cdot \ov-{g} \, \del \mu 
+  \]
+  Введем теперь отношение эквивалентности $f\sim g := f = g \alev$. 
+  Тогда $\summb_2 = \bigslant{\ov~{L}}{\sim}$.
+\end{exmp}
+
+\begin{thrm}\label{thrm:fourier::hilb::comp}
+  $\summb_2$ полно по мере, введённой выше.
+\end{thrm}
+
+\paragraph{Ортогональные системы. Ряд Фурье в гильбертовом пространстве.}
+\label{par:fourier::orthseries}
+
+\begin{defn}\label{defn:fourier::orthseries::delta}
+  $\displaystyle \delta_{ij}
+  \begin{cases}
+    1, & i =j \\
+    0, & i\neq j
+  \end{cases}
+  $
+\end{defn}
+
+
+\begin{defn}\label{defn:fourier::orthseries}
+  Пусть $H$~--- гильбертово. Рассмотрим $f_1, \dotsc, f_n \in H$. 
+  Допустим, $\langle f_i,f_j \rangle = \delta_{ij}$. Тогда $(f_i)$~--- ортогональная
+  система.
+\end{defn}
+
+\begin{thrm}[Пифагора \sour]\label{thrm:fourier::orthseries::pif}
+  Пусть $(f_i)$~--- ортогональная система. Допустим, $f = \sum_k f_k$. Тогда
+  \[
+    \|f\| ^2 = \sum_k \|f_k\|^2
+  \]
+\end{thrm}
+
+\begin{defn}\label{defn:fourier::orthseries::fs}
+  Пусть $(e_i)$~--- ортогональная система, $f \in H$. Тогда
+  \[
+    \begin{split}
+      c_n &= \left\langle f, \frac{e_n}{\|e_n\|} \right\rangle \text{~--- коэффициенты Фурье $f$} \\
+      f &=\sum_k c_k e_k  \text{~--- ряд Фурье $f$}
+    \end{split}
+  \]
+  
+\end{defn}
+
+\begin{thrm}[Неравенсто Бессля]\label{thrm:fourier::orthseries::ineq}
+  Пусть $f\in H$,  $(e_i)$~--- ортогональная система. Тогда \[
+    \sum_n |c_n|^2 \|e_n\|^2 \leqslant \|f\|^2
+  \]
+\end{thrm}
+
+\begin{defn}\label{defn:fourier::orthseries::compl}
+  Пусть $(e_i)$~--- ортогональная система. Допустим 
+  \[
+    \forall\, f \in \summb_2 \holds f \sim \sum_n c_n e_n 
+  \]
+  Тогда $(e_i)$~--- полная система.
+\end{defn}
+\begin{stat}\label{stat:fourier::orthseries::uniq}
+  Разложение в ряд Фурье по полной ортогональной системе~--- единственно.
+\end{stat}
+
+\paragraph{Тригонометрические системы}
+\label{par:fourier::trigseries}
+
+\begin{defn}\label{defn:fourier::trigseries::space}
+  $\summb_2^{2\pi} = \summb_2\bigl((0;2\pi),\mu\bigr) \, \cap $ $\{2\pi$-периодичные функции$\}$.
+\end{defn}
+
+\begin{prop}\label{prop:fourier::trigseries::orthsin}
+  $1, \cos x, \sin x, \cos 2x, \dotsc $~--- ортогональная система
+\end{prop}
+\begin{prop}\label{prop:fourier::trigseries::orthexp}
+  $1, e^x, e^{2x}, \dotsc $~--- ортогональная система
+\end{prop}
+
+\begin{thrm}\label{thrm:fourier::trigseries::comp}
+  Тригонометрические системы выше~--- полны.
+\end{thrm}
+\begin{tproof}
+  \quest Вообще, тут большой кусок теории.
+\end{tproof}
+
+\begin{defn}\label{defn:fourier::trigseries::vp}
+  Будем понимать 
+  \[
+    \sum_{-\infty}^\infty a_n := \Vp \sum_{-\infty}^\infty a_n 
+    = \lim_{N\to +\infty}  \sum_{-N}^N a_n
+  \]
+\end{defn}
+
+\begin{prop}\label{prop:fourier::trigseries::sin}
+  Коэффициенты разложения по синусам и косинусам:
+   \begin{align*}
+     a_n &= \frac{1}{\pi} \int_0^{2\pi} f(x) \, \cos nx \, \del x \; (n \geqslant 1)\\ 
+     b_n &= \frac{1}{\pi} \int_0^{2\pi} f(x) \, \sin nx \, \del x \; (n \geqslant 1)\\ 
+     a_0 &= \frac{1}{2\pi} \int_0^{2\pi} f(x) \, \del x \\ 
+     \ov~{a_0} &= \frac{1}{\pi} \int_0^{2\pi} f(x) \, \del x  = 2 a_0\\ 
+     f(x) \sim a_0 + \sum_{k=1}^\infty a_n \, \cos nx + \sum_{k=1}^\infty b_n \, \sin nx  
+   \end{align*}
+\end{prop}
+\begin{prop}\label{prop:fourier::trigseries::exp}
+  Коэффициенты разложения по экспонентам:
+   \begin{align*}
+     c_n &= \frac{1}{2\pi} \int_0^{2\pi} f(x) \, e^{-inx} \, \del x \\ 
+     f(x) &\sim \sum_{k=-\times}^\infty c_n  e^{inx}
+   \end{align*}
+\end{prop}
+
+\paragraph{Ядро Дирихле. Лемма Римана-Лебега}
+\label{par:fourier::dirker}
+
+\begin{defn}[Ядро Дирихле]\label{defn:fourier::dirker::dir}
+  $\mathcal D_n(x) := \dsum_{-n}^n e^{ikx}$
+\end{defn}
+\begin{lem}[Свойства ядра Дирихле]\label{lem:fourier::dirker::dir}
+  ${}$
+  \begin{enumerate}
+    \item $\mathcal D_n(-x) = \mathcal D(x)$
+    \item $\mathcal D_n(x) = \dfrac{\sin(n+\lfrac{1}{2})x}{\sin \frac x 2}$
+    \item всякие следствия отсюда
+  \end{enumerate}
+\end{lem}
+\begin{defn}[Ядро Фейера]\label{defn:fourier::dirker::fey}
+  $\mathcal F_n(x) := \frac{1}{n} \dsum_{k=0}^{n-1} \mathcal D_k(x)$
+\end{defn}
+\begin{lem}[Свойства ядра Фейера]\label{lem:fourier::dirker::fey}
+  ${}$
+  \begin{enumerate}
+    \item $\mathcal F_n(-x) = \mathcal F(x)$
+    \item $\mathcal F_n(x)= \dfrac1 n \cdot\dfrac{\sin^2\left(\frac{nx}{2}\right)}{\sin^2\frac x 2}$
+    \item всякие следствия отсюда
+  \end{enumerate}
+\end{lem}
+
+\begin{lem}[Римана-Лебега]\label{lem:fourier::dirker::rimleb}
+  Пусть $f\in \summb(\R)$. Тогда
+  \begin{align*}
+    \intR f(x) \sin nx \, x &\xto{n\to \infty} 0 \\
+    \intR f(x) \cos nx \, x &\xto{n\to \infty} 0\\
+    \intR f(x) e^{-inx} \, x &\xto{n\to \infty} 0\\
+  \end{align*}
+\end{lem}
+
+
+\paragraph{Теорема Дини о поточечной сходимости}
+\label{par:fourier::dini}
+
+\begin{thrm}[Дини]\label{thrm:fourier::dini}
+  Пусть $f\in \summb_2^{2\pi}$, $x\in\R$. Допустим, $f$ удовлетворяет условию Дини:
+  \[
+    \exists\, L \in \C, \delta > 0 \that u \in \summb\bigl((0;\delta)\bigr), 
+    u(t) = \frac{f(x+t) + f(x-t) - 2L}{t}
+  \]
+  Тогда 
+  \[
+    S_n(x) = \sum_{k=-n}^{n} c_n e^{ikx} \xto{n \to \infty} L
+  \]
+\end{thrm}
+
+\begin{prop}\label{prop:fourier::dini::dinisimp}
+  Частные случаи условия Дини:
+  \begin{enumerate}
+    \item $\exists$ конечные $f(x\pm0)$, $f'(x\pm 0)$.
+      При этом $L = \frac{1}{2} (f(x+0) + f(x-0))$.
+    \item $f$ непрерывна в $x$, $\exists$ конечные $f'(x\pm 0)$.
+      При этом $L = f(x)$.
+    \item $f \diffin x$.
+      При этом $L = f(x)$.
+  \end{enumerate}
+\end{prop}
+
+\paragraph{Свойства коэффициентов Фурье}
+\label{par:fourier::coef}
+
+{\denot $\displaystyle\ov^{f}(n):= c_n = \frac{1}{2\pi}\int_{-\pi}^\pi f(x)\,e^{-inx}\,\del x$}
+
+\begin{prop}\label{prop:fourier::coef::tozero}
+  $f\in \summb_2^{2\pi} \Rightarrow \ov^{f} (n) \xto{n\to \infty } 0$ 
+\end{prop}
+\begin{prop}\label{prop:fourier::coef::deriv}
+  Пусть $\exists\, f' \in \summb_2^{2\pi}$. Тогда
+  \begin{itemize}
+    \item $\ov^{f'} (n) = in \ov^{f}(n)$ 
+    \item $\ov^{f}(n) = o\left(\frac{1}{n}\right)$, $n\to \infty$ 
+  \end{itemize}
+\end{prop}
+\begin{prop}\label{prop:fourier::coef::nder}
+  Пусть $\exists\, f^{(p)} \in \summb_2^{2\pi}$. Тогда
+  \begin{itemize}
+    \item $\ov^{f^{(p)}} (n) = (in)^p \cdot  \ov^{f'}(n)$ 
+    \item $\ov^{f}(n) = o\left(\frac{1}{n^p}\right)$, $n\to \infty$  
+  \end{itemize}
+\end{prop}
+
+\begin{prop}\label{prop:fourier::coef::equiv}
+  Пусть $\displaystyle c_n = O \left(\frac{1}{n^{p+2}}\right)$. 
+  Тогда $\exists\, \varphi \in C^p_{2\pi}\that \varphi \sim f$.
+\end{prop}
+
+\paragraph{Сходимость рядов Фурье..}
+\label{par:fourier::conv}
+
+\begin{enumerate}[$1^\circ$]
+  \item $f\in \summb_1^{2\pi} \Rightarrow 
+    \forall\, \Delta \subset [-\pi,\pi] \holds 
+    \dint_\Delta f(x) \, \del x = \sum_{-\infty}^\infty \ov^{f} (n) \int_\Delta e^{inx}\, \del x$.
+  \item $f\in \summb_1^{2\pi} \Rightarrow c_n$ определены.
+  \item $f\in \summb_2^{2\pi} \Rightarrow \|S_n - f\| \to 0$.
+  \item $f\in C^{(p)} \Rightarrow c_n$ быстро убывают.
+  \item $c_n$ быстро убывают $\Rightarrow f\in C^{(p)}$ .
+  \item теорема Дини \ref{thrm:fourier::dini}
+  \item теорема Фейера \ref{thrm:fourier::conv::fey}
+\end{enumerate}
+
+\begin{thrm}[Фейера]\label{thrm:fourier::conv::fey}
+  Пусть $f\in C^{2\pi}$. Тогда $ \sigma_n \unito^\R f$, 
+  где $\sigma_n = \frac{1}{n} \dsum_{k=0}^{n-1} S_k$. (сходимость по Чезаро).
+\end{thrm}
+
+\paragraph{Преобразование Фурье}
+\label{par:fourier::transform}
+
+\begin{defn}\label{defn:fourier::transform}
+  Пусть $f \in \summb_1 (\R)$. Тогда\[
+    \ov^{f} (s) := \frac{1}{2\pi}  \intR f(x) e^{-isx} \, \del x
+  \]
+\end{defn}
+
+\begin{enumerate}
+  \item $|\ov^{f} (s) | \leqslant \frac{1}{2\pi} \|f\|_1$.
+  \item $\ov^{f}(s) \in C^0 $.
+  \item $\Bigl(g(x) = x^n f(x) \in \summb_1 \Bigr)\Rightarrow \ov^{f}(s) \in C^{(n)} $.
+  \item $\ov^f(s) \xto{s \to \infty} 0 $.
+  \item $\Bigl( f\in C^{(p)},f^{(p)}\in \summb_1\Bigr)
+    \Rightarrow\ov^f(s) = o\left(\frac{1}{|s|^p}\right)$ .
+  \item $f\in \summb_1, a\in \R, g(x) = f(x-a)$ $ \Rightarrow $ $\ov^g(s) = e^{-isa}\,\ov^f(s)$
+  \item $f, g\in \summb_1$. Тогда \[
+      \ov^{f\ast g} (s) = 2 \pi \,(\ov^f(s) \cdot \ov^g(s))
+    \]
+  \item Интегральная формула Фурье \ref{thrm:fourier::transform::recov}
+\end{enumerate}
+
+\begin{thrm}[формула восстановления Дини]\label{thrm:fourier::transform::recov}
+  Пусть $f\in \summb_1(\R)$, $x\in \R$, $L\in \C$ \note{Тут по идее все можно в $\C$}.
+  Допустим $f$ удовлетворяет условию Дини в точке $x$ с константой $L$. Тогда
+  \[
+    \check{\vphantom{\sum}\hat{f}} (x) = L
+  \]
+  Для непрерывных функций \[
+    f(x) = \Vp \intR \ov^f(s) \, e^{isx} \, \del x
+  \]
+\end{thrm}
+
+\paragraph{Решение уравнения теплопроводности}
+\label{par:fourier::heat}
+
+Само уравнение теплопроводности выглядит так:
+\[
+  \pder{u}{t} = a^2 \cdot \frac{\partial^2 u}{\partial x^2} 
+\]
+Но к нему ещё есть пара начальных условий:
+\begin{align*}
+  u(x,0) = f(x) \\
+  f \in \summb \qquad f \in C^2_x
+\end{align*}
+
+\underdev: \plholdev{решить что-ли..}
+
+В итоге получится что-то вроде\[
+  u(x,t) = \frac{1}{2a\sqrt{\pi t}}  \cdot \intR \, \exp \left(-\frac{(x-y)^2}{4a^2 t}\right)\cdot f(y) \, \del y 
+\]
+
+\end{document}
+%vim: tw=100 cc=100

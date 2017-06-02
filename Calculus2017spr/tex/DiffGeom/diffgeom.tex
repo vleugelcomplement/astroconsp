@@ -59,7 +59,7 @@
 \begin{defn}[Кривизна]\label{defn:dg::curvature}
   $k_1 = |\dot \tau |$
 \end{defn}
-\begin{defn}[Радиус кривизны]\label{defn:dg::curvature}
+\begin{defn}[Радиус кривизны]\label{defn:dg::curvature::rad}
   $R = k_1 ^{-1}$
 \end{defn}
 
@@ -97,7 +97,7 @@
 \begin{defn}[Абсолютное кручение]\label{defn:dg::norm::abscrvn}
   $|k_2| := | \dot\beta|$
 \end{defn}
-\begin{thrm}\label{defn:dg::norm::abscrvn}
+\begin{thrm}\label{thrm:dg::norm::abscrvn}
   $|k_2| = \left|\dfrac{(\dot r, \ddot r, \dddot r\,)}{k_1^2}\right|$
 \end{thrm}
 
@@ -305,19 +305,19 @@
 \end{thrm}
 
 \paragraph{Геодезическая кривизна. Теорема Гаусса-Бонне.}
-\label{par:meas::bonnet}
+\label{par:dg::bonnet}
 
-\begin{defn}[Геодезическая кривизна]\label{defn:meas::bonnet::geodcurv}
+\begin{defn}[Геодезическая кривизна]\label{defn:dg::bonnet::geodcrvn}
   Пусть $M$~--- поверхность, $T$~--- касательная к ней в точке $P$. Допустим,
   $\gamma \subset M$ проходит через $P$. Рассмотрим проекцию $\gamma$ на $T$.
   Тогда $\varkappa := k_\gamma $~--- и есть геодезическая кривизна.
 \end{defn}
 
-\begin{defn}\label{defn:meas::bonnet::geodcurv}
+\begin{defn}\label{defn:dg::bonnet::geodcurv}
   Если для кривой $\varkappa(s) \equiv 0$, то она называется геодезической.
 \end{defn}
 
-\begin{thrm}[Гаусса-Бонне]\label{thrm:meas::bonnet}
+\begin{thrm}[Гаусса-Бонне]\label{thrm:dg::bonnet}
   Пусть $M$~--- гладкая поверхность, $P_1, \dotsc, P_n$~--- вершины криволинейного многоугольника,
   $P_i, P_{i+1} = \gamma $, $\alpha_i$~--- углы при вершинах. Тогда \[
     \sum_i \alpha_i + \sum_i \int _{\gamma_i} \kappa \, \del s  = 2 \pi - \iint_P K \, \del s

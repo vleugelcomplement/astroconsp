@@ -152,6 +152,9 @@
   % fixes bookmark level
   \RequirePackage{bookmark}
   \hypersetup{%
+    pdfencoding=auto,
+    psdextra,
+    unicode=true,
     colorlinks=true,
     linkcolor=blue, 
     citecolor=green!50!black

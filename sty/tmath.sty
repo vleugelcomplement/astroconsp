@@ -25,18 +25,20 @@
 
 % if you know faster\cheaper\simplier alternative, you are welcome
 \newcommand*\ov[2]{
-  \newcommand\case[3]{\ifstrequal{#1}{##1}{##2}{##3}}
-  \case{~}{\widetilde{#2}}    {
-  \case{-}{\overline{#2}}     { 
-  \case{^}{\widehat{#2}}      {
-  \case{0}{\overset\circ{#2}} {
-{\PackageError{tmath}{Undefined option to ov: #1}} }}}}
-}
+  \providecommand\EqCase[3]{\ifstrequal{#1}{##1}{##2}{##3}}
+  \EqCase{~}{\widetilde{#2}}    {
+  \EqCase{-}{\overline{#2}}     { 
+  \EqCase{^}{\widehat{#2}}      {
+  \EqCase{0}{\overset\circ{#2}} {
+  \EqCase{v}{\check{#2}}        {
+  \PackageError{tmath}{Undefined option to ov: `#1'}
+}}}}}}
+
 
 \newcommand*\und[2]{
-  \newcommand\case[3]{\ifstrequal{#1}{##1}{##2}{##3}}
-  \case{-}{\underline{#2}}     { 
-{\PackageError{tmath}{Undefined option to ov: #1}} }
+  \providecommand\EqCase[3]{\ifstrequal{#1}{##1}{##2}{##3}}
+  \EqCase{-}{\underline{#2}}     { 
+{\PackageError{tmath}{Undefined option to ov: `#1'}} }
 }
 
 % causes long compilation time
@@ -54,6 +56,7 @@
 % \def\lfrac#1#2{{}^{#1}\!/_{\!#2}}
 \def\lfrac#1#2{\nicefrac{#1}{#2}}
 %\renewcommand\lfrac[2]{\sfrac{#1}{#2}}
+\newcommand{\bigslant}[2]{{\raisebox{.2em}{$#1$}\big/\raisebox{-.2em}{$#2$}}}
 
 
 \def\dint{\displaystyle\int}
@@ -135,3 +138,4 @@
 \newcommand{\punct}[1]{\overset{\circ}{#1}} 
 
 \DeclareMathOperator\dom{\mathcal D}
+\DeclareMathOperator\Vp{V.p.}
