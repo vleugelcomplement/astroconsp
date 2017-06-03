@@ -25,7 +25,7 @@
   \newtoggle{#1}
   \DeclareOption{#1}{\toggletrue{#1}}
 }
-\forcsvlist{\set@bool@opt}{hardcopy,timbord,ebook,tikz,draft}
+\forcsvlist{\set@bool@opt}{hardcopy,timbord,ebook,tikz,draft,exam}
 
 \newcommand*\set@passing@opt[1]{
   \DeclareOption{#1}{\PassOptionsToClass{\CurrentOption}{\@baseclass}}
@@ -117,11 +117,11 @@
 {1.5em plus 1ex minus 0.5ex}
 
 \RequirePackage{chngcntr} % tools for counters 
-\@definecounter{paragraph}
+%\@definecounter{paragraph}
+
 % still a bit hacky
 % \renewcommand{\thesection}{\arabic{section}.}
 \renewcommand{\theparagraph}{\S\thinspace\arabic{paragraph}}
-
 \titleformat {\paragraph}[block]%
 {\normalfont\bfseries}%
 {\theparagraph}%
@@ -134,6 +134,16 @@
 {0.7em plus 1ex minus 0.5ex}
 \titleformat {name=\paragraph,numberless}%
 {\normalfont\bfseries}{\S*}{2ex}{\normalfont\bfseries}{}
+
+\iftoggle{exam}{
+  \counterwithout*{paragraph}{chapter}
+  \counterwithout*{paragraph}{section}
+  \counterwithout*{paragraph}{subsection}
+  \counterwithout*{paragraph}{subsubsection}
+  \renewcommand{\theparagraph}{№\thinspace\arabic{paragraph}}
+  \titleformat\paragraph[block]{\normalfont\bfseries}%
+  {Билет\ \theparagraph:}{1ex}{\normalfont\bfseries}{}
+}{}
 
 \RequirePackage{tocloft}
 \cftsetindents{paragraph}{3.0em}{\widthof{\theparagraph--\arabic{paragraph}}+1em}
