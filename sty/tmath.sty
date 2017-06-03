@@ -15,7 +15,7 @@
 \RequirePackage[intlimits]{amsmath}
 \RequirePackage{amsfonts,amssymb}
 \RequirePackage{mathtools}
-% \RequirePackage[intlimits]{esint}
+\RequirePackage{esint} %AAA overrides my limits setup :(
 \RequirePackage{bbm}      %} more math fonts
 \RequirePackage{mathrsfs} %}
 \RequirePackage{accents}  % extra syms over another syms
@@ -139,3 +139,8 @@
 
 \DeclareMathOperator\dom{\mathcal D}
 \DeclareMathOperator\Vp{V.p.}
+\let\divsign\div
+\let\div\relax
+\DeclareMathOperator\div{div}
+\DeclareMathOperator\rot{rot}
+%\DeclareMathOperator\grad{grad} %exists already
