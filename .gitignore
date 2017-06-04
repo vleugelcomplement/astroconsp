@@ -6,6 +6,7 @@
 *.pyo
 *.pdf
 !/*/img/*.pdf
+!/*/img/*/*.pdf
 
 # Packages #
 ############

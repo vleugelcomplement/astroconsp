@@ -3,7 +3,7 @@
 % Author      : Iliya Tikhonenko <iliya.t@mail.ru>
 % Created at  : Thu Jun  1 18:33:27 MSK 2017
 %------------------------------------------------------------
-\documentclass[draft,ebook]{longnotes}
+\documentclass[draft,timbord]{longnotes}
 \usepackage{tmath} 
 \usepackage{cussymb} 
 \usepackage{silence}
@@ -16,7 +16,7 @@
 
 \begin{defn}[Кривая, как отображение]\label{defn:dg::curve::map}
   Пусть задано гладкое отображение $t\in [a;b] \mapsto r(t) \in \R^3$, регулярное, то есть
-  $rk r'(t) \equiv 1$. $t$~--- параметр, само отображение ещё можно
+  $\rk r'(t) \equiv 1$. $t$~--- параметр, само отображение ещё можно
   называть параметризацией.
 
 \end{defn}
@@ -30,6 +30,7 @@
 \end{defn}
 
 А теперь будем их путать. \flame
+Ещё веселье с многообразиями.
 
 \begin{defn}[Естественная параметризация]\label{defn:dg::curve::nat}
   Пусть $[a;b] = [t_0, t_1]$.
@@ -489,7 +490,7 @@
   \]
 \end{defn}
 
-\begin{defn}\label{defn:dg::secint::curv}
+\begin{defn}\label{defn:dg::secint::surf}
   Интеграл второго рода по поверхности $M$  от векторного поля $F$ определяется, как 
   \[
   \int_\Gamma  \langle F ,n \rangle \, \del s
@@ -530,6 +531,23 @@ $\Lambda^p (T_xM)$
     \omega^3 &= a_{xyz}\,\del x \wedge\del y\wedge z
   \end{align*}
 \end{exmp}
+
+Ещё одно маленькое 
+\begin{defn}[Внешний дифференциал]\label{defn:dg::secint::extdiff}
+  Введём линейный император $\colon (T^*_xM)^p \to (T^*_xM)^{p+1}$:
+  \begin{enumerate}
+    \item Для функции $f\colon \R^k \to M$ совпадает с обычнм дифференциалом.
+    \item $\del (\omega^p \wedge \omega^q )
+      = \del \omega ^p \wedge \omega ^q + (-1)^p \omega ^p \wedge \del \omega ^q$
+      Это вместо правила Лейбница.
+    \item $\del (\del \omega ) = 0$.
+  \end{enumerate}
+  Вообще, можно было бы определить 1, 3 правило и как дифференцировать 1-формы.
+  Тогда 2 правило ясно следует оттуда. Соберём обе формы в одну, здоровую.
+  После того как продифференцировали коэффициент, вылезет ещё какой-то $\del x^{i_l}$.
+  Если он из второй формы, его надо переставить через все первые $p$ дифференциалов.
+  Как раз и вылезет $(-1)^p$.
+\end{defn}
 
 \underdev\plholdev{понять меры Хаара. Когда-нибудь...}
 
@@ -584,6 +602,13 @@ $\Lambda^p (T_xM)$
 
 Физический смысл этого дела~--- работа.
 
+\begin{defn}\label{defn:dg::secint::prec}
+  Форма $\omega$ точна, если $\Gamma \int_\Gamma \omega = 0$
+\end{defn}
+\begin{defn}\label{defn:dg::secint::clos}
+  Форма $\omega$ замкнута, если $\del \omega = 0$.
+\end{defn}
+
 \def\wdgcoef#1#2#3{#1\, \del #2 \wedge \del #3}
 \begin{prop}\label{prop:dg::secint::surfdiffform}
   Пусть $M$~--- 2-мерная гадкая ориентируемая поверхность, $F=(P,Q,R)$,
@@ -615,16 +640,49 @@ $\Lambda^p (T_xM)$
 \paragraph{Дифференцирование векторных полей}
 \label{par:dg::vecfione}
 
-по методичке Лодкина\quest
+по методичке Лодкина
+Здесь~--- основные утверждения
 
 \begin{defn}\label{defn:dg::vecfione::basic}
   Пусть $f$~--- скалярное поле, $F = (P,Q,R)$~--- векторное. Тогда
   \begin{align*}
-    \grad f &= \left( \pder f x, \pder f y , \pder f z \right) \\
-    \rot F  &= \left( \pder R y - \pder Q z, \pder P z - \pder R x , \pder Q x - \pder P y \right) \\
-    \div F  &= \pder P x + \pder Q y + \pder R z
+    \nabla f = \grad f &= \left( \pder f x, \pder f y , \pder f z \right) \\
+    \nabla \times F = \rot F  &= \left( \pder R y - \pder Q z, \pder P z - \pder R x , \pder Q x - \pder P y \right) \\
+    \langle \nabla, F \rangle = \div F  &= \pder P x + \pder Q y + \pder R z
   \end{align*}
 \end{defn}
+
+\begin{prop}\label{prop:dg::vecfione::form}
+  При обратимом гладком преобразовании координат $\Psi \colon x \mapsto \ov~x$
+  ротор и дивергенция изменяются следующим образом.
+
+  \begin{align*}
+    \div \ov~F(\ov~r) &= \div F(r) \\
+    \rot \ov~F(\ov~r) &= \Psi (\rot F(r))
+  \end{align*}
+\end{prop}
+
+\begin{thrm}\label{thrm:dg::vecfione::diffrules}
+  Пусть $F$~--- гладкое поле. Тогда
+  \[
+    \begin{split}
+      \rot F (r) &= \rot \Bigl(\del F_r(h) \Bigr) \\
+      \div F (r) &= \div \Bigl(\del F_r(h) \Bigr)
+    \end{split}
+  \]
+\end{thrm}
+\begin{tproof}
+  Ну, если отображение линейно, то его матрица Якоби равна его матрице. А дальше очевидно
+\end{tproof}
+
+\begin{thrm}\label{thrm:dg::vecfione::difftbl}
+  Пусть $a, b\in \R^3$. Тогда 
+  \begin{align*}
+    F(r) &= r & &\Rightarrow & \rot F &= 0 & \div F &= 3\\
+    F(r) &= a \times r & &\Rightarrow & \rot F &= 2a & \div F &= 0\\
+    F(r) &= \langle a,r \rangle b & &\Rightarrow & \rot F &= a \times b & \div F &= \langle a,b\rangle
+  \end{align*}
+\end{thrm}
 
 
 \paragraph{Формула Грина}
@@ -640,9 +698,34 @@ $\Lambda^p (T_xM)$
 \end{thrm}
 
 \begin{tproof}
+  Здесь почти нигде не пользуются явным определением формы на многообразии. Ну, а зачем, 
+  пространство двумерное. Так что можно сразу сказать, что нормаль лишь повлияет на знак
+  $\del x \wedge \del y$ и не думать особо про то что $x,y$  не очень совпадает с пространством
+  параметров.
+
   Много пунктов. Сначала разбить на области типа $y$ (с вертикальными краями). 
-  И ещё занулить $P$, например.  А потом складывать разные случаи, пользуясь тем, что
-  по вертикальным краям интеграл обратится в ноль.
+  И ещё занулить $Q$, например. 
+
+  \vspace{1em}
+  \begin{minipage}{0.38\linewidth}
+    \includegraphics[scale=1.2]{dg/greenytype}
+  \end{minipage} \hfill
+  \begin{minipage}{0.68\linewidth}
+    Тогда 
+    $\displaystyle
+    \int_\Gamma \omega = \int_{\Gamma_1} \omega + \int_{\Gamma_3} \omega =
+      \int_a^b P(t,f_1(t)) - P(t,f_2(t))\, \del t
+    $
+    
+    Тем временем, от $\displaystyle \iint_D \cdots$ осталось лишь 
+    $(-1 )\cdot\dint_a^b\, \del x \; \int_{f_1(x)}^{f_2(x)} \pder{P}{y} \, \del y$.
+
+    Как видно, получилось.
+  \end{minipage}
+  \vspace{1em}
+  
+  Произвольная область легко \note{нет} режется на области типа $y$. Склеивать их можно, так
+  как интеграл по вертикальным сторонам 0.
   
   А потом сложить это с областями типа $x$.
 \end{tproof}
@@ -659,6 +742,30 @@ $\Lambda^p (T_xM)$
   \]
 \end{thrm}
 
+\begin{tproof}
+  Поскольку всё еще непонятно, что есть интеграл от формы по непростому многообразию, придётся
+  ограничиться простыми.
+
+  Пусть $F = (P,Q,R)$, $N=(A,B,C)$.
+  Здесь можно снова занулить $Q, R$.
+  Тогда \[
+    \rot F n = \frac{1}{|N|} \Bigl\langle (0, P_z, -P_y) , N \Bigr\rangle 
+    = \frac{1}{|N|} ( P_z B - P_y C )
+  \]
+
+  Тперь про вторую половину. \[
+    \oint_\Gamma \langle F,\tau \rangle \, \del s 
+    = \oint_{\ov~ \Gamma} P x_u \, \del u + Px_v \,\del v  
+    =\oint_{\ov~ \Gamma} \ov~\omega 
+  \]
+  Здесь мы довольно коварно перешли от границы многообразия к границе пространства параметров.
+  И ещё одна проблема как будто возникает из-за того, что в определении многообразия с границей
+  граница вроде не замкнута. Да и вообще прямая. Впрочем, это лечится инверсией. А вот что
+  делать бесконечностью~--- непонятно. Разве что сказать, что одна точка имеет меру ноль.
+  
+  Ладно, тут пользуемся  теоремой \ref{thrm:dg::green}, и получим первую половину.
+\end{tproof}
+
 \paragraph{Формула Гаусса-Остроградского}
 \label{par:dg::gaussost}
 
@@ -671,10 +778,69 @@ $\Lambda^p (T_xM)$
   \]
 \end{thrm}
 
+\begin{tproof}
+  Идейно мало чем отличается от теоремы Грина. 
+  Тоже разбиваем всё на области с вертикальными гранями, а потом складываем.
+\end{tproof}
+
+Все равно все эти теоремы никому не нужны, а лучше пользоваться абстрактной формулой Стокса
+\[
+  \int_{\partial M} \omega  = \int_M \del \omega 
+\]
+
 \paragraph{Физический смысл дивергенции и ротора}
 \label{par:dg::physdiv}
 
 Дивергенция~--- удельный (по объему) поток через через бесконечно малую поверхность.
+C ротором~--- сложно. Можно представить себе как-то так. Выделим контур (в жидкости)
+и заморизим всё, кроме него. Тогда средняя скорость (усреднённая по площади!) будет
+чем-то вроде ротора.
+
+См Фейнмановские лекции по физике, том 5 или 6. Который про магнетизм.
+
+\paragraph{Разные векторные поля}
+\label{par:dg::vecftypes}
+
+Попробуем в красивые таблички: \ref{tab:dg::vecftypes::prop}
+
+\vspace{1em}
+
+\begin{table}[h]
+  \def\arraystretch{1.7}
+  \caption{Разные поля}
+  \vspace{0.5em}
+  \label{tab:dg::vecftypes::prop}
+  \begin{tabularx}{0.8\linewidth}{l l l X} \toprule
+    \bf Название  & $F$            & $\omega_F$ & $\int \omega_F$  \\ \midrule
+    Потенциальное & $F=\grad \Phi$ & точна, $p=1$ & ноль для любой петли. 
+    Следует хоть из Ньютона-Лейбница.\\
+    
+    Безвихревое   & $\rot F = 0$ & замкнута, $p=1$  &
+    ноль для петель, что граница какой-нибудь поверхности. 
+    Можно проверить через формулу Стокса (\ref{thrm:dg::stocks}) \\
+    
+    Соленоидальное & $F = \rot B$ & точна, $p=2$ &
+    $\displaystyle\iint_{M} \omega = 0$, $M$~--- замкнута.
+    Проверяется тоже через Стокса, но в другую сторону.\\
+
+    Безвихревое & $\div F = 0$ & замкнута, $p=2$ & ноль, для поверхностей, 
+    являющихся краем трехмерных многообразий. Проверяется через Гаусса-Остроградского.
+    (\ref{thrm:dg::gaussost})
+    
+    \\ \bottomrule
+  \end{tabularx}
+\end{table}
+
+Из нечетных условий следуют чётные.
+Наоборот работает лишь там, где любая петля стягивается в точку.
+
+
+\paragraph{Примеры полей с разными свойствами}
+\label{par:dg::vecfitwo}
+
+вот тут уже точно по методичке Лодкина.
+
+
 
 \end{document}
 % vim: tw=100 cc=100

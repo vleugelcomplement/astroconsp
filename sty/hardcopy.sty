@@ -1,0 +1,20 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Стиль `hardcopy'
+%% пытается сделать документ удобнее
+%% для печати
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{hardcopy}[2017/06/04 Hardcopy style]
+
+\RequirePackage{geometry}
+\geometry{
+  left=1.5cm,
+  right=1.5cm,
+  top=1.5cm,
+  bottom=1.5cm,
+  bindingoffset=0cm
+}
+\newcommand{\note}[1]{\footnote{#1}}
+
+
