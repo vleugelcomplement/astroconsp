@@ -9,6 +9,8 @@
 % long notes are more like a report, with chapters and paragraphs
 \ProvidesClass{longnotes}[2017/05/27 Long version of notes]
 \def\@baseclass{report}
+\def\@styles{timbord,ebook,hardcopy}
+\def\@stylesfs{12pt,timbord,12pt,ebook,10pt,hardcopy}
 
 %language setting to handle cyrrilic in expansions
 
@@ -20,12 +22,30 @@
 \RequirePackage[english,russian]{babel}
 \RequirePackage[a4paper]{geometry}
 
+% \RequirePackage{trace}
 
+\newcommand\for@expnd@list[2]{\expandafter\forcsvlist\expandafter#1\expandafter{#2}}
+\newcommand\do@expnd@list[1]{\expandafter\docsvlist\expandafter\expandafter{#1}}
 \newcommand*\set@bool@opt[1]{
   \newtoggle{#1}
   \DeclareOption{#1}{\toggletrue{#1}}
 }
-\forcsvlist{\set@bool@opt}{hardcopy,timbord,ebook,tikz,draft,exam}
+\for@expnd@list{\set@bool@opt}{tikz,draft,exam}
+
+% hackery, no variants here
+\newtoggle{parseopt}\toggletrue{parseopt}
+\def\tmp@def#1#2{
+  \newtoggle{#2}
+  \DeclareOption{#2}{\PassOptionsToClass{#1}{\@baseclass}\toggletrue{#2}}
+} % too much \expandafters's, hence additional macro above
+\let\ex@f\expandafter
+\newcommand*\set@sty@opt[1]{
+  \iftoggle{parseopt}
+  {\def\@opt{#1}\togglefalse{parseopt}}
+  {\ex@f\tmp@def\ex@f{\@opt}{#1}\toggletrue{parseopt}}
+}
+\for@expnd@list{\set@sty@opt}{\@stylesfs}
+% one can only increase a font in opts, seems to be temporary limitation
 
 \newcommand*\set@passing@opt[1]{
   \DeclareOption{#1}{\PassOptionsToClass{\CurrentOption}{\@baseclass}}
@@ -42,33 +62,9 @@
 
 \LoadClass{\@baseclass}
 
-% processing toggles
-\iftoggle{hardcopy}{
-  \geometry{
-    left=1.5cm,
-    right=1.5cm,
-    top=1.5cm,
-    bottom=1.5cm,
-    bindingoffset=0cm
-  }
-}{}%
-\iftoggle{timbord}{
-  \geometry{
-    landscape,
-    left=5cm, 
-    right=2cm,
-    top=0.5cm, 
-    bottom=0.5cm,
-    marginparsep=5mm, 
-    marginparwidth=4cm
-  }
-  \RequirePackage{cmbright}
-% \renewcommand\bfseries{\protect \usefont{T2A}{cmss}{bx}{n}}
-  \renewcommand\bfdefault{sb}
-}{}%
-\iftoggle{ebook}{
-  \geometry{a4paper,top=2cm,bottom=2cm,right=3cm,left=3cm}
-}{}
+% processing style toggles
+\newcommand*\req@pkg@opt[1]{\iftoggle{#1}{\RequirePackage{#1}}{}}
+\for@expnd@list{\req@pkg@opt}{\@styles}
 
 
 \RequirePackage[pdftex]{graphicx}
@@ -177,11 +173,7 @@
 % \setlength{\marginparwidth}{3cm}
 % due to their nature, notes are usually placed in free space. And free space
 %+ heavily depends on page orientation. Hence:
-
-% a bit faster
-\iftoggle{timbord}%
-{\newcommand{\note}[1]{\marginpar{\footnotesize #1}}}%
-{\newcommand{\note}[1]{\footnote{#1}}}
+% : see style files for \note
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

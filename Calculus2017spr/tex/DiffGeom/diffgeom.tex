@@ -3,14 +3,14 @@
 % Author      : Iliya Tikhonenko <iliya.t@mail.ru>
 % Created at  : Thu Jun  1 18:33:27 MSK 2017
 %------------------------------------------------------------
-\documentclass[12pt,draft,timbord]{longnotes}
+\documentclass[draft,ebook]{longnotes}
 \usepackage{tmath} 
 \usepackage{cussymb} 
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
 \graphicspath{{../../img/}}
-
 \begin{document}
+
 \paragraph{Регулярная кривая и её естественная параметризация}
 \label{par:dg::curve}
 
@@ -615,13 +615,23 @@ $\Lambda^p (T_xM)$
 \paragraph{Дифференцирование векторных полей}
 \label{par:dg::vecfione}
 
-по методичке Лодкина
+по методичке Лодкина\quest
+
+\begin{defn}\label{defn:dg::vecfione::basic}
+  Пусть $f$~--- скалярное поле, $F = (P,Q,R)$~--- векторное. Тогда
+  \begin{align*}
+    \grad f &= \left( \pder f x, \pder f y , \pder f z \right) \\
+    \rot F  &= \left( \pder R y - \pder Q z, \pder P z - \pder R x , \pder Q x - \pder P y \right) \\
+    \div F  &= \pder P x + \pder Q y + \pder R z
+  \end{align*}
+\end{defn}
+
 
 \paragraph{Формула Грина}
 \label{par:dg::green}
 
 \begin{thrm}\label{thrm:dg::green}
-  Пусть $D$~--- связное двумерное ориентируемое гладкое подмногообразие $\R^2$ с краем,
+  Пусть $D$~--- связное двумерное ориентируемое гладкое компактное подмногообразие $\R^2$ с краем,
   $\omega = P \, \del x + Q\, \del y$~--- гладкая дифференциальная форма.
   Тогда
   \[
@@ -632,7 +642,7 @@ $\Lambda^p (T_xM)$
 \begin{tproof}
   Много пунктов. Сначала разбить на области типа $y$ (с вертикальными краями). 
   И ещё занулить $P$, например.  А потом складывать разные случаи, пользуясь тем, что
-  по вертикальным краям интеграл обратиться в ноль.
+  по вертикальным краям интеграл обратится в ноль.
   
   А потом сложить это с областями типа $x$.
 \end{tproof}
