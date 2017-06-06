@@ -1,5 +1,5 @@
 %------------------------------------------------------------
-% Description : 
+% Description : Теория меры
 % Author      : Iliya Tikhonenko <iliya.t@mail.ru>
 % Created at  : Tue Feb 21 00:00:16 MSK 2017
 %------------------------------------------------------------
@@ -9,7 +9,6 @@
 \usepackage{silence}
 % \WarningFilter{latex}{Reference}
 \graphicspath{{../../img/}}
-
 \begin{document}
 \paragraph{Системы множеств}
 \label{par:meas::setsys}
@@ -485,7 +484,7 @@
   Пусть задана тройка $(X, \alg_\sigma, \mu)$. Пусть ещё $f\colon X \to \R$. Тогда 
   $f$ называется измеримой относительно $\alg$, если 
   \[
-    \forall\, \Delta \subset \R  \holds f^{-1} (\Delta) \in \alg
+    \forall\, \Delta \subset \R, \text{$\Delta$~--- связно} \holds f^{-1} (\Delta) \in \alg
   \]
 \end{defn}
 
@@ -497,25 +496,38 @@
     \item[3 типа] $\{x \in X \mid f(x) > a\} \equiv X [f > a]$
     \item[4 типа] $\{x \in X \mid f(x) \geqslant a\} \equiv X [f \geqslant a]$
   \end{description}
-  При этом верно и обратное: если измеримы множества какого-то отдного типа, то
+  При этом верно и обратное: если измеримы множества какого-то одного типа, то
   $f$ измерима.
 \end{thrm}
+\begin{tproof}
+  Просто представляем множества одного типа, как пересечение или дополнение множеств другого.
+  Можно бесконечные, потому что здесь $\alg$~--- $\sigma$-алгебра.
+\end{tproof}
 
 \begin{thrm}\label{thrm:meas::mfun::sp}
-  Пусть $f_1, \dotsc, f_n$ измеримы относительно $\alg$ и $g\colon \R^n \to R$  
+  Пусть $f_1, \dotsc, f_n$ измеримы относительно $\alg$ и $g\colon \R^n \to \R$  
   непрерывна. Тогда измерима и $\varphi(x) = g(f_1(x), \dotsc, f_n(x))$.
 \end{thrm}
+\begin{tproof}
+  Взять, например, $I = (-\infty, a)$. Он открыт, так что $g^{-1}(I) \in \open$.
+  Из теоремы \ref{thrm:meas::setsys::borelcell} $G = \bigcup\limits_{k=1}^\infty \Delta _k$.
+  А прообраз объединения~--- объединение прообразов. Так что $f^{-1} (G)$ измеримо.
+\end{tproof}
 \begin{rem*}
   В частности, $f_1 + f_2$ измерима.
 \end{rem*}
 
 \begin{thrm}\label{thrm:meas::mfun::lims}
   Пусть $f_1,f_2, \dotsc $ измеримы относительно $\alg$ .
-  Тогда измеримы $\sup f_n, \inf f_n, \liminf f_n, \limsup f_n, \lim f_n $.
+  Тогда измеримы $\sup f_n, \inf f_n, \varliminf f_n, \varlimsup f_n, \lim f_n $.
   Последний, правда, может не существовать.
 \end{thrm}
 \begin{tproof}
-  Следует из непрерывности меры.
+  Например, для супремума. Он же по $n$, что
+  \[
+    X[ \sup f_n(x) < a ] = \bigcap_{n=1}^\infty X[f_n < a] 
+  \]
+  Каждое множество из пересечения $\in \alg$, значит и $\cap .. \in \alg$.
 \end{tproof}
 
 \begin{defn}\label{defn:meas::mfun::simp}
@@ -532,9 +544,15 @@
   \]
   Он, как видно совсем простая функция.
 \end{defn}
+\begin{prop}\label{prop:meas::mfun::indmult}
+  $\ind_{A \cap B} = \ind_A \cdot \ind_B$
+\end{prop}
+\begin{prop}\label{prop:meas::mfun::indsplitsum}
+  Пусть $\sqcup_j A_j = A$, тогда $\sum_j \ind_{A_j} = \ind_A$.
+\end{prop}
 
 \begin{stat}\label{stat:meas::mfun::simpind}
-  $f$~--- простая $ \Rightarrow f= \dsum_{k=1}^p c_k \ind_{E_k}$ 
+  $f$~--- простая $ \Rightarrow f= \dsum_{k=1}^p c_k \ind_{E_k}$, $E_k$~--- дизъюнктны.
 \end{stat}
 
 \begin{thrm}\label{thrm:meas::mfun::simpseq}
@@ -543,7 +561,26 @@
     \exists\, (\varphi_n)\colon 0 \leqslant \varphi_1 \leqslant \varphi_2 \leqslant \cdots
     \that \varphi_n \nearrow f \text{ (поточечно)}
   \]
+  Причём все $\varphi_i$~--- простые.
 \end{thrm}
+
+\begin{tproof}
+  Зафиксируем какое-то $n$. Тогда
+  \[
+    [0; +\infty) = \bigsqcup_{k=0}^{n^2} \Delta_k, 
+    \quad \Delta_k = \left[\frac{k}{n} , \frac{k+1}{n}\right), \; \Delta_{n^2} = [n; +\infty)
+  \]
+  Здесь мы порезали ось значений на $n^2$ интервалов. Выберем $e_k = f^{-1} (\Delta_k)$,
+  $c_k = \min_{e_k}f(x) = \min \Delta_k = \frac{k}{n}$.
+
+  Пусть $\psi_n = \dsum_{k=0}^{n^2} c_k \ind_{e_k}$.
+  Тогда $\psi_n(x) \leqslant f(x) < \psi_k(x)+ \frac 1 n$. Видно, что поточечная сходимость есть.
+
+  Теперь ещё обеспечим возрастание:
+  \[
+    \varphi_n = \max \{ \psi_1, \dotsc, \psi_n \}
+  \]
+\end{tproof}
 
 \paragraph{Интеграл по мере}
 \label{par:meas::int}
@@ -572,32 +609,55 @@
   \end{enumerate}
 \end{defn}
 \begin{rem}
-  $\displaystyle
-    \int _A f \, \del \mu := \sum_{k=1}^p c_k \mu (E_k \cap A)
-  $
-\end{rem}
-\begin{rem}
   Дальше измеримость и неотрицательность или суммируемость $f$ будет периодически 
   называться <<обычными>> условиями.
 \end{rem}
+\begin{rem}\label{rem:meas::int::corr}
+  Вторая половина корректна по \ref{thrm:meas::mfun::simpseq}, а с первой пока непонятно.
+  Но кажется, там все довольно просто.
+\end{rem}
 
 
-\begin{prop}\label{prop:meas::mfun::intind}
+\begin{prop}\label{prop:meas::int::intind}
   $\displaystyle \int_A f \, \del \mu = \int _X f \cdot \ind _A \, \del \mu$.
 \end{prop}
+\begin{lproof}
+  Для простых~--- следствие \ref{prop:meas::mfun::indmult}, для остальных получается из
+  определения.
+\end{lproof}
+\begin{rem}
+  Если 
+  $\displaystyle \int _A f \, \del \mu := \sum_{k=1}^p c_k \mu (E_k \cap A)$ 
+    включить в определение интеграла по мере для простых функций,
+  то \ref{prop:meas::int::intind}
+  станет утверждением. Иначе его стоит рассматривать как определение интеграла по
+  подмножеству.
+\end{rem}
 
 \subparagraph{Свойства интеграла от неотрицательных функций}
 
-Здесь всюду функции неотрицательны и измеримы, что не лишено отсутствия внезапности.
-\begin{enumerate}[$\text{А}_\arabic*$]
+\begin{prop}\label{prop:meas::int::pos}
+Пусть все функции неотрицательны и измеримы. Тогда
+\begin{enumerate}[{$[\text{А}_{\arabic*}]$}]
   \item $0 \leqslant f \leqslant g$. Тогда
     $\displaystyle \int_X f\, \del \mu  \leqslant \int_X g\, \del \mu$.
   \item $A \subset B \subset X$, $A , B \in \alg$, $f \geqslant 0$, измерима.
     Тогда $\displaystyle \int_A f \, \del \mu \leqslant \int_B f\, \del \mu$
   \item см теорему \ref{thrm:meas::levi}.
-  \item $\displaystyle \int_X (f+g)\, \del \mu = \int_X f\,\del mu + \int_X g\,\del mu $
-  \item $\displaystyle \int_X (\lambda g)\, \del \mu =  \lambda \int_X f\,\del mu $
+  \item $\displaystyle \int_X (f+g)\, \del \mu = \int_X f\,\del \mu + \int_X g\,\del \mu $
+  \item $\displaystyle \int_X (\lambda g)\, \del \mu =  \lambda \int_X f\,\del \mu $
 \end{enumerate}
+\end{prop}
+\begin{rem}\label{rem:meas::int::poshard}
+  Предпоследнее не сходу очевидно для индикаторов, так что по-быстрому докажем тут его.
+  По лемме \ref{prop:meas::mfun::indmult}
+  \[
+    \sum_k c_k \ind_{E_k} + \sum_j d_j \ind_{D_j} 
+    = \sum_k c_k \ind_{E_k} \, \sum_j \ind_{D_j} + \sum_j d_j \ind_{D_j} \, \sum_k \ind_{E_k}
+    = \sum_k \sum_j (c_k  + d_j) \, \ind_{E_k \cap D_j}
+  \]
+  Теперь запишем определение интеграла, размотаем все обратно и получим желаемое.
+\end{rem}
 
 \paragraph{Теорема Беппо \texorpdfstring{Л\'eви}{Леви}}
 \label{par:meas::levi}
@@ -609,24 +669,78 @@
     \int_X f \, \del \mu  = \lim_{n\to \infty} \int_X f_n \, \del \mu 
   \]
 \end{thrm}
+\begin{tproof}
+  Заметим, что из 1 пункта \ref{prop:meas::int::pos} $\int_X f_n$ возрастают.
+  Значит, 
+  \[
+    \exists\, L := \lim_{n\to \infty } \int_X f_n \, \del \mu 
+    \;\land\;
+    L \leqslant \int_X f\, \del \mu 
+  \]
+  Докажем неравенство в другую сторону. 
+
+  По определению
+  $\int_X f \, \del \mu = \sup_n \int_X \varphi_n \, \del \mu$.
+  Выберем какую-то $\varphi$, и рассмотрим 
+  \[
+    \begin{split}
+      c_0 = 0, c_k > 0 \quad
+      \varepsilon \colon 0 < \varepsilon < \min \{c_1, \dotsc, c_p\}\\
+      \varphi_\varepsilon = 0\cdot\ind_{E_0} + \sum_{k=1}^p (c_k- \varepsilon) \cdot \ind_{E_k}, 
+    \end{split}
+  \]
+  \note{В крайнем случае $E_0 = \varnothing$}. Таким образом, мы добились строгого неравенства
+  $\varphi_\varepsilon < f$.
+
+  Рассмотрим $X_n = X [f_n < \varphi_\varepsilon ]$. Оно измеримо как объединение измеримых.
+  К тому же 
+
+  \begin{enumerate}
+    \item $\forall\, n \holds X_n \subset X_{n+1}$. 
+    \item\label{it} $\forall\, x \; \exists\, N \that \forall\, n > N \holds x \in X_n$.
+    \item \ref{it} $\Rightarrow \bigcup_{n=1}^\infty X_n = X \Rightarrow \mu X_n \to \mu X$
+  \end{enumerate}
+
+  В итоге
+  \[
+    \begin{split}
+      L \gets \int_X f_n  \, \del \mu &\geqslant \int_{X_n} f_n \, \del \mu 
+      > \int_{X_n} \varphi_\varepsilon \, \del \mu = \\
+      &= \sum_{k=1}^p (c_k -\varepsilon) \cdot \mu(X_n \cap E_k)  
+      \xto{n\to \infty} \sum_{k=1}^p (c_k -\varepsilon) \cdot \mu(E_k) 
+      \xto{\varepsilon \to 0} \int_X \varphi \, \del \mu 
+    \end{split}
+  \]
+
+  А значит
+  \[
+    L \geqslant \sup_{0 \leqslant \varphi \leqslant f} \int_X \varphi \, \del \mu 
+    = \int_X f \, \del \mu 
+  \]
+\end{tproof}
 
 \paragraph{Свойства интеграла от суммируемых функций}
 \label{par:meas::summprop}
 
 \begin{defn}\label{defn:meas::summprop::summ}
-  $f$~--- суммируемая (на $X,\mu$), если $\displaystyle \int _X f \, \del \mu < \infty$.
+  $f$~--- суммируемая (на $X,\mu$), если $\dint _X f \, \del \mu < \infty$.
+  \note{ну, если он не определён, то и подавно не $\in \summb$}
   Весь класс суммируемых (на $X,\mu$) функций обозначается через $\summb (X,\mu)$.
 \end{defn}
+\begin{rem*}
+  Часто для суммируемости пользуются условием $\dint_X |f|\, \del \mu < \infty $.
+  Впрочем, ниже это даже написано.
+\end{rem*}
 
 Здесь всюду функции $\in \summb$
-\begin{enumerate}[$\text{B}_{\arabic*}$]
+\begin{enumerate}[{$[\text{B}_{\arabic*}]$}]
   \item $\displaystyle
     f \leqslant g \Rightarrow \int_X f \, \del \mu \leqslant \int_X g \, \del \mu$.
   
   \item $\displaystyle
     \int_X (f \pm g)\, \del \mu =  \int_X f \, \del \mu \pm \int_X g \, \del \mu$.
 
-  \item $\displaystyle
+  \item\label{it:negl} $\displaystyle
     \int_X \lambda f \, \del \mu =  \lambda \int_X f \, \del \mu$.
   
   \item $\displaystyle
@@ -642,19 +756,30 @@
     |f| \leqslant M \leqslant +\infty 
     \Rightarrow \left| \int_X f \, \del\mu \right| \leqslant M \mu X$
 \end{enumerate}
+Проще это все доказывать через интегралы от $f_{+} + g_{+}$ и $g_- + f_-$
+Проблема разве что с $\lambda = -1$ в \ref{it:negl}, но тут поможет то, что $(-f)_+ = f_-$
 
 \paragraph{Счётная аддитивность интеграла}
 \begin{thrm}\label{thrm:meas::infadd}
   Пусть задана тройка $(X,\alg,\mu)$, $f$~--- измерима и $f \geqslant 0 \lor f \in \summb$. 
   Пусть к тому же 
   \[
-    A, A_{1\intrng} \subset X, A = \bigcup_{n=1}^\infty A_n
+    A, A_{1\intrng} \subset X, A = \bigsqcup_{n=1}^\infty A_n
   \]
   Тогда 
   \[
     \int _A f \, \del \mu = \sum_{n=1}^\infty \int _{A_n} f\, \del \mu 
   \]
 \end{thrm}
+\begin{tproof}
+  Для неотрицательных следует из \ref{prop:meas::mfun::indsplitsum}, \ref{prop:meas::int::intind}
+  и теоремы Беппо-Леви (\ref{thrm:meas::levi}). Ну ещё нужна конечная аддитивность, которую
+  доказали в \ref{par:meas::int}.
+  
+  Для суммируемых уже очевидно.
+
+\end{tproof}
+
 
 \paragraph{Абсолютная непрерывность интеграла}
 \begin{thrm}\label{thrm:meas::abscont}
@@ -664,6 +789,9 @@
     \colon \mu A < \delta \holds \left| \int_A f \, \del \mu \right| < \varepsilon 
   \]
 \end{thrm}
+\begin{tproof}
+  Для ограниченных~--- очевидно, а потом приближать $|f|$ снизу простыми , которые ограничены
+\end{tproof}
 
 \paragraph{Интеграл от непрерывной функции по мере Лебега}
 \label{par:meas::contint}
@@ -675,6 +803,32 @@
   \]
   где $F$~--- первообразная $f$.
 \end{thrm}
+\begin{tproof}
+  \begin{enumerate}[1)]
+    \item \gprov $f$ измерима. Но она непрерывна, значит, прообраз $(-\infty, a)$
+      $\in \open \subset \lebesgue$.
+    \item \gprov $f$ суммируема.  Но $|f|$ ограничена, тогда и интеграл по множеству конечной
+      мере конечен.
+    \item $\exists\,F \that  F'(x) = f(x)$. \\
+      Пусть
+      \[
+        \forall\, x \in [a;b] \holds F(x) = \int_{[a;x]} 
+      \]
+      Она определена и конечна из суммируемости $f$.
+      Непрерывность следует из непрерывности интеграла по меме. Осталось последнее
+      \[
+        \Delta F =  \int_{[a;x+\Delta x]} f\, \del \lambda - \int_{[a;x]} f\, \del \lambda 
+        = \int_{(x;x+\Delta x]} f\, \del \lambda 
+      \]
+      Последнее можно оценить из непрерывности $f$.
+      \[
+        (f(x) - \varepsilon )\Delta x 
+        \leqslant \int_{(x;x+\Delta x]} f\, \del \lambda  \leqslant 
+        (f(x) + \varepsilon )\Delta x 
+      \]
+      А дальше можно поделить на $\Delta x$ и воспользоваться теоремой о 2 полицейских.
+  \end{enumerate}
+\end{tproof}
 
 \paragraph{Сравнение подходов Римана и Лебега}
 \label{par:meas::rimleb}
@@ -710,7 +864,16 @@
   \end{cases}$ интегрируема по Лебегу, но не по Риману.
 \end{exmp}
 
-\plholdev{картиночка с обоими интегралами}
+Интеграл Римана из вертикальных полосок, а Лебега из горизонтальных.
+См~\ref{fig:meas::rimleb} 
+
+\begin{figure}
+\begin{center}
+  \includegraphics[scale=1]{meas/lebegriman}
+\end{center}
+\caption{Интегралы Римана и Лебега}
+\label{fig:meas::rimleb}
+\end{figure}
 
 
 \paragraph{Сравнение несобственного интеграла и интеграла Лебега}
@@ -720,9 +883,14 @@
   Пусть $f \geqslant 0 \lor f \in \summb\bigl([a;b\bigr),\lambda)$. Тогда
   $\displaystyle \int_{[a;b)} f \, \del \lambda = \int _a ^{\to b} f$.
 \end{thrm}
-\begin{tproof}\underdev
+\begin{tproof}
   Cвести к собственному, а дальше непрерывность меры.
+  Реально, все уже  доказано в \ref{thrm:meas::contint} и \ref{prop:meas::meas::bcont}
 \end{tproof}
+
+Поведение становится разным на не суммируемых функициях.
+Например, $\dint_0^\infty \frac{sin}{x}$ сходится, но не абсолютно.
+Значит, аналогичный лебеговский интеграл не суммируется.
 
 \paragraph{Интеграл по дискретной мере и мере, задаваемой плотностью}
 \label{par:meas::discint}
@@ -735,8 +903,9 @@
   \]
 \end{thrm}
 
-\begin{tproof}\underdev
-  Счётная аддитивность интеграла поможет. \ref{thrm:meas::infadd}
+\begin{tproof}
+  Счётная аддитивность интеграла поможет(\ref{thrm:meas::infadd})
+  А на одноточечном множестве любая функция простая.
 \end{tproof}
 
 
@@ -744,8 +913,7 @@
   Пусть $\mu A=\#A$. Тогда \[
     \sum_{m,n\in\N} = \int _{\N^2} f(m,n) \, \del \mu
   \]
-  Причем условия суммируемости \note{ 
-  здесь объявим бесконечность приличным значением суммы ряда } 
+  Причем условия сходимости  
   ряда такие же, как у интеграла Лебега: 
   \[
     \left[\;
@@ -776,6 +944,16 @@
   Пусть выполнены <<обычные>> условия на $f$. Тогда 
   $\displaystyle \int_X f \, \del \nu = \int_X f \rho \, \del \mu$.
 \end{thrm}
+\begin{tproof}
+  Сначала разберёмся с простыми функциями. \[
+    \int_X g \, \del \nu =  \sum_k c_k \nu (E_k)
+    = \sum_k \int_X c_k \rho \cdot \ind_{E_k}\, \del \mu
+    = \int_X \left(\sum_k c_k \cdot \ind_{E_k}\right)\, \rho \, \del \mu
+    = \int_X f \rho \, \del \mu 
+  \]
+  Для неотрицательных поможет теорема Леви (\ref{thrm:meas::levi}), 
+  а с суммируемыми уже всё просто.
+\end{tproof}
 
 \paragraph{Мера Лебега-Стилтьеса. Интеграл по распределению}
 \label{par:meas::lebstil}

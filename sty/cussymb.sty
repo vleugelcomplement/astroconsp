@@ -16,15 +16,11 @@
 \RequirePackage[nointegrals]{wasysym}
 \RequirePackage{marvosym}
 
-\newcommand\create@subst@sign[3]{
-  \expandafter\newcommand\csname #1@\endcsname{#2}
-  \expandafter\newcommand\csname #1@subst\endcsname{#3}
+\let\ex@f\expandafter
+\newcommand\createSubstSym[3]{
+  \ex@f\newcommand\csname #1@\endcsname{#2}
+  \ex@f\newcommand\csname #1@subst\endcsname{#3}
 }
-
-\create@subst@sign{underdev}{\thinspace$\langle${\MineSign}$\rangle$\thinspace}{(underdev)}
-\create@subst@sign{sour}{$\langle\ddot\sim\rangle$}{(sour)}
-\create@subst@sign{quest}{$\langle?\rangle$}{(?)}
-\create@subst@sign{flame}{$\langle$\texttt{:set aflame}$\rangle$}{(:set aflame)}
 
 \newcommand*\subst@at@pdf@toc[1]{
   \iftoggle{draft}{
@@ -33,6 +29,34 @@
   {\expandafter\newcommand\csname #1\endcsname{%
 \texorpdfstring{\csname #1@\endcsname}{\csname #1@subst\endcsname}}
 }}
+
+\newcommand\savedesc[2]{\expandafter\newcommand\csname @desc@#1\endcsname{#2}}
+\newcommand*\descsym[1]{\csname @desc@#1\endcsname}
+\newcommand\newsym[4]{
+  \createSubstSym{#1}{#2}{#3}
+  \savedesc{#1}{#4}
+}
+
+\newsym{underdev}%
+{\thinspace$\langle${\MineSign}$\rangle$\thinspace}%
+{(underdev)}%
+{}
+
+\newsym{sour}%
+{$\langle\ddot\sim\rangle$}%
+{(sour)}%
+{}
+
+\newsym{quest}%
+{$\langle?\rangle$}%
+{(?)}%
+{}
+
+\newsym{flame}%
+{$\langle$\texttt{:set aflame}$\rangle$}%
+{(:set aflame)}%
+{}
+
 \forcsvlist{\subst@at@pdf@toc}{underdev,sour,flame,quest}
 
 
@@ -40,9 +64,10 @@
 % \newcommand{\flame}{$\langle$\texttt{:set aflame}$\rangle$}
 % \newcommand{\sour}{\texorpdfstring{$\langle\ddot\sim\rangle$}{(sour)}}
 % \newcommand{\quest}{\texorpdfstring{$\langle?\rangle$}{(?)}}
-\newcommand{\plholdev}[1]{\texttt{<+{#1}+>}} 
-\newcommand{\intrng}{\mathbin{..}} 
-\newcommand{\that}{\:::\:}
+\newcommand\plholdev[1]{\texttt{<+{#1}+>}} 
+\newcommand\intrng{\mathbin{..}} 
+\newcommand\that{\:::\:}
+\newcommand\gprov{(!) } % докажем, что
 \let\holds\that
 \newcommand\convex{\,\underline\cup\,}
 \newcommand\concave{\,\overline\cap\,}
