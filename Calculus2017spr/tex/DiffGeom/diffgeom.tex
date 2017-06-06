@@ -64,13 +64,40 @@
   $R = k_1 ^{-1}$
 \end{defn}
 
+\begin{lem}\label{lem:dg::curvature::fixnorm}
+  Пусть $v (s) \in \R^n$, $|v| \equiv R \in \R$.
+ Тогда $\dot v \perp v$.
+\end{lem}
+\begin{lproof}
+  $0 = \fder{}{t}\, {|v|^2} = \fder{}{t}\,  (\langle v,v \rangle) = 2 \langle v,\dot v \rangle$.
+  Так что $\langle v \dot v \rangle = 0 \Rightarrow v\perp \dot v $.
+\end{lproof}
+
 \begin{prop}\label{prop:dg::curvature::orth}
   $\tau \perp \dot \tau$
 \end{prop}
 
+
 \begin{thrm}\label{thrm:dg::curvature::repar}
+  Пусть $r(t)$~--- неестественная параметризация кривой. Тогда
   $\displaystyle k_1 = \frac{| r' \times r''|}{|r'|^3} $
 \end{thrm}
+
+\begin{tproof}
+  \begin{align*}
+    k_1 &= |\dot \tau | = \left| \fder{}{s}\, \frac{r'}{|r'|} \right| 
+    =\left| \fder{}{t} \left(\frac{r'}{|r'|}\right) \, \fder{t}{s}  \right|
+    =\left| \fder{}{t} \left(\frac{r'}{|r'|}\right) \, \frac{1}{|r'|}  \right| \\
+    \fder{}{t} \left(\frac{r'}{|r'|}\right) &=  \frac{r'' |r'| - r' |r'|'}{|r'|^2} , 
+    \quad |r'|' = \left(\sqrt{r'^2}\right)' = \frac{\langle r', r'' \rangle}{|r'|} \\
+    \fder{}{t} \left(\frac{r'}{|r'|}\right) &=  \frac{r'' |r'|^2 - r'\langle r', r''\rangle}{|r'|^3}
+    =  \frac{r'' \langle r', r' \rangle  - r'\langle r', r''\rangle}{|r'|^3}
+    =  \frac{r' \times (r'' \times r') }{|r'|^3} \; (A=C)\\
+    \intertext{ $r' \perp r' \times r''$, так что} \\
+    k_1 &= \left| \frac{r' \times (r'' \times r') }{|r'|^3} \right| \, \frac{1}{|r'|}
+    = \frac{|r' \times r''|}{|r'|^3} 
+  \end{align*}
+\end{tproof}
 
 \paragraph{Кручение и нормаль}
 \label{par:dg::norm}
@@ -78,6 +105,7 @@
 \begin{defn}[Нормаль]\label{defn:dg::norm::norm}
   Пусть $k_1 \neq 0$. Тогда $\nu  := \frac{\dot \tau } {k_1}$.
 \end{defn}
+из геометрии, она лежит в плоскости кривой и направлена в сторону <<поворота>>. 
 \begin{defn}[Бинормаль]\label{defn:dg::norm::binorm}
   $\beta = \tau \times \nu $.
 \end{defn}
@@ -87,13 +115,25 @@
 \end{rem*}
 \begin{defn}[Соприкасающаяся плоскость]\label{defn:dg::norm::tangpl}
   Пусть $k_1 > 0$, $P = r(s_0)$, $T$~--- плоскость, $T \ni P$, $N \perp T$~--- нормаль к ней.
-  Допустим, $r(s+\Delta s) \cdot N  = h$, $h = o(\Delta s^2)$. Тогда $T$~--- соприкасающаяся
+  Допустим, $ \langle \Delta r, N \rangle = h$, $h = o(\Delta s^2)$. Тогда $T$~--- соприкасающаяся
   плоскость.
 \end{defn}
 \begin{prop}\label{prop:dg::norm::tangpl}
   $ \tau , \nu \perp N  $;
   $(r-r_0, \dot r_0 , \ddot r_0)=0$~--- её уравнение
 \end{prop}
+\begin{lproof}
+  \[
+    \begin{split}
+      \Delta r = \dot r  \, \del s + \frac{\ddot r}{2} \, \del s^2 + o(\Delta s^2)
+      &= \tau \, \del s + \frac{1}{2} \, k_1 \nu \, \del s^2 + o(s^2) \\
+      &\langle \Delta r , N \rangle = o(\Delta s^2) 
+    \end{split}
+  \]
+  Так что скалярные произведения $\langle \tau,  N\rangle$, $\langle \nu,  N\rangle$ равны нулю.
+  
+  Вторая часть~--- из свойств смешанного произведения.
+\end{lproof}
 
 \begin{defn}[Абсолютное кручение]\label{defn:dg::norm::abscrvn}
   $|k_2| := | \dot\beta|$
@@ -101,6 +141,24 @@
 \begin{thrm}\label{thrm:dg::norm::abscrvn}
   $|k_2| = \left|\dfrac{(\dot r, \ddot r, \dddot r\,)}{k_1^2}\right|$
 \end{thrm}
+
+\begin{tproof}
+  Взять определение $\beta$ и посчитать производную.
+  \[
+    \dot \beta  = \dot \tau \times \nu + \tau \times \dot \nu 
+    = k_1 \nu \times \nu + \tau \times \dot \nu  = \tau \times \dot \nu 
+  \]
+
+  Производная $\tau$ ничем не отличается от \ref{thrm:dg::curvature::repar}, 
+  только $\tau$ заместо $r$.
+  
+  Так что
+  \[
+    \dot \beta = \tau\times(\dot \tau \times(\ddot\tau \times \dot\tau))\,\frac{1}{k_1^3}
+    = \frac{\dot\tau (\tau, \ddot \tau , \dot \tau) -(\ddot\tau \times \dot\tau)\cdot 0 }{k_1^3} 
+    = -\frac{\nu \cdot (\tau, \dot \tau , \ddot \tau)  }{k_1^2} 
+  \]
+\end{tproof}
 
 \begin{defn}[Кручение]\label{defn:dg::norm::crvn}
   $k_2 := \dfrac{-(\dot r, \ddot r, \dddot r\,)}{k_1^2}$
@@ -127,10 +185,26 @@
   \end{equation}
 \end{thrm}
 
+\begin{tproof}
+  Осталось доказать лишь второе, но оно очевидно следует из 1 и 3 и соотношения 
+  $\nu = \beta \times \tau$.
+\end{tproof}
+
 \begin{thrm}\label{thrm:dg::frene::reconst}
   Пусть $r(s)$~--- гладкая кривая с заданными $k_1$ и $k_2$, $k_1>0$. 
   Тогда система \eqref{eq:dg::frene} определит её с точностью до движения.
 \end{thrm}
+
+\begin{tproof}
+  Система \eqref{eq:dg::frene} вообще линейна. Так что решение задачи Коши у неё~--- единственно.
+  А положение кривой как раз задается начальными значениями $\tau , \nu , \beta $.
+
+  Правда ниоткуда не следует, что кривизна и кручение будет какими надо, но это скучно.
+  Из формул для них докажется.
+\end{tproof}
+
+В бумажном конспекте здесь ещё рассуждения, что полученные векторы единичны и ортональны, но 
+это тоже скучно.
 
 \paragraph{Регулярная поверхность. Касательная плоскость. Первая квадратичная форма}
 \label{par:dg::tangplane}
@@ -157,6 +231,40 @@
   Может, абстракций добавить.
 \end{defn}
 
+Просто утащил определеньки из \ref{par:dg::orient}
+\def\H{\mathbbm H}
+\begin{defn}\label{defn:dg::manifold}
+  Пусть $M \subset \R^n$. Выберем на нем произвольную точку $x$ и рассмотрим 
+  $V(x) = V_{\R^n}(x) \cap M$. Допустим, 
+  \[
+    \exists\, f \in C^1 \that V(x) \leftrightarrow^f \R^k\;(\text{или }\H^k).
+  \]
+  
+  Тогда $M$~--- гладкое подмногообразие $\R^n$, а $f$~--- локальная карта многообразия.
+  Набор всех карт называется атласом. $t \in \R^k$~--- локальные координаты в $V$.
+  
+  Атлас : $A(M) = \{(\varphi_k, V_k)_k\}$~--- все окрестности и карты на них. 
+
+  Если 
+  \[
+    \exists\, x\in M \that V \leftrightarrow \H (\H = \{x\in \R^k \mid x^1 \leqslant 1\},
+    \] 
+  тогда это многообразие с краем.  
+  Край обычно обозначается как $\partial M$.
+
+  По идее, в атлас ещё надо включать информацию, карта на $\R^k$ или на $\H^k$. Так что
+  \[
+    A(M) = \{ (\H^k, \varphi_i, V_i)_i\} \cup \{(\R^k, \varphi_j, V_j)_j\}
+  \]
+\end{defn}
+\begin{defn}[Касательное пространство в точке $x$]\label{defn:dg::tangentbndl}
+  Пусть $M$~--- гладкое многообразие. Допустим, $\varphi_i$~--- карта в $V(x)$.
+  Тогда
+  \[
+    T_x M = \Bigl(\del \varphi_i (x)\Bigr)(\R^k) 
+  \]
+\end{defn}
+
 
 
 \begin{defn}[Первая квадратичная форма]\label{defn:dg::tangplane::I}
@@ -166,6 +274,29 @@
         &= E \, \del u^2 + 2F\, \del u \,\del v + G\, \del v^2 
     \end{split}
   \]
+\end{defn}
+Плохое определение, надо сказать. Сделаем получше.
+
+\begin{defn}\label{defn:dg::tangentbndl::Ibetter}
+  Первая квадратичная форма поверхности $M$~--- единичная 
+  квадратичная форма на его касательном пространстве. 
+\end{defn}
+
+Скаляряное произведение на $T_x M$ можно перенести из $\R^m \supset M$. 
+
+\begin{prop}\label{prop:dg::tangentbndl::Ipar}
+  Пусть $\varphi \colon D \subset M$~--- карта на $M$. Тогда первая квадратичная форма в 
+  координатах пространства параметров имеет вид 
+  \[
+    L^T L , \quad L = \varphi'(x)
+  \]
+\end{prop}
+
+Мы вроде можем спокойно рассматривать $\varphi'$ как линейное отображение.
+Так что по идее первое определение~--- следствие отсюда, но \quest.
+
+\begin{defn}\label{defn:dg::tangentbndl::gram}
+  $g_{ij} = L^T L$. Хотелось бы сказать, что это метрический тензор, но не стоит.
 \end{defn}
 
 \paragraph{Вычисление длин и площадей на поверхности}
@@ -177,17 +308,33 @@
     \ell(\gamma)= \dint_{t_0}^{t_1} \sqrt I.\; (\del s = I)
   \]
 \end{thrm}
-
-\begin{thrm}\label{thrm:dg::area::area}
-  Пусть $M$~--- поверхность, $u,v\in D$, $I = E \, \del u^2 + 2F\, \del u \,\del v + G\, \del v^2$.
-  Тогда
-  \[
-    S(M) = \iint_D \sqrt{EG - F^2}\, \del u\,\del v
-  \]
-\end{thrm}
+\begin{tproof}
+  Пусть $r \in M$, $u \in D$. Тогда
+  $\del s^2 = \langle \del r, \del r \rangle = \del r ^T \del r = \del u^T L^T L \del u = I$.
+  А дальше можно параметризовать кривую, так что $u,v$~--- функции от $t$. 
+\end{tproof}
 
 
-\quest\plholdev{вкусный абстрактный кусок про меру на многообразии}
+Некое пояснение к определению.
+
+Здесь можно сказать, что  мера на касательном многообразии
+задаётся как образ лебеговой меры в $\R^k$.
+Они вроде как имеют одну размерность.
+Правда его надо как-то повернуть для этого, иначе якобиан не посчитать.
+
+Зафиксируем какие-то базисы в $D$ и $T_xM$.
+Соорудим вот такое ортогональное преобразование: $O = \left(\sqrt{I}\right)^{-1} L^T$,
+$O \colon \R^m \to \R^m$, скалярное произведение в них одинаковое.
+
+Здесь неявно сконструировали отображение $I\colon \R^k \to \R^k$ взяв матрицу $I$.
+
+Тогда пусть $F = O \circ L = \left(\sqrt{I}\right)^{-1} L^T L = \sqrt{I}$.
+Пользуясь теоремой из теории меры, $\lambda_T = \det F = \det \sqrt I = \sqrt {\det I}$.
+
+
+А теперь можно приближать параллелепипеды на самом многообразии
+похожими из касательного пространства.
+
 
 \begin{defn}\label{thrm:dg::area::manifold}
   Пусть $M$~--- подмногообразие $\R^n$.  Тогда 
@@ -197,9 +344,17 @@
   \]
 \end{defn}
 
-\begin{rem}
-  Как видно, в $\R^2$, $g$ очень похож на матрицу 1ой квадратичной формы
-\end{rem}
+\begin{thrm}\label{thrm:dg::area::manifoldcor}
+  Определение выше не зависит от параметризации.
+\end{thrm}
+
+\begin{thrm}\label{thrm:dg::area::area}
+  Пусть $M$~--- поверхность, $u,v\in D$, $I = E \, \del u^2 + 2F\, \del u \,\del v + G\, \del v^2$.
+  Тогда
+  \[
+    S(M) = \iint_D \sqrt{EG - F^2}\, \del u\,\del v
+  \]
+\end{thrm}
 
 \begin{defn}\label{defn:dg::area::isom}
   Пусть $M_1$, $M_2$~--- пара поверхностей. Допустим, $\exists\, F \colon M_1 \to M_2$, 

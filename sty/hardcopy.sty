@@ -9,12 +9,12 @@
 
 \RequirePackage{geometry}
 \geometry{
-  left=1.5cm,
-  right=1.5cm,
-  top=1.5cm,
-  bottom=1.5cm,
+  left=1cm,
+  right=1cm,
+  top=1cm,
+  bottom=1.3cm,
   bindingoffset=0cm
 }
 \newcommand{\note}[1]{\footnote{#1}}
-
+\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
 

@@ -3,7 +3,7 @@
 % Author      : Iliya Tikhonenko <iliya.t@mail.ru>
 % Created at  : Tue Feb 21 00:00:16 MSK 2017
 %------------------------------------------------------------
-\documentclass[12pt, timbord]{longnotes}
+\documentclass[draft, timbord]{longnotes}
 \usepackage{tmath}
 \usepackage{cussymb}
 \usepackage{silence}
@@ -78,9 +78,42 @@
   Пусть $\mathcal E_1, \mathcal E_2 \subset \pset(X)$, $\sigma(\mathcal E_1) \supset \mathcal E_2$.
   Тогда $\sigma(\mathcal E_1) \supset \sigma(\mathcal E_2)$
 \end{lem}
+\begin{lproof}
+  $\sigma(.)$ от обеих частей.
+\end{lproof}
 \begin{thrm}\label{thrm:meas::setsys::borelcell}
   $\borel_n = \sigma(\Cell_n)$.
 \end{thrm}
+\begin{tproof}
+  \begin{description}
+    \item[$\sigma (\open) \supset \Cell$] Покроем открытыми квадратиками.
+    \item[$\sigma (\Cell) \supset \open$] Для упрощения жизни $\open \supset G \in \R^2$.
+      Рассмотрим классы ячеек
+      \[
+        \mathcal C_k = \left\{
+          \left[\frac m 2; \frac{m+1}{2^k}\right) 
+          \times 
+          \left[\frac n 2; \frac{n+1}{2^k}\right) \subset G
+          \:\middle|\: m,n \in \Z
+        \right\}
+      \]
+      Осталось показать, что любую точку из $G$ покрывает ячейка какого-то класса.
+      
+      Каждая точка открытого множества входит с какой-то окрестностью, которую можно считать
+      обединением множеств из базы топологии. Короче, есть маленький открытый квадратик, 
+      содержащий точку. 
+
+      Так что теперь можно думать просто про одномерье.
+      Ясно, что \[
+        \exists\, m, k \that 
+        \begin{cases}
+          x-\varepsilon < \frac{m}{2^k} < x \\
+          x+ \varepsilon >  \frac{m+1}{2^k} > x \\
+        \end{cases}
+      \]
+      Для этого хватит, чтобы $ |x-\varepsilon ; x| > \frac{1}{2^k}$, например.
+  \end{description}
+\end{tproof}
 
 \begin{exmp}\label{exmp:meas::setsys::borel}
 %   \everymath{\displaystyle}
@@ -109,7 +142,7 @@
   +\infty]$~--- мера, если 
   \begin{enumerate}
     \item $\mu(\varnothing) = 0$
-    \item $\displaystyle\mu\underbrace{\left(\bigsqcup_{k=1}^\infty A_k\right)}_{\in \alg} 
+    \item $\displaystyle\mu\Biggl(\underbrace{\bigsqcup_{k=1}^\infty A_k}_{\in \alg}\Biggr)
       = \sum_{k=1}^\infty \mu(A_k)$. Здесь никто не обещает, что будет именно $\sigma$-алгебра.
   \end{enumerate}
   Множества $A \in \alg$ в таком случае называются $\mu$-измеримыми.
@@ -122,7 +155,8 @@
   \end{cases}$ ~--- $\delta$-мера Дирака.
 \end{exmp}
 \begin{exmp}\label{exmp:meas::meas::mol}
-  $a_k \in x$, $m_k \geqslant 0$, $\displaystyle\mu(a) := \sum_{\mathclap {k\colon a_k \in a}} m_k$~---
+  $a_k \in x$, $m_k \geqslant 0$, $\displaystyle\mu(a) 
+  := \sum_{\mathclap {k\colon a_k \in a}} m_k$~---
   <<молекулярная>> мера.
 \end{exmp}
 
@@ -137,12 +171,16 @@
 \begin{prop}[Монотонность меры]\label{prop:meas::meas::monot}
   Пусть $A,B \in \alg$, $A \subset B$. \par Тогда $\mu(A) \leqslant \mu(B)$.
 \end{prop}
+\begin{lproof}
+  $B = A \sqcup C$. Дальше очевидно
+\end{lproof}
 \begin{prop}\label{prop:meas::meas::diff}
   Пусть $A,B \in \alg$, $A \subset B$, $\mu(B) < +\infty$.  \par 
   Тогда $ \mu(B\setminus A) = \mu(B) - \mu(A)$.
 \end{prop}
+Мемы $A,B$ конечны, иначе нельзя вычитать.
 \begin{prop}[Усиленная монотонность]\label{prop:meas::meas::enfmont}
-  Пусть $A_{1 \intrng n}, B \in \alg$, $A_{1 \intrng n} \subset B$ и дизъюнктны. \par
+  Пусть $A_{1 \intrng n}, B \in \alg$, $\bigsqcup_i A_i \subset B$ . \par
   Тогда $\displaystyle\sum_{k=1}^n \mu(A_k) \leqslant \mu B$
 \end{prop}
 
@@ -154,7 +192,7 @@
   Сделать $B_k$ дизъюнктными: $C_k = B_k \setminus \bigcup_{j <k} B_k$. Затем представить $A$ как
   дизъюнктное объединение $D_k \colon D_k = C_k \cap A$. Так можно сделать, потому что
   \[
-    A = A \cap \bigcup_{k=1}^n B_k = A \cap \bigcup_{k=1}^n C_k = \bigcup_{k=1}^n A \cap C_k
+    A = A \cap \bigcup_{k=1}^n B_k = A \cap \bigsqcup_{k=1}^n C_k = \bigsqcup_{k=1}^n A \cap C_k
   \]
   Ну а тогда
   \[
@@ -165,23 +203,55 @@
 
 \begin{prop}[Непрерывность меры снизу]\label{prop:meas::meas::bcont}
   Пусть $A_1 \subset A_2 \subset \cdots$, $A_k \in \alg$,
-  $\displaystyle A = \bigcup_{k=1}^\infty A_k \in \alg$.
+  $\left(\displaystyle A = \bigcup_{k=1}^\infty A_k\right) \in \alg$.
   \note{Опять-таки никто не сказал, что $\alg$~--- $\sigma$-алгебра.} \par
   Тогда $\displaystyle \mu A = \lim_{n\to \infty} \mu A_n$
 \end{prop}
+\begin{lproof}
+  Строим разности $C_k = A_{k+1} \setminus A_k$,$C_0 = A_1$ а $A= \bigsqcup_k C_k$.
+  
+  Вот ещё картинка: \ref{fig:meas::meas::eudoks}, для пущей очевидности.
+
+   \begin{figure}
+   \begin{center}
+     \includegraphics[scale=1]{meas/eudoks}
+   \end{center}
+   \caption{Метод исчерпывания Евдокса}
+   \label{fig:meas::meas::eudoks}
+   \end{figure}
+   
+\end{lproof}
 \begin{prop}[Непрерывность меры сверху]\label{prop:meas::meas::ucont}
   Пусть $A_1 \supset A_2 \supset \cdots$, $A_k \in \alg$, 
   $\displaystyle A = \bigcap_{k=1}^\infty A_k \in \alg$, $\mu A_1 < +\infty $.
   \par
   Тогда $\displaystyle \mu A = \lim_{n\to \infty} \mu A_n$
 \end{prop}
+\begin{lproof}
+  Сначала заметим, что все меры сделаны конечными, ведь нужно считать разности мер, а
+  это так себе.
 
-\plholdev{Тут будет картинка про метод исчерпывания Евдокса}
+  Снова сделаем разности $C_k = A_k \setminus A_{k+1}$
+  \[
+    \bigsqcup_{k=1}^n  C_k = A_1 \setminus A_{n+1} 
+    \Rightarrow \mu (A_{n+1}) = \mu (A_1) - \mu \left( \bigsqcup_{k=1}^n  C_k \right)
+  \]
+  Понятно, что \[
+    \lim_{n\to \infty} \bigsqcup_{k=1}^n  C_k \sqcup A = \bigsqcup_{k=1}^\infty  C_k \sqcup A = A_1
+  \]
+  Так что \[
+    \lim_{n\to \infty} \mu \left( \bigsqcup_{k=1}^n  C_k \right) = \mu (A_1) - \mu (B)
+  \]
+  Но тогда\[
+    \lim_{n\to \infty } \mu (A_n) = \lim_{n\to \infty } \mu (A_{n+1}) = \mu B
+  \]
+\end{lproof}
+
 
 \begin{defn}\label{defn:meas::ledeg::compl}
   Пусть задана тройка $(X, \alg_\sigma, \mu)$. Тогда $\mu$~--- полная, если 
   \[
-    \forall\, \in \alg \colon \mu A = 0 \; \forall\, B \subset A, B \in \alg \;::\; \mu B = 0
+    \forall\,A \in \alg : \mu A = 0 \;\: \forall\, B \subset A, B \in \alg \holds \mu B = 0
   \]
 \end{defn}
 
@@ -194,7 +264,7 @@
 
 \begin{defn}\label{defn:meas::ledeg::mcont}
   Пусть $\alg_1, \alg_2$~--- сигма-алгебры подмножеств $X$, $\alg_1 \subset \alg_2$,
-  $\mu_1 \colon A_1 \to [0;+\infty] $, $\mu_2 \colon A_2 \to [0;+\infty]$. 
+  $\mu_1 \colon \alg_1 \to [0;+\infty] $, $\mu_2 \colon \alg_2 \to [0;+\infty]$. 
   Тогда $\mu_2$ называется продолжением $\mu_1$.
 \end{defn}
 
@@ -206,12 +276,38 @@
       Её ещё называют стандартным продолжением.
   \end{enumerate}
 \end{thrm}
-\plholdev{идея доказательства}
-Пока надо запомнить, что стандратное продолжение~--- сужение внешней <<меры>> 
-на хорошо разбивающие множества.
 
+\begin{defn}[Внешняя мема]\label{defn:meas::ledeg::exter}
+  Пусть $E \subset X$. Положим
+  \[
+    \mu^* (E) := \inf \left\{ \sum_{k=1}^\infty \mu A_k \: 
+    \middle|\; A_k \in \alg, E \subset \bigcup_{k=1}^\infty A_k \right\}
+  \]
+  Тогда $\mu ^* $~--- внешняя мема, порождённая $\mu$. Она не мера.
+\end{defn}
 
-\paragraph{Объём в \texorpdfstring{\(\R^n\)}{R\^{}n}. Мера Лебега }
+\begin{exmp}
+  Например, сигма-алгебра из вертикальных полос на квадратике. Аддитивность сломается, если
+  взять 2 непересекающихся горизонтальных <<лоскутка>> один по другим.
+\end{exmp}
+
+Так, вот про идею доказательства. 
+Внешняя мема~--- очень привлекательная вещь, но не мера. 
+
+Давайте разрешим лишь определённый набор множеств. Назовём их хорошо разбивающими.
+
+\begin{defn}\label{defn:meas::ledeg::wellspl}
+  Пусть $E \subset A$. Тогда $E$~--- хорошо разбивающее, если \[
+    \forall\, A \in \alg \holds \mu A = \mu^* (A \cap E) + \mu ^* (A \setminus E)
+  \]
+\end{defn}
+
+Хорошо разбивающие явно содержат исходную алгебру.
+
+Для тех же вертикальных полос в хорошо разбивающие попадут все 
+множества, проектирующиеся в точку на ось $\perp$ полосками.
+
+\paragraph{Объём в \texorpdfstring{$\R^n$}{R\^{}n}. Мера Лебега }
 \label{par:meas::lebeg}
 
 \begin{defn}\label{defn:meas::lebeg::cell}
@@ -237,18 +333,83 @@
 \begin{thrm}\label{thrm:meas::ledeg::finadd}
   $v$~--- конечно-аддитивен, то есть \[
     \forall\, A, A_{1 \intrng p} \in \Cell\, , A = \bigsqcup_{k=1}^p A_k
-    \:\; \Rightarrow  vA = \sum_{k=1}^p v A_k
+    \:\; \holds  vA = \sum_{k=1}^p v A_k
   \]
 \end{thrm}
+\begin{tproof}
+  На клеточки побить.
+\end{tproof}
 
 \begin{thrm}\label{thrm:meas::ledeg::infadd}
   $v$~--- счётно-аддитивен, то есть \[
     \forall\, A, A_{1 \intrng } \in \Cell\, , A = \bigsqcup_{k=1}^\infty  A_k
-    \:\; \Rightarrow  vA = \sum_{k=1}^ \infty  v A_k
+    \:\; \holds  vA = \sum_{k=1}^ \infty  v A_k
   \]
 \end{thrm}
-\begin{tproof}
-  Здесь в конспекте лишь частный случай про ячейки.
+Сначала докажем маленькую лемму.
+\begin{lem}\label{lem:meas::ledeg::openclcell}
+  Пусть $\Delta$~--- ограниченная ячейка в $\R^n$. Тогда 
+  \[
+    \exists\, \Delta' \in \open, \Delta'' \in \closed 
+    \that 
+    \left\{
+      \begin{aligned}
+        v \Delta'  &< v \Delta + \varepsilon  \\
+        v \Delta'' &> v \Delta - \varepsilon 
+      \end{aligned}
+    \right.
+  \]
+\end{lem}
+\begin{lproof}
+  Например, для $\Delta = \prod_k [a_k; b_k)$ \[
+    \begin{split}
+      \Delta_i'  &= \prod_{k=1}^n \left(a_k-\frac 1 i ; b_k\right) \\
+      \Delta_i'' &= \prod_{k=1}^n \left[a_k ; b_k - \frac 1 i\right] \\
+    \end{split}
+  \]
+  Увеличивая $i$ можно добраться до любого $\varepsilon$.
+\end{lproof}
+\begin{tproof}[Счётной аддитивности объема]
+  Здесь в конспекте лишь частный случай про ячейки. 
+  А по-хорошему $\Cell$ содержит и любые конечные объединения ячеек.
+  Утверждается, что там тоже самое, только возни сильно больше.
+
+  Пусть $A = \Delta$, $A_k = \Delta_k$, причём они все конечны.
+  Рассмотрим
+  \begin{align*}
+    \Delta_k' \supset \Delta &\that v \Delta_k' < v \Delta_k + \frac{\varepsilon}{2^k},\\
+    \Delta'' \subset \Delta    &\that v \Delta'' > v \Delta - \varepsilon ,
+  \end{align*}
+  штрихи имеют смысл как в лемме.
+
+  Тогда\[
+    \Delta''  \subset \bigcup_{k=1}^\infty \Delta_k ' 
+  \]
+
+  По определению компактности, \[
+    \exists\, (l_k) \that \Delta'  \subset \bigcup_{l=1}^N \Delta_{k_l}''
+  \]
+  
+  Так что из счётной аддитивности
+  \[
+    v \Delta'' \leqslant v \left(\bigcup_{l=1}^N \Delta_{k_l}'\right)
+    = \sum_{l=1}^N v \Delta_{k_l}' < \sum_{l=1}^N v \Delta_{k_l} + \varepsilon
+  \]
+  А \[
+    \sum_{l=1}^N v \Delta_{k_l} <  \sum_{k=1}^\infty v \Delta_{k}
+  \]
+  Так что 
+  \[
+    v \Delta < \sum_{k=1}^\infty v \Delta_{k} + 2\varepsilon \Rightarrow
+    v \Delta \leqslant \sum_{k=1}^\infty v \Delta_{k} 
+  \]
+
+  В другую сторону не так понятно. Для частных сумм из конечной аддитивности
+  \[
+    \forall\, N \holds \sum _{k=1}^N v \Delta_k \leqslant v \Delta
+  \]
+  При увеличении $N$ сумма лишь возрастает, но она и ограничена. Значит предел есть.
+  Тогда $\sum_k v \Delta_k \leqslant v \Delta$.
 \end{tproof}
 
 
@@ -263,7 +424,8 @@
 \begin{enumerate}[(1) $\triangleright$]
   \item $\lambda \{x\} = 0$
   \item $\lambda \bigl(\{x_k\}_{k}\bigr) = 0$
-  \item $\borel \subset \lebesgue$
+  \item $\borel \subset \lebesgue$. Это, кстати, не очевидно. С другой стороны, для них
+    есть покрытие квадратиками.
   \item $L \subset \R^m, m<n \Rightarrow \lambda_n L  = 0$
 \end{enumerate}
 
@@ -279,11 +441,42 @@
   \]
 \end{thrm}
 \begin{tproof}
-  куча скучных оценок квадратиками.
+  \begin{enumerate}[(1)]
+    \item Сначала разберёмся с конечными множествами. Из определения инфимума, 
+      $\exists\, \{\Delta_k\} \that \lambda(A) > \sum_k \Delta_k - \frac{\varepsilon}{2} $.
+
+      Снова подберём $\Delta'_k$, как в \ref{thrm:meas::ledeg::infadd},
+      только $\ov~\varepsilon = \frac{\varepsilon}{2^{k+1}}$.
+      В таком случае \[
+        \lambda(A) > \sum_k \Delta_k - \varepsilon / 2 > \sum_k \Delta_k ' - \varepsilon
+      \]
+    \item \underdev, но что-то жесть. Обычно доказывают что  $\lambda \inf G_k = \lambda A$.
+  \end{enumerate}
+  Кажется, победа. Для замкнутых можно доказывать все для $X \setminus A$ сводя к первому
+  пунку. Как-то так\[
+    (F^c \setminus A^c) = (F^c \cap A) = (A \cap F^c) = A \setminus F
+  \]
 \end{tproof}
+\begin{cor}\label{cor:meas::ledeg::gdelta}
+  $\forall\, A \; \exists\, D \in G_\delta \that A = D \cup N$, $\mu(N) = 0$.
+\end{cor}
 
-\plholdev{Пример неизмеримого множества на окружности}
+\begin{exmp}[Пример неизмеримого множества (по Лебегу)]\label{exmp:meas::ledeg::unmeasbl}
+  Пусть $x \sim y \Leftrightarrow y-x \in \Q$ и всё это лежит на отрезке $I=[0;1]$.
+  Пусть $R_k$~--- $k$-ый смежный класс по $\sim$. Тогда $S = \sqcup_k R_k$.
+  
+  \emph{Выберем} $E \colon \forall\, k \holds | E \cap R_k| = 1$. Как видно, $\{E_j\}$ отличаются
+  сдвигом на $r \in \Q$. Будем считать, что сдвиг~--- это скорее поворот, как бы замыкаем
+  начало и конец отрезка, так что $E_j + r \in I \;\: \forall\, k\in \Z, r\in[0;1]\cap \Q$.
 
+  Тогда $I = \sqcup_k E_k$, $\forall\, j,k \holds\lambda E_j = \lambda E_l $.
+  
+  Но теперь
+  \[
+    1= \lambda I = \sum_{k=1}^\infty \lambda E_k = \sum_{k=1}^\infty a 
+  \]
+  А бесконечная сумма вещественных чисел либо $0$ либо $\infty$.
+\end{exmp}
 
 \paragraph{Измеримые функции}
 \label{par:meas::mfun}
@@ -556,10 +749,10 @@
   ряда такие же, как у интеграла Лебега: 
   \[
     \left[\;
-    \begin{split}
+    \begin{aligned}
       \forall\, m,n\in \N \holds a_{m,n} &\geqslant 0 \\
       \sum_{m,n\in\N} |a_{m,n}| &< \infty \\
-    \end{split} \right.
+    \end{aligned} \right.
   \]
 \end{exmp}
 

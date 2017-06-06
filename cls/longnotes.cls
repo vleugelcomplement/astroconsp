@@ -109,7 +109,7 @@
 
 \titlespacing{\chapter}%
 {1em}%
-{2em plus 1ex minus 0.5ex}%
+{4em plus 2ex minus 1ex}%
 {1.5em plus 1ex minus 0.5ex}
 
 \RequirePackage{chngcntr} % tools for counters 
@@ -159,7 +159,6 @@
   \RequirePackage{bookmark}
   \hypersetup{%
     pdfencoding=auto,
-    psdextra,
     unicode=true,
     colorlinks=true,
     linkcolor=blue, 
