@@ -182,6 +182,9 @@
   Пусть $A_{1 \intrng n}, B \in \alg$, $\bigsqcup_i A_i \subset B$ . \par
   Тогда $\displaystyle\sum_{k=1}^n \mu(A_k) \leqslant \mu B$
 \end{prop}
+\begin{rem}\label{rem:meas::meas::enfmont}
+  Можно усилить и на случай $n = \infty$, предел есть, так как члены возрастают.
+\end{rem}
 
 \begin{prop}[Полуаддитивность меры]\label{prop:meas::meas::semiadd}
   Пусть $B_{1 \intrng n}, A \in \alg$, $A \subset \displaystyle \bigcup_{k=1}^n B_k$. \par
@@ -719,6 +722,65 @@
   \]
 \end{tproof}
 
+Часто пользуются сочетание теоремы Леви и теоремы про последовательность простых
+функций (\ref{thrm:meas::mfun::simpseq}). Ссылаться на такое будем как просто
+на теорему (\ref{thrm:meas::levi})
+
+\begin{defn}\label{defn:meas::almev}
+  Пусть задано $(X,\mu)$, $P(x)$~--- предикат. Говорят, что $P(x) = 1$ почти везде (\alev),
+  если $\mu \{x \mid P(x) = 0\} = 0$.
+\end{defn}
+
+\begin{defn}\label{defn:meas::almev::eq}
+  $f \sim g \Leftrightarrow f(x) = g(x) \alev$.
+\end{defn}
+
+\begin{lem}\label{lem:meas::almev::zerom}
+  Пусть задано $(X,\mu)$, $f = 0 \alev$. Тогда $\int_X f\, \del \mu =0$.
+\end{lem}
+
+\begin{lem}\label{lem:meas::almev::eq}
+  Пусть задано $(X,\mu)$, $f = g \alev$. Тогда $\int_X f\, \del \mu = \int_X f\, \del \mu $.
+\end{lem}
+\begin{lem}[Беппо-Леви для рядов]\label{lem:meas::almev::blseries}
+  Пусть задано $(X,\mu)$, $u_n \colon X \to \R$, $n\in \N$, $u_n$ измеримы, $u_n \geqslant 0$.
+  Тогда 
+  \begin{enumerate}[a)]
+    \item $\displaystyle \int _X \sum_{n=1}^\infty u_n \, \del \mu  
+      = \sum_{n=1}^\infty \int _X  u_n \, \del \mu$.
+    \item Если эти числа конечны, то ряд $\sum_n u_n \conv \alev$
+  \end{enumerate}
+\end{lem}
+\begin{lproof}
+  Частичные суммы ряда отлично подходят на роль $f_n$ из теоремы Леви.
+
+  Со второй частью хитрее. Рассмотрим множество $E = \{ x \mid S(x) = + \infty \}$.
+  Раз уж сумма ряда бесконечна, $g_n(x) \equiv n \nearrow S(x)$, ($x\in E$).
+
+  Тогда по теореме Леви (\ref{thrm:meas::levi}) 
+  \[
+    \int_E g_n \, \del \mu \to \int_E S \, \del \mu \leqslant \int_X S\, \del \mu < +\infty 
+  \]
+  С другой стороны,
+  \[
+    \int_E g_n \, \del \mu = n \cdot \mu E \xto{n\to \infty} \infty 
+  \]
+  Так что во избежаний противоречий, $\mu E= 0$.
+\end{lproof}
+
+\begin{lem}[Беппо-Леви <<вверх ногами>>]\label{lem:meas::almev::blov}
+  Пусть задано $(X,\mu)$, $(f_n)$, измеримы, $f_1 \geqslant f_2 \geqslant \cdots \geqslant 0$.
+  Пусть ещё $f_1 \in \summb$. Тогда
+  \[
+    \lim_{n\to \infty} \int_X f_n \, \del \mu = \int_X \lim_{n\to \infty} f_n \, \del \mu 
+  \]
+\end{lem}
+\begin{lproof}
+  $g_k = f_1 - f_k$~--- кандитаты на роль функций в теореме (\ref{thrm:meas::levi})
+\end{lproof}
+
+
+
 \paragraph{Свойства интеграла от суммируемых функций}
 \label{par:meas::summprop}
 
@@ -889,7 +951,7 @@
 \end{tproof}
 
 Поведение становится разным на не суммируемых функициях.
-Например, $\dint_0^\infty \frac{sin}{x}$ сходится, но не абсолютно.
+Например, $\dint_0^\infty \frac{\sin x}{x}$ сходится, но не абсолютно.
 Значит, аналогичный лебеговский интеграл не суммируется.
 
 \paragraph{Интеграл по дискретной мере и мере, задаваемой плотностью}
@@ -962,7 +1024,9 @@
   Пусть $I \subset \R$, $F \colon I \to \R$, $F \nearrow$, $F(x) = F(x-0)$ 
   (непрерывна слева).\note{А можно и без. Тогда $\nu([a;b)) = F(b-0) - F(a-0)$,
   см.~\ref{makpodk}}.
-  Рассмотрим порождённую полуинтервалами $[a;b) \subset I$ $\sigma$-алгебру.
+
+  Рассмотрим порождённую полуинтервалами $[a;b) \subset I$ алгебру.
+  По сути, $\Cell_1$.
   Введём <<объём>> $\nu_F \colon \nu([a;b)) = F(b) - F(a)$.
   
   Тогда мера Лебега-Стилтьеса $\mu_F$~--- стандартное продолжение $\nu_F$ на некоторую
@@ -972,7 +1036,19 @@
 \begin{rem}
   Здесь надо доказывать \emph{счётную} аддитивность, а то как продолжать $\nu$, если она~--- не
   мера?
+
+  Делается это аналогично аддитивности обычного объёма, тоже надо покрывать открытыми 
+  множествами ячейки из объединения. См~\ref{thrm:meas::ledeg::infadd}
 \end{rem}
+\begin{rem}
+  $\sigma$-конечность~--- очевидна.
+\end{rem}
+\begin{rem}
+  При таком задании объёма непрерывность $g$ слева жизненно необходима. Иначе нету непрерывности
+  меры.
+\end{rem}
+
+
 
 \subparagraph{Свойства мемы Лебега-Стилтьеса}
 
@@ -988,10 +1064,19 @@
   Пусть $\Delta = (a;b)$. Тогда $\mu \Delta  = F(b) - F(a+0)$.
 \end{prop}
 
+Доказывается всё это из непрерывности $\mu_F$.
+
 \begin{lem}\label{lem:meas::lebstil::smoothF}
   Пусть $F \in C(I)$, $\Delta \subset I$.
   Тогда $\mu_F (\Delta) = \dint_\Delta F'(t) \, \del \lambda$.
 \end{lem}
+\begin{lproof}
+  Мы в~\ref{thrm:meas::contint} уже доказывали, что для непрерывных функций интеграл по мере
+  совпадает с интегралом Ньютона-Лейбница. 
+\end{lproof}
+\begin{rem}\label{rem:meas::lebstil::smoothF}
+  Еще можно сказать, что $F$ задана плотностью $\rho = F'$.
+\end{rem}
 
 \begin{thrm}\label{thrm:meas::lebstil::int}
   Пусть $F\nearrow$, кусочно-гладка на $I \subset \R$, а для $f$ выполнены обычные
@@ -1002,6 +1087,14 @@
 \sum_k f(c_k) \, \underbrace{\Delta_{c_k} F}_{\mathclap{\text{скачок в $c_k$}}}
   \]
 \end{thrm}
+\begin{tproof}
+  По счётной аддитивности разобъем на непрерывные куски и точки. 
+
+  Для точек:\ref{prop:meas::lebstil::point}
+
+  Для непрерывных  кусков поможет интеграл по мере, заданной плотностью.
+  См~\ref{thrm:meas::discint::intchg} 
+\end{tproof}
 
 \begin{defn}[Образ мемы]\label{defn:meas::lebstil::imag}
   Пусть $(X,\alg,\mu)$~--- пространство с мемой, $f\colon X \to Y$. 
@@ -1011,11 +1104,24 @@
     \item $\mu' \equiv \nu = \mu \circ f^{-1} $.
   \end{enumerate}
 \end{defn}
+Корректность докажется из свойств прообраза.
 
 \begin{thrm}\label{thrm:meas::lebstil::imfun}
   Пусть для $g\colon Y \to \R$ выполнены обычные условия ($\alg = \alg'$, $\mu=\nu$).
   Тогда $\displaystyle \int_Y g \, \del \nu  = \int_X (g \circ f)\, \del \mu$.
 \end{thrm}
+\begin{tproof}
+  Пусть $g$~--- простая. 
+  \[
+    \int_Y g\, \del \nu = \sum_k c_k \nu (E_k) = \sum_k c_k \mu \bigl(f^{-1} (E_k)\bigr)
+  \]
+  С другой стороны \[
+    g(f(x)) = c_k \Leftrightarrow f(x) \in E_k \Leftrightarrow x \in f^{-1}(E_k) 
+    \: \Longrightarrow \:
+    g \circ f = \sum_k c_k \cdot \ind_{f^{-1}(E_k)}
+  \]
+  А дальше~--- как обычно, через теорему Леви (\ref{thrm:meas::levi}).
+\end{tproof}
 
 \begin{defn}[Функция распределения]\label{defn:meas::lebstil::distr}
   Пусть задано $(X, \mu)$, $\mu X < + \infty$, $f\colon X \to \R$. Тогда
@@ -1026,6 +1132,10 @@
   Пусть задано $(X, \mu)$, $\mu X < + \infty$, выполнены обычные условия для $f$.
   Тогда $\displaystyle \int_X f \, \del \mu = \intR t \, \del \mu_F$.
 \end{thrm}
+\begin{tproof}
+  Следствие~\ref{thrm:meas::lebstil::imfun} при  $g(t) = t$, $\nu = \mu_F$~--- мера Лебега-Стилтъеса
+  порожденная функцией распределения $F(t)$.
+\end{tproof}
 
 \paragraph{Интеграл Эйлера-Пуассона}
 \label{par:meas::eulpuass}
@@ -1033,6 +1143,41 @@
 \begin{prop}\label{prop:meas::eulpuass}
   $\displaystyle \int_{\R^2} e^{-(x^2 + y^2)}\, \del \lambda_2 = \pi $ 
 \end{prop}
+
+\begin{lproof}
+  Проще рассматривать $g(x,y) = -e^{ -(x^2 + y^2) }$. Тогда
+  \[
+    \begin{split}
+      F(t) &= \mu \R^2 [g(x,y) < t] =^* \mu \{x,y \mid -(x^2 + y^2) > \ln(-t) \} =\\
+           &= \mu \{ x,y \mid x^2 + y^2 < -\ln(-t) \} =^* 
+        \begin{cases}
+          -\pi \ln(-t), & -1 \leqslant t < 0 \\
+          0,            & t < -1             \\
+          \infty ,      & t \geqslant 0
+        \end{cases}
+      \end{split}  
+  \]
+  (${}^*$ посередине не стали тащить все варианты)
+
+  Здесь происходит некоторая магия. Можно как-то помахать руками и выкинуть всё, кроме
+  $[-1;0)$.
+  
+  С частью больше нуля вообще ничего не понятно. Единственный вариант~---
+  понимать здесь интеграл как предел конечного, по расширяющимся окружностям. В таком случае,
+  после какого-то $t$ $F= \rm const$. Тогда и производная там ноль. Так что будем считать, что
+  $F = \infty \Leftrightarrow F = \rm const$.
+  
+  Применять теорему \ref{thrm:meas::lebstil::distint} 
+  здесь тоже некорректно, но для ограниченных областей можно было бы.
+
+  \[
+    \int_{\R^2} f\, \del \lambda_2  = \int_{- \infty }^ \infty  t \, \del \mu_F (t)
+    = \int_{-1}^0 t F'(t) 
+    = \pi \int_{-1}^0 t  \cdot \left(- \frac 1 {-t} \cdot (-1) \right) \, \del t = -\pi 
+  \]
+\end{lproof}
+
+
 
 \paragraph{Вероятностный смысл мемы}
 \label{par:meas::prob}
@@ -1042,36 +1187,7 @@
 \paragraph{Геометрический смысл меры Лебега. Принцип Кавальери}
 \label{par:meas::geomleb}
 
-\begin{defn}\label{defn:meas::almev}
-  Пусть задано $(X,\mu)$, $P(x)$~--- предикат. Говорят, что $P(x) = 1$ почти везде (\alev),
-  если $\mu \{x \mid P(x) = 0\} = 0$.
-\end{defn}
-
-\begin{defn}\label{defn:meas::almev::eq}
-  $f \sim g \Leftrightarrow f(x) = g(x) \alev$.
-\end{defn}
-
-\begin{lem}[Беппо-Леви для рядов]\label{lem:meas::almev::blseries}
-  Пусть заданы $(X,\mu)$, $u_n \colon X \to \R$, $n\in \N$, $u_n$ измеримы, $u_n \geqslant 0$.
-  Тогда 
-  \begin{enumerate}[a)]
-    \item $\displaystyle \int _x \sum_{n=1}^\infty u_n \, \del \mu  
-      = \sum_{n=1}^\infty \int _x  u_n \, \del \mu$.
-    \item Если эти числа конечны, то ряд $\sum_n u_n \conv \alev$
-  \end{enumerate}
-  
-\end{lem}
-\begin{lem}[Беппо-Леви <<вверх ногами>>]\label{lem:meas::almev::blov}
-  Пусть задано $(X,\mu)$, $(f_n)$, измеримы, $f_1 \geqslant f_2 \geqslant \cdots \geqslant 0$.
-  Пусть ещё $f_1 \in \summb$. Тогда
-  \[
-    \lim_{n\to \infty} \int_X f_n \, \del \mu = \int_X \lim_{n\to \infty} f_n \, \del \mu 
-  \]
-\end{lem}
-
-\plholdev{Здесь была ещё пара лемм, но они не особо используются дальше. Вроде}
-
-\begin{defn}\label{defn:meas::almev::proj}
+\begin{defn}\label{defn:meas::geomleb::proj}
   Пусть $E \subset \R^m \times \R^n \in \lebesgue_{m+n}$.
   \begin{itemize}[$\triangleright$]
     \item $E_x      = \{ y\in \R^n \mid (x,y) \in E\}$~--- <<срез>>
@@ -1079,9 +1195,20 @@
   \end{itemize}
 \end{defn}
 
-\plholdev{картиночка для $\R^2$}
+\begin{exmp}\label{exmp:meas::geomleb::planarproj}
+  См картинку~\ref{fig:meas::geomleb::proj}
 
-\begin{thrm}\label{thrm:meas::almev::cav}
+  \begin{figure}
+  \begin{center}
+    \includegraphics[scale=1]{meas/proj}
+  \end{center}
+  \caption{Проекции и срезы для двумерья}
+  \label{fig:meas::geomleb::proj}
+  \end{figure}
+  
+\end{exmp}
+
+\begin{thrm}\label{thrm:meas::geomleb::cav}
   Пусть $E \in \lebesgue_{m+n}$, $E_x \in \lebesgue_{n} \alev x$,
   $\varphi(x) = \lambda_n(E_x)$ измерима относительно $\lebesgue_{m}$.
 
@@ -1090,25 +1217,72 @@
     \lambda_{m+n} (E) = \int_{\R^m} \lambda_n (E_x) \, \del \lambda_m
   \]
 \end{thrm}
-\plholdev{много букв}
+\begin{tproof}
+  \begin{enumerate}
+    \item $E = \displaystyle \prod_{k=1}^\infty \Delta^k$\\
+      Здесь просто $E = E_1 \times E_2$, так что
+      \[
+        E_x = \begin{cases}
+          E_2, & x \in E_1 \\
+          0, & x \not\in E_1 \\
+        \end{cases} \; \Rightarrow \;
+        \lambda_n  E_x = \begin{cases}
+          \lambda_n E_2, & x \in E_1 \\
+          0, & x \not\in E_1 \\
+        \end{cases} 
+      \]
+      Отсюда \[
+        \int_{\R^m} \lambda_n E_x \, \del \lambda_m = \int_{E_1} \lambda_n E_x \, \del \lambda_m 
+        = \lambda_m (E_1) \cdot \lambda_n(E_2) = \lambda_{m+n} (E)
+      \]
+    \item $E = \displaystyle \bigsqcup_{k=1}^\infty E_k$, $E_k$~--- ячейка\\
+      Здесь $\lambda_n E_x = \sum_k \lambda_n (E_k)_x$, а дальше теорема
+      Леви для рядов~\ref{lem:meas::almev::blseries}
+    \item $E \in G_\delta \Leftrightarrow G = \bigcap_k G_k$, $G_k \in \open$, причём 
+      $G_1 \supset G_2 \supset \cdots$. \\
+      Здесь уже нужна теорема Леви <<вверх ногами>> \ref{lem:meas::almev::blov}
+    \item $E$ измеримо и ограничено. \\
+      Из регулярности меры Лебега (точнее, из следствия~\ref{cor:meas::ledeg::gdelta}
+      к ней)
+      $\exists\, A\in G_\delta \that A = E \cup N$, а $\lambda(N) = 0$.
+    \item Для неограниченных~--- представить через объединение ограниченных.
+      Мера Лебега ведь сигма-конечна.
+  \end{enumerate}
+\end{tproof}
 
-\begin{defn}[График]\label{defn:meas::almev::plot}
+\begin{defn}[График]\label{defn:meas::geomleb::plot}
   $\Gamma^f = \{ (x,t) \in \R^{n+1} \mid t = f(x)\}$.
 \end{defn}
-\begin{defn}[Подграфик]\label{defn:meas::almev::subplot}
+\begin{defn}[Подграфик]\label{defn:meas::geomleb::subplot}
   $\Gamma_-^f = \{ (x,t) \in \R^{n+1} \mid 0 \leqslant t \leqslant f(x)\}$.
 \end{defn}
-\begin{defn}[Надграфик]\label{defn:meas::almev::supplot}
+\begin{defn}[Надграфик]\label{defn:meas::geomleb::supplot}
   $\Gamma_+^f = \{ (x,t) \in \R^{n+1} \mid t \geqslant f(x)\}$.
 \end{defn}
+Для знакопеременных можно модуль навесить, но редко встречалось.
 
-\begin{thrm}[Геометрический смысл интеграла]\label{thrm:meas::almev::geomsense}
+\begin{lem}\label{lem:meas::geomleb::plotmeas}
+  $\lambda_{n+1} \Gamma^f = 0$.
+\end{lem}
+\begin{thrm}[Геометрический смысл интеграла]\label{thrm:meas::geomleb::geomsense}
   Пусть $f\colon \R^n \to \R$, измерима, $ \geqslant 0$. Тогда
   \begin{enumerate}
-    \item $\Gamma_-^f$ измеримо.
-    \item $\lambda_{n+1}\Gamma_-^f = \int_{\R^n} f\, \del \lambda_n$ измеримо.
+    \item $\Gamma_-^f$ измеримо по $\lambda_{n+1}$
+    \item $\lambda_{n+1}\Gamma_-^f = \int_{\R^n} f\, \del \lambda_n$.
   \end{enumerate}
 \end{thrm}
+\begin{tproof}
+  \begin{enumerate}
+    \item Для индикатора второе утверждение теоремы очевидно. А вот с первым всё хуже.
+
+      В принципе, это следует вроде следует из того, что алгебра 
+      $\Cell_k \times [0;1]$ порождает $\Cell_{k+1}$, но \quest.
+
+    \item Для простых тоже всё очевидно, объединение измеримых~--- измеримо.
+    \item Для неотрицательных~--- через теорему Леви  для рядов (\ref{lem:meas::almev::blseries}).
+      Предел измеримых~--- измерим.
+  \end{enumerate}
+\end{tproof}
 
 \paragraph{Сведение кратного интеграла к повторному}
 \label{par:meas::mult}
@@ -1125,6 +1299,9 @@ $\del x\del y$.
     = \int_{\R^m} \del x \int_{\R^n} f(x,y) \, \del y
   \]
 \end{thrm}
+\begin{tproof}
+  Следствие~\ref{thrm:meas::geomleb::geomsense}. Правда снова сложности с измеримостью.
+\end{tproof}
 
 \begin{thrm}[Фубини]\label{thrm:meas::mult::fub}
   Пусть $f\colon \R^{m+n} \to \R$, измерима, $\in \summb(\R^{n+m}, \lambda_{m+n})$,
@@ -1145,38 +1322,83 @@ $\del x\del y$.
   \item Поворот с растяжением: $L \colon \R^n \to \R^n$, $L$~--- линейный император.
 \end{itemize}
 
+
 \begin{stat}\label{stat:meas::aff::shiftmeas}
   $E \in \lebesgue \Rightarrow T(E) \in \lebesgue$. 
 \end{stat}
+\begin{lproof}
+  Для открытых всё очевидно: $f(G) \in \open$, раз это гомеоморфизм. 
+  Пересечение образов~--- образ пересечения. Так что и для $G_\delta$ всё работает.
+
+  Дальше можно вспомнить, что измеримое $E= G_\delta \cap N$, $\lambda N = 0$.
+  Если множество нулевой меры, то можно покрыть его ячейками так, что 
+  $\sum_k \lambda\Delta_k < \varepsilon$. Это просто из определения внешней меры.
+
+  Поскольку размеры ячеек просто сохраняются, образ тоже будет нулевой меры.
+  $N \subset \bigcup_k \Delta_k \Rightarrow f(N) \bigcup_k f(\Delta_k)$, так как объединение
+  образов = образу объединения.
+\end{lproof}
 \begin{stat}\label{stat:meas::aff::linmeas}
   $E \in \lebesgue \Rightarrow L(E) \in \lebesgue$. 
 \end{stat}
+\begin{lproof}
+  В случае $\det L = 0$ размерность образа меньше $n \Rightarrow $ мера равна нулю.
+
+  Иначе, все очти аналогично рассуждению выше, только оценка меры образа сложнее.
+  Пусть $\lambda \Delta = \delta ^n$, тогда
+  \[
+    \forall\, x, y \in \Delta \holds \|Lx - Ly\| \leqslant \|L\|\, \|x - y\| 
+    \leqslant \sqrt{n} \delta \|L\|
+  \]
+  А значит можно уменьшая $\delta$ получить сколь угодно малые покрытия образа нуль-множества.
+\end{lproof}
+
 
 \begin{stat}\label{stat:meas::aff::disturb}
   Пусть $L \colon \R^n \to \R$, линейно. Тогда 
   \[
-    \exists\, C \geqslant 0 \forall\, E \in \lebesgue \holds \lambda L(E) = C \lambda E
+    \exists\, C \geqslant 0 \that \forall\, E \in \lebesgue \holds \lambda L(E) = C \lambda E
   \]
 \end{stat}
+\begin{lproof}
+  Здесь можно разобраться с ячейкой $[0;1)^n$, а дальше обычными способами построить весь мир 
+  из ячеек.
+\end{lproof}
 
 \begin{thrm}\label{thrm:meas::aff::deter}
   $C$ из прошлой теоремы равно $\bigl|\det [L]\bigr|$.
 \end{thrm}
-\plholdev{тут декомпозиция на ортогональный и диагональные операторы и 2 леммы}
-
+\begin{tproof}
+  тут декомпозиция на ортогональный и диагональные операторы:
+  \[
+    L = U_1 \, D \, U_2
+  \]
+  Определитель матрицы всего оператора равен определителю диагонального. Для ячеек очевидно, что
+  $C = |\det D|$, ортогональный сохраняет объёмы ячеек. А дальше как обычно.
+\end{tproof}
 \paragraph{Мера образа при гладком отображении}
 \label{par:meas::smoothimgmeas}
 
 {\denot $J_F(x) \equiv \det F'(x)$}
 
 \begin{thrm}\label{thrm:meas::smoothimgmeas}
-  Пусть $E \in \lebesgue$, $F \colon G \subset \R^n \to R^n$, гладкая биекция.
+  Пусть $E \in \lebesgue$, $F \colon G \subset \R^n \to \R^n$, гладкая биекция.
   Тогда $F(E) \in \lebesgue$ и $\lambda F(E) = \dint_E |\det F'(x) |\del x$.
 \end{thrm}
 \begin{tproof}
   \sour\underdev
 \end{tproof}
+\begin{tproof}
+  Что делать здесь с измеримостью не очень понятно. Если с компактами ещё как-то разобраться можно,
+  то вот что делать с неограниченными совсем непонятно.
 
+  Можно поразмахивать линеаризацией и сказать, что 
+  \[
+    F(x) \approx F(x_k) + F'(x_k) (x-x_k)
+  \]
+  а последнее уже аффинное, для которых якобы что-то доказали.
+\quest
+\end{tproof}
 
 \paragraph{Глакая замена переменной в интеграле}
 \label{par:meas::smoothvarch}
@@ -1189,6 +1411,25 @@ $\del x\del y$.
     \int_E f(y) \, \del y = \int_{F^{-1}(E)} f(F(x)) \cdot| J_F(x) | \, \del x
   \]
 \end{thrm}
+\begin{tproof}
+  Хотелось бы свести это к чему-то старому, но не получится: мера не поменялась, а поменялось
+  множество и функция.
+
+  Так что надо снова доказывать для простых. Пусть
+  \[
+    f(y) = \sum_i c_i \cdot \ind_{B_i}(y)
+  \]
+  Тогда $f(y) = c_i \Leftrightarrow y = F(x) \in B_i \Leftrightarrow x\in F^{-1}(B_i) = A_i$
+  Так что 
+  \[
+    f(y) = \sum_i c_i \cdot \ind_{A_i}(x)
+  \]
+  Отсюда\[
+    \int_E f(y) \, \del y = \sum_i c_i \int_{A_i} |J_F(x)|\, \del x 
+    = \sum_i c_i \int_{F^{-1}(E)} |J_F(x)|\cdot \ind_{A_i} \del x
+    = \int_{F^{-1}(E)} f(F(x)) \cdot|J_F(x)| \,\del x
+  \]
+\end{tproof}
 
 \begin{exmp}[Полярные координаты]\label{exmp:meas::smoothvarch::polar}
   \underdev
@@ -1207,7 +1448,7 @@ $\del x\del y$.
   Пусть $(f_n) \colon X \to \R$, $f \colon X \to \R$, $\mu$~--- мера на $X$.
   \begin{align*}
     & f_n \to f       & &:= & &\forall\, x \in X \holds f_n(x) \to f(x)      \\
-    & f_n \unito^X f  & &:= & &\sup\limits_X |f_n-f| \to 0                   \\
+    & f_n \unito^X f  & &:= & &\rho(f_n, f) = \sup\limits_X |f_n-f| \to 0     \\
     & f_n \to f \alev & &:= &&\exists\, N \subset X \colon \mu(N) = 0 
     \that \forall\, x\in X \setminus N \holds f_n(x) \to f(x).            \\
     & f_n \to^\mu f & &:= &&\forall\, \sigma > 0 \holds \mu X [ |f_n - f| \geqslant \sigma ]\to 0
@@ -1229,6 +1470,17 @@ $\del x\del y$.
 \begin{thrm}\label{thrm:meas::limint::uniint}
   $f_n \unito^X f, \mu X < \infty \Rightarrow \dint_X f_n \, \del \mu \to \int _X f$
 \end{thrm}
+\begin{tproof}
+  \[
+    \begin{split}
+      \left| \int_X f_n \, \del \mu - \int_X f\, \del \mu  \right| 
+      &= \left| \int_X f_n - f\, \del \mu  \right| 
+      \leqslant \int_X |f_n - f| \, \del \mu 
+      \leqslant \int \rho (f_n, f) \, \del \mu \\
+      &= \rho (f_n ,f) \, \mu X \xto{n\to \infty} 0
+    \end{split}
+  \]
+\end{tproof}
 
 \begin{thrm}
   см теорему Беппо-Леви (\ref{thrm:meas::levi}) или её вариацию \ref{lem:meas::almev::blov}.
@@ -1240,6 +1492,25 @@ $\del x\del y$.
     \int_X \varliminf f_n \, \del \mu \leqslant \varliminf \int_X f_n \, \del \mu 
   \]
 \end{thrm}
+\begin{exmp}\label{exmp:meas::limint::gaussian}
+  Ползущая на бесконечность гауссиана.
+\end{exmp}
+\begin{tproof}
+  \[
+    \varliminf f_n(x)  = \lim_{n\to \infty} \inf_{m \geqslant n} f_m (x) ; \quad 
+    g_n(x) = \inf_{m \geqslant n} f_m (x) 
+  \]
+  Эта последовательность возрастает, мы каждый раз берем все меньше функций. 
+  Так что по теореме Леви (\ref{thrm:meas::levi}) 
+  \[
+    \int g_n \to \int \varliminf f_n 
+  \]
+  Из определения инфимума $f_n \geqslant g_n$. Значит
+  \[
+    \varliminf \int f_n \geqslant \varliminf \int g_n = \lim \int g_n = 
+    \int \varliminf f_n
+  \]
+\end{tproof}
 
 \paragraph{Теорема Лебега об ограниченной сходимости}
 \label{par:meas::bndconv}
@@ -1254,6 +1525,20 @@ $\del x\del y$.
     \lim_{n\to \infty} \int _X f_n \, \del \mu = \int_X f\, \del \mu 
   \]
 \end{thrm}
+\begin{tproof}
+  $f$ суммируема из теоремы Фату~\ref{thrm:meas::limint::fatu}
+
+  Коль скоро $\varphi - f_n \geqslant 0$, 
+  \[
+    \int (\varphi - f)  =  \int \varliminf (\varphi - f_n) \leqslant 
+    \int \varphi + \varliminf \left(- \int f_n \right) = \int \varphi - \varlimsup \int f_n
+  \]
+  Используя свойства верхних и нижних пределов и теорему Фату (\ref{thrm:meas::limint::fatu})
+  получим 
+  \[
+    \int f \leqslant \varliminf \int f_n \leqslant \varlimsup \int f_n \leqslant \int f
+  \]
+\end{tproof}
 
 {\denot $(\mathcal L)$~--- условия теоремы Лебега об ограниченной сходимости.}
 
@@ -1268,6 +1553,9 @@ $\del x\del y$.
     \int _X f_t \, \del \mu \xto{t\to t_0}{} \int_X f\, \del \mu 
   \] 
 \end{cor}
+\begin{lproof}
+  Предел по Гейне.
+\end{lproof}
 
 {\denot $(\mathcal L_{\rm loc})$~--- условия локальной теормемы Лебега об ограниченной сходимости.}
 
@@ -1411,11 +1699,34 @@ $(\mathcal L_{\rm loc})$. Так что по сути они~--- просто и
   \item $\Gamma (1) = 1$
   \item $\forall\, t \Gamma (t+1) = t \Gamma (t)$
   \item $n\in \N$ $\Gamma(n+1) = n!$
-  \item $\Gamma$-выпукла
+  \item\label{it:meas::gamma::conc} $\Gamma$-выпукла
   \item $\Gamma \sim \frac{1}{t} $ при $t\to 0$
-  \item $\Gamma(t+1) \sim \sqrt{2\pi} \sqrt{t} t^t e^{-t}$ при $t\to \infty$.
+  \item $\Gamma(t+1) \sim \sqrt{2\pi} \sqrt{t} \cdot t^t e^{-t}$ при $t\to \infty$.
   \item $\Gamma(t) \cdot \Gamma(1-t) = \frac{\pi}{\sin \pi t}$. (формула отражения)
 \end{enumerate}
+\begin{lproof}
+  Доказать интересно лишь \ref{it:meas::gamma::conc}
+  Здесь нужно мажорировать интеграл от $n$-ой производной. Выберем окрестность $t^0$
+  равную $(t_1;t_2)$, $t_1 > 0$.
+  \[
+    \frac{\partial^n}{\partial t^n} x^{t-1} e^{-x} = x^{t-1}\, e^{-x}\, \ln ^n (x)
+  \]
+  Надо разобраться с $x^{t-1}$. В $(0;1)$ можно оценить его как $x^{t_1 -1}$, $t_1$~--- фиксировано.
+  Логарифм убывает медленнее $x^{-p}$, пусть $p = 1/2 \cdot t_1$. С экспонентой 
+  проблем нет, её единицей оценим
+
+  При $x>1$ оценим $x^{t-1}$ как $x^{t_2-1}$, экспонента забьёт все остальное.
+  Так что $\varphi$~--- суммируемая мажоранта
+  \[
+    \varphi(x) = 
+    \begin{cases}
+      x^{\lfrac{1}{2} t_1 - 1},& 0 < x< 1 \\
+      x^{t_2 - 1}\ln^n (x) \, e^{-x},& x \geqslant 1 \\
+    \end{cases}
+  \]
+  Отсюда по следствию из \ref{thrm:meas::bndconv} производные от $\Gamma$ существуют.
+  Как видно, выпуклость здесь уже совсем очевидна, подынтегральное выражение положительно.
+\end{lproof}
 
 Гамма-функцию можно продолжить на отрицательную область, через формулу отражения.
 И на комплексную, там будет сходимость при $\Im z > 0$.
@@ -1433,6 +1744,38 @@ $(\mathcal L_{\rm loc})$. Так что по сути они~--- просто и
   \item $B(y,z) = \dfrac{\Gamma(y) \Gamma(z)}{\Gamma(y+z)}$.
 \end{enumerate}
 
+\begin{lproof}
+  Начнём с $\Gamma(y) = \dint_0^\infty x^{y-1} e^{-x} \, \del x$. Пусть $x=ut$, $t>0$. 
+  Тогда
+  \[
+    \Gamma(y) = \int_0^\infty t^{y-1} u^{y-1} \, e^{-ut} \, t \, \del u 
+    \Rightarrow 
+    \frac{\Gamma(y)}{t^y} = \int_0^\infty u^{y-1} e^{-ut} \, \del u
+  \]
+  Заменим: $y \gets y+z, t \gets t+1$.
+  \[
+    \frac{\Gamma(y+z)}{t^{y+z}} = \int_0^\infty u^{y+z-1} e^{-ut}\, e^{-u}\, \del u
+    \Rightarrow 
+    \int_0^\infty \frac{\Gamma(y+z)}{(1+t)^{y+z}} \, t^{y-1} \, \del t 
+    = \int_0^\infty \del t\, t^{y-1} \, \int_0^\infty u^{y+z-1} e^{-ut} e^{-u} \, \del u
+  \]
+  Докажем, что
+  \[
+    \int_0^\infty \frac{t^{y-1}}{(1+t)^{y+z}} \, \del t = B(y,z)
+  \]
+  Это очевидно после замены $t = \frac{1-s}{s} $.
+
+  Разберёмся с оставшейся частью
+  \[
+    \begin{split}
+      \int_0^\infty \del t\, t^{y-1} \, \int_0^\infty u^{y+z-1} e^{-ut} e^{-u} \, \del u
+      &= \int_0^\infty\del u\, e^{-u}\,u^{y+z-1}\int_0^\infty\del t\left(e^{-ut} t^{y-1}\right) \\
+      &= \int_0^\infty \del u \, u^{y+z-1} e^{-u} \, \frac{\Gamma(y)}{u^y} 
+      = \Gamma(y) \Gamma (z)
+    \end{split}
+  \]
+\end{lproof}
+
 \paragraph{Объём \texorpdfstring{$n$}{n}-мерного шара}
 \label{par:meas::ball}
 
@@ -1443,6 +1786,22 @@ $(\mathcal L_{\rm loc})$. Так что по сути они~--- просто и
     \lambda_n B_n(R) = \frac{\pi ^{n/2} R^n}{\tfrac{n}{2} \cdot \Gamma(\tfrac{n}{2})} 
   \]
 \end{thrm}
+\begin{tproof}
+  Докажем всё для шара единичного радиуса, из свойств меры Лебега можно доказать для
+  остальных.
+  \[
+    \begin{split}
+      V_n 
+      &= \int_{B(1)} 1 \, \del \lambda_n 
+      = \int_{-1}^1 \del x_1 \, B_{n-1}\left(\sqrt[n-1]{1-x_1^2}\right)
+      = V_{n-1} \int_{-1}^1 (1-x_1^2) ^{\lfrac{n-1}{2}} \, \del x_1 \\
+      &= /t=x_1^2/ = 2 V_{n-1} \int _0^1 (1-t)^{\lfrac{n-1}{2}} \cdot \frac{1}{2} t^{-1/2} \, \del t
+      = V_{n+1} B(\frac 1 2, \frac {n+1} 2)
+    \end{split}
+  \]
+  Одна из двоек вылезла из-за чётности. Упрощая, используя кучу доказанного про гамма- и
+  бета-функции, получим желаемое.
+\end{tproof}
 
 \end{document}
 % vim: tw=100 cc=100
