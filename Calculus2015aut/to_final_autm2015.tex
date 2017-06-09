@@ -1,0 +1,799 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage[T2A]{fontenc}
+\usepackage[left=1cm,right=1cm,
+top=1cm,bottom=1cm,bindingoffset=0cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+%pdf search
+\usepackage{cmap}
+\usepackage{verbatim}
+\usepackage{epigraph}
+\usepackage{wasysym}
+%\usepackage{hyperref}
+\usepackage{mathrsfs}
+\title{Путевые заметки о билетах к экзамену по анализу}
+\date{13.01.2015}
+\author{}
+
+\newcommand\R{\mathbb{R}} 
+\newcommand\Q{\mathbb{Q}}
+\newcommand\Z{\mathbb{Z}}
+\newcommand\N{\mathbb{N}}
+
+\newcommand\ilim{\lim\limits}
+\newcommand\convex{\,\underline\cup\,}
+\newcommand\concave{\,\overline\cap\,}
+
+\theoremstyle{plain}
+\newtheorem{thrm}{Теорема}
+\newtheorem{lem}{Лемма}
+\newtheorem{stat}{Утверждение}
+\newtheorem{imp}{Следствие}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Определение}
+\newtheorem{exmp}{Пример}
+
+\theoremstyle{remark}
+\newtheorem{rem}{Замечание}
+
+\newenvironment{ittproof}{$\square$ }{ $\blacksquare$ \\}
+\newenvironment{itlproof}{$\phantom{0}\\ \blacktriangledown$ \\ }%
+{ \phantom{0}\\ $\blacktriangle$ \\}
+
+
+\def\resetdefs{ \setcounter{defn}{0}\setcounter{exmp}{0} }
+\def\resetthrm{ \setcounter{thrm}{0}\setcounter{stat}{0} }
+\def\resetrem{ \setcounter{rem}{0} }
+\def\resetall{ \resetdefs \resetthrm \resetrem}
+
+\def\itemrange#1{%
+  \addtocounter{enumi}{1}%
+  \edef\labelenumi{\theenumi--\noexpand\theenumi.}%
+  \addtocounter{enumi}{-1}%
+  \addtocounter{enumi}{#1}%
+  \item
+  \def\labelenumi{\theenumi.}
+}
+\begin{document}
+
+\maketitle
+\epigraph{\sl Матан осилит ботающий }{}
+\section*{Пределы}
+\begin{enumerate}
+  \setcounter{enumi}{18}
+  \item Сходимость в себе
+    { \defn $(x_n)$ называется сходящейся в себе (фундаментальной), если
+      \[
+        \forall\,\varepsilon>0 \exists\,N:\forall\,m,n > N\; |x_n - x_m| < \varepsilon 
+      \] 
+    }
+    { \lem\label{lem:fund_implies} $(x_n)$ сходится $\Rightarrow$ $(x_n)$"---~фундаментальная. }
+    { \lem\label{lem:fund_limited} Если последовательность сходится в себе, то ограничена она }
+    \begin{itlproof}
+      Рассмотрим $\varepsilon=1$, тогда $\forall\, n,m > N\; |x_n - x_m| < 1$.
+      Зафиксируем $m$, ведь для любых же верно.
+      Тогда $x_m-1 < x_n < x_m + 1$. Тогда число элементов снаружи ограничено.
+      Выберем из них максимальный и минимальный"---~победа.
+    \end{itlproof}
+    \begin{thrm}[Больцано--Коши]
+      $(x_n)$"---~фундаментальная $\Leftrightarrow$ $x_n\xrightarrow[n\to\infty]{} L$
+    \end{thrm}
+    \begin{ittproof}
+      \begin{description}
+        \item[\fbox{$\Leftarrow$} :]  см. лемму~\ref{lem:fund_implies}
+        \item[\fbox{$\Rightarrow$} :] по лемме~\ref{lem:fund_limited} $\exists\,A,B:A\leq x_n\leq B$.
+          Тогда из неё можно выбрать сходящуюся подпоследовательность $x_{n_k}\to L$.
+          \begin{align*}
+            &\forall\,\varepsilon>0 \exists\,N : \forall\, m,n > N \; |x_m-x_n| < \varepsilon \\
+            &\forall\,\varepsilon>0 \exists\,K : \forall\, k > K \; |x_{n_k} - L| < \varepsilon 
+          \end{align*}
+          Пусть $M = \max{K,N}$, $m = n_k$. 
+          Тогда $k > M \Rightarrow n_k \geq k > M \geq N$, $|x_n - x_m| < \varepsilon$.
+          \[
+            k > M \Rightarrow k \geq K \Rightarrow |x_{n_k} - L | = |x_m - L| < \varepsilon \\
+            |x_n - L| = |x_n - x_m + x_m - L| \leq |x_n - x_m | + |x_m - L| < 2\varepsilon 
+          \]
+      \end{description}
+    \end{ittproof}
+\end{enumerate}
+
+\section*{Непрерывности}
+
+\begin{enumerate}
+  \setcounter{enumi}{19}
+  \item Непрерывность, разрывы
+    { \defn $f : A \to \R$ непрерывная в $x_0 \in A$}
+    { \defn Непрерывность на промежутке }
+    { \defn Изолированная точка, точка сгущения }
+    { \defn Разрыв
+      \begin{enumerate}
+        \item 1 рода: 
+          \begin{equation*}
+            \left\{
+            \begin{array}{l}
+              f(x_0-0) , f(x_0 + 0) \; \text{оба существуют}\\ 
+              f(x_0-0) = f(x_0 + 0) \neq f(x_0) 
+            \end{array}
+            \right.
+          \end{equation*}
+        \item 2 рода:\\
+          Хотя бы один предел не существует или бесконечен
+      \end{enumerate}
+    }
+    Свойства непрерывности:
+    \begin{enumerate}
+      \item $f, g \in C(x_o) \Rightarrow f \pm g , f\,g, 
+        {f \over g}, |f| \in C(x_0)$
+      \item $f \in C(x_0), g \in C(f(x_0), f : X \to Y, g : Y \to \R 
+        \Rightarrow g \circ f \in C(x_0)$ 
+    \end{enumerate}
+  \item Теорема Больцано-Коши
+    { \thrm Пусть $f : [a;b] \to [A;B],\; f \in C([a,b])$ . 
+      Тогда $ \forall C \in [A;B]\; \exists c \in [a;b] : f(c) = C $
+    }
+  \itemrange{1} Теоремы о монотонной функции на промежутке и её разрывах
+    \resetall
+    { \thrm Пусть $f:I\to\R,\;I$~---промежуток и $f$ монотонна на $I$.
+    Тогда все её разрывы~--- скачки }
+    { \thrm Пусть $I \in\R $~---промежуток, $f\in C(I)$. Тогда и $f(I)$~--- промежуток }
+    { \thrm Пусть $f:I \to\R,\;I$~---промежуток, $f$ монотонна. 
+      Тогда и $f(I)$~--- промежуток $\Leftrightarrow f\in C(I)$ }
+    { \thrm Пусть $f:I\to\R, f\in C(I)$~----строго монотонная функция.
+      Тогда $\exists\,f^{-1}$, тоже строго монотонная, непрерывная на $I$, 
+      с такой же монотонностью, что и $f$ }
+  \item Корень
+  \item Экспонента
+    \resetall
+    { \defn Пусть $x=n\in\N$. Тогда $a^n := \underbrace{a\cdot\dots a}_{n\text{ раз}}$. }
+    { \defn Пусть $x=m\in\Z\setminus\N$. Тогда:
+      \begin{description}
+        \item[$x=0$:] $a^x := 1 $
+        \item[$x<0$:] $a^x := {1\over a^{-x}}$
+      \end{description} }
+      { \defn Пусть $x={m\over n}\in\Q$. Тогда $a^x := \root n \of {a^m}$. }
+      { \defn Пусть $x=\in\R$. Тогда 
+        \begin{description}
+          \item[$a > 1$:] $a^x := \sup\limits_{r\in\Q}\{a^r\,|\, r\leq x\}$
+          \item[$a = 0$:] $a^x := 1$
+          \item[$0 < a < 1$:] $a^x := \left({1\over a}\right)^{-x}$
+        \end{description}
+      }
+      
+      { \lem\label{lem:varbernineq} Пусть $a>1,\; n\in\N$. Тогда $a^{1/n}-1 \leq {a-1\over n}$ }
+
+      \begin{thrm}\label{thrm:exponent}
+        Пусть $f(x) = a^x =: \exp_a(x),\;x\in\R,\;a>0$.
+        Тогда:
+        \begin{enumerate}
+          \item $f:\R\to(0;+\infty)$
+          \item $f \uparrow \text{ при }a > 1$ и $f\downarrow \text{ при } 0 < a < 1$
+          \item $f(x+y) = f(x)\cdot f(y)$
+          \item $f\in C$
+        \end{enumerate}
+      \end{thrm}
+      \begin{ittproof}
+        \begin{enumerate}
+          \item\label{item:exp_values} $f:\R\to(0;+\infty)$ \\
+            Пусть $y_0\in\R_+$
+            \[
+              \sphericalangle\; A=\{x\in\R\,|\,a^x < y_0\} \text{ и } 
+              B = \{x\in\R\,|\,y_0 < a^x\}
+            \]
+            Эти множества не пусты, в них есть хотя бы рациональные числа.
+            Из пункта~\ref{item:exp_monot} одно правее другого. 
+            Тогда из аксиомы полноты 
+            $\forall x_1\in A,\: x_2\in B \; \exists\, x_0: x_1\leq x_0\leq x_2$.
+            Осталось доказать только, что $a^{x_0} = y_0$, а это почти как теорема о $\sqrt{2}$.
+            Разве что добавку можно взять равной $1/n$.
+          \item\label{item:exp_monot} 
+            $a > 1,\; x_1,x_2\in\R \; x_1 < x_2\Rightarrow a^{x_1} < a^{x_2} $ \\
+            По теореме о плотности $\Q : \; \exists\,r_1,r_2\in\Q : x_1<r_1<r_2<x_2$,
+            $\exists\, r_3\in\Q : r_2 < r_3 < x_2$.
+            Тогда 
+            \begin{align*}
+              &a^{x_1} = \sup\{a^r\,|\,r\leq x_1\} < a^{r_1} \\
+              &r_2 < r_3 < x_2 \Rightarrow a^{r_2} < a^{r_3} \Rightarrow 
+              a^{x_2} = \sup\{a^r\,|\,r\leq x_2\} > a^{r_2} 
+            \end{align*}
+            Таким образом $a^{x_1} < a^{r_1} < a^{r_2} < a^{x_2}$.
+          \item\label{item:exp_oper} $f(x+y) = f(x)\cdot f(y)$
+            Следует из аналогичного свойства для рациональных чисел по~\ref{item:exp_cont}
+          \item\label{item:exp_cont} $f\in C$
+            Из принципа Архимеда $\exists\, n : |x-x_0| < {1\over n}$.
+            Также $\exists\,r_1,r_2\in\Q:r_1 < x < x_0 < r_2$, $|r_1 - r_2| < 1/n$.
+            Тогда по~\ref{item:exp_monot} \[
+              a^{r_1} < a^{x_1} < a^{x_0} < a^{r_2} \Rightarrow 
+              0 < a^{x_0} - a^{x} < a^{r_2} - a^{r_1} < a^{r_1}(a^{r_2-r_1}-1) <
+              a^{r_1}\left( {a-1\over n} \right) < \varepsilon
+            \]
+        \end{enumerate}
+      \end{ittproof}
+  \item Логарифм и степенная функция
+  \item О-символика 
+    \resetall
+    { \defn $ f(x) = o(g(x)) \text{ при } x \to c 
+      \Leftrightarrow \lim\limits_{x \to c}{f(x) \over g(x)} = 0$ }
+    
+    { \defn $ f(x) = O(g(x)) \text{ при } x \to c 
+      \Leftrightarrow \; \exists M : \lim\limits_{x \to c}{|f(x) \over g(x)|} \leq M $ }
+    
+    { \defn $ f(x) \sim g(x) \text{ при } x \to c 
+      \Leftrightarrow \lim\limits_{x \to c}{f(x) \over g(x)} = 1$ } \\
+    \begin{table}[h]
+      \centering
+      \begin{tabular}{lll}
+        $\ilim_{x \to 0}{\sin x \over x} = 1$ & $x \sim \sin x$ & $\sin x - x = o(x)$\\
+        $\ilim_{x \to 0}{1 - \cos x \over x^2} = {1\over2}$ & ${x^2 \over 2} \sim \cos x$ 
+        & $\cos x - 1 - {x^2 \over 2} = o(x^2)$\\
+        $\ilim_{x \to 0}{\ln(x+1) \over x} = 1$ & $x \sim \ln(x+1)$ & $\ln(x+1) - x = o(x)$\\
+        $\ilim_{x \to 0}{e^x - 1\over x} = 1$ & $e^x \sim 1 + x$ & $e^x  = 1 + x + o(x)$
+      \end{tabular}
+      \caption{Полезные пределы}
+      \label{tab:lims}
+    \end{table}
+  \item Теорема Вейерштрасса
+    \begin{thrm}\label{thrm:Weierstrass_cont}
+      Пусть $f\in C([a;b])$. Тогда $f$ ограничена и достигает своих 
+      \raisebox{0.5ex}{наибольшего} и \raisebox{-0.5ex}{наименьшего} 
+      значений. 
+    \end{thrm}
+    \begin{ittproof}
+      Нетрудно понять, что $\exists\,y_n\in f([a;b]):y_n\to\sup\limits[a;b]f(x) = s$.
+      Из теоремы Больцано--Коши $\exists\,x_n\in[a;b]:y_n=f(x_n)$. А из $x_n$ можно вытащить
+      $x_{n_i} \to c \Rightarrow y_{n_i}=f(x_{n_i}) \to f(c)$ по непрерывности $f$.
+      А по теореме о пределе подпоследовательности $f(c)=s$. Ограниченность очевидна.
+      Для инфимума тоже самое.
+    \end{ittproof}
+  \item Равномерная непрерывность и теорема Кантора
+    \resetall
+    { \defn $f : X \to \R \text{ равномерно непрерывна } \Leftrightarrow \\
+    \Leftrightarrow 
+    \forall \varepsilon > 0 \exists \delta > 0 \forall x_1 \in X \forall x_2 \in X
+    |x_1 - x_2 | < \delta \Rightarrow | f(x_1) - f(x_2) | < \varepsilon $ 
+    }
+    { \exmp $f(x) = \sin{1 \over x}$ помимо всех прочих её неприятных особенностей
+    непрерывна на $(0;1)$, но не равномерно непрерывна там же ($E.\ g.\ \varepsilon=1 $) 
+    \begin{figure}[h!]
+      \centering
+      \input{badfunc}
+      \label{fig:badfunc}
+    \end{figure}
+    }
+    \begin{thrm}[Кантора - Гейне]
+      $f \in C([a;b]) \Leftrightarrow f \text{ равномерно непрерывна на } [a;b] $
+    \end{thrm}
+    \begin{ittproof}
+      Пойдём от противного. Пусть $ \exists \varepsilon_0 > 0 : \forall \delta > 0 \;
+      \exists\, x,x' \in [a;b]\,|x - x'| < \delta \Rightarrow |f(x) - f(x')| 
+      \geq \varepsilon_0 $ 
+
+      Пусть $\delta_n = 1/n $. Тогда (тут пользуемся пределом по Гейне)       
+      $\exists\, x_n,x_n' \in [a;b]\; |x_n - x_n'| < {1\over n} |f(x_n) - f(x_n')| 
+      \geq \varepsilon_0 $ \\
+      Извлечём из $(x_n)$  сходящуюся подпоследовательность 
+      $(x_{n_k}) : x_{n_k} \xrightarrow[k \to \infty]{} c, c \in [a;b]$.
+      По непрерывности
+      $$
+      \left.
+      \begin{array}{c}
+        f(x_{n_k}') \to f(c) \\
+        f(x_{n_k}) \to f(c) 
+      \end{array} \right| \Rightarrow 
+      f(x_{n_k}') - f(x_{n_k}) \xrightarrow[k \to \infty]{} 0
+      $$
+      Но по предположению $| f(x_{n_k}') - f(x_{n_k})| \geq \varepsilon_0$
+    \end{ittproof}
+\end{enumerate}
+
+\section*{Производные}
+\begin{enumerate} 
+\setcounter{enumi}{30}
+  \item Дифференцируемость и прочие нужные определения
+    \resetall
+    { \defn Пусть $f : X \to \R$. Тогда \emph{производной} функции $f$ называется 
+    $\ilim_{h\to 0}{f(x+h) - f(x) \over h}$ \label{def:derivative}}
+    { \defn $f : X \to \R$ называется дифференцируемой в $x_0 \in X$, если 
+    $\Delta f = f(x_0 + \Delta x) - f(x_0) = \underset{\in \R }{A}\,h + o(h)$  }
+  
+    Дифференцируемость равносильна наличию конечной производной ( это довольно простая теорема ).
+    Вот теперь $A = f'(x)$.
+    { \defn Дифференциал функции $f$ в точке $x_0 $ --- новая функция 
+      $\mathrm{d}f(x;h)$~:=~$A\,h$~=~$f'(x)\,h$ (\textit{линейная часть приращения}).}
+  
+    Важный частный случай: $f = {\rm id}_X$. Тогда $f'(x) = 1$ и ${\rm d}f = h$.
+    Вводится обозначение: ${\rm d}x$~:=~$\Delta x$~$=$~$h$.
+    Ещё пара довольно общих свойств:
+    \begin{itemize}
+      \item $f \in C^1(x_0) \Rightarrow  f \in C(x_0)$
+      \item $f \in C^1(x_0) \Rightarrow \exists\, \varphi \in C(0) : 
+        f(x + h) = \varphi(h)\,h+f(x) \land \varphi(0) = f'(h)$
+    \end{itemize}
+  \item Дифференцируемость частного (остальное неинтересно)
+    { \stat $f, g \in C^1(x) \land g(x)\neq 0\Rightarrow {f \over g} \in C^1(x)$ и 
+    ${f \over g}' = {f'\,g - f\,g' \over g^2}$ } 
+    \begin{itlproof}
+      Рассмотрим приращение частного $f$  и $g$.
+      \begin{align*}
+        &\Delta\left({f \over g}\right) = {f(x+h) \over g(x+h)} - {f(x) \over g(x)} = 
+        { (f(x)+\varphi(h)\,h)\,g(x) - (g(x)+\psi(h)\,h)\,f(x)  \over g(x)\,g(x+h)} = \\
+        &= { (\varphi(h)g(x)-\psi(h)f(x))\cdot h \over g(x)g(x+h)} = \eta(x) \cdot h 
+      \end{align*}
+      Легко показать, что $\eta \in C(0) $ (числитель и знаменатель непрерывны, 
+      знаменатель не ноль ).
+      А тогда $$
+      \left( {f \over g} \right)' = \eta(0) = { f'(x)g(x)-g'(x)f(x) \over g(x)^2} $$ 
+    \end{itlproof}
+  \item Дифференцируемость композиции и обратной.
+    \resetall
+    { \stat $f \in C^1(x), g \in C^1(y), y=f(x) $. Тогда $g\circ f \in C^1(x)$ 
+    и $(g\circ f)' = g'\circ f \cdot f'$ }. Доказывается через свойство 2 из 31 билета
+    { \stat Пусть $f \uparrow I,\; J=f(I),\; g=f^{-1}: J \to I,\; x \in I,\; y=f(x)$.
+    Также пусть $f \in C^1(x),\; f'(x) \neq 0$. Тогда $$(g^{-1})'={1\over f'\circ f^{-1}}$$ }
+    Тут доказывать через производную композиции нельзя, зато можно через предел композиции. 
+    Нам ведь ещё неизвестна дифференцируемость $f^{-1}$ в $y_0$.  
+  \item Табличка производных --- это слишком просто и скучно 
+   
+  \item Теоремы Ферма и Ролля.
+    \resetall
+    \begin{thrm}[Ферма]
+      Пусть $f : I \to \R, c \in I \text{ (без концов) }$. Также пусть $f$  достигает 
+      экстремума в точке $c$ и $f \in C^1(c)$. Тогда $f'(c) = 0$.
+    \end{thrm} Доказывается через предельный переход в неравенствах.
+    \begin{thrm}[Ролля]
+      Пусть $f : [a;b] \to \R,\; f\in C^1(\,(a;b)\,)$. Также пусть $f(a)=f(b)$.
+      Тогда $\exists c\in (a;b) : f'(c) = 0$.
+    \end{thrm} Доказывается через теоремы Вейерштрасса и Ферма.
+  \item Теоремы Коши и Лагранжа
+    \begin{thrm}[Коши]
+      Пусть $f,g : [a;b] \to \R, f,g \in C^1(\,(a;b)\,)$.  
+      Тогда $\exists c\in (a;b) : (f(b)-f(a))g'(c) = (g(b)-g(a))f'(c) $.
+    \end{thrm} Доказывается через теорему Ролля вводом новой понятно какой функции.
+    \begin{thrm}[Лагранжа]
+      Пусть $f : [a;b] \to \R, f \in C^1(\,(a;b)\,)$.  
+      Тогда $\exists c\in (a;b) : ( f(b)-f(a) ) = (b-a)f'(c) $.
+    \end{thrm}
+  \itemrange{2} Производные и монотонность
+    \resetall
+    { \thrm Пусть $f : I \to \R , f \in C^1(I)$. Тогда 
+      \begin{itemize}
+        \item $f \uparrow I \Leftrightarrow f' \geq 0$
+        \item $f \downarrow I \Leftrightarrow f' \leq 0$
+        \item $f\equiv const \text{ на } I \Leftrightarrow f' \equiv 0$
+      \end{itemize}
+    } Туда ($\Rightarrow$) --- очевидно, обратно через теорему Лагранжа
+    
+    \begin{thrm}[Признак строгой монотонности]
+      Пусть $f : I \to \R , f \in C^1(I)$. Тогда 
+      \begin{itemize}
+        \item $f \uparrow I \Leftrightarrow f' \geq 0 
+          \land \forall\, x_1,x_2 \in I : x_1 < x_2 \;\exists\, c \in (x_1, x_2) : f'(c) > 0$
+        \item $f \downarrow I \Leftrightarrow f' \leq 0
+          \land \forall\, x_1,x_2 \in I : x_1 < x_2 \exists\, c \in (x_1, x_2) : f'(c) < 0$
+      \end{itemize}
+    \end{thrm}
+    
+    \begin{thrm}[Доказательство неравенств] 
+      Пусть $ f,g : [a;b] \to \R ,\; f,g \in C^1(\,(a;b)\,) ,\; f(a) = f(b), \;
+      f'(x) \leq g'(x)$ на $(a;b)$. 
+      Тогда $f(x) \leq g(x)$ на $(a;b)$
+    \end{thrm}
+  \item Правило Лопиталя.
+  \item Многочлен Тейлора.
+    \resetall
+    { \defn $ f^{(n)} := ( f^{(n-1)} )'$, причём $f^{(0)} := f$ }
+    { \defn ${\rm d}^n f(x) := f^{(n)}(x)\,{\rm d}x^n $, 
+    при этом $x$ -- независимая переменная (иначе там всё плохо) }
+    { \thrm Пусть $p(x) \in \R[x] : p(x) = b_n\,x^n +\cdots+ b_0,\; a \in \R$.
+      Тогда $p(x)$ также представим в виде $p(x) = \sum\limits_{k=0}^n c_k (x-a)^k$, 
+      где $c_k = {p^{(k)}(a) \over k!}$ . 
+    } Дифференцируем много раз -- получаем то что нужно.
+  \item Асимптотическая формула Тейлора
+    \resetdefs
+    { \thrm $f : I \to \R,\; a \in I,\; \exists\, f^{(n)}(a)$.
+      Тогда: 
+      \begin{align*}
+        f(x) &= T_n(x) + R_n(x), \\
+        &\text{ где } T_n(x) = \sum_{k=0}^n\,c_k(x-a)^k \text{ -- многочлен Тейлора}, \\ 
+        &R_n(x) = o( (x-a)^n ) \text{ -- остаточный член в форме Пеано },\\
+        &c_k = {f^{(k)}(a) \over k!} 
+      \end{align*} (формула Тейлора)\\
+    }
+    \begin{ittproof}
+      Из предыдущей теоремы $c_k = {T_n^{(k)}(a) \over k! } $.
+      Таким образом, все $n$ производных $f$ и $T_n$ равны. 
+      Вообще надо доказать, что 
+      $$ \lim_{x\to a}{R_n(x) \over (x-a)^n} = 0 \Leftrightarrow 
+      \lim_{x\to a}{f(x) - T_n(x) \over (x-a)^n} = 0 $$
+      Применим $n-1$ раз правило Лопиталя. Тут очень важно, что для применения этого чудного
+      правила нам нужна дифференцируемость хотя бы в некоторой \emph{окрестности} $a$. 
+      Но нам известно только, что в некоторой окрестности $a$ существует $f^{(n-1)}$
+      (иначе как мы продифференцируем последний раз? ). Мы знаем лишь, что $f \in C^n(a) $.
+      Итак, 
+      $$ \lim_{x\to a}{f(x) - T_n(x) \over (x-a)^n} = 0 \Leftarrow
+      \lim_{x\to a}{f^{(n-1)}(x) - T_n^{(n-1)}(x) \over n!\,(x-a)} = 0 $$
+      А 
+      \begin{align*}
+        \lim_{x\to a}{f^{(n-1)}(x) - T_n^{(n-1)}(x) \over n!\,(x-a)} &= 
+        \lim_{x\to a}{f^{(n-1)}(x) - f^{(n-1)}(a) \over n!\,(x-a)} - 
+        \lim_{x\to a}{T_n^{(n-1)}(x) - T_n^{(n-1)}(a) \over n!\,(x-a)} = \\
+        &= {1\over n!}(f^{(n)}(a) - T_n^{(n)}(a)) = 0 
+      \end{align*} просто по определению производной.
+    \end{ittproof}
+  \item Разложение элементарных функций
+    \begin{itemize}
+      \item $\displaystyle e^x = \sum_{k=0}^n\,{x^k\over k!} + o(x^n) $
+      \item $\displaystyle \sin x = \sum_{k=0}^n\,{(-1)^k\over (2k+1)!}\,x^{2k+1} + o(x^{2n+2}) $
+      \item $\displaystyle \cos x = \sum_{k=0}^n\,{(-1)^k\over (2k)!}\,x^{2k} + o(x^{2n+1}) $
+      \item $\displaystyle \ln (x+1) = \sum_{k=1}^n\,{(-1)^{k-1}\over k!}\,x^k + o(x^n) $
+      \item $\displaystyle (1+x)^\mu = \sum_{k=0}^n\,\binom \mu k x^k + o(x^n) $
+    \end{itemize}
+  \itemrange{1} Условия экстремума
+    \resetall
+    \begin{thrm}[Необходимое условие экстремума]
+      \label{thrm:necessity}
+      Cм. теорему Ферма
+    \end{thrm}
+    
+    \begin{thrm}[Достаточное условие экстремума]
+      \label{thrm:adequacy}
+      Пусть  $\overset{\circ}{U}(a)\subset I,\;f\in C^1(\overset{\circ}{U}(a))$ 
+      и $f'$ меняет знак при переходе через $a$. Тогда в $a$~--- экстремум. 
+    \end{thrm}
+    
+    \begin{thrm}[Достаточное условие экстремума c производными высшего порядка]
+      \label{thrm:high_adequacy}
+      $\phantom{0}$ \\ Пусть  
+      $\overset{\circ}{U}(a)\subset I,\; f\in C^n(\overset{\circ}{U}(a)),\; 
+      f'(a)=\dots=f^{(n-1)}(a)$, а $f^{(n)} \neq 0$.Тогда:
+      \begin{enumerate}
+        \item $n$ чётно --- в $a$ экстремум. 
+        \item $n$ нечётно --- в $a$ нет экстремума. 
+      \end{enumerate}
+    \end{thrm} Через формулу Тейлора докажется.
+  \item Формула Тейлора с остатком в форме Лагранжа
+    \resetall
+    { \thrm $f : I \to \R,\; a \in I,\; \exists\, f^{(n+1)}(I)$.
+      Тогда:
+      \begin{align*}
+        f(x) &= T_n(x) + R_n(x), \\
+        &\text{ где } T_n(x) = \sum_{k=0}^n\,\alpha_k(x-a)^k,  \\ 
+        &R_n(x) = {f^{(n+1)}(c) \over (n+1)!}(x-a)^{n+1},\; c\in (a;x) ,\\
+        &\alpha_k = {f^{(k)}(a) \over k!} 
+      \end{align*} 
+    }  
+    В качестве наводящих соображений:
+    \includegraphics[width=0.5\linewidth]{taylor_lagrange}
+  \item Выпуклость. 
+    \resetall
+    { \defn $X \subset \R^n$. X~--- выпуклое, если $\forall\,a,b\in X \; [a;b] \subset X $}
+    { \lem Пусть $x,a,b \in \R^n$. Тогда $\forall\, x\in [a;b]\;\exists\, \theta \in [0;1] :
+      x = a + \theta\,(b - a) $ }
+    { \lem Пусть $x,a,b \in \R^n$. Тогда $\forall\, x\in [a;b]\;\exists\, \lambda_1,\lambda_2
+      \in [0;1] : \lambda_1+\lambda_2 \land x = \lambda_1a + \lambda_2b $ }
+    { \defn $f$ называется выпуклой (выпуклой вниз) на $I$, 
+      если $ \{ (x;y) | x\in I, y\geq f(x) \}$"---~выпуклое множество.
+      Почему-то почти не встречается обозначение $f \convex I$, 
+      однако мне оно приглянулось $\smiley$}
+    { \defn $f$ называется вогнутой (выпуклой вверх) на $I$, 
+      если $ \{ (x;y) | x\in I, y\leq f(x) \}$"---~выпуклое множество.
+      Аналогичные соображения про обозначение $f \concave I$ . } 
+    
+    \begin{thrm}[Условие выпуклости функции]
+      Пусть $f : I \to \R$. Тогда  $f \convex I \Leftrightarrow \forall\,x_1,x_2\in I\;\\ 
+      \forall\,\lambda_1,\lambda_2~\in~[0;1] : \lambda_1 + \lambda_2 = 1 \quad 
+      f(\lambda_1x_1+\lambda_2x_2) \leq \lambda_1f(x_1) + \lambda_2f(x_2)$
+    \end{thrm}
+
+    \begin{lem}[О 3 хордах]
+      Пусть $f : I \to \R,\; f \convex I,\; x_1, x,x_2\in I: x_1 < x < x_2$.
+      Тогда и только тогда: 
+      $$
+        {f(x)-f(x_1)\over x-x_1} \leq {f(x_2)-f(x_1)\over x_2-x_1} \leq {f(x_2)-f(x)\over x_2-x} 
+      $$
+    \end{lem} Давайте объявим её очевидной из геометрии. 
+    ( На самом деле она спокойно докажется из определения, но это длинно и не шибко интересно )
+  \item Неравенство Енсена (Йенсена, Иенсена --- как только его не называют\dots)
+    \resetall
+    { \defn $x_1,\ldots,x_n\in I, \; \lambda_1,\ldots,\lambda_n\in[0;1],\;
+      \sum\limits_{i=1}^n\lambda_i = 1$. \\
+      Тогда $\displaystyle \sum_{i=1}^n\lambda_ix_i$~--- выпуклая комбинация.
+    }
+    { \rem $\sum\limits_{i=1}^n\lambda_ix_i \in I$ } 
+
+    \begin{thrm}[Неравенство Енсена] \label{thrm:jensen}
+      Пусть $f : I \to \R,\; f \convex I$. Тогда :
+      \begin{align*}
+        &\forall\,x_1,\ldots,x_n \in I,\; \forall\,\lambda_1,\dots,\lambda_n \in [0:1] 
+                                          : \sum_{i=1}^n\lambda_i = 1 \quad
+        f\left(\sum_{i=1}^n\lambda_ix_i\right) \leq \sum_{i=1}^n\lambda_if(x_i)
+      \end{align*}
+    \end{thrm} Индукцией побеждается
+  \item Дифференциальные условия выпуклости.\\
+    \resetall
+    Поскольку теоремы кажутся очевидными, давайте их докажем.
+    \begin{thrm} \label{thrm:derconvex} 
+      Пусть $f \convex I=\langle a; b \rangle $. 
+      Тогда: 
+      \begin{enumerate}
+        \item $x \in (a;b) \Rightarrow \exists f'(x-0), f'(x+0)$ и $f'(x-0) \leq f'(x+0)$.
+        \item $x_1,x_2,x \in I,\;x_1<x_2 \Rightarrow f'(x_1+0) \leq f'(x_2-0)$
+        \item $f\in C(a;b)$
+      \end{enumerate}
+    \end{thrm}
+    \begin{ittproof}
+      \begin{enumerate}
+        \item Пусть $\varphi(h) := {f(x+h) - f(x) \over h}, 0\not\in \mathscr{D}(\varphi)$ \\
+          $ \sphericalangle\; h_1, h_2 \in (a;b): h_1 < h_2 $.
+          Пусть $ h_1 > 0 $.
+          Переобозначим: $ y_1 := x, y := x + h_1, y_2 := x + h_2 $.\\
+          По лемме о 3 хордах:
+          \[
+            {f(y)-f(y_1) \over y-y_1} \leq {f(y_2)-f(y_1) \over y_2-y_1}\Leftrightarrow
+            {f(x+h_1) - f(x) \over h_1} \leq {f(x+h_2)-f(x) \over h_2}\Leftrightarrow
+            \varphi(h_1) \leq \varphi(h_2)
+          \]
+          Аналогичное верно и для $h_1 < 0 < h_2$ и $h_1 < h_2 < 0$, таким образом
+          $\varphi$ монотонна в $\overset{\circ}{U}(0)$ и непрерывна в ней. Все разрывы
+          монотонной функции --- скачки. Тогда каждая из половинок монотонна и ограничена.
+          А значит $\exists\, \varphi(+0), \varphi(-0)$ и равны $f'(x+0), f'(x-0)$ соответственно.
+          При этом никто не гарантирует, что $\exists\, f'(x) = f'(x-0) = f'(x+0)$.
+        \item По лемме о 3 хордах 
+          \begin{align*}
+            {f(x) - f(x_1) \over x - x_1} &\leq {f(x) - f(x_2)\over x - x_2} \\
+            \scalebox{0.8}{($x\to x_1+0$)}\downarrow\quad &
+            \qquad\downarrow \scalebox{0.8}{($x\to x_2-0$)} \\
+            f'(x_1+0)                      &\leq f'(x_2-0)
+          \end{align*}
+        \item Так как существуют конечные $f'(x-0)$ и $f'(x+0)$, то $f(x-0)=f(x+0)=0$.
+          То есть $f\in C(x)$. Однако нам ничего не известно про границы $I$. Заметим также,
+          что число точек <<перелома>> не более чем счётно. Как было доказано ранее, в 
+          точках, где не существует производная $f(x_0-0) < f(x_0+0)$. По теореме о полноте
+          $\Q$ между ними есть $r\in \Q$. Также отметим, что $r_1 < f(x_1+0) < f(x_2-0) < r_2
+          \Rightarrow r_1 < r_2$. Мы построили сюръекцию из $\Q$ в множество разрывов --- победа. 
+      \end{enumerate}
+    \end{ittproof}
+    \begin{thrm} 
+      Пусть $f : I\to \R,\; f\in C^1(I)$. Тогда $f \convex I \Leftrightarrow f' \uparrow I$.
+    \end{thrm}
+    \begin{ittproof}
+      \begin{itemize}
+        \item[\fbox{$\Rightarrow$}] следует из теоремы~\ref{thrm:derconvex}
+        \item[\fbox{$\Leftarrow$}] Пусть $x_1 < x < x_2 \in I$. Из теоремы Лагранжа
+        \begin{align*}
+          \exists\, c_1\in (x_1,x), c_2 \in (x;x_2) : f'(c_1) = {f(x)-f(x_1)\over x-x_1},\;
+          f'(c_2) = {f(x_2)-f(x)\over x_2-x} \Rightarrow \\ 
+          {f(x)-f(x_1)\over x-x_1} \leq {f(x_2)-f(x)\over x_2-x}
+        \end{align*} и по утверждению обратному к лемме о 3 хордах $f \convex I$ 
+      \end{itemize}
+    \end{ittproof}
+    { \thrm Пусть $ f\in C^2(I)$. Тогда $f \convex I \Leftrightarrow f'' \geq 0 \text{ на } I$ }
+  \item Неравенство Гёльдера
+    \resetall
+    \begin{thrm}
+      $\forall\, a_1,\dots,a_n; b_1,\dots,b_n > 0 ,\; \forall\, p,q > 1: {1\over p}+{1\over q}=1$
+      \[
+        \sum_{i=1}^n a_ib_i \leq 
+        \left( \sum_{i=1}^n a_i^p \right)^{1/p} \left( \sum_{i=1}^n b_i^q \right)^{1/q} 
+      \]
+    \end{thrm}
+    Докажется через неравенство Енсена (при $p > 1$ $x^p \convex \R_+ $) не без помощи магии.
+\end{enumerate}
+
+\section*{Интегралы}
+
+\begin{enumerate}
+\setcounter{enumi}{50}
+  \itemrange{1}  Первообразная и неопределённый интеграл.
+    \resetall
+    { \defn Пусть $f,F : I\to \R$. Тогда $F' = f \Leftrightarrow F$~--- первообразная для $f$.}
+    { \thrm $f \in C(I) \Rightarrow \exists\, F : F' = f$ }
+    { \thrm $F,G,f:I\to\R : F'=G'=f$. Тогда $F - G \equiv c (c\in\R)$.}
+    { \defn Неопределённый интеграл $\int f(x)\,{\rm d}x := \{F(x) + c|c\in\R\, 
+      F\text{ --- первообразная }f\} $ }
+    
+    Свойства первообразной:
+    \begin{enumerate}
+      \resetall
+      \item $\displaystyle {\rm d} \int f(x)\,{\rm d} x = f(x)\,{\rm d}x$
+      \item $\displaystyle \int {\rm d} F(x) = F(x)+c, c\in\R$
+      \item $\displaystyle \int \alpha f(x) + \beta g(x)\,{\rm d}x = 
+        \alpha\,\int f(x)\,{\rm d}x + \beta\,\int g(x)\,{\rm d}x$
+      \item Формула интегрирования по частям.\\
+        $\displaystyle u,v \in C^1(I) \Rightarrow \int u\,{\rm d}v = uv - \int v\,{\rm d}u$
+      \item Замена переменной в неопределённом интеграле.\\
+      Пусть $\varphi:I_t\to I,\; \varphi\in C^1(I_t),\; x=\varphi(t)$. Тогда 
+      $\displaystyle \int f(x)\,{\rm d}x = \int (f \circ \varphi)(t)\,\varphi'(t){\rm d}t$
+    \end{enumerate}
+  \item Алгоритмические вопросы интегрирования
+    \begin{thrm} \label{thrm:int_ratio}
+      $\int R(x){\rm d}\,x$, где $R(x)\in\R(x)$~--- выражается через элементарные функции. 
+    \end{thrm}
+    \begin{ittproof}
+      Основные пункты доказательства:
+      \renewcommand{\labelenumii}{\Roman{enumii}.}
+      \begin{enumerate}
+        \item Представимость в виде суммы многочлена и простейших дробей 
+        \item Интегрируемость $\displaystyle{A\over x-a}$
+        \item Интегрируемость $\displaystyle{A\over (x-a)^n}$
+        \item Интегрируемость $\displaystyle{Ax + B\over x^2 + px + q}$ 
+          \begin{enumerate}
+            \item $\displaystyle{2x + p \over x^2 + px + q }$
+            \item $\displaystyle{1      \over x^2 + px + q}$
+          \end{enumerate}
+        \item Интегрируемость ${Ax + B\over (x^2 + px + q)^n}$
+          \begin{enumerate}
+            \item $\displaystyle{2x + p\over (x^2 + px + q)^n}$ 
+            \item $\displaystyle{1     \over (x^2 + px + q)^n}$
+            \begin{itemize}
+              \item $\displaystyle{1\over (u^2+1)^n}$~--- берётся по частям, 
+                понижая на каждом шаге степень знаменателя.
+            \end{itemize}
+          \end{enumerate}
+      \end{enumerate}\renewcommand{\labelenumii}{(\alph{enumii})}
+    \end{ittproof}
+    \begin{thrm} \label{thrm:int_ratio_sin}
+      $\int R(\sin x,\cos x)\,{\rm d}x$, где $R(u,v)\in\R(u,v)$~--- 
+      выражается через элементарные функции.
+    \end{thrm}
+    \begin{ittproof}
+      $\sphericalangle\; t = \tg{x\over 2}$. Тогда 
+      \[
+        \sin x = {2t\over 1+t^2}, \;
+        \cos x = {1-t^2\over 1+t^2}, \text{ а } {\rm d}x = {2\over 1+t^2}\,{\rm d}t
+      \]. 
+      Таким образом \[
+      R\left({2t\over 1+t^2}, {1-t^2\over 1+t^2}\right) \to \tilde{R}(t) \in \R(t)\].
+    \end{ittproof}
+    \begin{thrm} \label{thrm:int_ratio_sqrt_quadr}
+      $\int R(x, \sqrt{ax^2+bx+c})\,{\rm d}x$, где $R(u,v)\in\R(u,v)$~--- 
+      выражается через элементарные функции. 
+    \end{thrm}
+    \begin{ittproof}
+      $\sphericalangle\; t = \sqrt{ax^2 + bx + c} + \sqrt{a}\,x$(\emph{подстановка Эйлера}).
+      Тогда \[ 
+        x = {t^2 -c \over 2\sqrt{a}\,t + b}, \;
+        \sqrt{ax^2 + bx + c} = {\sqrt{a}\,t^2 + bt + c\sqrt{a}\over 2\sqrt{a}\,t + b},\;
+        {\rm d}x = 2{\sqrt{a}\,t^2 + bt + c\sqrt{a}\over (2\sqrt{a}\,t + b)^2}\,{\rm d}t
+      \]. Рационализация достигнута. 
+    \end{ittproof}
+
+    \begin{thrm} \label{thrm:int_ratio_nrt}
+      $\int R(x, \root n \of{ax+b\over cx+d})\,
+      {\rm d}x$, где $R(u,v)\in\R(u,v)$~--- выражается через элементарные функции. 
+    \end{thrm}
+    \begin{ittproof}
+      $\sphericalangle\; t^n = {ax + b\over cx + d}\,x$.
+      Тогда \[ 
+        x = {dt^n - b \over a -ct^n}, \;
+        \root n \of{ax+b\over cx+d} = t, \;
+        {\rm d}x = {(a\,d-b\,c) \,n\,t^{n-1}\over ( c\,t^n - a )^2}{\rm d}\,t
+      \]. Рационализация достигнута. 
+    \end{ittproof}
+  \item Определённый интеграл
+    \resetall
+    { \defn Пусть $f: I\to \R,\; f\in C(I)\; a,b\in I$ и $F$~---первообразная. Тогда
+    \[
+      \int_a^bf \equiv \int_a^bf(x)\,{\rm d}x := F(b) - F(a) 
+    \](\emph{формула Ньютона-Лейбница}) }
+    \hphantom{0} \\ Интересные свойства:
+    \begin{enumerate}
+      \item Совсем простые (написаны просто чтобы не забыть)
+        \begin{itemize}
+          \item линейность
+          \item $\displaystyle a<c<b\in I\; \int_a^bf = \int_a^cf+\int_c^bf$
+          \item $\displaystyle \int_a^bf = -\int_b^af$
+          \item $\displaystyle \forall a\in I \int_a^af=0$
+          \item (Теорема Барроу) $\displaystyle f\in C(I),\; a,x\in I \Rightarrow 
+            {{\rm d}\over{\rm d}x} \int_a^xf = f$
+        \end{itemize}
+      \item Чуть сложнее (нужна невероятная теорема про неравенства и производные)
+        \begin{itemize}
+          \item $\displaystyle f \geqq 0,\; a\leq b \Rightarrow \int_a^bf \geq 0$
+            (такой значок: $\leqq$~--- будет использоваться для функций для красоты) 
+          \item $\displaystyle f \geqq 0,\; a < b,\; \int_a^bf > 0 
+            \Rightarrow \exists\, c : f(c) > 0$
+          \item $\displaystyle f \leqq g,\; a < b \Rightarrow \int_a^bf \leq \int_a^bg$
+            (интегрирование неравенств)
+          \item $\displaystyle |f| \leqq g,\; a \leq b \Rightarrow \left|\int_a^bf\right|
+            \leq \int_a^bg$
+          \item $\displaystyle a \leq b \Rightarrow \left|\int_a^bf\right| \leq \int_a^b|f|$
+          \item $\displaystyle f \leqq M,\; a \leq b \Rightarrow \left|\int_a^bf\right| 
+            \leq M(b - a)$ (ограниченность)
+        \end{itemize}
+      \item Почти такие же, как у неопределённого интеграла
+        \begin{itemize}
+          \item $\displaystyle \int_a^bu\,{\rm d}v = uv\Bigr|_a^b - \int_a^bv\,{\rm d}u$ 
+          \item Замена переменной
+            \begin{align*}
+            &f:I\to\R, f\in C(I),\;\varphi: J\to I, \varphi\in C^1(J), \;
+            a, b\in I,\; \alpha,\beta\in J:\varphi(\alpha) = a\land\varphi(\beta) = b, \\
+            &\int_\alpha^\beta (f\circ\varphi)(t)\varphi'(t)\,{\rm d}t 
+            = \int_a^b f(x)\,{\rm d}x
+          \end{align*}
+        \end{itemize}
+    \end{enumerate}
+  \item Теорема о среднем
+    \resetall
+    \begin{thrm}\label{thrm:int_average}
+    Пусть $f, g \in C([a;b]),\; g \geq 0,\; g \not\equiv 0$. Тогда
+    \[
+      \exists\, c\in (a;b) : f(c) = {\int_a^bfg \over \int_a^bg}
+    \]
+    \end{thrm}
+    Доказывается через теоремы Вейерштрасса и Больцано-Коши о непрерывной функции.
+
+    { \defn Пусть $f\in C([a;b]), \; a < b$. Тогда 
+    \[
+      \langle f \rangle \equiv f_\text{ср} :=  {1\over b-a} \int_a^b f
+    \] }
+
+    {\thrm Пусть $f \in C([a;b])$. Тогда $\exists\, c\in (a;b) : f(c) = \langle f \rangle$.}
+    См. теорему~\ref{thrm:int_average}.
+  \item Интеграл как предел Римановых сумм
+    { \defn Пусть $f\in C([a;b])\,\; a < x_1 < \dots < x_{n-1} < x_n = b,\; 
+    \xi_i\in[x_i;x_{i+1]}$. Тогда 
+    \begin{itemize}
+      \item $\tau = \{x_1,\dots,x_{n-1}\}$~--- разбиение отрезка $[a;b]$
+      \item $\xi = \{\xi_1,\dots,\xi_{n-1}\}$~--- оснащение разбиения $\tau$
+      \item $\Delta x_i = x_{i+1}-x_i$~--- длина $i$-го отрезка
+      \item $r=r(\tau) = \max\limits_i\{\Delta x_i\}$~--- ранг разбиения
+      \item $\sigma = \sigma(\tau,\xi,f):= \sum\limits_{i=0}^{n-1}f(\xi_i)\cdot\Delta x_i$ ~---
+        сумма Римана
+    \end{itemize} }
+    { \thrm Пусть $f:[a;b]\to\R,\; f\in C([a;b])$. 
+      Тогда $\displaystyle\int_a^b f = \lim_{r(\tau)\to 0} \sigma(\tau,\xi,f)$ }
+    Единственная теорема, для которой нужна равномерная непрерывность, так как $\delta$
+    выбирается для всего разбиения сразу.
+    Приближенные формулы:
+    \begin{enumerate}
+      \item Формула левых прямоугольников
+        $x_i = a+i\,{b-a\over n},\; \Delta x_i = {b-a\over n} ,\; 
+        \tau = \{x_i\}_{i=1}^{n-1},\; \xi_i=x_i$
+        \[
+          \int_a^bf \approx \sum_{i=0}^{n-1}f\left(a+i\,{b-a\over n}\right)\cdot{b-a\over n}
+        \]
+      \item Формула правых прямоугольников
+        $x_i = a+i\,{b-a\over n},\; \Delta x_i = {b-a\over n} ,\; 
+        \tau = \{x_i\}_{i=1}^{n-1},\; \xi_i=x_{i+1}$
+        \[
+          \int_a^bf \approx \sum_{i=0}^{n-1}f\left(a+(i+1)\,{b-a\over n}\right)\cdot{b-a\over n}
+        \]
+      \item Формула трапеций
+        $x_i = a+i\,{b-a\over n},\; \Delta x_i = {b-a\over n} ,\; 
+        \tau = \{x_i\}_{i=1}^{n-1},\;$ \par
+        $\displaystyle \xi_i=c\in [x_i;x_{i+1}]:f(c)~=~{f(x_i)+f(x_{i+1}) \over2}$
+        \[
+          \int_a^bf \approx \sum_{i=0}^{n-1}{f(x_i)+f(x_{i+1})\over 2}\cdot{b-a\over n}
+        \]
+      \item Формула Симпсона
+        $x_i = a+i\,{b-a\over n},\;\Delta x_i = {b-a\over n},\;\tau=\{x_i\}_{i=1}^{n-1},\;$\par 
+        $\displaystyle \xi_i=c\in [x_i;x_{i+1}] : 
+        f(c) = {f(x_i) + 4f\left({x + x_{i+1}\over 2} \right) + f(x_{i+1}) \over 6}$
+        \[
+          \int_a^bf \approx \sum_{i=0}^{n-1}{f(x_i) + 4f(x_{i + {1\over2}})+ f(x_{i+1})\over 6}
+          \cdot{b-a\over n}
+        \]
+    \end{enumerate}
+  \item Интегральная форма остаточного члена формулы Тейлора  
+    { \thrm Пусть $f : I\to\R,\; f\in C^{n+1}(I),\; a\in I$. 
+      Тогда:
+      \begin{align*}
+        f(x) &= T_n(x) + R_n(x), \\
+        &\text{ где } T_n(x) = \sum_{k=0}^n\,\alpha_k(x-a)^k,  \\ 
+        &R_n(x) = {1\over n!}\int_a^x f^{(n+1)}(t)(x-t)^{n+1}\,{\rm d}x ,\\
+        &\alpha_k = {f^{(k)}(a) \over k!} 
+      \end{align*} 
+    } Докажется индукцией по $n$ с интегрированием по частям на каждом шаге
+  \end{enumerate}
+  Ещё, конечно, есть примечания, но там вроде всё уже знакомое.
+  \newpage\thispagestyle{empty}\mbox{}
+  \newpage\thispagestyle{empty}\mbox{}
+  \centering
+  \includegraphics[width=1\linewidth]{keep-calm-and-may-the-force-be-with-you-35}
+\end{document}

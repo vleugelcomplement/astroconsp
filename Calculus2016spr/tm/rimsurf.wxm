@@ -1,0 +1,66 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 12.04.0 ] */
+
+/* [wxMaxima: input   start ] */
+plot3d([imagpart((x + %i*y)^(1/2)), -imagpart((x + %i*y)^(1/2)), [x, -1, 1], [y, -1,1]]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f(z):=(if abs(sin(carg(z)-%pi)) < 0.1 then a else log(z));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sin(1.01*%pi-%pi), numer:true;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+''f(cos(1.1*%pi)+%i*sin(1.1*%pi)),numer:true;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+if 2*abs(pi) < 0.1*%pi then a else 0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+carg(-1-%i);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+imagpart(log(cos(1.1*%pi)+%i*sin(1.1*%pi))),numer:true;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot3d([th ,  [r,0,1], [th,0,6*%pi]],
+ [grid,30,300],
+[transform_xy, polar_to_xy],
+ [elevation, 58],
+ [azimuth,220],
+ [color, white, black, grey],
+ [box, false],
+ [legend, false],
+ [palette,false])/*,
+ [pdf_file, "/home/iliya/Документы/Математика/Суровый матан/Зачёты и прочая гадость/Весна2016/img/sqrootprobl.pdf"])*/$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d([(x + %i*y)^(1/2), -(x + %i*y)^(1/2)], [x, -1, 1], grid2d,
+[plot_realpart, true]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
