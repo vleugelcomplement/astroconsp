@@ -42,7 +42,8 @@
 \end{exmp}
 
 \begin{thrm}\label{thrm:fourier::hilb::comp}
-  $\summb_2$ полно по мере, введённой выше.
+  $\summb_2$ полно (в крайнем случае, пополним его) по метрике введённой нормой индуцированной
+  скалярным произведением, введённым выше.
 \end{thrm}
 
 \paragraph{Ортогональные системы. Ряд Фурье в гильбертовом пространстве.}
@@ -76,17 +77,21 @@
   \[
     \begin{split}
       c_n &= \left\langle f, \frac{e_n}{\|e_n\|} \right\rangle \text{~--- коэффициенты Фурье $f$} \\
-      f &=\sum_k c_k e_k  \text{~--- ряд Фурье $f$}
+      f &\sim\sum_k c_k e_k  \text{~--- ряд Фурье $f$}
     \end{split}
   \]
   
 \end{defn}
 
-\begin{thrm}[Неравенсто Бессля]\label{thrm:fourier::orthseries::ineq}
+\begin{thrm}[Неравенсто Бесселя]\label{thrm:fourier::orthseries::ineq}
   Пусть $f\in H$,  $(e_i)$~--- ортогональная система. Тогда \[
     \sum_n |c_n|^2 \|e_n\|^2 \leqslant \|f\|^2
   \]
 \end{thrm}
+ \begin{tproof}
+   Достаточно доказать, что $h_N = f - S_N$, где $S_N$~--- частные суммы, ортогональна $S_N$.
+   Главную роль играет то, что коэффициенты имеют особый вид.
+ \end{tproof}
 
 \begin{defn}\label{defn:fourier::orthseries::compl}
   Пусть $(e_i)$~--- ортогональная система. Допустим 
@@ -180,6 +185,9 @@
     \intR f(x) e^{-inx} \, x &\xto{n\to \infty} 0\\
   \end{align*}
 \end{lem}
+\begin{lproof}
+  Для простых очевидно. Для остальных~--- (\ref{thrm:meas::levi})
+\end{lproof}
 
 
 \paragraph{Теорема Дини о поточечной сходимости}
@@ -196,6 +204,10 @@
     S_n(x) = \sum_{k=-n}^{n} c_n e^{ikx} \xto{n \to \infty} L
   \]
 \end{thrm}
+\begin{tproof}
+  Через ядро Дирихле сводится к применению теоремы Римана-Лебега на двух участках:
+  $(0;\delta)$ и $[\delta;\pi]$. Условие Дини помогает получить суммируемость.
+\end{tproof}
 
 \begin{prop}\label{prop:fourier::dini::dinisimp}
   Частные случаи условия Дини:
