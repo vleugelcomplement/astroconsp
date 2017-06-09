@@ -8,6 +8,9 @@ SETTYPE = ../tools/settype.pl
 
 MAIN    = main
 MAINT   = main_t
+DIR     = $(shell pwd)
+COURSE  = $(shell basename "$(DIR)" )
+PDFNAME = $(COURSE)_$(MAIN)
 
 PDFDIR  = pdf
 $(shell mkdir -p $(PDFDIR) &>/dev/null)
@@ -23,7 +26,7 @@ MESSAGE = $(shell git log -1 --pretty=%B)
 	@cp $(MAIN).tex $(MAINT).tex
 	@$(SETTYPE) $(MAINT).tex $*
 	@$(BUILDER) $(MAINT).tex
-	@mv $(MAINT).pdf $(PDFDIR)/$(MAIN)_$*.pdf
+	@mv $(MAINT).pdf $(PDFDIR)/$(PDFNAME)_$*.pdf
 
 
 pdfs: @ebook @timbord @hardcopy distclean
@@ -51,3 +54,9 @@ distclean:
 	$(DISTCLEANER) $(MAIN).tex
 	$(DISTCLEANER) $(MAINT).tex
 	@rm $(MAINT).tex
+
+dummy:
+	@echo $(MAIN) '<->' $(MAINT)
+	@echo $(DIR) 
+	@echo '//' $(COURSE)
+	@echo '>>' $(PDFNAME)
