@@ -8,7 +8,8 @@ use warnings;
 # Not today (2017-06-03)
 ##
 
-my ($fname, $type) = @ARGV;
+foreach (@ARGV) {
+my ($fname, $type) = split ' ', $_;
 my ($dirname) = ($fname =~ m/^(.*)\//);
 system("mkdir -p $dirname") if ( $dirname ); 
 open my $file, '>', $fname or die $!;
@@ -16,15 +17,30 @@ open my $file, '>', $fname or die $!;
 my $com  = '#'; #comment sign
 my $lang = ''; #some default language constructions
 my $modeline = '';
-if ($fname =~ m/(?:\.c|\.cpp|\.cxx|\.cc|\.h)$/) {
+my $shabang = '';
+if ($fname =~ m/(?:\.c|\.cpp|\.cxx|\.cc)$/) {
     $com = '//';
+}
+elsif ($fname =~ m/(?:\.h|\.hpp)$/) {
+    $com = '//';
+    print $fname;
+    $fname =~ m/(\w+)\.(\w+)$/;
+    my $hname = uc $1.'_'.$2; 
+    $lang = <<"END";
+#ifndef $hname
+#define $hname
+
+#endif // $hname
+END
+    $lang = "#pragma once\n";
 }
 elsif ($fname =~ m/(?:\.sql|\.hs)$/) {
     $com = '--';
 }
-elsif ($fname =~ m/\.pl$/) {
+elsif ($fname =~ m/\.pl/) {
+    $shabang = '#!/usr/bin/perl'."\n";
     $com = '#';
-    $lang = "use strict;\nusewarnings;\n"
+    $lang = "use strict;\nuse warnings;\n"
 }
 elsif ($fname =~ m/(?:\.tex|\.ltx)$/) {
     $com = '%';
@@ -65,7 +81,7 @@ $com Author      : $name <$email>
 $com Created at  : $date
 $com$border
 $lang
-$modeline
 EOS
-
+print $file $modeline if ($modeline);
+}
 
