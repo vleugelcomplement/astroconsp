@@ -1,0 +1,114 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb,theorem}
+
+%%%%%%%%%% Start TeXmacs macros
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\newcommand{\emdash}{---}
+\newcommand{\nocomma}{}
+{\theorembodyfont{\rmfamily}\newtheorem{example}{\CYRP\cyrr\cyri\cyrm\cyre\cyrr}}
+%%%%%%%%%% End TeXmacs macros
+
+\begin{document}
+
+\begin{example}
+  Статический момент плоской фигуры
+  относительно оси.
+  
+  Докажем, что
+  \[ N = \int_{x_1}^{x_2} \sigma xa \left( x \right) d \nocomma x \]
+  где $a \left( x \right)$~{\emdash} длина ``сечения''
+  фигуры, $\sigma$~{\emdash} поверхностная
+  плотность
+  
+  Пусть $\Delta = \left[ \alpha, \beta \right] \subset \left[ x_1, x_2
+  \right]$~{\emdash} промежуток на оси $x$, $\Phi \left( \Delta
+  \right)$~{\emdash} момент такой ``полоски''.
+  
+  Будем считать статический момент
+  аддитивным по определению. Ещё мы умеем
+  считать момент точки: он равен $m_i x_i$.
+  Чтобы воспользоваться тестом \ref{denstest3}
+  докажем, что (то, что они все
+  положительные, очевидно)
+  \[ \left( \min_{\Delta} a \left( x \right) \right)  \left( \min_{\Delta} x
+     \sigma \right)  \left| \Delta \right| \leqslant \Phi \left( \Delta
+     \right) \leqslant \left( \max_{\Delta} a \left( x \right) \right)  \left(
+     \max_{\Delta} x \sigma \right) \left| \Delta \right| \]
+  \begin{eqnarray*}
+    &  & \left( \min_{\Delta} a \left( x \right) \right)  \left| \Delta
+    \right| = \left| \Delta \right| a_{\min} = S_1 \text{~ \emdash
+    вписаннаяплощадьполоски}\\
+    &  & \left( \max_{\Delta} a \left( x \right) \right)  \left| \Delta
+    \right| = \left| \Delta \right| a_{\max} = S_2 \text{~ \emdash
+    описаннаяплощадьполоски}\\
+    &  & \left( \min_{\Delta} x \right) = \alpha \hspace{1em}  \left(
+    \max_{\Delta} x \right) = \beta
+  \end{eqnarray*}
+  
+  
+  Тогда нижний предел~{\emdash} это если бы мы
+  сгребли всю массу с $S_1$ и поместили в
+  ближний к оси край и посчитали момент
+  всего этого. Видно, что момент полоски на
+  самом деле больше: и масса оценена снизу,
+  и есть хотя бы одна точка с ненулевой
+  массой дальше от оси чем $\alpha$.
+  Аналогичные рассуждения применимы про
+  оценку сверху.
+  
+  Все условия теста \ref{denstest3} выполнены,
+  значит
+  \[ N_{\Delta} = \Phi \left( \Delta \right) = \int_{\Delta} a \left( x
+     \right) x \sigma d \nocomma x \]
+\end{example}
+
+\begin{example}
+  Работа, которую нужно затратить на
+  возведение пирамиды.
+  
+  Пусть $\Delta = \left[ \alpha, \beta \right] \subset \left[ 0 ; H
+  \right]${\emdash}промежуток на оси высот, $\Phi \left(
+  \Delta \right) ${\emdash} работа которую нужно
+  затратить чтобы поднять слой толщины $\left|
+  \Delta \right|$ на нужную высоту, $a \left( h \right)$
+  {\emdash} сторона пирамиды в зависимости от
+  высоты (она правильная и с квадратом в
+  основании).
+  
+  Чтобы получить функцию плотности,
+  посмотрим сначала, что происходит с
+  блоком в форме параллелепипеда со
+  строной основания $a$. Если поднять его на
+  высоту $h$ то работа, затраченна на это
+  {\emdash} $mgh = \rho a \left( h \right)^2 hg$.
+  
+  Теперь, давайте докажем, что
+  \[ \Phi \left( \Delta \right) = \int_{\Delta} a \left( h \right)^2 hg \, d
+     \nocomma h \]
+  
+  
+  Будем пользоваться условием теста
+  \ref{denstest3}
+  \[ \left( \min_{\Delta} a \left( x \right)^2 \right)  \left( \min_{\Delta}
+     x \rho \right)  \left| \Delta \right| \leqslant \Phi \left( \Delta
+     \right) \leqslant \left( \max_{\Delta} a \left( x \right)^2 \right) 
+     \left( \max_{\Delta} x \rho \right) \left| \Delta \right| \]
+  
+  
+  Как видно, от предыдущего примера
+  отличается только степенью при $a \left( x
+  \right)$. Доказательство здесь почти такое
+  же.
+  
+  У нормальной пирамиды $a \left( h \right) = A \frac{H -
+  h}{H}$. Тогда
+  \[ A = \int_0^H A^2  \left( 1 - \frac{h}{H} \right)^2 h \rho \, d \, x =
+     \rho \frac{A^2}{H^2}  \left( \frac{H^4}{2} - \frac{2 H^4}{3} +
+     \frac{H^4}{4} \right) = \frac{1}{12} \rho A^2 H^2 \]
+  
+\end{example}
+
+
+
+\end{document}

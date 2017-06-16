@@ -1,0 +1,191 @@
+\documentclass[12pt]{../../notes}
+\usepackage{silence}
+\WarningFilter{latex}{Reference}
+\graphicspath{{../../img/}}
+
+\begin{document}
+\paragraph{Общие свойства несобственного интеграла}
+
+\begin{defn}\label{defn:impint}
+  Пусть $f \in C\big([a;b)\big)$, $b\in \overline{\R}$. 
+    Тогда 
+    \[
+      \int_a^{\to b} f := \lim_{t \to b-0} \int_a^t f
+    \]
+  Аналогичным образом можно поступить и для нижнего предела (или обоих сразу)
+\end{defn}
+
+\begin{defn}\label{defn:intconv}
+  $\displaystyle \int_a^{\to b}$ называется \emph{сходящимся}, если он существует и конечен.
+\end{defn}
+Свойства несобственного интеграла:
+\begin{enumerate}
+  \item $f \in C \big([a;b]\big)$, $a, b \in \R$. Тогда 
+    \[
+      \int_a^{\to b} f = \int_{\to a}^b f = \int_a^b f
+    \]
+  \item $f \in C \big([a;b)\big)$, $c \in (a;b)$ Тогда 
+    \[
+      \int_a^{\to b} f = \int_a^c f + \int_c^{\to b} f
+    \]
+    Второе слагаемое ещё называют остатком.
+    \[
+      \int_a^{\to b} f \text{ сходится } \Leftrightarrow \int_c^{\to b} f \text{ сходится }
+    \]
+  \item $f \in C \big([a;b)\big)$, $c \in (a;b)$. Тогда 
+    \[
+      \int_a^{\to b} f \conv \Rightarrow \int_c^{\to b} f \xrightarrow[c\to b]{} 0
+    \]
+  \item $f,g \in C \big([a;b)\big)$. Тогда 
+    \[
+      \int_a^{\to b} (f+g) = \int_a^{\to b} f + \int_a^{\to b} g
+    \]
+  \item $f \in C \big([a;b)\big)$, $c\in \R$
+    \[
+      \int_a^{\to b} c f = f \int_a^{\to b} f 
+    \]
+\end{enumerate}
+\begin{exmp}
+  \[
+    \int_1^{+\infty} = \begin{cases} \frac{1}{p-1}, & p > 1 \\ +\infty, & p \leqslant 1 \end{cases}
+  \]
+\end{exmp}
+
+\paragraph{Признак Больцано-Коши сходимости интеграла}
+
+Этот кусочек не сильно нужен, так что он будет {\footnotesize таким шрифтом}
+\begin{footnotesize}
+
+\begin{defn}
+  Пусть $f: I \to \R$, $c\in \overline{\R}$~--- точка сгущения. Тогда $f$ сходится в себе при $x\to c$
+  $\Leftrightarrow$
+  \[
+    \forall\, \varepsilon > 0 \;\: \exists\, V(c) \colon \; \forall\,x', x'' \in \overset{\circ} V 
+    \;\: |f(x') - f(x'')| < \varepsilon
+  \]
+\end{defn}
+
+\begin{thrm}[Теорема Больцано-Коши для функций]\label{thrm:bkfun}
+  $f$ сходится в себе при $x\to c$ $\Leftrightarrow$ $\exists\,\lim_c f = M \in \R$.
+\end{thrm}
+\begin{ittproof}
+  \begin{description}
+    \item[\circlearound{$\Leftarrow$}]  Рассмотрим произвольный $\varepsilon > 0$. Тогда из условия конечности
+      предела $\lim_c f$
+      \[
+        \exists\, V(c) \colon \forall\, x \in V \;\: | f(x) - M | < \varepsilon/2
+      \]
+      Тогда для $x',x'' \in V(c)$ 
+      \[
+        |x' - x''| = |(x' - M) - (x''- M)| \leqslant |x' - M| + |x'' - M| < \varepsilon 
+      \]
+    \item[\circlearound{$\Rightarrow$}] Будем доказывать через аналогичную теорему для последовательностей
+      и определение предела по Гейне. Рассмотрим произвольную $(x_n)\colon x_n \to c, x_n \neq c$, 
+      произвольный $\varepsilon > 0$.
+      Из условия равномерной сходимости
+      \[
+        \exists\, V(c) \colon \forall\, x', x'' \in \overset{\circ}{V} |f(x') - f(x'')| < \varepsilon
+      \]
+      $x_n \to c \Rightarrow$
+      \[
+        \exists\, N \colon \forall\, m,n > N \;\: x_m, x_n \in \overset{\circ}{V}
+      \]
+      Ну тогда $x' = x_n, x'' = x_m$ и по определению равномерной сходимости последовательностей 
+      $y_n = f(x_n)$~--- фундаментальная. А значит, по теореме Больцано-Коши для последовательностей
+      $\exists\, \lim y_n = L \in \R$.
+
+      Хорошо, мы получили, что для каждой последовательности $(x_n)$ существует какой-то конечный предел 
+      последовательности $y_n = f(x_n)$. Для определения по Гейне необходимо, чтобы они все были равны.
+
+      Хорошо, пусть
+      \begin{align*}
+        &x_n' \to c  & y_n' = f(x_n') \to L' \\
+        &x_n'' \to c  & y_n'' = f(x_n'') \to L''
+      \end{align*}
+      Тогда $\sphericalangle$ $z_n := (x_1', x_1'', x_2', x_2'', \dotsc)$. Она тоже $\to c$, 
+      значит $\exists\, M \in \R\colon f(z_n) \to M$. 
+      Но тогда у её подпоследовательностей разные пределы, что странно. 
+  \end{description}
+\end{ittproof}
+\end{footnotesize}
+
+\begin{thrm}\label{thrm:bkconvint}
+  Пусть $f \in C\big([a;b)\big)$, $b\in \overline{\R}$. Тогда
+  \[
+    \int_a^b f \conv \Leftrightarrow \forall\, \varepsilon > 0 \;\: \exists\, V(b) 
+    \colon \forall\,t',t''\in \overset{\circ}{V} \;\: \left|\int_{t'}^{t''} f\right| < \varepsilon
+  \]
+\end{thrm}
+
+\paragraph{Свойства несобственного интеграла от положительных функций}
+Пусть $f\in C\big([a;b)\big)$, $f \geqslant 0$, $F'=f$.
+\begin{enumerate}
+    \setcounter{enumi}{-1}
+  \item $\displaystyle \int_a^{\to b} f \conv \Leftrightarrow F(x) \leqslant M \; \forall\, x$ 
+  \item\label{stat:intcmp} Признак сравнения интегралов.\\
+    Пусть $0 \leqslant f(x) \leqslant g(x)$. Тогда 
+    \begin{align*}
+      \int_a^{\to b} g \conv \Rightarrow \int_a^{\to b} f \conv \\ 
+      \int_a^{\to b} f \noconv \Rightarrow \int_a^{\to b} g \noconv 
+    \end{align*}
+    Хватит и выполнения неравенства на $[c;b)$, $c \in (a;b)$, всё равно нужен только остаток.
+    \item\label{stat:intcmplim} Второй признак сравнения.\\
+      Пусть $\displaystyle \exists\, \lim_{t \to b-0} \frac{f(t)}{g(t)} = L$
+      Тогда:
+      \begin{enumerate}
+        \item $\displaystyle L < +\infty 
+          \Rightarrow \left(  \int_a^{\to b} g \conv \Rightarrow \int_a^{\to b} f \conv \right)$
+        \item $\displaystyle L > 0 
+          \Rightarrow \left(  \int_a^{\to b} f \conv \Rightarrow \int_a^{\to b} g \conv \right)$
+      \end{enumerate}
+      В частности, из эквивалентности следует одинаковый характер сходимости
+\end{enumerate}
+Попутно в этом же месте нормально определяли всякую тригонометрию, но, кажется, это не нужно в билете.
+
+\paragraph{Абсолютная и условная сходимость интеграла}
+\begin{defn}\label{defn:absintconv} 
+  Пусть $\dint_a^{\to b}$~--- сходится. Тогда говорят, что он абсолютно сходится, 
+  если $\dint_a^{\to b} |f| < + \infty$. В противном случае говорят, что интеграл сходится условно.
+\end{defn}
+
+\begin{thrm}\label{thrm:absconv2conv}
+  Если интеграл абсолютно сходится, то он сходится.
+\end{thrm}
+\begin{ittproof}
+  $\sphericalangle\,g  = |f| - f$. 
+  Тогда $-|f| \leqslant f \leqslant |f| \Rightarrow 0 \leqslant g \leqslant 2|f|$. Теперь всё положительно
+  и можно пользоваться признаками сравнения.
+  Ещё можно воспользоваться признаком Больцано-Коши~\ref{thrm:bkconvint}~\cite{zorich}.
+\end{ittproof}
+
+
+\paragraph{Признаки Дирихле и Абеля}
+\begin{thrm}[Признак сходимости Дирихле]\label{thrm:imprdirconv}
+  Пусть $f,g \in C^1\big([a;b)\big)$\footnote{Вообще, хватило бы и просто непрерывности, 
+  но для этого нужно доказывать ещё сколько-то интегральных неравенств о среднем 
+  такого сорта : 
+  \[
+    \exists\, \xi \in [a;b]\colon \int_a^b (fg) = g(b)\int_a^\xi f + g(a) \int_\xi^b f
+    \text{ \hspace{1cm} (см.~\cite[стр.~469]{zorich}) } \] } и 
+  \begin{enumerate}
+    \item $|f(x)|$\footnote{Вообще, мы формулировали это без модуля, 
+      но для непрерывных функций эти условия эквивалентны} $\searrow 0$ при $x \to b-0$
+    \item $\exists\,M: \left|\int_a^t g\right| \leqslant M \;\, \forall\, t $
+  \end{enumerate}
+  Тогда $\dint_a^{\to b} fg$~--- сходится
+\end{thrm}
+\begin{thrm}[Признак сходимости Абеля]\label{thrm:imprabelconv}
+  Пусть $f,g \in C^1\big([a;b)\big)$ и 
+    \begin{enumerate}
+      \item $f(x)$ монотонна и ограничена
+      \item $\int\limits_a^{\to b} g$ сходится
+    \end{enumerate}
+  Тогда $\dint_a^{\to b} fg$~--- сходится
+\end{thrm}
+\begin{ittproof}
+  Доказывать всё надо через признак Больцано-Коши~\ref{thrm:bkconvint}. Сначала проинтегрировать по частям,
+  а потом долго оценивать и доказывать что всё $\to 0$.
+\end{ittproof}
+
+
+\end{document}

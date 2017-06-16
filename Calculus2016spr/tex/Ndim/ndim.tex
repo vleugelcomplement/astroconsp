@@ -1,0 +1,748 @@
+\documentclass[12pt]{../../notes}
+\usepackage{silence}
+\WarningFilter{latex}{Reference}
+\graphicspath{{../../img/}}
+\begin{document}
+
+\paragraph{Основные структуры в \texorpdfstring{$\R^n$}{}}
+
+\begin{defn}\label{defn:Rn}
+  $\R^n = \{ (x^1, \dotsc, x^n) \mid x^1, \dotsc, x^n \in \R \}$. Сделаем теперь из $\R^n$ векторное пространство
+  над $\R$
+  введя соответствующие операции. В дальнейшем будем работать с $\R^n$ уже как с векторным пространством.
+\end{defn}
+
+\begin{defn}\label{defn:scalprodRn}
+  Пусть $x, y\in \R^n$. Тогда скалярное произведение $\langle x,y\rangle$ определяется как
+  операция со следующими свойствами:
+  \begin{enumerate}
+    \item $\langle \alpha x + \beta y , z \rangle = \alpha \langle x,y\rangle + \beta \langle y,z\rangle$
+    \item $\langle x , y \rangle = \langle y, x\rangle$
+    \item $\forall\, x \in \R^n, x > 0 \;\; \langle x , x \rangle > 0$
+  \end{enumerate}
+  В частности, в ортонормированном базисе 
+  \[
+    \langle x, y \rangle = \sum_{i=1}^{n} x^i y^i
+  \]
+\end{defn}
+\begin{defn}\label{defn:normRn}
+  Пусть $x\in \R^n$. Тогда определим норму в $\R^n$ так:
+  \[
+    \| x \| = \sqrt{\langle x,x \rangle} = \sqrt{\sum_{i=1}^{n} x_i^2}
+  \]
+  Свойства нормы:
+  \begin{enumerate}
+    \item $\forall\, x\in \R^n \;\: \| x \| \geqslant 0$, $\|x\| = 0 \Leftrightarrow x = 0$
+    \item $\forall\, \alpha\in\R, x\in \R^n \;\; \|\alpha x\| = |\alpha| \cdot \|x\|$
+    \item $\forall\, x, y \in \R^n \;\: \|x + y\| \leqslant \|x\| + \|y\|$
+  \end{enumerate}
+  Последнее (котрое неренство треугольника) верно по неравенству Минковского,
+  которое следствие неравенства Гёльдера. 
+\end{defn}
+
+\begin{defn}[Метрика в $\R^n$]\label{defn:rhoRn}
+  $\forall\, x, y \in \R^n \;\: \rho(x,y) := \| x - y \|$, $\rho$~--- эвклидово расстояние.
+  Про него верны следующие свойства:
+  \begin{enumerate}
+    \item $\forall\, x, y \in \R^n \;\: \rho(x,y) = \rho(y,x)$
+    \item $\forall\, x, y \in \R^n \;\:\rho(x,y) \geqslant 0$, $\rho(x,y) = 0 \Leftrightarrow x = y $
+    \item $\forall\, x, y, z \in \R^n \;\:\rho(x,y) \leqslant \rho(x,z) + \rho(z,y)$
+  \end{enumerate}
+\end{defn}
+
+\begin{defn}\label{defn:metrspace}
+  $(\R^n, \rho)$~--- метрическое пространство.
+\end{defn}
+
+\begin{rem*}
+  Наверное было бы лучше определить и норму и метрику через их свойста, так более общо. 
+  А потом доказать, что и евклидова норма и евклидова метрика являются нормой и метрикой, соответственно.
+  Но вроде не нужно, к тому же мне лень править этот кусок.
+\end{rem*}
+
+\begin{defn}[Шар в $\R^n$]\label{defn:ballRn}
+  Пусть $a\in \R^n$, $r > 0$.
+  \[
+    B_r(a) := \{ x\in \R^n \mid \rho(x,a) < r \}
+  \]
+\end{defn}
+
+\begin{defn}\label{defn:openRn}
+  Множество $G \subset \R^n$~--- открытое, если 
+  \[
+    \forall\, a \in G \; \exists\, B_r(a) \colon B_r(a) \subset G
+  \]
+  Если $G_1, \dotsc, G_n$~--- открытые множества, то и $\bigcap\limits_{1\leqslant i \leqslant n} G_i$ ,
+  $\bigcup\limits_{1\leqslant i \leqslant n} G_i$~--- открытые.
+\end{defn}
+
+\begin{exmp*}
+  Шар в $\R^n$~--- открытое множество.
+\end{exmp*}
+
+\begin{defn}\label{defn:topology}
+  Топология на множестве $X$~--- такое семейство множеств $T \subset 2^X$, что 
+  \begin{enumerate}
+    \item $\varnothing \in T$
+    \item $X \in T$
+    \item $A_1, \dotsc, A_n \in T \Rightarrow \bigcap\limits_{1\leqslant i \leqslant n} A_i$
+    \item $A_1, \dotsc, A_n \in T \Rightarrow \bigcup\limits_{1\leqslant i \leqslant n} A_i$
+  \end{enumerate}
+  Элементы семейства называются открытыми множествами.
+\end{defn}
+
+\begin{exmp}
+  $T = \{ X, \varnothing \}$~--- тривиальная (антидискретная) топология на $X$.
+\end{exmp}
+
+\begin{exmp}
+  Открытые множества, как мы их определили в~\ref{defn:openRn} задают стандартную топологию на $\R^n$
+\end{exmp}
+
+\begin{defn}[Окрестность в $\R^n$]\label{defn:neightbRn}
+  Пусть $x\in \R^n$. Тогда $U(x)$~--- произвольное открытое множество, содержащее $x$. 
+\end{defn}
+\begin{exmp*}
+  В качестве окрестности подойдёт $B_\varepsilon$, например.
+\end{exmp*}
+\begin{rem*}
+  Проколотая окрестность определяется всё так же: $\overset{\circ}{U}(x) = U \setminus \{x\}$.
+\end{rem*}
+
+\begin{defn}[Предел в $\R^n$]\label{defn:limtop}
+  Пусть $x_k\in \R^n$, $a\in \R^n$. Тогда 
+  \[
+    \lim_{k\to \infty} x_k = a \Leftrightarrow \forall\, U(a) \;\: \exists\, N\colon
+    \forall\, k > N \;\: x_k \in U(a)
+  \]
+  Теперь для функций. 
+  Пусть $f\in X \subset \R^n \to \R^m$, $x_0$~--- точка сгущения $X$, $A\in \R^m$. Тогда 
+  \[
+    \lim_{x\to x_0} f(x) = A \Leftrightarrow \forall\, \overset{\circ}{U(A)} \;\:
+    \exists\, \overset{\circ}{V(x_0)} \colon x\in \overset{\circ}{V} \Rightarrow f(x) \in \overset{\circ}{U}
+  \]
+\end{defn}
+
+\begin{stat}[Свойства предела в $\R^n$]\label{stat:limcoordRn}
+  $x_k \to a \Leftrightarrow \rho(x,a) \to 0 \Leftrightarrow \| x_k - a \| \to 0$.
+  И тогда 
+  \[
+    \lim_{k\to \infty} x_k = a \Leftrightarrow \forall\, i \;\: x_k^i \to a^i
+  \]
+  То есть сходимость в $\R^n$ покоординатная. 
+\end{stat}
+\begin{itlproof}
+  Тут на самом деле 2 утверждения:
+  \begin{enumerate}
+    \item $x_k \to a \Leftrightarrow \rho(x, a) \to 0$.
+      \begin{description}
+        \item[\circlearound{$\Leftarrow$}] Из определения открытого множества в любой окрестности $x_0$ 
+          есть шар $B_\varepsilon(x_0)$. А если принадлежит шару, то и окрестности.
+        \item[\circlearound{$\Rightarrow$}] $B_\varepsilon(a)$~--- тоже окрестность. 
+      \end{description}
+    \item $ x_k \to a \Leftrightarrow \forall\, i \;\: x_k^i \to a^i$
+      \begin{description}
+        \item[\circlearound{$\Leftarrow$}] Ясно из того, как задана норма в $\R^n$~(\ref{defn:normRn}).
+        \item[\circlearound{$\Rightarrow$}] Многомерный параллелепипед~--- тоже окрестность. 
+      \end{description}
+  \end{enumerate}
+\end{itlproof}
+
+
+\paragraph{Секвенциальная компактность}
+
+\begin{defn}[Предельная точка]\label{defn:limpoint}
+  Пусть $X \subset \R^n$, $a\in \R^n$ Тогда $a$~--- предельная точка $X$, если 
+  $\exists\, (x_n)\in X \colon x_n \to a$
+\end{defn}
+
+\begin{rem*}
+  При таком определении предельная точка $\neq$ точка сгущения
+\end{rem*}
+
+\begin{exmp*}
+  $X = \{a\}$~--- есть последовательность $(x_n) \equiv a$, сходящаяся к $a$, но
+  $\overset{\circ}{V}(a) = \varnothing$
+\end{exmp*}
+
+\begin{defn}\label{defn:closedRn}
+  Пусть $X\subset \R^n$. Тогда $X$~--- замкнуто, если содержит все свои предельные точки
+\end{defn}
+
+\begin{defn}[Замыкание]\label{defn:closureRn}
+  Пусть $X \subset \R^n$. Тогда $\overline{X} = \clos(X)$~--- множество всех предельных точек $X$.
+\end{defn}
+
+\begin{exmp*}
+  $\clos \Q = \R$
+\end{exmp*}
+
+Свойства замыкания:
+\begin{enumerate}
+  \item $\varnothing$ замкнуто
+  \item $\R^n$ замкнуто
+  \item объединение и пересечение замкнутых множеств замкнуто
+\end{enumerate}
+
+\begin{thrm}\label{thrm:closopenRn}
+  Пусть $G \subset \R^n$, $F = \R^n \setminus G$. Тогда $G$ открыто $\Leftrightarrow$ $F$ замкнуто.
+\end{thrm}
+
+\begin{defn}\label{defn:seqcompRn}
+  Пусть $X\subset \R^n$. Тогда $X$~--- компактное, если 
+  \[
+    \forall\, (x_m) \in X \; \exists\, (x_{m_k}) \colon x_{m_k} \to c , c \in X
+  \]
+  То есть, в нём выполняется принцип Больцано-Вейерштрасса.
+\end{defn}
+
+\begin{defn}\label{defn:limitedsetRn}
+  Множество $X\subset \R^n$~--- ограниченно, если 
+  \[
+    \sup_{x_1, x_2 \in X} \rho (x_1, x_2) \in \R
+  \]
+\end{defn}
+
+\begin{thrm}\label{thrm:compclosopenRn}
+  Пусть $X\subset \R^n$. Тогда $X$~--- компактно $\Leftrightarrow$ $X$ замкнуто и ограничено.
+\end{thrm}
+\begin{ittproof}
+  \begin{description}
+    \item[\circlearound{$\Rightarrow$}] Проблемы с пределом последовательности
+    \item[\circlearound{$\Leftarrow$}] Можно мнооого раз применять одномерную теорему Больцано-Коши
+      для каждого измерения и оно получится.
+  \end{description}
+\end{ittproof}
+\begin{rem*}
+  Не работает в бесконечномерных
+\end{rem*}
+
+\paragraph{\texorpdfstring{$\R^n$}{} как полное метрическое пространство}
+
+\begin{defn}\label{defn:cauchyseq}
+  Последовательность $(x_n)$ называется фундаментальной (последовательностью Коши),
+  если 
+  \[
+    \forall\, \varepsilon > 0 \;\: \exists\, N\colon \forall\,m,n>N \;\: \rho(x_n - x_m) < \varepsilon 
+  \]
+\end{defn}
+
+\begin{defn}\label{defn:comtmetspc}
+  Метрическое пространство $(X,\rho)$~--- полное, если всякая фундаментальная последовательность
+  в нём  сходится
+\end{defn}
+
+\begin{exmp*}
+  $\R \setminus 0$~--- не полное метрическое пространство, $x_n = \lfrac{1}{n}$ тому пример.
+\end{exmp*}
+
+\begin{stat}\label{stat:comtRn}
+  $\R^n$~--- полное метрическое пространство.
+\end{stat}
+\begin{itlproof}
+  $\sphericalangle$ произвольный $\varepsilon > 0$. Тогда 
+  \[
+    \rho(x_n - x_m) < \varepsilon 
+    \Rightarrow \forall\, i \;\: \rho(x_m^i e_i - x_n^i e_i) < \varepsilon
+    \Rightarrow \forall\, i \;\: |x_m^i - x_n^i| < \varepsilon
+  \]
+  Таким образом $(x_n^i)\in \R$~--- фундаментальная. 
+  А в $\R$ по теореме из первого семестра фундаментальные последовательности сходятся.
+  Тогда $\forall\, x_n^i \to a^i$. Значит и $x_n \to a$ по теореме~\ref{stat:limcoordRn}
+\end{itlproof}
+
+\paragraph{Непрерывные отображения}
+
+\begin{defn}\label{defn:contRn}
+  Пусть $f\colon X \subset \R^n \to \R^m$. Тогда $f$ непрерывна в $x_0\in X$, если
+  \[
+    \forall\, U\big(f(x_0)\big) \; \exists\, V(x_0) \colon x \in V \Rightarrow f(x) \in U
+  \]
+  Можно например в качестве окрестности брать $B_\varepsilon$.
+\end{defn}
+
+%\begin{stat}\label{stat:contcoordRn}
+  %Аналогично пределу, непрерывность в $\R^n$ имеет покоординатный характер.
+%\end{stat}
+\begin{defn}\label{defn:openinsubsetRn}
+  Множество $A\subset X \subset \R^n$ называется открытым в $G$, если 
+  \[
+    \forall\, a\in A \;\: \exists B_r(a) \colon B_r(a) \cap X \subset A
+  \]
+\end{defn}
+
+\begin{thrm}\label{thrm:contopen}
+  Пусть $f\colon X \subset \R^n \to \R^m$~--- непрерывна, тогда и только тогда, когда
+  \[
+    \forall\, G\subset \R^m \colon G\text{~--- открытое } \;\: f^{-1}(G)\text{~--- открытое в }X
+  \]
+\end{thrm}
+\begin{ittproof}
+  \begin{description}
+    \item[\circlearound{$\Rightarrow$}] Пусть $f(x) = y\in G$  Тогда из открытости $G$ 
+      \[
+        \exists\,B_\varepsilon(y) \colon B_\varepsilon(y) \subset G
+      \]
+      Но из непрерывности
+      \[
+        \forall\, B_\varepsilon(y) \;\: \exists\, B_\delta(x) \colon \forall\, x'\in B_\delta \cap X 
+        \;\: y'=f(x') \in B_\varepsilon 
+      \]
+      А раз $f(x')\in B_\varepsilon \subset G$, то $x'\in f^{-1}(G)$. То есть 
+      \[
+        \forall\, x \in f^{-1}(G) \;\: \exists\,B_\delta(x) \colon \forall\, x'\in B_\delta \cap X 
+        \;\: x'\in f^{-1}(G)
+      \]
+      А это как раз открытость $f^{-1}(G)$ в $X$.
+    \item[\circlearound{$\Leftarrow$}] Пусть $y = f(x)$. Рассмотрим тогда $B_\varepsilon(y)$.
+      Оно открыто, и, по условию, $f^{-1}(B_\varepsilon)$~--- открыто в $X$. Тогда 
+      \[
+        \forall\, x'\in f^{-1}(B_\varepsilon) \;\: \exists B_\delta(x') \colon
+        B_\delta(x') \cap X \subset f^{-1}(B_\varepsilon) 
+      \]
+      Но в таком случае
+      \[
+        \forall\, x'' \in B_\delta(x') \cap X \;\: f(x'') \in B_\varepsilon
+      \]
+  \end{description}
+\end{ittproof}
+
+\begin{imp}\label{stat:contsuperpos}
+  $f, g$~--- непрерывны, $f\circ g$ определена $\Rightarrow$ $f\circ g$ непрерывна.
+\end{imp} 
+
+\begin{thrm}[Вейерштрасса]\label{thrm:weierRn}
+  Пусть $f\colon X \subset \R^n \to \R^m$, $X$~---компакт. 
+  Тогда $f\in C(x) \Rightarrow  f(X)$~--- компактно.
+\end{thrm}
+\begin{ittproof}
+  Можно рассмотреть какую-нибудь последовательность в $f(X)$ и  вытащить сходящуюся подпоследовательность
+  из её прообраза. А тогда по непрерывности образ подпоследовательности сходится к чему-то в $f(X)$.
+  А значит оно компактно.
+\end{ittproof}
+
+\begin{imp}
+  При $m=1$ $f$ ограничена и достигает своего минимума/максимума
+\end{imp}
+
+\begin{itlproof}
+  Ограниченность очевидна, а супремум и инфимум~--- предельные точки.
+\end{itlproof}
+
+\begin{defn}\label{defn:unicontRn}
+  Пусть $f\colon X \subset \R^n \to \R^m$. Тогда $f$ равномерно непрерывна на $X$, если
+  \[
+    \forall\, \varepsilon \; \exists\, \delta(\varepsilon) \colon \forall\,x,x_0\in X 
+    \;\:\| x - x_0 \| \Rightarrow \| f(x) - f(x_0) \|
+  \]
+\end{defn}
+
+\begin{thrm}[Кантора]\label{thrm:cantRn}
+  $f\in C(X), X$~--- компакт $ \Leftrightarrow$ $f$ равномерно непрерывна на $X$.
+\end{thrm}
+\begin{ittproof}
+  Так же, как и в одномерье~--- от противного; следствие принципа выбора Больцано-Вейерштрасса.
+\end{ittproof}
+
+\begin{thrm}[Больцано-Коши]\label{thrm:bolzcauchyRn}
+  Пусть $f : X\subset \R^n\to \R$, $f\in C(X)$ и $\forall\,a,b \in X $ $\exists\,\Gamma \in X \colon$
+  $\Gamma$~--- непрерывная кривая, содержащая $a, b$, и $f(a)\cdot f(b) < 0$. Тогда
+  $\exists\, c \in X \colon f(c) = 0$.
+\end{thrm}
+\begin{ittproof}
+  Следствие непрерывности композиции и одномерной теоремы Больцано-Коши.
+\end{ittproof}
+
+\begin{thrm}\label{thrm:coordfcontRn}
+  \[
+    f \in C(x_0) \Leftrightarrow \forall\, i \;\: f^i \in C(x_0)
+  \]
+\end{thrm}
+\begin{ittproof}
+  Вообще-то, свойство предела. См.~\ref{stat:limcoordRn}.
+\end{ittproof}
+
+\paragraph{Соотношение между непрерывностью по каждому аргументу и непрерывностью по совокупности переменных}
+
+Это не то же самое, что непрерывность по каждой координатной функции, надо это понимать. Я вот только
+сейчас (2016-06-09 01:43) понял это совсем хорошо.
+
+\begin{defn}\label{defn:contargRn}
+  Отображение $f_j: X\subset\R^n \to R$ непрерывно по $i$-ой координате в точке $x_0$, если 
+  \[
+    \begin{split}
+      \forall\, \varepsilon > 0 \;\: \exists\, \delta > 0 \colon &| x^i - x^i_0 | < \delta \Rightarrow \\ 
+      &\Rightarrow | f_j(x_0^1, \dotsc, x^i, \dotsc, x^n_0) - f_j(x_0^1, \dotsc, x^i_0, \dotsc, x^n_0)  | <\varepsilon
+    \end{split}
+  \]
+\end{defn}
+
+\begin{lem}\label{lem:contfandcontargRn}
+  Отображение $f_j: X\subset\R^n \to R$ непрерывно точке $x_0$, $\Rightarrow$ $f_j$ непрерывно по каждому аргументу.
+  Обратное неверно, см.~пример~\ref{exmp:partialinsuff}
+\end{lem}
+
+%\begin{thrm}\label{thrm:contargproperRn}
+  %Если $f: \R^n \to \R$ непрерывна по каждому аргументу в $U(x_0)$, то $f$ непрерывна в $x_0$.
+%\end{thrm}
+
+%\begin{ittproof}
+  %Можно поочерёдно переходить к пределам по координатам в окрестности $x_0$ и вроде выйдет. А если
+  %она изолированная, то там по определению всё непрерывно.
+%\end{ittproof}
+
+\parrange{2}{Линейное отображение и его норма}
+
+Вспомним определение из алгебры:
+\begin{defn}\label{defn:linfun}
+  Пусть $\varphi:V \to U$, $V,U$~--- линейные пространства и
+  \begin{enumerate}
+    \item $\varphi(x+y) = \varphi(x) + \varphi(y)$
+    \item $\varphi(\alpha x) = \alpha \varphi(x)$
+  \end{enumerate}
+  Тогда $\varphi$~--- линейное отображение.
+\end{defn}
+
+\begin{rem}
+  В дальнейшем $\varphi : \R^n \to \R^m$ всюду будет линейным отображением,
+  так что выберем в $\R^n$ стандартный базис и обозначим матрицу $\varphi$ в нём за $A$.
+\end{rem}
+
+\begin{defn}[Норма линейного отображения]\label{defn:normlinfun}
+  \[
+    \| A \| := \sup_{\substack{x \in \R^n \\ x\neq 0}} \frac{\|Ax\|}{\|x\|}
+  \]
+\end{defn}
+\begin{lem}\label{lem:normnormlinfun}
+  \[
+    \sup_{x \neq 0}  \frac{\|Ax\|}{\|x\|}  = \sup_{\|x'\|=1} \|Ax'\|
+  \]
+\end{lem}
+
+\begin{thrm}[Об оценке нормы линейного отображения]\label{thrm:apprnormlinfun}
+  Пусть $A = (a_{ij})$, тогда
+  \[
+    \| A \| \leqslant \sqrt{\sum_{i,j}a_{ij}^2}
+  \]
+\end{thrm}
+\begin{ittproof}
+  Неравенство Коши-Буняковского в чистом виде.
+\end{ittproof}
+
+\subparagraph{ Свойства нормы линейного отображения:}
+\begin{enumerate}
+  \item $\|A\| > 0; \; \|A\|=0 \Leftrightarrow A\equiv 0$
+  \item $\forall\,\alpha \in \R\;\: \|\alpha A\| = |\alpha| \|A\|$
+  \item $\varphi,\psi:\R^n \to \R^m$ $\|A+B\| \leqslant \|A\| + \|B\|$
+  \item $\displaystyle
+    \begin{aligned}
+      &\varphi : \R^n \to \R^m \\
+      &\psi: \R^m \to \R^p
+    \end{aligned}$, $\psi \circ \varphi : \R^m \to \R^p$ $\|BA\| \leqslant \|B\|\,\|A\|$.
+\end{enumerate}
+\begin{itlproof}
+  Основные инструменты доказательства~--- свойства нормы и неравенство $\| Ax \| \leqslant \|A\|\,\|x\|$, очевидно следующее
+  из определения~\ref{defn:normlinfun}
+\end{itlproof}
+
+\begin{stat}\label{stat:lincont}
+  Линейное отображение непрерывно
+\end{stat}
+\begin{itlproof}
+  Пусть $A$~--- матрица линейного отображения $\R^n \to \R^m$, $x_0$~--- точка сгущения.
+  Тогда при $x \to x_0$ :
+  \[
+    0 \leqslant \| Ax - Ax_0 \| = \| A(x-x_0) \| \leqslant \|A\| \, \|x - x_0\| \to 0
+  \]
+  Так можно, ведь норма отображения ограничена из~\ref{thrm:apprnormlinfun}.
+\end{itlproof}
+
+\paragraph{Дифференцируемость отображения}
+\begin{defn}\label{defn:diffRn}
+  Пусть $f:\R^n \to \R^m$. Тогда $f\in C^1(x)$ если 
+  \begin{align}
+    & \exists\, \varphi_A:\R^n \to \R^m \colon \Delta f(x,h) = \mathrm{A} h + \alpha(h)\label{eq:difffun} \\
+    & \alpha(h) = o(h) \Leftrightarrow \frac{\alpha(h)}{\|h\|} \xrightarrow[h\to 0]{} 0
+  \end{align}
+\end{defn}
+\begin{rem*}
+  Вообще, смещение $h$ тут может быть любым. Например в частных производных меняется всего одна координата.
+\end{rem*}
+
+\begin{stat}\label{stat:diffcontRn}
+  $f \in C^1(x) \Rightarrow f \in C^0(x)$
+\end{stat}
+
+\begin{stat}[Покоординатный характер сходимости]\label{stat:diffcorrd}
+  Пусть $f: X \subset \R^n \to \R^m$ , $x\in X$, $y = f(x) = (y_1,\dotsc,y_n)$, $y^i = f_i(x)$.
+  
+  Тогда 
+  \[
+    f\in C^1(x) \Leftrightarrow \forall\, i \;\: f^i \in C^1 (x^i)
+  \] и 
+  \[
+    \Delta f^i = \sum_{j=1}^{n} a_{ij}h^j + o(h^j)
+  \]
+\end{stat}
+
+\begin{itlproof}
+  Распишем равенство \eqref{eq:difffun} через координатные функции, которые вещественнозначные :
+  \[
+    \begin{cases}
+      \Delta f^1 = f^1(x + h) - f^1(x) = A^1 h + \alpha^1(x,h)&\\
+      \hdotsfor{1} &\\
+      \Delta f^m = f^m(x + h) - f^m(x) = A^m h + \alpha^m(x,h)&
+    \end{cases}
+  \]
+  где $A = (A^1, \dotsc, A^m)$~--- все очевидно линейные функции. Также очевидно, что 
+  \[
+    \frac{\alpha}{\|h\|} \to 0 \Leftrightarrow \forall\, i \frac{\alpha}{\|h\|} \to 0 
+  \]
+  Ну а тогда координатные функции дифференцируемы.
+  Если ещё вспомнить, чему равны $A^i$, получится оставшаяся часть утверждения.
+\end{itlproof}
+
+\begin{defn}[Частная производная]\label{defn:partial}
+  $f:X \subset \R^n \to R$, $x$~--- внутренняя точка $X$.
+  \[
+    \frac{\partial f}{\partial x^i}(x) 
+    := \lim_{t \to 0} \frac{f(x^1, \dotsc, x^i + t, \dotsc, x^n) - f(x^1, \dotsc, x^n)}{t}
+  \]
+\end{defn}
+
+\begin{rem*}
+  \[
+    \frac{\partial f}{\partial x^i}(x) \equiv \partial_i f \equiv \mathcal{D}_i f \equiv f_{x^i}'
+  \]
+\end{rem*}
+
+\begin{thrm}[Единственность линейной части приращения]\label{thrm:diffcoefpart}
+  $f : X \subset \R^n \to \R \in $ дифференцируема в $x$ $\Rightarrow$ 
+  \[
+    \exists\, \{a_i\} \colon \Delta f = \sum_{i=1}^{n} a_i h^i + o(h^i) , \; a_i = \partial_i f(x)
+  \]
+  То есть $a_i$ определяются однозначно.
+\end{thrm}
+\begin{ittproof}
+  Получится, если рассмотреть 
+  \[
+    h = (0, \dotsc, t, \dotsc, 0)
+  \]
+  и из определения частной производной~\ref{defn:partial} $a_i$ как раз и получаются каким надо$b$
+\end{ittproof}
+
+\begin{rem*}
+  Обратное утверждение неверно, существования всех частных производных не хватит для дифференцируемости.
+\end{rem*}
+\begin{exmp}\label{exmp:partialinsuff}
+  \[
+    f = \begin{cases}
+      1, &xy \neq 0 \\
+      0, &xy = 0
+    \end{cases}
+  \]
+\end{exmp}
+
+\begin{imp}
+  Пусть теперь $f:\R^n \to R^m$. Тогда $f^i : \R^n \to \R$. Таким образом $a_{ij} = \partial_j f^i(x)$.
+\end{imp}
+
+\paragraph{Дифференциал}
+
+\begin{defn}\label{defn:derivativeRn}
+  Производную $f'(x)$ можно теперь определить так:
+  \[
+    f'(x) := A = (a_{ij}) = 
+    \begin{pmatrix}
+      \partial_1 f^1(x) & \cdots & \partial_n f^1(x) \\
+      \vdots            & \ddots & \vdots \\
+      \partial_1 f_m(x) & \cdots & \partial_n f_m(x) \\
+    \end{pmatrix}
+  \]
+  где $A$~--- матрица Якоби
+\end{defn}
+
+\begin{defn}\label{defn:differentialRn}
+  Дифференциал $\mathrm{d}(f,h)$ определим так:
+  \[
+    \mathrm{d}f(x) := \mathrm{d}(f,h):= A h = 
+    \begin{pmatrix}
+      \partial_1 f^1(x) & \cdots & \partial_n f^1(x) \\
+      \vdots         & \ddots & \vdots \\
+      \partial_1 f_m(x) & \cdots & \partial_n f_m(x) \\
+    \end{pmatrix}\cdot
+    \begin{pmatrix}
+      h^1 \\
+      \vdots \\
+      h^n \\
+    \end{pmatrix}, \; h = \Delta x = dx
+  \]
+\end{defn}
+
+Ещё видимо тут должно быть вот это утверждение:~\ref{thrm:diffcoefpart}
+\paragraph{Достаточное условие дифференцируемости}
+
+\begin{thrm}\label{thrm:nessdiffRn}
+  Пусть $f:G \subset \R^n \to \R$, $a \in G$. Пусть также в некоторой окрестности $U(a)$ $\exists\, \partial_i f(x)$
+  и они непрерывны в $a$. Тогда $f$ дифференцируема в $a$.
+\end{thrm}
+\begin{ittproof}
+  Не успею написать нормально, но расписать приращение , а потом применить теорему Лагранжа и \emph{аккуратно} перейти к пределам\ldots
+\end{ittproof}
+
+\begin{defn}\label{defn:smoothRn}
+  Пусть $f:G\subset \R^n \to \R$. Пусть также в $G$ существуют и непрерывны все $\partial_i f$.
+  Тогда отображение $f$ называется \emph{гладким} \\ $\big(f\in C^1(G;\R^n)\big)$.
+\end{defn}
+
+\paragraph{Свойства дифференцируемых отображений}
+\begin{enumerate}
+  \item $f \in C^1 \Rightarrow f \in C^0$
+  \item $(\alpha f + \beta g)'(x) = \alpha f'(x) + \beta g'(x)$
+  \item $f, g: \R \to \R^n$ $\langle f,g\rangle' = \langle f',g\rangle + \langle f,g'\rangle $
+  \item $f, g: \R^n \to \R$  $(fg)' = f'g + fg'$
+  \item $f, g: \R \to \R^3$  $(f \times g)' = f' \times g + f \times g'$
+\end{enumerate}
+
+\begin{itlproof}
+  Дифференцируемость всего следует из того, что производная~--- матрица.
+  Все произведения тоже линейны. Получится короче, просто писать некогда.
+\end{itlproof}
+
+\paragraph{Правило цепочки}
+
+\begin{thrm}\label{stat:diffsuperpRn}
+  Пусть $f : X \subset \R^n \to \R^m$, $g : Y \subset \R^m \to \R^p$, $f(X) \subset Y$.
+  Пусть также $f \in C^1(x), g \in C^1(\,f(x)\,)$. 
+
+  Тогда $(g \circ f) \in C(x)$ и $(g\circ f)' = g'\circ f \cdot f'$. (Это таки произведение матриц)
+\end{thrm}
+
+\begin{ittproof}
+  Посмотрим на приращение:
+  \[
+    \begin{split}
+      \Delta (g \circ f) &= (g \circ f)(x+h) - (g \circ f)(x) = g(\underbrace{f(x+h)}_{y+k}) - g(\underbrace{f(x)}_{y}) \\ 
+          &= \mathrm{B} k + \beta = \mathrm{B}(\mathrm{A} h + \alpha ) + \beta 
+          = \mathrm{B}\mathrm{A} h + \underbrace{\mathrm{B} \alpha + \beta}_\gamma
+    \end{split}
+  \]
+  Здесь $B = g'(y)$, $A = f'(x)$.
+  Осталось доказать, что $\gamma = o(\|h\|)$. 
+
+  Сначала заметим, что $\mathrm{B}$~--- ограничена $\Rightarrow \mathrm{B} \alpha = \mathrm{B} o(\|h\|) = o(\|h\|)$.
+  Теперь надо пострадать. Потому что $k = 0$ бывает.
+
+  Сначала рассмотрим случай $k \neq 0$.
+  \[
+    \| k \| = \| A h + \alpha \| \leqslant \|A\| \cdot \|h\| + \|\alpha\| = O(\|h\|) 
+  \]
+  Тогда
+  \[
+    \beta = o(\|k\|) = o(O(\|h\|)) = o(\|h\|)
+  \]
+  В случае же $k = 0$ ничего существенно не изменится, можно просто доопределить $\beta(0) = 0$ 
+  (ну и правда, $\beta = (\Delta g - B\cdot k)(0) = 0$).
+\end{ittproof}
+
+\begin{imp}[Правило цепочки]\label{stat:chainrule}
+  Пусть $y^i = f^i(x^1, \dotsc, x^n)$, $z^i = f^i(y^1, \dotsc, y^m)$
+  \[
+    \frac{\partial z^i}{\partial x^j} = \sum_{k=1}^{m} \left( \frac{\partial z^i}{\partial y^k}(y) 
+        \cdot \frac{\partial y^k}{\partial x^j}(x) \right)
+  \]
+\end{imp}
+
+\paragraph{Касательные к кривым на поверхности}
+
+\begin{stat}\label{stat:tanplane}
+  Пусть $S = f(x,y)$. Это какая-то поверхность а $p = (x^0, y^0, z^0)$, $z^0 = f(x^0, y^0)$~--- точка на
+  ней. Тогда уравнение касательной плоскости(непонятно что это, но вроде из геометрии видно) можно записать как-то так
+  \[
+    z - z^0 = \frac{\partial f}{\partial x}(x^0)\cdot(x-x^0) + \frac{\partial f}{\partial y}(y^0)\cdot(y-y^0) 
+  \]
+\end{stat}
+
+
+\begin{stat}\label{stat:curvetanRn}
+  Пусть $\Gamma$~--- кривая в $S\subset\R^3$, а $S = f(x,y)$. Пусть на этой кривой есть точка 
+  $p = (x^0, y^0, z^0)$, $z^0 = f(x^0, y^0)$, а $T$~--- касательная плоскость к $S$ в $p$.
+  Тогда если $L$~---  касательная к $\Gamma$, то $L \subset T$
+\end{stat}
+
+
+\paragraph{Признак постоянства функции в области}
+\begin{defn}\label{defn:spaceRn}
+  Область~--- открытое связное множество
+\end{defn}
+
+\begin{thrm}\label{thrm:signconstRn}
+  Пусть $f:G\subset\R^n \to \R$, $f\in C^1(G)$. Пусть также в $G$ $\forall\, \partial_i f \equiv 0$.
+  Тогда $f \equiv const$
+\end{thrm}
+\begin{ittproof}
+  В области можно любые 2 точки соединить путём $\gamma : [0;1] \to \R^n$. Теперь, если рассмотреть $F = f \circ \gamma$, то
+  ситуация сведётся к одномерному случаю.
+\end{ittproof}
+
+\paragraph{Производная по вектору}
+\begin{defn}\label{defn:vecderivRn}
+  Пусть $f:G\subset\R^n \to \R$, $G$~--- открытое, $a\in G$, $v \in \R^n$. Тогда
+  \[
+    \mathcal{D}_v f(a) := \lim_{t\to 0} \frac{f(a+tv)-f(a)}{t}\text{~--- производная по вектору $v$ }
+  \]
+  (если существует, конечно)
+\end{defn}
+
+\begin{defn}\label{defn:gradRn}
+  $\grad f = \nabla f := (\partial_1 f, \dotsc, \partial_n f)$~--- градиент $f$. Вообще его в целом 
+  лучше определять как-то более инвариантней, но пока и так сойдёт.
+\end{defn}
+
+\begin{thrm}[Связь с градиентом]\label{thrm:gradvecderRn}
+  Пусть $f\in C(a)$. 
+  \[
+    \forall\, v\in \R^n \;\: \exists\, \mathcal{D}_v f(a) 
+    \wedge \bigg( \mathcal{D}_v f(a) = \langle \nabla f(a) , v \rangle \bigg)
+  \]
+\end{thrm}
+\begin{ittproof}
+  Рассмотрим $F(t) = f(x(t)) = f(a + t v)$. Тогда по правилу цепочки
+  \[
+    \mathcal{D}_v = F'(0) = \sum_{k=1}^n \frac{\partial f}{\partial x^k}(x(0) = a)\cdot \frac{\partial x^k}{\partial t} 
+    = \langle \nabla f, v\rangle
+  \]
+\end{ittproof}
+
+\begin{rem}
+  Если рассмотреть всевозможные $v:\|v\|=1$, то получится, что функция быстрей всего возрастает в 
+  направлении градиента со ``скоростью'' $\|\nabla f(a)\|$ соответственно
+\end{rem}
+
+\begin{rem}
+  $L:\langle \nabla f(a), v\rangle = 0$~--- линии уровня, эквипотенциальные поверхности например.
+\end{rem}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
