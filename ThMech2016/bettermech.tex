@@ -50,16 +50,64 @@ $\v*{f_k}(\v x) = \v{e^k} \cdot \v x$.
   \item Контравариантные координаты~--- коэффициенты разложения по базису линейного пространства.
   \item Ковариантные координаты~--- коэффициенты разложения по базису пространства линейных форм.
 \end{itemize}
+Ещё можно определить $g^{ij} = \v{e^i \cdot e^j}$, и перенести это на 
+соответствующие линейные формы. Обобщая дальше, можно вообще сказать, что $g_i^k = \delta_{ij}$.
+Тогда $g$ будет задавать действие формы на вектор. Вроде физикам это зачем-то надо.
 
-А вот теперь можно уже развлекаться с индексами.
+А после тирады выше уже развлекаться с индексами.
 
 \begin{prop}
   $\v{e^k} \cdot \v{e_j} = \delta_{kj}$
 \end{prop}
+\begin{lproof}
+  Следует из определения координатной функции, ведь $\v{e^k} \cdot \v x = \v*{f_k}(\v x)$
+\end{lproof}
 
 \begin{prop}
-  Пусть $\v r =  \xi^k \v {e_k}$ и $=\xi^k \v{e_k}$. Тогда $\xi_k = \v r \cdot \v{e_k}$
+  $\v a\cdot \v b = \sum_i a^i b_i$
 \end{prop}
 
+\begin{prop}
+  Пусть $\v r = \sum_k \xi^k \v {e_k}$ и $=\sum_k\xi_k \v{e^k}$.
+  Тогда $\xi_k = \v r \cdot \v{e_k} = \sum_j \xi^j g_{jk}$
+\end{prop}
+\begin{lproof}
+  Ну, $\v{r} \cdot \v{e_k} = \dsum_j \xi_j \, \v{e^j}\cdot \v{e_k} 
+  = \sum_j \xi_j \,\delta_{jk} = \xi_k$. Вроде всё.
+\end{lproof}
+
+Аналогичная ситуация с $\xi^k$.
+\begin{prop}
+  $\xi^k = \v{r\cdot e^k} = \sum_j \xi_j g^{jk}$.
+\end{prop}
+
+\begin{prop}
+\[
+  \v{e^k} = \sum_j g^{jk} \v{e_j}, \quad \v{e_k} = \sum_j g_{jk} \v{e^j}
+\]
+\begin{lproof}
+  Первое домножить на $\v{e^i}$, второе на $\v{e_i}$.
+\end{lproof}
+\end{prop}
+\begin{prop}
+  $\sum_{i} g^{i\ell}g_{ik} = \delta_{\ell k}$
+\end{prop}
+\begin{lproof}
+%   Дельта-символ, как и дельта-функция проявляется в сумме (или интеграле).
+  \[
+    \sum_{i} g^{i\ell}g_{ik} = \sum_i g^{i\ell} \v{e_i \cdot e_k} = \v{e^\ell}\cdot \v{e_k} =
+    \delta_{\ell k}
+  \]  
+\end{lproof}
+
+
+Как видно, когда определения безкоординатные, жызнъ прекрасна!. 
+\note{тут не опечатка, а отсылка к известной картинке \texttt{;)}}
+\appendix
+\chapter{Обозначения}
+\begin{description}
+  \item[$\v*{f}$]~--- линейная форма. \hfill$\langle$\verb+\mathrm f+$\rangle$
+  \item[$\v{x}$]~--- вектор. \hfill$\langle$\verb+\mathbf x+$\rangle$
+\end{description}
 \end{document}
 % vim:tw=100 cc=100
