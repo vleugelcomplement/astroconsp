@@ -4,7 +4,7 @@
 случае, меня.
 
 Если сильно хотите, то здесь схема почти та же -- все пдфки 
-в ветке `gh-pages`. [Тут](https://taxus-d.github.io/astroconsp/ThMech/pdf/bettermech_ebook.pdf), 
+в ветке `gh-pages`. [Тут](https://taxus-d.github.io/astroconsp/ThMech2016/pdf/bettermech_ebook.pdf), 
 короче
 
 `taxus` has no time to write detailed notes.<br/>
