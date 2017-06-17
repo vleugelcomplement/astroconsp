@@ -1,5 +1,5 @@
 %------------------------------------------------------------
-% Description : 
+% Description : Куски теормеха --- получше 
 % Author      : Iliya Tikhonenko <iliya.t@mail.ru>
 % Created at  : Fri Jun 16 18:12:20 MSK 2017
 %------------------------------------------------------------
@@ -9,12 +9,6 @@
 \graphicspath{{img/}}
 
 \makeatletter
-\let\old@v=\v
-\def\v{\@ifstar\v@star\v@choice}
-\def\v@choice#1{\ifmmode \v@vec{#1} \else \old@v{#1} \fi}
-\def\v@star#1{\v@lin{#1}}
-\def\v@vec#1{\mathbf{#1}}
-\def\v@lin#1{\mathrm{#1}}
 \makeatother
 
 \begin{document}

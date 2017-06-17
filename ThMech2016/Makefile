@@ -6,7 +6,7 @@ DISTCLEANER = $(LMK) -C
 
 SETTYPE = ../tools/settype.pl
 
-MAIN    = bettermech
+# MAIN is read from command line
 MAINT   = main_t
 
 PDFDIR  = pdf
@@ -17,6 +17,7 @@ $(shell mkdir -p $(TMPDIR)/$(PDFDIR) &>/dev/null)
 MESSAGE = $(shell git log -1 --pretty=%B)
 
 @%:
+	@test -s $(MAIN).tex || { echo "Grghm? Specify a *valid* file."; exit 1; }
 	@echo ====================
 	@echo ::  $*
 	@echo ===================
@@ -51,3 +52,6 @@ distclean:
 	$(DISTCLEANER) $(MAIN).tex
 	$(DISTCLEANER) $(MAINT).tex
 	@rm $(MAINT).tex
+
+dummy:
+	@echo $(MAIN).tex
