@@ -97,6 +97,51 @@ $\v*{f_k}(\v x) = \v{e^k} \cdot \v x$.
 
 Как видно, когда определения безкоординатные, жызнъ прекрасна!. 
 \note{тут не опечатка, а отсылка к известной картинке \texttt{;)}}
+\setcounter{paragraph}{12}
+\paragraph{Кинематический винт}
+
+При переходе между полюсами, угловая скорость не меняется, в отличие от линейной.
+Давайте это обоснуем.
+
+\begin{minipage}{0.28\linewidth}
+\vspace{1em}
+\includegraphics[scale=1]{kinscrew}
+\vspace{1em}
+\end{minipage} \hfill
+\begin{minipage}{0.68\linewidth}
+$\displaystyle
+\left\{
+\begin{aligned}
+  \v v &= \v{v_0} + \v \omega \times \v{r} = \v{v_0'} + \v{\omega'} \times \v{r'}\\
+  \v {v_0'} &= \v{v_0} + \v \omega \times \ov{->} {OO'} \\
+  \v r' &= -\ov{->} {OO'} + \v r \\
+\end{aligned}\right. \Rightarrow 
+\begin{aligned}
+  \v\omega \times (\v r - \ov{->} {OO'} ) &= \v{\omega '} \times ( - \ov{->} {OO'} + \v r) \\
+                                          &\Leftrightarrow \\
+  (\v \omega - \v {\omega'} ) \times ( r- \ov{->}{OO'} ) &= 0
+\end{aligned}
+$
+\end{minipage}
+Смещаться можно как угодно, так что угловые скорости равны.
+
+Теперь про кинематический винт. При обычном винтовом движении, $\v v_0 \coori \v\omega $,
+все точки на оси просто движутся со скоростью $\v v_0$, для них $\v \omega \times \v v =0$.
+
+Теперь найдём множество таких точек, что $\v w \times \v v = 0$ в произвольном случае.
+\[
+  \v \omega \times \v v_0 + \v \omega \times (\v \omega \times \v r) = 0
+\]
+Первый член~--- не изменяется в ходе перемещений по телу при зафиксированном времени.
+Если продифференцировать по $\v r$, то $\v \omega \times (\v \omega \times \v {\del r}) = 0$, 
+то есть приращение $r$ всегда $\coori \v \omega $. Так что это прямая. Назовём её $\ell_k$.
+
+Собственно, пара $(\omega, \v v)$, где $\v v\v =v(\v r), \v r \in \ell_k$ и называется кинематическим
+винтом. Если перенести полюс на $\ell_k$, то движение тела сильно похоже на винтовое.
+
+\paragraph{Плоское движение}
+не сюда.
+
 \appendix
 \chapter{Обозначения}
 \begin{description}

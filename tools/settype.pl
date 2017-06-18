@@ -16,6 +16,7 @@ while (<$texin>) {
     if (/^\\documentclass/) {
         my ($cmd, $opts, $cls) = /\\(\w+)(?:\[((?:\d|\w|,)+)\])?\{(\w+)\}/;
         if (defined($opts)) {
+            $opts =~ s/draft/final/;
             my @opts = split /,/, $opts;
             $opts[$#opts] = $type;
             $opts = join ",", @opts;

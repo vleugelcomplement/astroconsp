@@ -87,12 +87,46 @@
     \begin{itemize}
       \item $\v {v_{r_n}} 
         = \sum_{k=0}^{n-1} \left( \v{v_k} + \v{\omega_k} \times \ov{->}{O_kO}\right) 
-        + \sum_{k=0}^{n-1} \v{\omega_k} \times \v{r_0}$
+        + \sum_{k=0}^{n-1} \v{\omega_k} \times \v{r_0}$, $O_0 = O$.
       \item $\v{V} = \sum_{k=0}^{n-1} \left( \v{v_k} + \v{\omega_k} \times \ov{->}{O_kO}\right) $
       \item $\Omega  = \sum_{k=0}^{n-1} \v{\omega_k} \quad\Rightarrow \v {v_{r_n}} 
         = \v V + \v\Omega \times \v{r_0}$
     \end{itemize}
   \item Кинематический винт
+    \begin{itemize}
+      \item $\v \omega \times \v v_0 + \v \omega \times (\v \omega \times \v r)= 0$
+    \end{itemize}
+  \item Плоское  движение
+    \begin{itemize}
+      \item $0 = \v v_0 + \v \omega \times \v r_c $ 
+      \item $\v r_* = \left(-\frac{v_{0y}}{\omega}, + \frac{v_{0x}}{\omega}\right)$~---подвижная 
+        центроида
+      \item $\v r_*' = \v r_* + \v r_0 $~--- неподвижная центроида
+      \item $\omega = \frac{|\v v_B - \v v_A|}{|\v r_B - \v r_A|}$
+      \item $\omega = \frac{|\v v_a \times \v r_{A*}|}{r_{A*}^2} $ и то же с $B$.
+      \item центр ускорений: \quest
+    \end{itemize}
+  \item Динамика вращения ТТ
+    \footnote{Здесь по-хорошему надо меру на многобразии вводить}
+    \begin{itemize}
+      \item $M = {\dint_\tau  1 \, \del \mu(r) }$
+      , $\v r_c = \frac{\dint_\tau \v r \, \del \mu(r)}{\dint_\tau  1 \, \del \mu(r) } $
+      \item $\v {\ell} = \int_\tau (\v r \times (\v \omega \times \v r) \, \del \mu$,
+        $\v \ell' = \int_\tau (\v R \times \v v) \, \del \mu$
+      \item $
+        \begin{aligned}
+          \v \ell' &= \v R_0 \times \v v_0 \, M + \v r_c \times \v v_0 \, M + \v R_0 
+          \times (\v \omega \times \v r_c) M + \ell
+        \end{aligned}
+        $
+      \item $T  = \frac 1 2 \int_\tau (\v \omega \times \v r)^2 \, \del \mu$,
+            $T' = \frac 1 2 \int_\tau {\v v}^2 \, \del \mu$
+      \item $T' = T + \frac 1 2 M \v v_0^2 + M \v v_0 \cdot (\v \omega \times \v r_c)$
+      \item $\ell_\omega = \omega J_\omega  $
+      \item $\v \ell = \ov^ J \v \omega = \sum_{j,k} J_{jk} \omega_k \,\v i_j$, 
+        $J_{ik} = \int_\tau (r^2 \delta_{jk} - x_j x_k) \, \del \mu $
+      \item $T = \frac{J_\omega \omega ^2}{2} = \frac{\ov^ J \, \v \omega \cdot \v \omega}{2} $
+    \end{itemize}
   \end{enumerate}
 \end{multicols*}
 \end{document}
