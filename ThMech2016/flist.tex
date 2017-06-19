@@ -7,18 +7,23 @@
 \usepackage{tmath}
 \usepackage{cussymb}
 \usepackage{multicol}
+\usepackage{bm}
 \geometry{
-  left=1cm,
-  right=1cm,
-  top=1cm,
-  bottom=1cm
+  left=0.7cm,
+  right=0.7cm,
+  top=0.7cm,
+  bottom=0.7cm
 }
 \graphicspath{{img/}}
 \everymath{\displaystyle}
+\usepackage{endnotes}
+\renewcommand{\footnote}{\endnote}
+\setlist[enumerate,1]{leftmargin=0pt, labelwidth=*}
 \setlist[itemize,1]{leftmargin=0cm, noitemsep, label=$\triangleright$}
-
+\setlength{\columnsep}{2em}
+\setlength{\columnseprule}{0.1pt}
 \begin{document}
-\begin{multicols*}{3}
+\begin{multicols*}{4} \raggedright
 \begin{enumerate}
   \item 
     \begin{description}
@@ -31,29 +36,55 @@
   \item В криволинейных координатах
     \begin{itemize}[$\triangleright$]
       \item $\v v = \sum_k \dot q^k \v {e_k}$
-      \item $\v w = \sum_k \ddot q^k \v {e_k} + \sum_{k,i} \dot q^k \dot q^i \, \pder{\v{e_k}}{q^i}$
+      \item $\v w = \sum_k \ddot q^k \v e_k + \sum_{k,i} \dot q^k \dot q^i \, \pder{\v e_k}{q^i}$
       \item ${w^j} = \ddot q^j + \sum_{k,i} \dot q^k \dot q^i \, \Gamma_{ki}^j$
-      \item $ \Gamma_{j,\,ki} = \pder{\v{e_k}}{q^i}\cdot \v{e_j}$~--- I рода
-      \item $ \Gamma_{ki}^j \;\,\,= \pder{\v{e_k}}{q^i}\cdot \v{e^j}$~--- II рода
+      \item $ \Gamma_{j,\,ki} = \pder{\v e_k }{q^i}\cdot \v e_j$~--- I рода
+      \item $ \Gamma_{ki}^j \;\,\,= \pder{\v e_k }{q^i}\cdot \v e^j$~--- II рода
       \item $w_\ell = 
         \fder{}{t} \left(\pder{}{\dot q^\ell}\left(\frac{\dot{\v r}^2}{2}\right)\right) 
         - \fder{}{q^\ell} \left(\frac{\dot{\v r}^2}{2}\right)$
     \end{itemize}
   \item Про углы Эйлера \\
+    \noindent
     \includegraphics[width=1.0\linewidth]{euler_ang.pdf}
 
     \begin{itemize}[$\triangleright$]
-      \item $\v \omega = \dot\psi\,\v{i_3'} + \dot\theta\,\v{i_1''} + \dot\varphi\,\v{i_3} $
-      \item $\v R (t) = \v{R_0} (t) + \v r(t)$
-      \item $\v v = \v {v_0} + \v{\omega \times r} + \v{v_r}$
+      \item $\v \omega = \dot\psi\,\v i_3'  + \dot\theta\,\v i_1''  + \dot\varphi\,\v i_3  $
+      \item $\v R (t) = \v R_0  (t) + \v r(t)$
+      \item $\v v = \v {v_0} + \v \omega \times \v r  + \v v_r $
       \item $\v w = \v w_0 + \dot{\v \omega} \times \v r 
-        + \v \omega \times (\v \omega \times \v r) + 2 \v \omega \times \v{v_r} + \v{w_r}$
+        + \v \omega \times (\v \omega \times \v r) + 2 \v \omega \times \v v_r  + \v w_r $
     \end{itemize}
-  \item  
-  \item  
-  \item  
-  \item  
-  \item В поле центральной силы $\neg$
+  \item Динамика точки и систем точек
+    \begin{itemize}
+      \item $\v r_k = \v r_k (t, \{c_\ell\})$, $k\in 1 \intrng N$, $\ell \in 1 \intrng 6N$
+      \item $m_k \ddot{\v r_k} = \v F_k$, $m w_\ell= Q_\ell$
+      \item $\fder{}{t} \left(\pder{T}{\dot q^\ell}\right) 
+        - \fder{T}{q^\ell}  = Q_\ell$
+      \item $\v r_c = \frac{\sum_k m_k \v r_k}{\sum_k m_k} $, $\sum_k m_k = M$
+    \end{itemize}
+  \item Закон сохранения импульса
+    \begin{itemize}
+      \item $\v p = \sum_k \v p_k$, $\v p_k = m_k \v v_k$
+      \item $\v F = \sum_k \left( \v F_k^{(e)} + \v F_k^{(i)}\right)$
+      \item $\fder{\v p}{t} = \sum_k \v F_k^{(e)}$. Все сиды взаимодействия вымерли.
+    \end{itemize}
+  \item  Момент импульса
+    \begin{itemize}
+      \item $\v \ell = \sum_k \v\ell_k $, $\v \ell_k = \v r_k \times \v p_k $
+      \item $\v L = \sum_k \v r_k \times \v F_k^{(e)} + \sum_k \v r_k \times \v F_k^{(i)}  $
+      \item $\v F_{kj}^{(i)} = \lambda (\v r_{kj}) \v r_{kj}$ $ \Rightarrow $ 
+        $\fder{\v \ell}{t} = \sum_k \v L_k^{(e)}$.
+    \end{itemize}
+  \item Энергия
+    \begin{itemize}
+      \item $T = \sum_k T_k$, $T_k = \frac{m_k (\v v_k \cdot \v v_k)}{2}$
+      \item $\delta A_k = \v F_k \cdot \del \v r_k$, 
+        $A = \int_\Gamma \delta A$, а вообще-т интеграл от формы.
+      \item $\del T = \delta A_k^{(e)} + \delta A_k^{(i)} $
+      \item $\del E = \del \left(T + \Pi^{(e)} + \Pi^{(i)}\right) = \delta A_{\text{не\,пот}}$
+    \end{itemize}
+  \item В поле центральной силы$\neg$
     \begin{itemize}[$\triangleright$]
       \item $u = 1/\rho$.
       \item  Формулы Бине \\
@@ -67,15 +98,15 @@
     \begin{itemize}
     \raggedright
       \item $\omega =0$~--- поступательное
-      \item $\v {v_0}, \v {w_0} =0, \omega = \dot \varphi \v{i_3}$~--- вращение вокруг неподвижной оси
-      \item $\v {v_0} \coori \v{\omega}$~--- винт
+      \item $\v {v_0}, \v {w_0} =0, \omega = \dot \varphi \v i_3 $~--- вращение вокруг неподвижной оси
+      \item $\v {v_0} \coori \v \omega $~--- винт
       \item \quest Как попало вокруг неподвижной точки \footnote{У нас тут вроде косяк, 
         а дальше снова как здесь \sour} $\neg$ 
         $\begin{aligned}
           \v \omega 
-          &= \v{i_1} (\dot \psi \sin \theta \sin \varphi + \dot \theta  \cos \varphi ) + \\
-          &+ \v{i_2} (\dot \psi \sin \theta \cos \varphi - \dot \theta \sin \varphi ) + \\
-          &+ \v{i_3} (\dot \psi \cos \varphi + \dot \varphi )
+          &= \v i_1  (\dot \psi \sin \theta \sin \varphi + \dot \theta  \cos \varphi ) + \\
+          &+ \v i_2  (\dot \psi \sin \theta \cos \varphi - \dot \theta \sin \varphi ) + \\
+          &+ \v i_3  (\dot \psi \cos \varphi + \dot \varphi )
       \end{aligned}$
     \end{itemize}
   \item Скорость и ускорение точек твердого тела
@@ -86,11 +117,11 @@
   \item Сложение движений ТТ
     \begin{itemize}
       \item $\v {v_{r_n}} 
-        = \sum_{k=0}^{n-1} \left( \v{v_k} + \v{\omega_k} \times \ov{->}{O_kO}\right) 
-        + \sum_{k=0}^{n-1} \v{\omega_k} \times \v{r_0}$, $O_0 = O$.
-      \item $\v{V} = \sum_{k=0}^{n-1} \left( \v{v_k} + \v{\omega_k} \times \ov{->}{O_kO}\right) $
-      \item $\Omega  = \sum_{k=0}^{n-1} \v{\omega_k} \quad\Rightarrow \v {v_{r_n}} 
-        = \v V + \v\Omega \times \v{r_0}$
+        = \sum_{k=0}^{n-1} \left( \v v_k  + \v \omega_k  \times \ov{->}{O_kO}\right) 
+        + \sum_{k=0}^{n-1} \v \omega_k  \times \v r_0 $, $O_0 = O$.
+      \item $\v V  = \sum_{k=0}^{n-1} \left( \v v_k  + \v \omega_k  \times \ov{->}{O_kO}\right) $
+      \item $\v \Omega   = \sum_{k=0}^{n-1} \v \omega_k  \quad\Rightarrow \v {v_{r_n}} 
+        = \v V + \v\Omega \times \v r_0 $
     \end{itemize}
   \item Кинематический винт
     \begin{itemize}
@@ -114,10 +145,8 @@
       \item $\v {\ell} = \int_\tau (\v r \times (\v \omega \times \v r) \, \del \mu$,
         $\v \ell' = \int_\tau (\v R \times \v v) \, \del \mu$
       \item $
-        \begin{aligned}
-          \v \ell' &= \v R_0 \times \v v_0 \, M + \v r_c \times \v v_0 \, M + \v R_0 
+          \v \ell' = \v R_0 \times \v v_0 \, M + \v r_c \times \v v_0 \, M + \v R_0 
           \times (\v \omega \times \v r_c) M + \ell
-        \end{aligned}
         $
       \item $T  = \frac 1 2 \int_\tau (\v \omega \times \v r)^2 \, \del \mu$,
             $T' = \frac 1 2 \int_\tau {\v v}^2 \, \del \mu$
@@ -126,8 +155,94 @@
       \item $\v \ell = \ov^ J \v \omega = \sum_{j,k} J_{jk} \omega_k \,\v i_j$, 
         $J_{ik} = \int_\tau (r^2 \delta_{jk} - x_j x_k) \, \del \mu $
       \item $T = \frac{J_\omega \omega ^2}{2} = \frac{\ov^ J \, \v \omega \cdot \v \omega}{2} $
+      \item $L = \fder{\ell}{t}$
+      \item Динамические уравнения Эйлера $\neg$ \\
+        $
+        \begin{aligned}
+          L_a &= J_a \dot \omega _a + (J_c - J_b)\, \omega_c \omega_b \\ 
+          L_b &= J_b \dot \omega _b + (J_a - J_c)\, \omega_a \omega_c \\ 
+          L_c &= J_c \dot \omega _c + (J_b - J_a)\, \omega_b \omega_a 
+        \end{aligned}
+        $
+      \item Кинематические уравнения Эйлера $\neg$ \\ 
+        $
+        \begin{aligned}
+          \label{eq:kineuler}
+          \omega_a &= (\dot \psi \sin \theta \sin \varphi + \dot \theta  \cos \varphi )  \\
+          \omega_b &= (\dot \psi \sin \theta \cos \varphi - \dot \theta \sin \varphi )  \\
+          \omega_c &= (\dot \psi \cos \varphi + \dot \varphi )
+        \end{aligned}
+        $
     \end{itemize}
-  \end{enumerate}
+  \item Вращение вокруг неподвижной оси$\neg$
+    \begin{itemize}
+      \item Ну, та скучная системка 
+    \end{itemize}
+  \item $L = 0$
+  \item Сила всего одна и приложена к центру масс
+  \item \underdev 
+  \item \underdev 
+  \item \underdev 
+  \item Принцип Даламбера-Лагранжа: \\
+    Суммарная работа сил инерции и активных сил по виртуальным перемещениям равна нулю:
+    $
+      (M \ddot{\v y} - \v Y ) \cdot \delta \v y = 0
+    $
+  \item При варьировании с фиксированными концами $\Bigg(\delta t_1 = \delta t_0 = 0$, 
+    $
+    \begin{aligned}
+      \delta q^\ell |_{t_1} = 0 \\ \delta q^\ell |_{t_2} = 0 
+    \end{aligned}
+    \Bigg)
+    $
+    $\delta S = 0 \Leftrightarrow \fder{}{t}\, \left(\pder{L}{\dot q^l}\right) - \pder{L}{q^l} = 0$
+  \item Интегральный принцип Лагранжа:
+    \begin{itemize}
+      \item $\delta W = \delta \int_{t_0}^{t_1} 2 T$, 
+        $T = \tfrac{M}{2} \sum_{j,k} g_{ij} \dot q^j \dot q^k$
+      \item $\delta q_0^\ell = \delta q_1^\ell = 0 \Rightarrow \Delta q|_{t_1} = \Delta q |_{t_0}$,
+        $\Delta q^\ell = \delta q^\ell + \dot q^\ell \delta t$ (полная вариация)
+      \item Лишь при этом условии работает принцип выше
+    \end{itemize}
+  \item $\pder{S}{t} + H\left(q^\ell ,\pder{S}{q^\ell}, t\right) = 0$
+  \item $
+    \left\{
+      \begin{aligned}
+        \label{eq:hamilt}
+        \dot q^k &= \pder{H}{p_k} \\
+        \dot p_k &= - \pder{H}{q^k} + Q_k
+      \end{aligned}
+    \right.
+    $
+  \item Теорема Якоби \\
+    \hspace{-1.2em}$ 
+    \left\{
+      \begin{aligned}
+        \label{eq:jacobth}
+        &\pder{S}{t} + H\left(q^\ell ,\pder{S}{q^\ell}, t\right)= 0, \\
+        &\det\left(\pdder{S}{q^l}{a^p}\right) \neq 0\quad\Rightarrow~\\ 
+        &p_\ell = \pder{S}{q^\ell}, \; b_k = \pder{S}{a^k}\\
+          &a_k, b_k \text{~--- const}
+      \end{aligned}
+    \right.~
+    \left\{
+      \begin{aligned}
+        \label{eq:hamilt}
+        \dot q^k &= \pder{H}{p_k} \\
+        \dot p_k &= - \pder{H}{q^k}
+      \end{aligned}
+    \right.
+    $
+  \item Инварианты
+    \begin{itemize}
+      \item Фазовый объём
+      \item Жесть
+    \end{itemize}
+  \item \underdev
+\end{enumerate}
+
+\theendnotes
+
 \end{multicols*}
 \end{document}
 % vim:tw=100 cc=100
