@@ -36,7 +36,7 @@
 %% Fallback                                  
 \DeclareOption*{
     \ClassWarning{notes}{'Notes' class don't know about '\CurrentOption'}
-    \PassOptionsToClass{\@baseclass}
+    \PassOptionsToClass{\CurrentOption}{\@baseclass}
 }
 
 % \ExecuteOptions{10pt}
@@ -53,7 +53,7 @@
     bottom=1.5cm,
     bindingoffset=0cm
   }
-}%
+}{}%
 \iftoggle{timbord}{
   \geometry{
     landscape,
@@ -67,7 +67,7 @@
   \RequirePackage{cmbright}
 % \renewcommand\bfseries{\protect \usefont{T2A}{cmss}{bx}{n}}
   \renewcommand\bfdefault{sb}
-}%
+}{}%
 \iftoggle{ebook}{
   \geometry{a4paper,top=2cm,bottom=2cm,right=3cm,left=3cm}
 }{}

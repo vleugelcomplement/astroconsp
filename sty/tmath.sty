@@ -12,7 +12,7 @@
 \let\dddot\relax
 \let\ddddot\relax
 %-----%<-------
-\RequirePackage[intlimits]{amsmath}
+\RequirePackage{amsmath}
 \RequirePackage{amsfonts,amssymb}
 \RequirePackage{mathtools}
 \RequirePackage{esint} %AAA overrides my limits setup :(
@@ -31,8 +31,10 @@
   \EqCase{^}{\widehat{#2}}      {
   \EqCase{0}{\overset\circ{#2}} {
   \EqCase{v}{\check{#2}}        {
+  \EqCase{->}{\overrightarrow{#2}} {
+  \EqCase{<-}{\overleftarrow{#2}} {
   \PackageError{tmath}{Undefined option to ov: `#1'}
-}}}}}}
+}}}}}}}}
 
 
 \newcommand*\und[2]{
@@ -97,17 +99,25 @@
 \providecommand{\xRightarrow}[2][]{\mathop{\Longrightarrow}\limits_{#1}^{#2}}
 \providecommand{\xequal}[2][]{\mathop{=}\limits_{#1}^{#2}}
 
+%% Differentiation
 \newcommand\del{\ensuremath\mathrm{d}}
-\newcommand\fder[2]{\ensuremath \frac{\del #1}{\del #2}}
-\newcommand\pder[2]{\ensuremath \frac{\partial #1}{\partial #2}}
-\newcommand\pdder[3]{\ensuremath \frac{\partial^2 #1}{\partial #2 \partial #3}}
+\newcommand\gen@der@fr[4][\relax]{
+  \ensuremath 
+  \ifx#1\relax \frac{#4 #2}{#4 #3}
+  \else        \frac{{#4}^{#1} #2}{#4 {#3}^{#1}}
+  \fi
+}
+\newcommand\pder[3][\relax]{\gen@der@fr[#1]{#2}{#3}{\partial}}
+\newcommand\fder[3][\relax]{\gen@der@fr[#1]{#2}{#3}{\del}}
 
-
+\newcommand\pdder[3]{\ensuremath \frac{\partial^2 #1}{\partial #2 \, \partial #3}}
+\newcommand\fdder[3]{\ensuremath \frac{\del^2 #1}{\del #2 \, \del #3}}
 
 % make dots a bit more visible
 \renewcommand*{\dot}[1]{\accentset{\mbox{\bfseries .}}{#1}}
 \renewcommand*{\ddot}[1]{\accentset{\mbox{\bfseries .\hspace{-0.1ex}.}}{#1}}
 \renewcommand*{\dddot}[1]{\accentset{\mbox{\bfseries .\hspace{-0.1ex}.\hspace{-0.1ex}.}}{#1}}
+
 % probability theory
 \DeclareMathOperator{\Exp}{M} 
 \DeclareMathOperator{\Var}{D} 
@@ -146,5 +156,11 @@
 \DeclareMathOperator\rot{rot}
 %\DeclareMathOperator\grad{grad} %exists already
 
+\let\old@v=\v
+\def\v{\@ifstar\v@star\v@choice}
+\def\v@choice#1{\ifmmode \v@vec{#1} \else \old@v{#1} \fi}
+\def\v@star#1{\v@lin{#1}}
+\def\v@vec#1{\boldsymbol{#1}}
+\def\v@lin#1{\mathrm{#1}}
 
 
