@@ -36,6 +36,7 @@
 # bib[la]tex stuff
 *.bbl
 *.blg
+*.ent
 
 
 # OS generated files #

@@ -199,8 +199,8 @@
 \newtheorem{rem}{Замечание}[defn]
 \newtheorem*{rem*}{Замечание}
 
-\@addtoreset{imp}{lem}
-\@addtoreset{imp}{stat}
+% \@addtoreset{imp}{lem}
+% \@addtoreset{imp}{stat}
 \counterwithin*{rem}{thrm}
 \counterwithin*{equation}{paragraph}
 
