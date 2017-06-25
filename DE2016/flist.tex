@@ -1,0 +1,173 @@
+%------------------------------------------------------------
+% Description : Список всех формулок в методичке Басова
+% Author      : Iliya Tikhonenko <iliya.t@mail.ru>
+% Created at  : Thu Jun 22 14:50:30 MSK 2017
+%------------------------------------------------------------
+\documentclass[timbord]{longnotes}
+\geometry{
+  paperheight=20cm
+}
+\usepackage{tmath}
+\usepackage{cussymb}
+\graphicspath{{img/}}
+\DeclareMathOperator\Lip{Lip}
+\def\Liploc{\Lip^{\rm loc}}
+
+\begin{document}
+\newcounter{chn}\setcounter{chn}{1}
+\newcounter{eqn}\setcounter{eqn}{0}
+\def\nch{\stepcounter{chn}\setcounter{eqn}{0}}
+\newcommand{\skeq}[1][\relax]{
+  \ifx #1\relax \stepcounter{eqn}
+  \else \addtocounter{eqn}{#1}
+  \fi
+}
+\everymath{\displaystyle}
+\def\seteq#1{\setcounter{eqn}{#1}}
+\newsavebox{\smtri}
+\savebox{\smtri}{\raisebox{0.4ex}{\scalebox{0.5}{$\blacktriangleright$}}}
+\begin{list}
+{\stepcounter{eqn}(\thechn.\theeqn)}
+{
+  \setlength{\labelwidth}{2cm}
+  \setlength{\labelsep}{1em}
+  \renewcommand{\makelabel}[1]{#1 \usebox{\smtri}}
+}
+
+\skeq[4]
+  \item $\psi (x) = \psi(x_j) + f(x_j, \psi(x_j))\, (x-x_j)$
+  \item $\psi'(x) = f(x_j, \psi(x_j))$ 
+    \hfill ($j\in (1-N) \intrng (N-1)$)
+  \item $\psi (x) = \psi(x_0) + \int_{x_0}^x \psi'(s) \, \del s$
+  \item $|\psi'(x) - f(x,\psi(x))| \leqslant \varepsilon$
+    \hfill $\forall x\in [a;b]$
+\skeq
+  \item $\exists\, \lambda, \mu \geqslant 0 \that 
+    \forall\, x_0 , x\in \langle a,b \rangle \holds 
+    0 \leqslant h(x) \leqslant\lambda+
+    \mu \left|\int_{x_0}^x h(s) \,\del s \right|$
+  \item $h(x) \leqslant \lambda e^{\mu |x-x_0|}$
+\skeq
+  \item $A = \{(x,y) \mid a<x<b, \varphi_1(x) <y<\varphi_2(x)\}$
+  \item $\varphi(x,C) = y(x,\zeta, C)$
+    \hfill $(\zeta,C) \in \ov-{A}$
+  \item $y_0 = y(x_0, \zeta, C)$
+\nch\nch\nch\nch
+  \item $y' = P(x) y$, $P = \{p_{ij}(x)\}_{ij=1}^n$ 
+  \item[(5.1$^m$)] $\Theta' = P(x) \Theta$ 
+  \item[(5.1$^c$)] $y' = A y$ 
+  \item[(5.1$^p$)] $y' = A(x)\, y$ \hfill $A(x+\omega) = A(x)$
+  \item $y = P(x) z$ \hfill $P(x) = \Phi(x) e^{-Rx}$
+  \item $z' = Rz$
+  \item $y' = P(x)y+q(x)$
+  \item $z' = P(x) z$
+    \nch
+  \item $\dot x = X(x)$
+  \item $\forall\, \tau \in \R \holds \psi=\varphi(t+ \tau, t_0 + \tau, p) 
+    \overset{(a;b)}{\equiv} \varphi(t,t_0,p)$
+  \item $\forall\, t_1 \in (\alpha,\beta)\holds \varphi (t-t_0,p) \overset{(a;b)}{\equiv} 
+    \varphi\bigl(t-t_1, \varphi(t_1 - t_0, p)\bigr)$
+  \item $\fder{x_2}{x_1} = \frac{X_2(x)}{X_1(x)}, \dotsc, \fder{x_n}{x_1} =\frac{X_n(x)}{X_1(x)}$
+  \item $\forall\, \varepsilon > 0, T>0 \holds \exists\, t^* > T \that
+    \|\varphi(t^*-t_0,p)-q\|<\varepsilon$ \hfill 
+    \skeq
+  \item $\left\{\begin{aligned}
+      \dot x_1 &= -x_2 + x_1(x_1^2 + x_2^2 - 1) \\
+      \dot x_2 &= x_1 + x_2(x_1^2 + x_2^2 - 1)  
+    \end{aligned}\right.$
+  \item $\dot r = r(r^2 -1),\; \dot \varphi =1$
+  \item $
+    \begin{aligned}
+      r(t,r_0, \varphi_0) &= (1-c_0 e^{2t})^{-1/2}\\
+      \varphi(t,r_0, \varphi_0) &= \varphi_0 + t
+    \end{aligned}
+    $
+  \item $\dot y = Ay$ \hfill $A\in M_{2,2} (\R)$ \skeq
+  \item $\dot z = J z$
+  \item $z_1(t) = c_1 e^{\lambda_1t}, z_2(t) = c_2 e^{\lambda_2t}$
+  \item $\dot z = J z$, 
+    $J = 
+    \begin{pmatrix}
+      \lambda_1 & 0 \\ 0 & \ov-\lambda_1
+    \end{pmatrix}$ $ \Rightarrow $
+    $\left\{ 
+      \begin{aligned}
+        \dot z_1 &= (\alpha + i \beta)z_1 \\ \dot z_2 &= (\alpha - i \beta)z_2 
+      \end{aligned}
+    \right.$ \hfill $\beta >0$ 
+  \item $z = Cu$, $C = \begin{pmatrix} 1&i\\1 & -i \end{pmatrix}$
+  \item $\dot u = J_R u$, $J_R = 
+    \begin{pmatrix}
+      \alpha & -\beta \\
+      \beta &  \alpha \\
+    \end{pmatrix}$
+  \item $y = SC u$
+  \item[(*)] $\dot r = \alpha r, \; \dot\varphi  = \beta $ \hfill(После полярной замены)
+    \nch
+  \item $\dot x = f(t,x)$
+  \item $\dot y = g(t,y)$
+  \item $\dot y = P(t) y + Y(t,y)$
+  \item $\dot y = P(t)y$
+  \item $\dot y = Ay + Y(t,y)$ \hfill $\frac{\|Y(t,y)\|}{\|y\|} \overset{[t_0;\infty)}\unito 0 $
+  \item $\|y(t)\| \leqslant n \left\|e^{A(t-t_0)}\right\|\, \|y^0\| + 
+    \int_{t_0}^t n \, \left\|e^{A(t-s)}\right\| \, \|Y(s,y(s)\|\, \del s$
+  \item $\|y(t)\| \leqslant n K \|y^0\|\, e^{-(\lambda- \varepsilon_0) \, (t-t_0)}$
+    \skeq[3]
+  \item $\dot x =f(t,x) \; f \in C(G) \; f \in \Liploc_x(G)$
+  \item $\fder{V(t,x(t))}{t} \equiv \mathrm D V(t,x(t))$ 
+    \nch
+  \item $\dot x = Ax + X(x)$
+  \item $x= Sy+f(y)$
+  \item $\dot y = By + Y(y)$
+  \item $B =  S^{-1} A S$
+  \item $\pder fy B y - Af + SY = X(Sy + f) - \pder{f}{y} Y$
+  \item $x = Sz$
+  \item $z = y + h(y)$
+  \item $\dot z= Jz+Z(z)$
+  \item $\dot z_i = \lambda_i z_i + \sigma_i z_{i-1} + Z_i(z)$
+  \item $z_i = y_i + h_i(y)$
+  \item $\dot y_i = \lambda_i y_i + \sigma_i y_{i-1} + Y_i(y)$
+  \item [*] $|p +q| = |p| + |q|$ \hfill{\flame}
+  \item $\begin{aligned}
+      &\left(\sum_j p_j \lambda_j - \lambda_i\right) h_i^{(p)} + Y_i^{(p)} 
+      =  \bigl\{Z_i(y + h) \bigr\}^{(p)} + \sigma_i h_{i-1}^{(p)} - \\ 
+      &- \sum_j \sigma_j (p_j + 1) h_j ^{(p-e_{j-1}+e_j)} 
+      - \sum_j \sum\limits_{|q|=2}^{|p|-1}(p_j - q_j +1) h_i^{(p-q+e_j)} Y_j^{(q)} 
+    \end{aligned}$
+  \item $\delta_{pi}h_i ^{(p)} + Y_i^{(p)} = \ov~{Y_i}^{(p)}$
+  \item $\delta_{pi} = \langle p-e_i, \lambda \rangle$
+  \item $h_i^{(p)} = \delta_{pi}^{-1} (\ov~{Y}_i^{(p)} - Y_i ^{(p)})$
+  \item $Y^{(p)} = \ov~{Y}_i^{(p)}$ \hfill $\delta_{pi}= 0$
+  \item $\dot x = Ax + X(x)$, $\lambda_{1,2} = \pm i \beta$ \hfill $\beta >0, A,X\colon\cdot\to\R$
+  \item $\dot z= Jz + Z(z)$, $J = \left(\begin{matrix}
+      i \beta & 0 \\ 0& -i \beta
+  \end{matrix}\right)
+  $
+  \item $z_2 = \ov- z_1$, 
+    $Z_2(z_1, z_2) = \ov-{Z}_1 (z_2, z_1) \Leftrightarrow Z_2^{(p_1,p_2)} = \ov-Z_1^{(p_2, p_1)}$
+  \item $\dot u = J_R u + U(u)$,
+    $J = \left(
+      \begin{matrix}
+        0 & -\beta \\ \beta & 0 
+      \end{matrix}
+    \right)$ \hfill $\alpha = 0$
+  \item $\dot y = J+Y$ \hfill $\beta >0$
+  \item $Y_1 = \sum_{r=1}^\infty Y_1^{(r+1,r)} y_1^{r+1} y_2 ^{r}$, \quad 
+    $Y_2 = \sum_{r=1}^\infty Y_2^{(r,r+1)} y_1^{r} y_2 ^{r+1}$
+  \item $y_2 = \ov-y_1$, $Y_2 = \ov-Y_1$
+  \item $\dot y_1 = i \beta y_1 + Y_1^0 (y_1,y_2)$ \hfill $y_2 = \ov-y_1$
+  \item НЕТ
+  \item $z=y + h(y)$, $h_1 = \ov-h_2$ \hfill $y_1 = \ov- y_2$
+  \item $i \beta (p_1 - p_2 -1)h_1^{(p_1,p_2)} + {\left(Y_1^0\right)}^{(p_1,p_2)} =
+    \{Z_1(y+h)\}^{(p_1,p_2)} - \Phi_1$ \\
+    $\Phi_1^{(p)} 
+    = \sum_{r=1}^{p^*} h^{(p_1-r,p_2-r)}\left(( p_1+p_2 -2r) \Re Y_1^{(r+1,r)} + i (p_1-p_2) \Im
+    Y_1^{(r+1,r)}\right)$ \\
+    $p^* = \min\left\{p_1,p_2, \frac{p_1+p_2}2-1\right\}$
+  \item $\Phi_1^{(p)} = i(p_2-p_1)\sum_{r=1}^{p^*} h_1(p_1-r,p_2-r) \Im Y_1^{(r+1,r)}$
+  \item $i \beta (p_1 - p_2 -1) 
+    = \{Z_1(y+h)\}^{(p)} - i (p_1-p_2) \sum_{r=1}^{p^*}h_1^{(p_1-r,p_2-r)} \Im Y_1^{(r+1,r)}$
+  \item $Y_1^{(s+1,s)} = \{Z_1(y+h)\}^{(s+1,s)}$
+\end{list}
+\end{document}
+% vim:tw=100 cc=100
