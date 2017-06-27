@@ -1,4 +1,7 @@
-\documentclass[12pt]{notes}
+\documentclass[exam,hardcopy]{longnotes}
+\usepackage{tmath} 
+\usepackage{cussymb} 
+\usepackage{tlegacy}
 \usepackage{docmute}
 \graphicspath{{img/}}
 \title{Заметки к экзамену по анализу}
@@ -8,6 +11,7 @@
 \begin{document}
 \maketitle
 
+\tableofcontents
 \abstract{\sl\small
   Главная цель данного документика~--- удобно собрать формулировки всяких утверждений из анализа и по возможности
   их доказательства (ну или идеи доказательств). 
@@ -17,9 +21,8 @@
   Ещё одно примечание: тут все номера утверждений и т.п. имеют вид \\ 
   \texttt{<глава>.<параграф>.<№ утверждения>}
 }
-
-\tableofcontents
 \newpage
+
 \input{tex/convineq}
 
 \setcounter{chapter}{4}
@@ -35,7 +38,7 @@
 \chapter{Функциональные ряды}
 \input{tex/FSeries/fseries}
 
-\chapter{Дифференциальное исчисление в \texorpdfstring{$\R^n$}{}}
+\chapter{Дифференциальное исчисление в \texorpdfstring{$\R^n$}{R\^{}n}}
 \input{tex/Ndim/ndim}
 %В силу понятных причин не будет его здесь.
 

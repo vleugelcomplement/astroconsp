@@ -19,7 +19,7 @@ Current version of Makefile assumes that `latexmk` preinstalled. However, you ma
 you should edit class options to get a desired style.
 
 ##### Layout
-```
+<pre font="Hack">
 ╠ sty ┐      
 ║     ├ 'styles'     ══ see below, have the same name as a corresponding option
 ║     ├ tmath.sty    ── list of \DeclareMathOperator's
@@ -38,7 +38,7 @@ you should edit class options to get a desired style.
 ╠ ...
 ╠ A number of dirs with courses content
 ╠ their names are assumed to be self-explainatory
-```
+</pre>
 
 
 ### Styles

@@ -6,11 +6,11 @@ DISTCLEANER = $(LMK) -C
 
 SETTYPE = ../tools/settype.pl
 
-MAIN    = main
+MAIN    = calculus2016spring
 MAINT   = main_t
 DIR     = $(shell pwd)
 COURSE  = $(shell basename "$(DIR)" )
-PDFNAME = $(COURSE)_$(MAIN)
+PDFNAME = $(COURSE)_main
 
 PDFDIR  = pdf
 $(shell mkdir -p $(PDFDIR) &>/dev/null)

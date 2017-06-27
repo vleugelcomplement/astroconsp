@@ -3,7 +3,7 @@
 % Author      : Iliya Tikhonenko <iliya.t@mail.ru>
 % Created at  : Sat Jun 17 14:33:58 MSK 2017
 %------------------------------------------------------------
-\documentclass[draft,landscape,timbord]{notes}
+\documentclass[final,landscape,hardcopy]{notes}
 \usepackage{tmath}
 \usepackage{cussymb}
 \usepackage{multicol}
@@ -21,7 +21,7 @@
 \setlist[enumerate,1]{leftmargin=0pt, labelwidth=*}
 \setlist[itemize,1]{leftmargin=0cm, noitemsep, label=$\triangleright$}
 \setlength{\columnsep}{2em}
-\setlength{\columnseprule}{0.1pt}
+\setlength{\columnseprule}{0.0pt}
 \begin{document}
 \begin{multicols*}{4} \raggedright
 \begin{enumerate}
@@ -32,8 +32,15 @@
       \item[$\ddot{\v r}$:] $\ddot{\v r}(t)$, $(\ddot x,\ddot y,\ddot z)(t)$,
         $\ddot s \v \tau + \dot s^2 k_1 \v n$
     \end{description}
-  \item \quest
   \item В криволинейных координатах
+    \begin{itemize}
+      \item $\v e^k \cdot \v e_j = \delta_{kj} $, $\v a \cdot \v b = \sum_i a^i b_i $
+      \item $\xi_k = \v r\cdot \v e_k = \sum_j \xi^j g_{jk}$,
+        $\xi^k = \v r\cdot \v e^k = \sum_j \xi_j g^{jk}$
+      \item $\v e^k = \sum_j g^{jk} e_j$, $\v e^k = \sum_j g^{jk} e^j$
+      \item $\sum_i g^{i\ell}\, g_{ik} = \delta_{\ell k}$
+    \end{itemize}
+  \item Скорость и ускорение 
     \begin{itemize}[$\triangleright$]
       \item $\v v = \sum_k \dot q^k \v {e_k}$
       \item $\v w = \sum_k \ddot q^k \v e_k + \sum_{k,i} \dot q^k \dot q^i \, \pder{\v e_k}{q^i}$
@@ -46,7 +53,6 @@
     \end{itemize}
   \item Про углы Эйлера \\
     \noindent
-    \includegraphics[width=1.0\linewidth]{euler_ang.pdf}
 
     \begin{itemize}[$\triangleright$]
       \item $\v \omega = \dot\psi\,\v i_3'  + \dot\theta\,\v i_1''  + \dot\varphi\,\v i_3  $
@@ -55,6 +61,9 @@
       \item $\v w = \v w_0 + \dot{\v \omega} \times \v r 
         + \v \omega \times (\v \omega \times \v r) + 2 \v \omega \times \v v_r  + \v w_r $
     \end{itemize}
+    
+    \includegraphics[width=1.0\linewidth]{euler_ang.pdf}
+  
   \item Динамика точки и систем точек
     \begin{itemize}
       \item $\v r_k = \v r_k (t, \{c_\ell\})$, $k\in 1 \intrng N$, $\ell \in 1 \intrng 6N$
@@ -100,8 +109,8 @@
       \item $\omega =0$~--- поступательное
       \item $\v {v_0}, \v {w_0} =0, \omega = \dot \varphi \v i_3 $~--- вращение вокруг неподвижной оси
       \item $\v {v_0} \coori \v \omega $~--- винт
-      \item \quest Как попало вокруг неподвижной точки \footnote{У нас тут вроде косяк, 
-        а дальше снова как здесь \sour} $\neg$ 
+      \item Как попало вокруг неподвижной точки\footnote{У нас тут вроде косяк, 
+        а дальше снова как здесь \sour}$\neg$ 
         $\begin{aligned}
           \v \omega 
           &= \v i_1  (\dot \psi \sin \theta \sin \varphi + \dot \theta  \cos \varphi ) + \\
@@ -176,23 +185,59 @@
     \end{itemize}
   \item Вращение вокруг неподвижной оси$\neg$
     \begin{itemize}
-      \item Ну, та скучная системка 
+      \item $m \fder{\v v_c}{t} = \v F + \v N_A + \v N_B$, $\v v_c = \v \omega \times \v r_c$, $ \Rightarrow $
+        $
+        \begin{aligned}
+          m(-\ddot \varphi x_{c_2} + (\dot \varphi)^2 x_{c_1}) &=  F_1 +  N_{A_1} +  N_{B_1}\\
+          m(\ddot \varphi x_{c_1} - (\dot \varphi)^2 x_{c_2}) &=  F_2 +  N_{A_2} +  N_{B_2}\\
+          0 &=  F_3 +  N_{A_3} +  N_{B_3}
+        \end{aligned}
+        $
+      \item $\fder{\v \ell}t = \v L + (\v r_A \times \v N _A)+ (\v r_A \times \v N _A) \Rightarrow $
+        $
+        \begin{aligned}
+          J_{13} \ddot \varphi - J_{23}(\dot \varphi)^2  &=  L_1 - r_A N_{A_2} +  r_B N_{B_2}\\
+          J_{23} \ddot \varphi + J_{13}(\dot \varphi)^2  &=  L_2 + r_A N_{A_1} -  r_B N_{B_1}\\
+          J_{33} \ddot \varphi &= L_3
+        \end{aligned}
+        $
     \end{itemize}
   \item $L = 0$
-  \item Сила всего одна и приложена к центру масс
-  \item \underdev 
-  \item \underdev 
-  \item \underdev 
+    \includegraphics[width=\linewidth]{earth}   
+  \item Сила всего одна и приложена к центру масс\\
+    \includegraphics[width=0.7\linewidth]{lagrset2}
+    \includegraphics[width=\linewidth]{largtraj2}
+  \item Связи
+    \begin{itemize}
+      \item $\varphi(t,\v r, \v v) \geqslant 0$ (или $=0$)
+      \item $\varphi(t,\v r, \v v) = 0 \Leftrightarrow f(t, \v r) = 0$~---~голономные 
+      \item $\v R_i = \Lambda_i \nabla' \varphi_i + \v T_i$, \footnote{Здесь вообще градиенты, но жирная 
+        набла выглядит некрасиво: $\v \nabla\varphi $}
+        $\Lambda_i = -\frac{m\pder{\varphi_i}t + m\nabla \varphi_i \v v + \nabla' \varphi_i \v F }
+        {|\nabla' \varphi_i|^2}$
+    \end{itemize}
+  \item По поверхности
+    \begin{itemize}
+      \item $m \v w= \v F + \Lambda \nabla f + \v T$
+      \item $\v T = -k N \v\tau$
+      \item $\v F = 0$, $v^2 = v_0^2 e^{-\alpha(s)}$
+    \end{itemize}
+  \item По кривой 
+    \begin{itemize}
+      \item $m \v w= \v F + \Lambda_1 \nabla f_1 +\Lambda_2 \nabla f_2 + \v T$
+      \item $\v T = -k N \v\tau$
+      \item катится мир к упадку
+    \end{itemize}
   \item Принцип Даламбера-Лагранжа: \\
     Суммарная работа сил инерции и активных сил по виртуальным перемещениям равна нулю:
     $
-      (M \ddot{\v y} - \v Y ) \cdot \delta \v y = 0
+    (M \ddot{\v y} - \v Y ) \cdot \delta \v y = 0
     $
   \item При варьировании с фиксированными концами $\Bigg(\delta t_1 = \delta t_0 = 0$, 
-    $
-    \begin{aligned}
-      \delta q^\ell |_{t_1} = 0 \\ \delta q^\ell |_{t_2} = 0 
-    \end{aligned}
+      $
+      \begin{aligned}
+        \delta q^\ell |_{t_1} = 0 \\ \delta q^\ell |_{t_2} = 0 
+      \end{aligned}
     \Bigg)
     $
     $\delta S = 0 \Leftrightarrow \fder{}{t}\, \left(\pder{L}{\dot q^l}\right) - \pder{L}{q^l} = 0$
@@ -222,7 +267,7 @@
         &\pder{S}{t} + H\left(q^\ell ,\pder{S}{q^\ell}, t\right)= 0, \\
         &\det\left(\pdder{S}{q^l}{a^p}\right) \neq 0\quad\Rightarrow~\\ 
         &p_\ell = \pder{S}{q^\ell}, \; b_k = \pder{S}{a^k}\\
-          &a_k, b_k \text{~--- const}
+        &a_k, b_k \text{~--- const}
       \end{aligned}
     \right.~
     \left\{
@@ -235,10 +280,38 @@
     $
   \item Инварианты
     \begin{itemize}
-      \item Фазовый объём
-      \item Жесть
+      \item Ф.~объём:
+        $\int_M \rho \, \del \Omega $, $\del \Omega =``\prod_i" \del q^i\,\del p_i $
+      \item Пуанкаре: $\oint_C p_k \, \del q^k$
+      \item Пуанкаре-Картане: $\oint_C p_k \, \del q^k-H\del t$
     \end{itemize}
-  \item \underdev
+    Здесь \\
+    $M$~--- сечение фазовой трубки,\\ 
+    $C$~--- охватывающий её контур.
+  \item Канонические преобразования\par
+    Когда нету зависимости от времени
+    \begin{itemize}
+      \item $p_k = p_k(\ov~p, \ov~q)$, $q^k = q^k(\ov~p, \ov~q)$, 
+        $\ov~H(t, \ov~p, \ov~q)=  H\bigl(t, p(\ov~p, \ov~q), q(\ov~p, \ov~q)\bigr)$
+    \end{itemize}
+
+    Когда есть порождающая функция $V$.
+    \begin{enumerate}[1*,start=0]
+      \item $\ov~L = L + \fder{V}{t}$
+      \item $V_1(t,q,\ov~q)=V$ 
+      \item $V_2(t,p,\ov~q)=V+\sum_k p_k q^k$ 
+      \item $V_3(t,\ov~p,q)=V-\sum_k \ov~p_k \ov~q^k$ 
+      \item $V_4(t,p,\ov~p)=V + \sum_k p_k q^k- \sum_k \ov~p_k \ov~q^k$ 
+    \end{enumerate}
+    
+    При этом
+    \begin{enumerate}[$ \langle 1 \rangle $, leftmargin=2ex]
+      \item $\ov~p_k = +\pder{V_1}{\ov~q^k}$, $p_k = +\pder{V_1}{q^k}$, $\ov~H = H - \pder{V_1}{t}$
+      \item $\ov~p_k = +\pder{V_2}{\ov~q^k}$, $q^k = -\pder{V_2}{p_k}$, $\ov~H = H - \pder{V_2}{t}$
+      \item $\ov~q^k = -\pder{V_3}{\ov~p_k}$, $p_k = -\pder{V_3}{q^k}$, $\ov~H = H - \pder{V_3}{t}$
+      \item $\ov~q^k = -\pder{V_4}{\ov~p_k}$, $q^k = +\pder{V_4}{p_k}$, $\ov~H = H - \pder{V_4}{t}$
+    \end{enumerate}
+    Выглядит не очень, но бывают вещи и похуже
 \end{enumerate}
 
 \theendnotes
