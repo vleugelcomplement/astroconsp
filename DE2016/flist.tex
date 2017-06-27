@@ -14,13 +14,21 @@
 \def\Liploc{\Lip^{\rm loc}}
 
 \begin{document}
+\newlength{\offset}\setlength{\offset}{2cm+1em}
 \newcounter{chn}\setcounter{chn}{1}
 \newcounter{eqn}\setcounter{eqn}{0}
-\def\nch{\stepcounter{chn}\setcounter{eqn}{0}}
+\def\nch{\par
+\vspace*{1em}
+\hspace{-\offset}
+\rule{\linewidth+\offset}{0.1pt}
+\stepcounter{chn}\setcounter{eqn}{0}
+\vspace*{1em}
+}
 \newcommand{\skeq}[1][\relax]{
   \ifx #1\relax \stepcounter{eqn}
   \else \addtocounter{eqn}{#1}
   \fi
+\item[\dotfill]
 }
 \everymath{\displaystyle}
 \def\seteq#1{\setcounter{eqn}{#1}}
@@ -52,7 +60,50 @@
   \item $\varphi(x,C) = y(x,\zeta, C)$
     \hfill $(\zeta,C) \in \ov-{A}$
   \item $y_0 = y(x_0, \zeta, C)$
-\nch\nch\nch\nch
+\nch
+  \item $M(x,y)\del x + N(x,y)\del y =0$
+    \skeq[7]
+  \item $N(x,y)U_x'(x,y) - M(x,y)U_y'(x,y)=0$ \hfill $(x,y) \in G^0$
+  \item $U_1(x,y) \equiv \Phi(U(x,y))$
+  \item $g_1(x)h_2(x) \, \del x+ g_2(x) h_1(x) \, \del y =0 $
+  \item $\ov-{x_1}^g \cap \ov-{x_2}^g = \varnothing$, $\ov-{y_1}^h \cap \ov-{y_2}^h = \varnothing$
+\skeq[4]
+  \item $U'_x(x,y) = M(x,y)$, $U_y'(x,y) = N(x,y)$
+\nch
+  \item $y'=f(x,y)$
+  \item $y^{(m)} = f(x,y,y', \dotsc, y^{(m-1)})$
+  \item $y=y_1$, $y'=y_2$, ...
+  \item 
+    $ \left\{
+    \begin{aligned}
+      y_1' &= y_2 \\
+      y_{m-1}' &= y_m \\
+      y'_m &= f(x,y_1, \dotsc, y_m)
+    \end{aligned} \right.
+    $
+  \item $y_1  - y_1^0 = f_1(x_0,y_1^0, \dotsc, y_n^0)(x-x_0)$
+  \item $\fder{x_1}{X_1(x_1, \dotsc, x_n)} =\dotsb=\fder{x_{n+1}}{X_{n+1}(x_1, \dotsc, x_{n+1})}$
+  \item $f(x, \ov^y)-f(x,\ov~y) = \sum_j \int_0^1\pder{f(x,u)}{y_j}\del s\cdot(\ov^y_j-\ov~y_j)$
+  \item $\forall\, (x,\ov~y), (x,\ov^y) \in D \holds \|f(x,\ov^y) - f(x,\ov~y)\|
+    \leqslant L \|\ov^y - \ov~y\|$
+    \skeq
+  \item $y^{(k+1)} (x) = y^0 + \int_{x_0}^x f(s,y^{(k)}(s))\, \del s$
+  \item $\|\varphi^{(k)} (x)\| \leqslant \frac{M}{L} \, \frac{(L|x-x_0|)^k}{k!}  $
+  \item $\|y(x) - y^{(k)} (x) \| \leqslant \frac{M}{L} \, \frac{(L(\beta-\alpha))^k}{(k+1)!} $
+  \item $\forall\, x\in[\alpha, \beta] \holds \|y^{(k)} (x) - y^0 \| \leqslant b$
+  \item $y' = P(x) y + q(x)$
+  \item $y'=f(x,y,\mu)$
+    \skeq
+  \item $v' = \pder{f(x,y(x,x_0,y^0,\mu),\mu)}{y} v
+    + \pder{f(x,y(x,x_0,y^0,\mu),\mu)}{\mu_j}$ \\
+    $x_0, \pder{y^0(\mu)}{\mu_j}$
+  \item $u' - \pder{f(x,y(x,x_0,y^0,\mu),\mu)}{y} u$ \\
+    $x_0, e^{(i)}$
+  \item $\pder{}{x} y (x,x_0,y^0,\mu) \equiv f(x,y(x,x_0,y^0,\mu),\mu)$
+\nch
+  \item $y^{(n)} + p_1(x) y^{(n-1)} + \dotsb + p_n(x) y = q(x)$
+\nch
+
   \item $y' = P(x) y$, $P = \{p_{ij}(x)\}_{ij=1}^n$ 
   \item[(5.1$^m$)] $\Theta' = P(x) \Theta$ 
   \item[(5.1$^c$)] $y' = A y$ 
@@ -151,7 +202,7 @@
         0 & -\beta \\ \beta & 0 
       \end{matrix}
     \right)$ \hfill $\alpha = 0$
-  \item $\dot y = J+Y$ \hfill $\beta >0$
+  \item $\dot y = Jy+Y$ \hfill $\beta >0$
   \item $Y_1 = \sum_{r=1}^\infty Y_1^{(r+1,r)} y_1^{r+1} y_2 ^{r}$, \quad 
     $Y_2 = \sum_{r=1}^\infty Y_2^{(r,r+1)} y_1^{r} y_2 ^{r+1}$
   \item $y_2 = \ov-y_1$, $Y_2 = \ov-Y_1$
@@ -165,9 +216,17 @@
     Y_1^{(r+1,r)}\right)$ \\
     $p^* = \min\left\{p_1,p_2, \frac{p_1+p_2}2-1\right\}$
   \item $\Phi_1^{(p)} = i(p_2-p_1)\sum_{r=1}^{p^*} h_1(p_1-r,p_2-r) \Im Y_1^{(r+1,r)}$
-  \item $i \beta (p_1 - p_2 -1) 
+  \item $i \beta (p_1 - p_2 -1) h_1^{(p_1,p_2)} 
     = \{Z_1(y+h)\}^{(p)} - i (p_1-p_2) \sum_{r=1}^{p^*}h_1^{(p_1-r,p_2-r)} \Im Y_1^{(r+1,r)}$
-  \item $Y_1^{(s+1,s)} = \{Z_1(y+h)\}^{(s+1,s)}$
+  \item $Y_1^{(s+1,s)} = \{Z_1(y+h)\}^{(s+1,s)}$ \hfill $p_2 = p_1 -1=s$
+  \item $\varphi \prec \beta_*  \eta V(\eta,\varphi) + 2 \beta_* \varphi^2 $
+  \item $\psi =  \beta_*  \eta V(\eta,\psi) + 2 \beta_* \psi^2 $
+  \item $\dot y_1 = i y_1 A(y_1 \ov-{y_1})$
+\item $y(t,y^0)= \begin{pmatrix} y_1^0 e^{iA(y^0)t} \\[0.5em] \ov-{y_1^0}\, e^{-iA(y^0)t}\end{pmatrix}$
+  \item $z_1(t,z^0) = y_1^0 e^{iA(y^0)t} + h_0(t,y^0)$, $z_2 = \ov-{z_1}$
+  \item $z_1 = y_1 + h_1(y_1,y_2)$, $z_2 = y_2 + \ov-{h_1}(y_2,y_1)$ \hfill $h \in \R[y_1,y_2]$
+  \item $\dot y_1 = i \beta y_1 + Y_1^0(y_1,y_2) + {\cal Y}_1(y_1,y_2)$, $y_2 = \ov-{y_1}$
+  \item $\dot r = r^{2p_0+1} (a+R(r, \varphi))$, $\dot \varphi = \beta + \Phi(r,\varphi)$
 \end{list}
 \end{document}
 % vim:tw=100 cc=100
