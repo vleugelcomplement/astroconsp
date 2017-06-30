@@ -33,7 +33,11 @@
 # bib[la]tex stuff
 *.bbl
 *.blg
+*.ent
 
+# NO TEX FILES!
+*.tex
+tex/
 
 # OS generated files #
 ######################
