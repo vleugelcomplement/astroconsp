@@ -3,10 +3,8 @@
 % Author      : Iliya Tikhonenko <iliya.t@mail.ru>
 % Created at  : Thu Jun 22 14:50:30 MSK 2017
 %------------------------------------------------------------
-\documentclass[timbord]{longnotes}
-\geometry{
-  paperheight=20cm
-}
+\documentclass[hardcopy]{longnotes}
+\geometry{left=2cm}
 \usepackage{tmath}
 \usepackage{cussymb}
 \graphicspath{{img/}}
@@ -24,12 +22,21 @@
 \stepcounter{chn}\setcounter{eqn}{0}
 \vspace*{1em}
 }
+\renewcommand\nch{
+  \stepcounter{chn}\setcounter{eqn}{0}
+}
 \newcommand{\skeq}[1][\relax]{
   \ifx #1\relax \stepcounter{eqn}
   \else \addtocounter{eqn}{#1}
   \fi
 \item[\dotfill]
 }
+\renewcommand{\skeq}[1][\relax]{
+  \ifx #1\relax \stepcounter{eqn}
+  \else \addtocounter{eqn}{#1}
+  \fi
+}
+
 \everymath{\displaystyle}
 \def\seteq#1{\setcounter{eqn}{#1}}
 \newsavebox{\smtri}
