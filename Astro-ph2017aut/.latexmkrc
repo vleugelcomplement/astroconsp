@@ -1,0 +1,1 @@
+/home/iliya/data/docs/Астрономия/Университет/Конспекты лекций/astroconsp/tools/.latexmkrc
