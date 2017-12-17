@@ -9,10 +9,10 @@
 и
 [презенташка](https://taxus-d.github.io/astroconsp/Astrosoft2017/iraf/IRAF.pdf)
 1. Про `midas` --- смотрите в заметках. Хотя вот мануалы есть:
-    A) [том А](https://taxus-d.github.io/astroconsp/Astrosoft2017/midas/volume_a.ps)
-    B) [том B](https://taxus-d.github.io/astroconsp/Astrosoft2017/midas/volume_b.ps)
-    C) [том A в epub](https://taxus-d.github.io/astroconsp/Astrosoft2017/midas/MIDAS Manual Volume A.epub)
-    D) [ещё какое-то руководство](https://taxus-d.github.io/astroconsp/Astrosoft2017/midas/78 Ильин Желенкова (2006) Структуры данных и программирование в MIDAS.pdf)
+    - [том А](https://taxus-d.github.io/astroconsp/Astrosoft2017/midas/volume_a.ps)
+    - [том B](https://taxus-d.github.io/astroconsp/Astrosoft2017/midas/volume_b.ps)
+    - [том A в epub](https://taxus-d.github.io/astroconsp/Astrosoft2017/midas/MIDAS Manual Volume A.epub)
+    - [ещё какое-то руководство](https://taxus-d.github.io/astroconsp/Astrosoft2017/midas/78 Ильин Желенкова (2006) Структуры данных и программирование в MIDAS.pdf)
 
 1. [Псевдобилеты](https://taxus-d.github.io/astroconsp/Astrosoft2017/AstroPo_Psevdobilety.pdf) --- не совсем
 совпадают с нашим курсом, но что-то полезное есть
