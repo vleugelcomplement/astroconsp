@@ -11,7 +11,7 @@
 \newcommand{\lipgl}[1]{\Lip_{#1}^{\mathrm{gl}}} 
 \usepackage{xstring}
 
-\newcommand*\ov[2]{
+\newcommand*{\ov}[2]{
   \IfEqCase{#1}{%
     {~}{\widetilde{#2}}%
     {-}{\overline{#2}}%
@@ -19,13 +19,13 @@
   }[\PackageError{tmath}{Undefined option to ov: #1}{}]%
 }
 
-\newcommand*\und[2]{
+\newcommand*{\und}[2]{
   \IfEqCase{#1}{%
     {-}{\underline{#2}}%
   }[\PackageError{tmath}{Undefined option to und: #1}{}]%
 }
 
-\newcommand*\arr[1]{
+\newcommand*{\arr}[1]{
   \IfEqCase{#1}{%
     {<=}{\Leftarrow}%
     {=>}{\Rightarrow}%
