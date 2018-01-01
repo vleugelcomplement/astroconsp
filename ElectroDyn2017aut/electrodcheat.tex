@@ -1,0 +1,109 @@
+\documentclass{trchesh}
+\usepackage{trmath}
+\usepackage{trsym} 
+
+\setlayout[page-orient=landscape]{hardcopy}
+
+\hypersetup{
+  pdftitle={Шпора по электроду},
+  pdfauthor={taxus},
+  pdfsubject={Электродинамика},
+  pdfkeywords={Электродинамика;СПбГУ;by-taxus}
+}
+\columnseprule=0.1dd
+\def\arraystretch{1.3}
+\begin{document}
+
+\begin{multicols*}{3}
+  \begin{enumerate}
+    \item Уравнения Максвелла \par
+      $
+      \begin{aligned}
+        &\div \v E &&=&& 4 \pi \rho \\
+        &\div \v H &&=&& 0 \\
+        &\rot \v E &&=&& - \frac 1 c \, \pder{\v H}{t} \\
+        &\rot \v H &&=&& \frac 1 c\, \pder{\v E}{t} + \frac{4 \pi}{c}\v j
+      \end{aligned}$
+    \item Они же в интегральной
+    \item $\pder \rho t  + \div \v j = 0 $
+    \item В среде\\
+      $
+      \begin{aligned}
+        \v P \that\v j_{pol} &=\pder{\v P}t,\;\rho_{pol} =-\div \v P,\\
+      \v M \that \v j_m &= c \rot \v M\end{aligned}$ \par
+    В сильнопеременных 
+      $\v j_{int} = \pder{\v P}{t}  + c \rot \v M$
+    \item $\v D = \v E + 4 \pi \v P$, $\v H = \v B - 4 \pi \v M$ \par
+      $ 
+      \begin{aligned}
+        \div \v D &= 4 \pi \rho_{ex} \\
+        \rot \v H &= \frac 1 c \, \pder {\v D} t + \frac{4\pi}{c} \,
+        (\v j_{ex} + \v j _{c})           
+      \end{aligned}$
+    \item Материальные уравнения (простейшие)\par
+      $\v D = \varepsilon \v E,\;\v B = \mu \v H ,\;\v j_c = \sigma \v E$
+    \item Дисперсия, варианты \par
+      $ \begin{aligned}
+        \v D (\v r,t) &= \int_{-\infty}^t f (t' - t, \v r)\,\v E(\v r, t')\, \del t \\
+        \v D (\v r,t) &= \int_{\Delta V} g(\v r' -\v r, t)\,\v E(\v r, t')\, \del V
+      \end{aligned} $
+    \item Энергетические соотношения \par
+      $
+      \begin{aligned}
+        w &= \frac{1}{8 \pi} \, (\varepsilon E^2 + \mu H^2) \\
+        \v B &= \frac{c}{4 \pi} \, \v E \times \v H \\
+        \pder{w}{t} + \div \v S &= - \sigma E^2 - \v E \cdot \v j_{ex}
+      \end{aligned}
+      $ \par
+      Так что если внешние силы не совершают работы, 
+      энергия лишь убывает.
+    \item Потенциал: \par
+      $ \v E = - \frac 1 c \pder{\v A} t  - \nabla \varphi$,
+      $\v B = \rot \v A$ \par
+      Калибровка Лоренца: 
+      $\frac{\varepsilon \mu}{c} \, \pder{\varphi}t + \div \v A = 0$
+    \item Волны в однородной среде\par
+      $\begin{aligned}
+      \Box \v E = 0, \; \Box \v B  =0 \\
+      \Box \v A =0, \; \Box \varphi  =0 , \; \Box f  = 0 
+      \end{aligned}$ \par
+      Тут $f$~--- функция, зависящая от калибровки.
+    \item Плоская волна\par
+      $\begin{aligned}
+      \frac 1 {v^2} \, \pder[2]{u}{t} - \pder[2]{u}{x} = 0 \\
+      u = f(x-vt) + g(x+vt)
+      \end{aligned}$ \par
+      Ещё $\v B = \frac cv \,\v n \times \v E$, a $\v S = v w \v n$.
+    \item Сферические волны \underdev
+    \item Монохроматические волны \par
+      $\begin{aligned}
+        u \propto \cos(\omega t + \alpha) \\
+        \Delta u + \frac{\omega^2}{v^2} u =0, \quad k = \frac \omega v\\
+      \end{aligned}$
+    \item Поляризационная матрица, параметры Стокса\par
+      $\rho = \begin{pmatrix}
+        \averg{|E_x|^2} & \averg{E_x E_y^*} \\
+        \averg{E_y E_x^*} & \averg{ |E_y|^2} \\
+      \end{pmatrix}=\frac 12 \, \begin{pmatrix}
+        I+Q & U-iV \\
+        U+iV & I-Q \\
+      \end{pmatrix}
+      $
+    \item Частные случаи \par
+      \begin{enumerate}
+        \item $Q=U=V=0$~"--- белый свет
+        \item $Q=U=0$~"--- круговая поляризация
+        \item $V=0$~"--- линейная поляризация
+      \end{enumerate}
+    \item Геометрическая оптика \par
+      $\begin{aligned}
+        u = u_{0} e^{i \psi} \\
+        \frac{1}{v^2} \left(\pder{\psi}t\right)^2 - (\nabla \psi)^2 = 0\\
+        \psi = - \omega t + \psi_1, \; (\nabla \psi_1)^2 = n^2(\v r)
+      \end{aligned}$
+    \item Гадость в неоднородной среде
+    \item $E,H$-волны.\par
+      $E''(z) + f(z) \, E(z) = 0$, $f(z) = k^2 - \varkappa^2$
+  \end{enumerate}
+\end{multicols*}
+\end{document}
