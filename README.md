@@ -1,7 +1,6 @@
 # astroconsp
 
 Если вы просто ищете пдфки, вам сюда: [« wiki »](https://github.com/tis-p30/astroconsp/wiki) \
-Если вы ищете матан, можете сразу [сюда](https://taxus-d.github.io/astroconsp/Calculus2017spr/pdf/main_ebook.pdf)
 
 If google led your here, you may look below for technical details
 or follow the link above to download lecture notes from wiki page.
@@ -33,7 +32,7 @@ you should edit class options to get a desired style.
 ║       ├ Perl scripts to change styles automagically
 ║       ├ Makefile
 ║       └ vim ┐
-║             ├ abbreaviations and maps for common symbols
+║             ├ abbreviations and maps for common symbols
 ║             └ tex.vim ftplugin with vimtex setup
 ╠ ...
 ╠ A number of dirs with courses content
