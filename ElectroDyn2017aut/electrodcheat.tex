@@ -3,7 +3,9 @@
 \usepackage{trsym} 
 
 \setlayout[page-orient=landscape]{hardcopy}
-\let\note=\endnote
+\makeatletter
+\def\note{\ifexpmode{\@gobble}{\endnote}}
+\makeatother
 \hypersetup{
   pdftitle={Шпора по электроду},
   pdfauthor={taxus},
@@ -13,6 +15,7 @@
 \columnseprule=0.1dd
 \def\arraystretch{1.3}
 \setlist[enumerate,1]{leftmargin=2em}
+\setlist[itemize,1]{leftmargin=2em, label=$\triangleright$}
 
 \def\waveop{\mathop{\boldsymbol\Box}}
 \begin{document}
@@ -23,17 +26,17 @@
 \begin{enumerate}
   \item Теорема Гаусса: $\oint \v E \cdot \del \v s = 4 \pi Q$.
   \item Закон Фарадея: $\oint\v E \cdot \del \v l = - \frac{1}{c} \pder{\Phi}{t}$, \\
-    $\Phi=\int \v H \cdot \del \v s$
-  \item Закон Био-Савара-Лапласа: $\v H = \frac{1}{c} \, \frac{\v j \times \v R}{R^3}$
-  \item $\oint \v H \cdot \del \v s = 0$
-  \item Закон Ампера: $\oint \v H \cdot \del \v l = \frac{4 \pi}{c} \int \v j \cdot \del \v s$
+    $\Phi=\int \v B \cdot \del \v s$
+  \item Закон Био-Савара-Лапласа: $\v B = \frac{1}{c} \, \frac{\v j \times \v R}{R^3}$
+  \item $\oint \v B \cdot \del \v s = 0$
+  \item Закон Ампера: $\oint \v B \cdot \del \v l = \frac{4 \pi}{c} \int \v j \cdot \del \v s$
   \item Уравнение неразрывности: $\pder \rho t  + \div \v j = 0 $
   \item Сами уравения Максвелла: \par\vspace{1ex}$
     \begin{aligned}
       &\div \v E &&=&& 4 \pi \rho \\
-      &\div \v H &&=&& 0 \\
-      &\rot \v E &&=&& - \frac 1 c \, \pder{\v H}{t} \\
-      &\rot \v H &&=&& \frac 1 c\, \pder{\v E}{t} + \frac{4 \pi}{c}\v j
+      &\div \v B &&=&& 0 \\
+      &\rot \v E &&=&& - \frac 1 c \, \pder{\v B}{t} \\
+      &\rot \v B &&=&& \frac 1 c\, \pder{\v E}{t} + \frac{4 \pi}{c}\v j
     \end{aligned}$
 \end{enumerate}
 
@@ -65,7 +68,8 @@ $
   $ \begin{aligned}
     \v D (\v r,t) &= \int_{-\infty}^t f (t' - t, \v r)\,\v E(\v r, t')\, \del t \\
     \v D (\v r,t) &= \int_{\Delta V} g(\v r' -\v r, t)\,\v E(\v r, t')\, \del V
-  \end{aligned} $
+  \end{aligned} $ \par
+$g$~--- функция отклика.
 \end{enumerate}
 
 
@@ -73,7 +77,7 @@ $
 $
   \begin{aligned}
     w &= \frac{1}{8 \pi} \, (\varepsilon E^2 + \mu H^2) \\
-    \v B &= \frac{c}{4 \pi} \, \v E \times \v H \\
+    \v S &= \frac{c}{4 \pi} \, \v E \times \v H \\
     \pder{w}{t} + \div \v S &= - \sigma E^2 - \v E \cdot \v j_{ex}
   \end{aligned}
 $ \par
@@ -111,7 +115,7 @@ $
 \end{aligned}
 $
 
-Ещё можно $\varphi$ занулить, выбрав нужную $\chi$%
+Ещё можно $\varphi$ занулить, выбрав нужную $\chi$
 \note{В предыдущем нельзя, может не оказаться решением}
 
 \paragraph{Плоские и сферические волны}
@@ -145,8 +149,8 @@ $
   \item $\alpha, \v b$ \\
     $
     \begin{aligned}
-      \alpha &\that \v E_0^2 = |E_0^2| \, e^{-2i \alpha} \\
-      \v b   &\that \v E_0 = \v b \,e ^{i \alpha},\; \v b^2 = |E_0^2|, \; \v b = \v b_1 + i\,\v b_2
+      \alpha &\that \v E_0^2 = |E_0^2| \, e^{-2i \varphi_0 } \\
+      \v b   &\that \v E_0 = \v b \,e ^{-i \varphi_0 },\;\v b^2 = |E_0^2|,\;\v b = \v b_1 + i\,\v b_2
     \end{aligned}
     $
   \item $b^2 \in \R \Rightarrow \v b_1 \perp \v b_2$
@@ -156,28 +160,106 @@ $
 \paragraph{Почти монохроматические волны}
 $\v E = \v E_0 (t) \, e^{-i \omega t}$, \quest
 \paragraph{Поляризационная матрица, параметры Стокса}
-      $\rho = \begin{pmatrix}
-        \averg{|E_x|^2} & \averg{E_x E_y^*} \\
-        \averg{E_y E_x^*} & \averg{ |E_y|^2} \\
-      \end{pmatrix}=\frac 12 \, \begin{pmatrix}
-        I+Q & U-iV \\
-        U+iV & I-Q \\
-      \end{pmatrix}
-      $
-      \paragraph{Частные случаи поляризации}
-      \begin{enumerate}
-        \item $Q=U=V=0$~"--- белый свет
-        \item $Q=U=0$~"--- круговая поляризация
-        \item $V=0$~"--- линейная поляризация
-      \end{enumerate}
-      \paragraph{ Геометрическая оптика} 
-      $\begin{aligned}
-        u = u_{0} e^{i \psi} \\
-        \frac{1}{v^2} \left(\pder{\psi}t\right)^2 - (\nabla \psi)^2 = 0\\
-        \psi = - \omega t + \psi_1, \; (\nabla \psi_1)^2 = n^2(\v r)
-      \end{aligned}$
-      \paragraph{Гадость в неоднородной среде}
-      \paragraph{\(E,H\)-волны}
-      $E''(z) + f(z) \, E(z) = 0$, $f(z) = k^2 - \varkappa^2$
+$|\averg{\v S}| = \frac{\varepsilon v}{8 \pi} \, \averg{\v E^\dagger \v E} $
+$\rho = \frac{\varepsilon v}{8 \pi} \, \averg{\v E \v E^\dagger} =  \begin{pmatrix}
+  \averg{|E_x|^2} & \averg{E_x E_y^*} \\
+  \averg{E_y E_x^*} & \averg{ |E_y|^2} \\
+\end{pmatrix}=\frac 12  \begin{pmatrix}
+  I+Q & U-iV \\
+  U+iV & I-Q \\
+\end{pmatrix}
+$
+\begin{enumerate}
+  \item $\det \rho = I^2 - Q^2 - U^2 - V^2$
+  \item $\det \rho = 0 \Leftrightarrow E_x^0 \propto E_y^0$ \note{В поляризационной матрице 
+    все $E$ можно позаменять на $E^0$ (фазы всё равно сокращаются), а в предпредыдущем пунке
+  у нас как раз $E^0_x = b_1\, e^{-i \varphi_0 }$, $E^0_y = ib_2\, e^{-i \varphi_0 }$}
+\item $I^2, V^2, U^2+Q^2$~--- инварианты \note{Отсюда, кстати, очевидно преобразование параметров
+  Стокса при поворотах}
+\item $I(\psi, \delta) = \averg{|\v S|} = \v \ell_\delta^\dagger\, \rho \, \v \ell_\delta
+  = \frac12 (I + Q\, \cos 2\psi + U \, \sin 2\psi \, \cos \delta - V \, \sin 2\psi \, \sin \delta)$,
+  $\v \ell_\delta = (\cos \psi,\; \sin \psi \, e^{-i \delta}) ^ \top$,
+  а вот выводится это неприятно.
+\end{enumerate}
+\paragraph{Частные случаи поляризации, параметры поляризации}
+$
+\begin{aligned}
+  I &= \frac{\varepsilon v}{8 \pi} \, (\averg{|E_x|^2} +  \averg{|E_y|^2}) = \averg{|\v S|} \\
+  Q &= \frac{\varepsilon v}{8 \pi} \, (\averg{|E_x|^2} -  \averg{|E_y|^2}) \\
+  U &= \frac{\varepsilon v}{8 \pi} \, (\averg{E_x^* E_y} +  \averg{E_xE_y^*}) 
+  = \frac{\varepsilon v}{8 \pi} \, 2 \Re \averg{E_x^* E_y} \\
+  V &= \frac{\varepsilon v}{8 \pi} \,i (\averg{E_x^* E_y} -  \averg{E_xE_y^*}) 
+  = \frac{\varepsilon v}{8 \pi} \, 2 \Im \averg{E_x^* E_y} \\
+\end{aligned}
+$
+\begin{enumerate}
+  \item $Q=U=V=0$~"--- белый свет
+  \item $\det \rho = 0$~"--- эллиптическая поляризация
+\begin{enumerate}
+  \item $Q=U=0$~"--- круговая поляризация
+  \item $V=0$~"--- линейная поляризация
+\end{enumerate}
+
+Ещё всякие величины:
+\begin{itemize}
+  \item $R_d^2 = Q^2 + U^2 + V^2$, $r_d^2 = Q^2 + U^2$
+  \item $P = \lfrac{R_d}{I}$~--- степень поляризации
+  \item $p = \lfrac{r_d}{I}$~--- степень линейной поляризации
+  \item $p_s = \lfrac{V}{I}$~--- степень круговой поляризации
+  \item $\tg 2 \alpha = \lfrac{U}{D}$, $\alpha$~--- угол между базисом и осями эллипса.
+\end{itemize}
+
+\item Частичная поляризация:  
+\begin{itemize}
+  \item белый свет + эллитическая
+  \item сумма 2 ортогональных эллиптических
+\end{itemize}
+\end{enumerate}
+\paragraph{ Геометрическая оптика} 
+%% TODO: \text{} and duplicated endnotes
+$\begin{aligned}
+  u &= u_{0} e^{i \psi}, \; \psi \hbox{~"--- эйконал\note{$\psi_1$~"--- то, что названо эйконалом
+  у Бутикова. Вроде у него правильнее, но \quest}}\\
+  \frac{1}{v^2} \left(\pder{\psi}t\right)^2 - (\nabla \psi)^2 &= 0 \\
+  \psi = - \omega t + \frac{\omega}{c} \psi_1, \; (\nabla \psi_1)^2 &= n^2(\v r) \text{~"--- уравнение эйконала.} \\
+  \frac{\omega}{c}\, \psi_1 - \omega t &= \mathrm{const} \text{~"--- волновая поверхность}
+\end{aligned}$
+
+Здесь торжественно забили на вторые прозводные эйконала.
+      
+\paragraph{Гадость в неоднородной среде}
+\begin{enumerate}
+  \item $\varepsilon = \varepsilon(r)$, $\mu = 1$
+  \item Волновые уравнения поменяются:\par
+    $
+    \begin{aligned}
+      \waveop \v E &- \nabla \bigl(\v E \cdot  \nabla (\ln \varepsilon)\bigr) = 0 \\
+      \waveop \v H &- \nabla (\ln \varepsilon) \times \rot H  = 0 
+    \end{aligned}
+    $
+  \item Монохроматический случай:\par
+    $
+    \begin{aligned}
+      [\Delta + k^2(r)] \,&\v E + \nabla \bigl(\v E \cdot  \nabla (\ln \varepsilon)\bigr) = 0 \\
+      [\Delta + k^2(r)] \,&\v H + \nabla (\ln \varepsilon) \times \rot H  = 0 
+    \end{aligned}
+    $
+\end{enumerate}
+\paragraph{\(E,H\)-волны}
+$\varepsilon = \varepsilon(z)$
+\begin{enumerate}
+  \item $\v E \coori \mathrm{Oy},\; E = (0,1,0)\, E(z) e^{i \varkappa x}$~--- E-волны
+  \item $\v H \coori \mathrm{Oy},\; H = (0,1,0)\, H(z) e^{i \varkappa x}$~--- H-волны
+\end{enumerate}
+Если переписать волновое уравнение выше:
+\begin{enumerate}
+  \item $E''(z) + f(z) \, E(z) = 0$, $f(z) = k^2 - \varkappa^2$
+  \item $w''(z) + f(z) \, w(z) = 0$, $H(z) = \sqrt{\varepsilon(z)}\, w(z)$,
+    $f(z) = k^2 - \varkappa^2
+    + \frac 12\, \frac{\varepsilon''}{\varepsilon} 
+    - \frac 34\, \left(\frac{\varepsilon'}{\varepsilon}\right)$
+\end{enumerate}
+\paragraph{Метод ВКБ}
+
 \end{multicols*}
 \end{document}
