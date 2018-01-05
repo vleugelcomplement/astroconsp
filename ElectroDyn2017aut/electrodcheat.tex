@@ -215,7 +215,7 @@ $
   \item сумма 2 ортогональных эллиптических
 \end{itemize}
 \end{enumerate}
-\paragraph{ Геометрическая оптика} 
+\paragraph{Геометрическая оптика} 
 %% TODO: \text{} and duplicated endnotes
 $\begin{aligned}
   u &= u_{0} e^{i \psi}, \; \psi \hbox{~"--- эйконал\note{$\psi_1$~"--- то, что названо эйконалом
@@ -283,6 +283,29 @@ $\varepsilon = \varepsilon(z)$
 \end{enumerate}
 Для предыдущего параграфа просто $ \lambda = \frac{2 \pi}{\sqrt{f}}$
 
+\paragraph{Диспергирующая среда, частотная и пространственная дисперсия}
+Если пространство однородно (и по времени): \\
+$\begin{aligned}
+  \v D (\v r,t) &= \int_{-\infty}^t f (t' - t, \v r)\,\v E(\v r, t')\, \del t \\
+  \v D (\v r,t) &= \int_{\Delta V} g(\v r' -\v r, t)\,\v E(\v r, t')\, \del V
+\end{aligned}$\par\vspace{1ex}
+Для монохроматических можно сказать  чуть  больше:
+\begin{itemize}
+  \item $\v D(\v r,t) = \varepsilon (\omega,\v k) E(\v r,t)$
+  \item $\varepsilon = \varepsilon(\omega)$~--- частотная дисперсия
+  \item $\varepsilon = \varepsilon(\v k)$~--- пространственная дисперсия
+  \item $\varepsilon = \varepsilon_1 + i \varepsilon _2$, 
+    $\varepsilon_1(-\omega) = \varepsilon_1(\omega)$, $\varepsilon_2(-\omega) = -\varepsilon_2(\omega)$,
+    $\omega \to \infty \quad \varepsilon(\omega) \to 0$
+\end{itemize}
+
+\paragraph{Что-то про преобразование Фурье}
+\begin{itemize}
+  \item $\ov~f(\omega) = \intR u(t)\, e^{-i \omega t} \, \del t$
+  \item $2 \pi \delta(\omega) = \intR e^{i \omega t} \, \del t$
+  \item $\ov~{f\ast g} = \ov~{f} \cdot \ov~{\vphantom{f}g}$
+\end{itemize}
+
 \paragraph{Материальные уравнения для быстропеременных процессов}
 \begin{itemize}
   \item $\v D(\omega) = \varepsilon(\omega) \, \v E(\omega)$
@@ -335,6 +358,17 @@ $\{\varepsilon, \mu \}_2 \ll \{\varepsilon, \mu\}_1$.
   \end{enumerate}
 \end{description}
 
+\paragraph{Групповая скорость}
+
+\begin{enumerate}
+  \item $v_{\mathrm{gr}} = \frac{\averg{|\v S|}}{\averg{w}} = \frac{c}{\fder{n \omega}{\omega}}$
+  \item $v_{\mathrm{gr}} = \frac{1}{\fder k \omega} = \frac{c}{\fder{n \omega}{\omega}}$
+\end{enumerate}
+Отсюда $v_{\mathrm{gr}} = v_\phi \cdot \frac{1}{1 + \frac \omega n\, \fder{n}{\omega}}$
+\begin{itemize}
+  \item $\fder{n}{\omega} > 0$~--- нормальная дисперсия, $v_{\mathrm{gr}} < v_\phi$
+  \item $\fder{n}{\omega} < 0$~--- аномальная дисперсия, $v_{\mathrm{gr}} > v_\phi$
+\end{itemize}
 
 \end{multicols*}
 \end{document}
