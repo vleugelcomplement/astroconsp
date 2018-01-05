@@ -69,7 +69,7 @@ $
     \v D (\v r,t) &= \int_{-\infty}^t f (t' - t, \v r)\,\v E(\v r, t')\, \del t \\
     \v D (\v r,t) &= \int_{\Delta V} g(\v r' -\v r, t)\,\v E(\v r, t')\, \del V
   \end{aligned} $ \par
-$g$~--- функция отклика.
+$f,g$~--- функция отклика.
 \end{enumerate}
 
 
@@ -245,7 +245,7 @@ $\begin{aligned}
     \end{aligned}
     $
 \end{enumerate}
-\paragraph{\(E,H\)-волны}
+\paragraph{E,H-волны}
 $\varepsilon = \varepsilon(z)$
 \begin{enumerate}
   \item $\v E \coori \mathrm{Oy},\; E = (0,1,0)\, E(z) e^{i \varkappa x}$~--- E-волны
@@ -260,6 +260,81 @@ $\varepsilon = \varepsilon(z)$
     - \frac 34\, \left(\frac{\varepsilon'}{\varepsilon}\right)$
 \end{enumerate}
 \paragraph{Метод ВКБ}
+Метод решения таких уравнений: $\frac 1{s^2} u'' + f\, u = 0$, $\lfrac 1{s^2}$~--- малый параметр.
+\begin{enumerate}
+  \item $z = s\,\tau$, $u = e^{is \psi}$ 
+  \item В ряд его: $\psi = \psi_0 + \frac is\,\psi_1 + \dotsb $
+  \item ВКБ-решения (первое приближение)
+    $
+    \begin{aligned}
+      u_{1,2} &= f^{-\lfrac 14}\, \exp \left({\pm is\int\sqrt{f}\, \del \tau}\right)\\
+      u       &= c_1 u_1 + c_2 u_2
+    \end{aligned}
+    $
+  \item Условия применимости \quest:\\ 
+    $
+    \left\lvert \fder{\psi_0}{\tau} \right\rvert^2 \!\!\gg
+    \frac{1}{s} \left\lvert\fder[2]{\psi_0}{\tau}\right\rvert
+    \Leftrightarrow 
+    |f| \gg \frac 1s \left\lvert \frac{f'}{2\sqrt f} \right\rvert
+    \Leftrightarrow 
+    \left\lvert \fder{{\sqrt \frac 1f}}{z} \right\rvert \ll 1
+    $
+\end{enumerate}
+Для предыдущего параграфа просто $ \lambda = \frac{2 \pi}{\sqrt{f}}$
+
+\paragraph{Материальные уравнения для быстропеременных процессов}
+\begin{itemize}
+  \item $\v D(\omega) = \varepsilon(\omega) \, \v E(\omega)$
+  \item $\v B(\omega) = \varepsilon(\omega) \, \v H(\omega)$
+  \item $\varepsilon (\omega) = 1 - \frac{4 \pi N e^2}{m \omega^2}$
+  \item $\mu \sim 1$
+  \item \underdev
+\end{itemize}
+
+\paragraph{Энергетические соотношения при дисперсии}
+$\div \v S = - \frac 1 {4\pi} \, 
+    \left(\v E \cdot \pder{\v D}{t} + \v H \cdot \pder{\v B}{t}\right)$
+
+Для монохроматических волн:
+\begin{itemize}
+  \item $\v D = \varepsilon(\omega) \, \v E$, $\v B = \mu(\omega) \, \v H$
+  \item $\varepsilon(\omega) = \varepsilon_1 + i \varepsilon_2$, $\mu(\omega) = \mu_1 + i \mu_2$
+  \item $\averg{\div \v S} = \frac{-\omega}{8\pi}\, 
+    \left(\varepsilon_2 \averg{|\v E|^2} + \mu_2 \averg{|\v H|^2}\right)$ 
+    $ \Rightarrow \varepsilon_2 > 0, \mu_2 > 0$ \quest\note{Тут непонятно что с плотностью
+    энергии. Но, вроде, если амплитуда сохраняется и колебания гармонические, 
+  то $\pder[2]{\averg{w}}{t}=0$. }
+\end{itemize}
+$\{\varepsilon, \mu \}_2 \ll \{\varepsilon, \mu\}_1$~--- прозрачная среда. Тогда можно ввести 
+плотность энергии, как-то так:
+\begin{enumerate}
+  \item припомнить $\div \v S$
+  \item первый член: $\frac{1}{16 \pi} \left(\v E \,\pder{\v D^*}{t} + \v E^* \, \pder{\v D}{t}\right)$
+  \item $\pder{\v D}{t} = -i \omega \varepsilon (\omega) \v E + \fder{(\omega \varepsilon)}{\omega}
+    \, \pder{\v E^0}{t} \, e^{-i \omega t}$
+  \item $\div \v S = - \pder{w}{t}$
+  \item $\averg{w} = \frac{1}{8\pi} 
+    \left( \fder{(\omega \varepsilon)}{\omega} \, \averg{|\v E^0|^2} + 
+    \fder{(\omega \mu)}{\omega} \, \averg{|\v H^0|^2} \right)$
+\end{enumerate}
+
+\paragraph{Волны [монохроматические] в диспергирующей среде\note{Бардак в конспекте, писал по Бутикову}}
+Здесь
+$k := \sqrt{\varepsilon(\omega) \, \mu(\omega)} \, \frac{\omega}{c} = \v k_1 + i\v k_2$,
+$\{\varepsilon, \mu \}_2 \ll \{\varepsilon, \mu\}_1$.
+\begin{description}
+  \item[$\v k_1 \nparallel \v k_2$] Неоднородная плоская волна:
+    $\v E = \v E_0 \, e^{-\v k_2\cdot \v r}\, e^{i(\v k_1 \cdot \v r - \omega t)}$
+  \item[$\v k_1 \coori \v k_2$] Однородная плоская волна: 
+    \begin{enumerate}
+      \item $k = (n + i \varkappa)\, \lfrac{\omega}{c}$~--- показатель преломления и затухания,
+      \item $E(z,t) = E_0 \, e^{-\varkappa \omega \lfrac zc} \, e^{-i \omega (t - n \lfrac z/c )}$
+      \item $\averg{S(z)} = S_0 \, e^{-2 \varkappa \omega \,\lfrac z c} = S_0 e^{-\alpha z}$,
+        $\alpha$~--- к-т поглошения.
+  \end{enumerate}
+\end{description}
+
 
 \end{multicols*}
 \end{document}
