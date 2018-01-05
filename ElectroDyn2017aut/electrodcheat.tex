@@ -16,10 +16,24 @@
 \def\arraystretch{1.3}
 \setlist[enumerate,1]{leftmargin=2em}
 \setlist[itemize,1]{leftmargin=2em, label=$\triangleright$}
-
 \def\waveop{\mathop{\boldsymbol\Box}}
-\begin{document}
 
+\newcommand{\deflabel}[1]{
+  \makebox[\labelwidth][l]{%
+    \parbox[t]{\labelwidth}{\hspace{0pt}\textsf{#1}}%
+  }~::
+}
+\newenvironment{defs}%
+  {\begin{list}{}{%
+        \let \makelabel=\deflabel%
+        \labelwidth=12ex %
+        \setlength{\leftmargin}{\labelwidth+\labelsep}%
+        \itemsep=0pt %
+      }}%
+  {\end{list}}
+\newenvironment{facts}{\begin{list}{$\triangleright$}{}}{\end{list}}
+
+\begin{document}
 \begin{multicols*}{3}\raggedright
 \parindent=0pt
 \paragraph{Уравнения Максвелла}
@@ -370,5 +384,137 @@ $\{\varepsilon, \mu \}_2 \ll \{\varepsilon, \mu\}_1$.
   \item $\fder{n}{\omega} < 0$~--- аномальная дисперсия, $v_{\mathrm{gr}} > v_\phi$
 \end{itemize}
 
+\paragraph{Дисперсия на атоме}
+\begin{enumerate}
+  \item $m\ddot{\v r} + m \omega_0^2 \v r + \gamma m \dot{\v r} = e \v E_0 \, e^{i \omega t}$
+    $ \Rightarrow$ $\v r = \frac em \, \frac{\v E}{\omega_0^2 - \omega^2 - i \omega \gamma} $
+  \item $\v P = n e\, \v r$ $ \Rightarrow$ $\varepsilon(\omega) 
+    = 1 + \frac{\omega_p^2}{\omega_0^2 - \omega^2 - i \omega \gamma}$, 
+    $\omega_p = \textstyle\sqrt{\frac{4 \pi n e^2}{m}}$, \\
+    $
+    \begin{aligned}
+      \varepsilon_1(\omega)& &&=& 1 + 
+      &\frac{\omega_p^2 \, (\omega_0^2 - \omega^2)}{(\omega_0^2 - \omega^2)^2 + \omega^2 \gamma^2} \\
+      \varepsilon_2(\omega)& &&=& 
+      &\frac{\omega_p^2 \, \gamma \omega}{(\omega_0^2 - \omega^2)^2 + \omega^2 \gamma^2}.
+    \end{aligned}
+    $
+  \item $\omega \ll \omega_0$
+  \item $\omega \gg \omega_0$
+\end{enumerate}
+
+\paragraph{СТО, событие и интервал}
+\begin{enumerate}
+  \item Все явления природы одинаковы во всех ИСО
+  \item $c=\textrm{const}$
+\end{enumerate}
+
+\begin{defs}
+  \item[Мировая точка] $(x,y,z,t)$
+  \item[Событие] что-то прозошедшее в мировой точке
+  \item[Мировая линия] траектория точки (в $\R \times \R^3$)
+  \item[Интервал] $S_{12}^2 = c(t_2 - t_1)^2 - (\v r_2 - \v r_1)^2$
+\end{defs}
+\begin{itemize}
+  \item $S^2 > 0$~--- времениподобный интервал (причинная связь)
+  \item $S^2 < 0$~--- пространственноподобный интервал 
+  \item $S^2 = 0$~--- светоподобный интервал
+\end{itemize}
+
+\paragraph{Преобразования Лоренца}
+\begin{itemize}
+  \item Линейны
+  \item Сохраняют интервал
+\end{itemize}
+
+\begin{itemize}
+  \item одномерные: $
+    \begin{aligned}
+      x' &= \gamma(x -Vt) \\
+      t' &= \gamma(t - \frac{Vx}{c^2} \, x)
+    \end{aligned}
+    $
+  \item в общем случае: $
+    \begin{aligned}
+      \v r' &= \v r - \gamma t \, \v V + (\gamma-1) \, \frac{\v r\cdot \v V}{V^2}\, \v V \\
+      t' &= \gamma\left(t - \frac{\v V\cdot \v r}{c^2} \, x\right)
+    \end{aligned}
+    $ или
+    $\begin{aligned}
+      \v r' &= \gamma (\v r -  t \v V) + (\gamma-1) \, \frac{\v V \times (\v V \times \v r)}{V^2} \\
+      t' &= \gamma\left(t - \frac{\v V\cdot \v r}{c^2} \, x\right)
+    \end{aligned}$
+\end{itemize}
+$\Delta \tau = \Delta t \cdot \frac {1}{\gamma(V)} \leqslant \Delta t$
+
+$\tau$~--- собственное время, в той СО, где тело неподвижно. Именно в ней $\Delta \v r = 0$
+\paragraph{Лоренцево сокращение и сложение скоростей}
+В собственной СО $\Delta t' = 0$
+\par\vspace{1ex}
+$\left.\begin{aligned}
+    \Delta \v r_\parallel &= \gamma (\Delta \v r'_\parallel) \\
+    \Delta \v r_\perp &= \Delta \v r'_\perp
+\end{aligned}\right\}\Rightarrow V_0 \mapsto V_0/\gamma $ 
+\par\vspace{1em}
+$\v v' = \frac{\v v - \v V + (1-\lfrac 1 \gamma) \, \v V \times (\v V \times \v v)/V^2}
+{1-\frac{\v V\cdot\v v}{c^2}}$
+\begin{enumerate}
+  \item $\v v \coori \v V$ $ \Rightarrow$ $v' = \frac{v - V}{1 -\lfrac{vV}{c^2}}$
+  \item $\v v \perp \v V$ $ \Rightarrow$ $\v v' = \v v\, \sqrt{1-\lfrac{V^2}{c^2}} - \v V$,
+    $\gamma(v) = \gamma(V)\, \gamma (v')$
+\end{enumerate}
+
+\paragraph{Инвариантные объекты в СТО и махинации с ними\underdev}
+$\Lambda$~--- преобразование Лоренца
+\begin{enumerate}
+  \item $a = \mathrm{const}$ \hfill /$S^2$, $\del^4r$/
+  \item $a^\alpha = \Lambda^\alpha_\mu a^\mu$ \hfill /$r$, $u$, $\nabla$ \dots/
+  \item $A_{\v \alpha}^{\v \beta} = \Lambda_{\v \alpha}^{\v \mu} \, \Lambda_{\v \nu}^{\v \beta}\,
+    A_{\v \mu}^{\v \nu}$ \hfill /$F^{ik}$, $g_{ij}$, \dots/
+\end{enumerate}
+
+\begin{facts}
+\item $\Lambda = \begin{pmatrix}
+  \gamma &  \underdev & \underdev&\underdev \\
+  \underdev &  \underdev & \underdev&\underdev \\
+  \underdev &  \underdev & \underdev&\underdev \\
+  \underdev &  \underdev & \underdev&\underdev
+\end{pmatrix}$
+\item $a \cdot b = g_{\mu\nu} a^\mu b^\nu$
+\end{facts}
+
+\paragraph{Скорость и импульс в СТО}
+
+\begin{facts}
+  \item $u = \fder{r}{\tau}  = \{\gamma c, \gamma \v v\}$, $\beta = v / c$
+  \item $p = m \, u = \{p_0, \v p\}$
+\end{facts}
+\begin{enumerate}
+\item $\v p = m \, \gamma \, \v v$, $p_0 = m \, \gamma \, c$
+\item $p^2 = m\, c^2 \Rightarrow p_0^2 = m^2\,c^2 + p^2$ (закон сохранения энергии-импульса)
+\item $\fder{p_0 c}{t} = m \gamma^3 (\v v \cdot \dot{\v v}) = 
+  \v v \cdot \underbrace{\fder{\v p}{t}}_{\v F} = \fder{\mathcal E}{t}$
+\item $p_0 = \mathcal E/c$  $T(p) = p_0\, c - m\,c^2$
+\end{enumerate}
+
+\paragraph{Сложение скоростей}
+$w = \fder{u}{\tau} $
+\begin{facts}
+\item $w = \gamma^2\left\{(\v\beta \cdot \v w) \gamma^2, \v w +
+  (\v\beta \cdot \v w) \, \v\beta \gamma^2\right\}$
+\item $w \cdot \beta = 0$ (этакая ортогональность)
+\item $w^2 = \gamma^2 \bigl(-\v w^2 + (\v\beta \times \v w)^2\bigr) $
+\end{facts}
+
+$u_1 = \{\gamma_1c, \gamma_1\v v_1\}$, $u_2 = \{\gamma_2c, \gamma_2\v v_2\}$
+\begin{enumerate}
+  \item $\v V = \v v_1$
+  \item $u_1' = \{c, 0\}$, $u_2' = \{\gamma_r c, \gamma_r \v v_r\}$
+  \item $\gamma_r = \gamma_1\, \gamma_2 \, \left( 1- \frac{(\v v_1\cdot \v v_2)}{c^2}\right) = 
+  \frac{1}{c^2}\, u_1 \cdot u_2 = \mathrm{inv}$
+\item $\v v_r = \frac {\gamma_2}{\gamma_r} \, \left(\v v_2 - \gamma_2 \v v_2 
+  + (\gamma-1) \frac{\v v_1 \, (\v v_2 \cdot \v v_1)}{\v v_1^2}\right)$
+\item тосковатт
+\end{enumerate}
 \end{multicols*}
 \end{document}
