@@ -516,5 +516,57 @@ $u_1 = \{\gamma_1c, \gamma_1\v v_1\}$, $u_2 = \{\gamma_2c, \gamma_2\v v_2\}$
   + (\gamma-1) \frac{\v v_1 \, (\v v_2 \cdot \v v_1)}{\v v_1^2}\right)$
 \item тосковатт
 \end{enumerate}
+
+\paragraph{Импульс фотона}
+$k = \left\{\frac \omega c, \v k\right\} = \frac{\omega}{c} \{1, \v n\}$
+\note{Для корректности надо доказать инвариантность фазы,
+а это следует из преобразований $F^{ik}$ монохроматических волн}, 
+$p_\gamma = \hbar \, \v k$
+
+\begin{enumerate}
+  \item Эффект Допплера: $\omega' = \omega \gamma (1 - \v b \cdot \v n)$
+  \item Абберация: $\v n' = \frac%
+    {\v n - \gamma \v\beta + (\gamma-1)\, (\v\beta \cdot \v n)\, \v \beta / \beta^2}%
+    { \gamma (1- \v n \cdot\v \beta)} $
+    \begin{itemize}
+      \item $\sin (\alpha'-\alpha) = 
+        \sin \alpha \, \frac{\beta - (1-\gamma^{-1})\, \cos \alpha\bigr)}{1-\beta\, \cos \alpha}$
+      \item $\cos \alpha' = \frac{\cos \alpha - \beta}{1-\beta \cos \alpha}$
+      \item $\sin \alpha' = \frac 1 \gamma \,\frac{\sin \alpha}{1-\beta \cos \alpha}$
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{4-ток и потенциал}
+
+\begin{description}
+\item[$j \that$] $j=\{c\,\rho, \rho\,\v v\}$\hfill /$\nabla j=\partial_t\rho + \div\v j = 0 = \rm inv$/
+\item[$A \that$] $A=\{\varphi, \v A\}$\hfill /$\waveop A = \frac{4\pi}{c} \, j$/
+\end{description}
+
+\paragraph{Тензор электромагнитного поля}
+$F_{ik} = \partial_i A_k - \partial_k A_i$
+\begin{itemize}
+  \item $F_{ik} = (\v E, \v H) = \begin{pmatrix}
+       0   &  E_1  &  E_2  &  E_3 \\
+      -E_1 &  0    & -H_3  &  H_2 \\
+      -E_2 &  H_3  &  0    & -H_1 \\
+      -E_3 & -H_2  &  H_1  &  0   \\
+  \end{pmatrix}$
+\item $F^{ik} = (-\v E, \v H)$
+\item $F_{ik} = -F_{ki}$
+\end{itemize}
+
+Уравнения Максвелла:
+$\left\{
+\begin{aligned}
+  &\partial_\alpha F_{\beta\gamma}+\partial_\beta F{\gamma\alpha}+\partial_\gamma F_{\alpha\beta}=0\\
+  &\partial_\alpha F^{\alpha \beta} = - \frac{4\pi}{c} j^\beta  
+\end{aligned}\right. \Leftrightarrow
+\left\{
+\begin{aligned}
+  &\partial_\alpha e^{\alpha\!\beta\gamma \delta} F_{\gamma \delta} = 0 \\
+  &\partial_\alpha F^{\alpha \beta} = - \frac{4\pi}{c} j^\beta  
+\end{aligned}\right.
+$
 \end{multicols*}
 \end{document}
