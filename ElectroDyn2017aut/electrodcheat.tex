@@ -554,6 +554,9 @@ $F_{ik} = \partial_i A_k - \partial_k A_i$
   \end{pmatrix}$
 \item $F^{ik} = (-\v E, \v H)$
 \item $F_{ik} = -F_{ki}$
+\item $F^{ik}F_{ik} = 2 H^2 - 2 E^2$
+\item $\frac{1}{2} \, e^{prst} F_{pr} F_{st} = - 4\, \v E \cdot \v H$
+\item $G^{ik} = \frac 12 e^{iklm} F_{lm} = (-\v H, -\v E)$
 \end{itemize}
 
 Уравнения Максвелла:
@@ -564,9 +567,91 @@ $\left\{
 \end{aligned}\right. \Leftrightarrow
 \left\{
 \begin{aligned}
-  &\partial_\alpha e^{\alpha\!\beta\gamma \delta} F_{\gamma \delta} = 0 \\
+  &\partial_\alpha G^{\alpha \beta} = 0 \\
   &\partial_\alpha F^{\alpha \beta} = - \frac{4\pi}{c} j^\beta  
 \end{aligned}\right.
 $
+
+\paragraph{Преобразование Лоренца для поля}
+для $\v \beta \coori \v i$ $F'=$ 
+$
+\begin{matrix}
+  0 & {{F}_{0,1}} &
+-\gamma\left( {F_{2,1}}\beta-{{F}_{0,2}}\right)  & \gamma\left({{F}_{1,3}}\beta+{{F}_{0,3}}\right) \\
+{{F}_{1,0}}  & 0 &
+\gamma\left( {{F}_{0,2}}\beta-{{F}_{2,1}}\right)  & \gamma\left( {{F}_{0,3}}\beta+{{F}_{1,3}}\right) \\
+\cdots  & \cdots  &
+0 & -{{F}_{3,2}}\\
+\cdots  & \cdots & {{F}_{3,2}} & 0\end{matrix}
+$ (остальное из антисимметричности) или \note{я это не считал, это всё \texttt{maxima}}
+
+$\begin{matrix}
+  0 & {{E}_{1}} & \gamma\left({{E}_{2}} - \beta{{H}_{3}}\right)  & \gamma\left( \beta{{H}_{2}}+{{E}_{3}}\right) \\
+-{{E}_{1}} & 0 & -\gamma\left( {{H}_{3}}-\beta{{E}_{2}}\right)  & \gamma\left( {{H}_{2}}+\beta{{E}_{3}}\right) \\
+\cdots & \cdots  & 0 & -{{H}_{1}}\\
+\cdots & \cdots & {{H}_{1}} & 0
+\end{matrix}$ 
+
+\begin{facts}
+\item $\v E'_\parallel = \v E_\parallel$, $\v E'_\perp = \gamma\,(\v E_\perp + \v\beta \times \v H)$
+\item $\v E' = \gamma \v E + \frac \gamma c \, \v V \times \v H - 
+  (\gamma-1)\, \frac{\v V \, (\v V \cdot \v E)}{V^2}$
+\item $\v H' = \gamma \v E - \frac \gamma c \, \v V \times \v E - 
+  (\gamma-1)\, \frac{\v V \, (\v V \cdot \v H)}{V^2}$ \note{Если мы имеем дело с плоской волной,
+  то $(\v E, \v H, \v \beta)$, $(\v H, \v E, -\v\beta)$ будут образовывать правые тройки.
+Так что понятно, почему у $\v V$ поменялся знак}
+\end{facts}
+
+\paragraph{Тензор энегрии-импульса}
+\begin{facts}
+\item $m\, \fder{u^i}{\tau} = \frac ec \, F^i_k \, u^k$ $ \Rightarrow $ $\mu\, \fder{u^i}{t}  = \frac 1c \, F^i_k \, j^k =: f_l^i$
+\end{facts}
+
+Поле:
+\begin{description}
+  \item[$T^{ik} :=$]$ \frac{1}{4\pi} \, \left(-F^{is}\,F^k_s + \frac{1}{4}\, g^{ik}\, F_{ps}F^{ps}\right)$
+  \item[$T=$]$ (\omega, S/c, \sigma)$~--- плотность энергии, плотность потока энегрии (импульс для поля) и плотность 
+    потока компоненты импульса. Ещё $\sigma$~--- Максвелловский тензор напряжений.
+\end{description}
+\begin{enumerate}
+  \item $j = \frac{c}{4\pi} \, \nabla \cdot F$ (неоднородные из уравнений Максвелла)
+  \item $f^i = \frac 1 {4\pi} F^i_k \, (\nabla\cdot F)^k$
+  \item $-\partial_k T^{ik} =  (\partial_kF^{is})\,F^k_s + F^{is}\, \partial_k F^k_s + 0 = 
+    \bigl(\{\underbrace{\text{антисим}}_{=\,0 }\} + \{\text{сим}\} \bigr) F^{is} +
+    F^{i}_s \, \partial_k F^{ks} = f^i$
+  \item $\sigma_{ik} = \frac{1}{4\pi} \, \left(-E_i E_k - H_iH_k + \frac12 \delta_{ik} \,(E^2 + H^2) \right)$ 
+  \item $\pder wt + \div \v S = - f^0 = - \v E \cdot \v j$
+  \item $\frac {1}{c^2}\pder {S^i}{t} + \div \v \sigma_i = - f_L^i$
+\end{enumerate}
+
+Частицы: $T_{(p)}^{ik} = \frac \mu \gamma \, u^i u^k$, $\nabla (T_{(p)} + T) = 0  \Longrightarrow$
+\begin{enumerate}
+  \item $\pder {w_0}t + \div \v {S_0} = 0$
+  \item $\frac {1}{c^2}\pder {S_0^i}{t} + \div (\v\sigma_0)_i = 0$
+\end{enumerate}
+
+
+\paragraph{Потенциалы точечного заряда}
+запаздывающие потенциалы:\par
+$
+\begin{aligned}
+  \rho(\v r, t) &= e \, \delta(\v r - \v r_0(t)) &
+  \v j(\v r, t) &=  \rho(\v r,t) \, r_0'(t) \\
+  \varphi(\v r, t)&= \int \frac{\rho (\v r_1,t_1)}{|\v r - \v r_1|}\, \del^3 \v r_1 &
+  \v A(\v r, t) &= \int \frac{\v j (\v r_1,t_1)}{|\v r - \v r_1|}\, \del^3 \v r_1 \\
+\end{aligned}
+$
+$c\,(t-t_1) = |\v r - \v r_1|  \text{~--- условие}\text{ запаздывания}$
+
+\paragraph{Вычисление этих потенциалов}
+$
+\begin{aligned}
+  s = R_0 - \v \beta \cdot \v R_0&\\
+    &\varphi = \frac es & \v A &= \frac{e\beta}{s} \\
+  A = \frac{e \, u}{u\cdot R_0}&
+\end{aligned}
+$
+
+\paragraph{Напряжённость поля точечного заряда}
 \end{multicols*}
 \end{document}
