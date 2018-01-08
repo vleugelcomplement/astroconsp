@@ -725,14 +725,30 @@ $I = \frac 23\, \frac{e^2}{c^3} \, (\ddot x)^2 = \frac 23\, \frac{e^2}{c^3} \, (
 = \frac 23\, \frac{e^2}{c^3} (- \ddot x \cdot \ddot x)$\note{Мы здесь всё считаем в момент
 излучения~--- $t_1$. Наблюдатель не нужен}
 
-$\{0, \v w\} = \ddot x, \quad I = \frac 23\, \frac{e^2}{c^3} (- \ddot x \cdot \ddot x)$
+$\{0, \v w\} = \ddot x, \quad I = \frac 23\, \frac{e^2}{c^3} \, \gamma^6\, \bigl(w^2 - (\v \beta \times \v w)^2 \bigr)$
 
 \begin{enumerate}
   \item $\v F = \fder{}{t}(m \gamma \v v) = m \gamma \v w + m \gamma^3 \v \beta \,(\v \beta\cdot \v w)$
   \item $I = \frac 23\, \frac{e^2}{m^2c^3}\, F^2 \, \begin{cases}
         1,& \v \beta \parallel \v w \\ \gamma^2,& \v \beta \perp \v w
   \end{cases}$
-\item $\gamma \gg 1 \Rightarrow \perp$ эффективнее.
+\item $\gamma \gg 1 \;\Rightarrow\; \perp$ эффективнее.
 \end{enumerate}
+
+\paragraph{Угловое распределение излучения}
+\begin{enumerate}
+\item $\v E = \frac{e}{Rc^2}\, \frac{\v n \times \bigl((\v n - \v \beta) \times \v w\bigr)}%
+  {(1-\v n \cdot \v \beta)^3}$
+\item $P\,\del t_1 = |\v S| R^2 \, \del \Omega \, \del t$ \note{А тут про наблюдателя вспомнили}
+\item $\del t = (1-\v n \v \beta) \, \del t_1$
+\item $\mathcal W(\v n) = \frac{c}{4\pi} \, E^2 R^2 (1-\v n\v\cdot \beta)$
+\item $\mathcal W(\v n) = \frac{e}{4\pi c^3} \cdot \frac{\Bigl(\v n \times \bigl((\v n - \v \beta) \times \v w\bigr)\Bigr)^2}{(1-\v n\v\cdot \beta)^5}$
+\end{enumerate}
+
+$\int \mathcal W(\v n)\, \del \Omega =\frac 23\, \frac{e^2}{c^3} \, \gamma^6\, \bigl(w^2 - (\v \beta \times \v w)^2 \bigr) = I$,
+$\int \mathcal W(\v n)\,\v n\, \del \Omega = \v\beta I$
+
+
 \end{multicols*}
 \end{document}
+%vim: syntax sync minlines=200
