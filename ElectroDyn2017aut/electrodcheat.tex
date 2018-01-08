@@ -23,10 +23,10 @@
     \parbox[t]{\labelwidth}{\hspace{0pt}\textsf{#1}}%
   }~::
 }
-\newenvironment{defs}%
+\newenvironment{defs}[1][\hspace{12ex}]%
   {\begin{list}{}{%
         \let \makelabel=\deflabel%
-        \labelwidth=12ex %
+        \setlength{\labelwidth}{\widthof{#1}} %
         \setlength{\leftmargin}{\labelwidth+\labelsep}%
         \itemsep=0pt %
       }}%
@@ -646,12 +646,93 @@ $c\,(t-t_1) = |\v r - \v r_1|  \text{~--- условие}\text{ запаздыв
 \paragraph{Вычисление этих потенциалов}
 $
 \begin{aligned}
-  s = R_0 - \v \beta \cdot \v R_0&\\
-    &\varphi = \frac es & \v A &= \frac{e\beta}{s} \\
-  A = \frac{e \, u}{u\cdot R_0}&
+  s = R_0 - \v \beta \cdot \v R_0& &\v n_0 &= \frac{\v R_0}{R_0}\\
+                                 &\varphi = \frac es & \v A &= \frac{e\beta}{s}& \\
+  A = \frac{e \, u}{u\cdot R}&
 \end{aligned}
 $
 
+Попутно $c^{-1}\, \partial_t \varphi + \nabla \v A=0$
+
 \paragraph{Напряжённость поля точечного заряда}
+Хлам, но оказалось полезно:
+$
+\begin{aligned}
+  \pder{\v R_0}{t_1} &= -c \, \v \beta  & \pder{R_0}{t_1} &= - c\,\v\beta \cdot \v n_0\\
+  \pder{t_1}{t} &= \frac{1}{1-\v n_0\cdot \v\beta} & \pder{t}{t_1} &= {1-\v n_0\cdot \v\beta} \\
+  \nabla t_1 &= -\frac{R_0}{cs} & \nabla R_0 &= \frac{\v R_0}{s} \\
+  s' &= -c\,\v \beta \cdot \v n_0 + c\, \beta^2 - \v \beta\cdot \v R_0 \span\span \\
+\end{aligned}
+$\vspace{1.2ex}
+
+Напряжённости:
+$
+\begin{aligned}
+  \v E_1 &=  \frac{e}{s^3}\, (1-\beta^2)\, (\v R_0 - R_0 \,\v \beta) \\
+  \v E_2 &=  \frac{e}{cs^3}\, \v R_0 \times \bigl((\v R_0 - R_0\, \v \beta) \times \v \beta'\bigr) \\
+  \v H_1 &= -\frac{e}{s^3}\, (1-\beta^2)\, (\v R_0 \times \v\beta)\\ 
+  \v H_2 &= -\frac{e}{cs^3}\, \Bigl((\v R_0\cdot \v\beta')\, \v R_0 \times \v\beta 
+          + (R_0 - \v R_0\cdot \v \beta)\,\v R_0 \times \v\beta'\Bigr) \\
+\v H_1 &= \v n_0 \times \v E_1, \qquad \v H_2 = \v n_0 \times \v E_2
+\end{aligned}
+$
+\begin{facts}
+\item $E_1, H_1 \propto \frac{1}{R_0^2} $, $E_2, H_2 \propto \frac{1}{R_0} $ 
+\item $R_0 \gg a$, $R \gg \lambda$ (волновая зона)~"--- $S \sim E_2 \, H_2 \propto \frac{1}{R_0^2}$ 
+  $ \Rightarrow \Phi = const$
+\end{facts}
+
+\paragraph{На больших расстояниях}
+\begin{enumerate}
+  \item $\varphi, \v A \colon R_0 \to R$, $n_0 \to n$; $\quad c\,(t_1-T) = \v n\cdot\v x = t-\frac Rc$
+  \item $\nabla(R^\alpha) \sim R^{\alpha-1} \Rightarrow \nabla = -\frac{\v n}{c}\, \pder{}{t}  $
+  \item $\v E = \v E_2$, $\v H = \v H_2$
+  \item $\v S = w c \v n$
+\end{enumerate}
+
+\paragraph{Поле медленного заряда}
+\begin{defs}[квадрупольный момент]
+\item[дипольный момент] $\v d = e\v x$
+\item[магнитный момент] $\v m = \frac{e}{2c} \, (\v x \times \v x')$
+\item[квадрупольный момент] $Q_{ij} = e\,(3x_ix_j - g_{ij} x_s x^s)$ $ \Rightarrow$ 
+  $\v Q = e\, (3 \v x\, (\v n\cdot \v x) - x^2 \, \v n)$
+\end{defs}
+
+\begin{facts}
+\item $\v A = \frac{1}{Rc} \, \pder{}{t} \, \left(\v d + \v m \times \v n + \frac{1}{6c}\, \v Q' + 
+  \frac{e}{3c}\, \v n \, (\v x\cdot \v x')\right)$
+\item $\v H = \frac{1}{Rc^2} \, \left(\v d'' \times \v n + (\v m'' \times \v n) \times \v n 
+    + \frac{1}{6c}\, \v Q'' \times \v n \right)$
+  \item $\v E = \v H \times \v n = \frac{1}{Rc^2} \, \left(\v n \times (\v n \times \v d'')
+    + \v n \times \v m'' + \frac{1}{6c}\, \v n \times (\v n \times \v Q'') \right)$
+\end{facts}
+
+\paragraph{Дипольное приближение}
+$\v H = \frac{Rc^2} \, \v d'' \times \v n, \; \v E = \frac{}{Rc^2} \, \v n \times (\v n \times \v d'')$
+
+\begin{enumerate}
+  \item $\v S = \frac{\v n}{4\pi c^3R^2}\,\Bigl\lvert\v d''\times\v n \Bigr\rvert^2 = 
+    \mathcal W(\theta) \, \del \Omega$
+  \item $\mathcal W(\theta) = \frac{e^2}{4\pi c^3}\,(\ddot x)^2 \,\sin^2 \theta$~"--- формула Лармора
+  \item $I = \int \mathcal W(\theta)\, \del \Omega = \frac{2}{3}\, \frac{e^2}{c^3} (\ddot x)^2$
+\end{enumerate}
+
+\paragraph{Излучение релятивистких}
+$I := -\fder{\mathcal E}{t_1}$~--- инвариант.
+В сопутствующей СО работает формула Лармора. Так что
+
+$I = \frac 23\, \frac{e^2}{c^3} \, (\ddot x)^2 = \frac 23\, \frac{e^2}{c^3} \, (-\{0,\ddot x\})
+= \frac 23\, \frac{e^2}{c^3} (- \ddot x \cdot \ddot x)$\note{Мы здесь всё считаем в момент
+излучения~--- $t_1$. Наблюдатель не нужен}
+
+$\{0, \v w\} = \ddot x, \quad I = \frac 23\, \frac{e^2}{c^3} (- \ddot x \cdot \ddot x)$
+
+\begin{enumerate}
+  \item $\v F = \fder{}{t}(m \gamma \v v) = m \gamma \v w + m \gamma^3 \v \beta \,(\v \beta\cdot \v w)$
+  \item $I = \frac 23\, \frac{e^2}{m^2c^3}\, F^2 \, \begin{cases}
+        1,& \v \beta \parallel \v w \\ \gamma^2,& \v \beta \perp \v w
+  \end{cases}$
+\item $\gamma \gg 1 \Rightarrow \perp$ эффективнее.
+\end{enumerate}
 \end{multicols*}
 \end{document}
