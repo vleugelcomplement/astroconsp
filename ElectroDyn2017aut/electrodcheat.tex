@@ -1,4 +1,4 @@
-\documentclass[draft]{trchesh}
+\documentclass{trchesh}
 \usepackage{trmath}
 \usepackage{trsym} 
 
@@ -708,11 +708,11 @@ $
 \end{facts}
 
 \paragraph{Дипольное приближение}
-$\v H = \frac{Rc^2} \, \v d'' \times \v n, \; \v E = \frac{}{Rc^2} \, \v n \times (\v n \times \v d'')$
+$\v H = \frac{1}{Rc^2} \, \v d'' \times \v n, \; \v E = \frac{1}{Rc^2} \, \v n \times (\v n \times \v d'')$
 
 \begin{enumerate}
   \item $\v S = \frac{\v n}{4\pi c^3R^2}\,\Bigl\lvert\v d''\times\v n \Bigr\rvert^2 = 
-    \mathcal W(\theta) \, \del \Omega$
+    \mathcal W(\theta) \, R^2$
   \item $\mathcal W(\theta) = \frac{e^2}{4\pi c^3}\,(\ddot x)^2 \,\sin^2 \theta$~"--- формула Лармора
   \item $I = \int \mathcal W(\theta)\, \del \Omega = \frac{2}{3}\, \frac{e^2}{c^3} (\ddot x)^2$
 \end{enumerate}
@@ -740,14 +740,59 @@ $\{0, \v w\} = \ddot x, \quad I = \frac 23\, \frac{e^2}{c^3} \, \gamma^6\, \bigl
 \item $\v E = \frac{e}{Rc^2}\, \frac{\v n \times \bigl((\v n - \v \beta) \times \v w\bigr)}%
   {(1-\v n \cdot \v \beta)^3}$
 \item $P\,\del t_1 = |\v S| R^2 \, \del \Omega \, \del t$ \note{А тут про наблюдателя вспомнили}
-\item $\del t = (1-\v n \v \beta) \, \del t_1$
-\item $\mathcal W(\v n) = \frac{c}{4\pi} \, E^2 R^2 (1-\v n\v\cdot \beta)$
-\item $\mathcal W(\v n) = \frac{e}{4\pi c^3} \cdot \frac{\Bigl(\v n \times \bigl((\v n - \v \beta) \times \v w\bigr)\Bigr)^2}{(1-\v n\v\cdot \beta)^5}$
+\item $\del t = (1-\v n \cdot \v \beta) \, \del t_1$
+\item $\mathcal W(\v n) = \frac{c}{4\pi} \, E^2 R^2 (1-\v n\cdot\v \beta)$
+\item $\mathcal W(\v n) = \frac{e}{4\pi c^3} \cdot \frac{\Bigl(\v n \times \bigl((\v n - \v \beta) \times \v w\bigr)\Bigr)^2}{(1-\v n\cdot\v\beta)^5}$
 \end{enumerate}
 
 $\int \mathcal W(\v n)\, \del \Omega =\frac 23\, \frac{e^2}{c^3} \, \gamma^6\, \bigl(w^2 - (\v \beta \times \v w)^2 \bigr) = I$,
 $\int \mathcal W(\v n)\,\v n\, \del \Omega = \v\beta I$
 
+
+\paragraph{Мгновенное движение по прямой и окружности}
+\includegraphics[width=\linewidth]{perp_par.pdf}
+
+\begin{enumerate}
+  \item $\mathcal W_\parallel = \frac{e^2}{4\pi c^2} \, w^2 \, \frac{\sin^2\theta}{(1-\beta \cos \theta)^5}$, $\theta_0 \approx \frac{1}{2 \gamma}$
+  \item $\mathcal W_\perp = \frac{e^2}{4\pi c^2}  \, \frac{w^2}{(1-\beta \cos \theta)^3} 
+    \left(1 - \frac{\sin^2 \theta \, \cos^2 \varphi}{\gamma^2\, (1-\beta \, \cos \theta)^2}\right)$,
+    $\theta_0 = 0$, $\Delta \theta \approx 1/\gamma$
+\end{enumerate}
+
+$\gamma \gg 1 \quad I \approx I_\perp$
+
+$\Delta t_1 \sim \frac{\rho}{c \gamma} \Rightarrow \Delta t \sim \frac{\rho}{c \gamma^3}  
+\Rightarrow \omega < \omega_c = \frac{c \gamma^3}{\rho}$ 
+
+\paragraph{Спектр и поляризация движения по окуржности}
+\underdev \flame
+
+\begin{enumerate}
+  \item $\v M := \sqrt{c \over 4\pi}$, $\mathcal W(\v n, t) = |\v S|\, R^2 = |\v M(t)|^2 =
+    \fder{\mathcal E(t)}{t}$
+  \item $\v M(\omega) = \frac{e}{c} \, \sqrt{c \over 4\pi} \intR e^{i \omega t} \,\del
+    \left(\frac{\v n \times (\v n \times \v \beta)}{1 - \v n \cdot \v \beta}\right)$
+  \item $t = T + R/c = t_1 - \frac 1c \v n\cdot \v x$
+  \item $v M(\omega) = \frac{-i\omega e\, e^{i \omega R}}{c} \, \sqrt{c \over 4\pi} \* 
+     \intR e^{i \omega (t_1 - \frac 1c \v n \cdot \v \beta)} \,
+  \v n \times (\v n \times \v \beta)\, \del t_1$
+  \item В поляризационном базисе и при малых углах
+    $
+    \begin{aligned}
+      \mathcal E &= \frac{e^2 \omega^2}{4\pi^2 c}\,|-\v e_\parallel M_\parallel + \v e_\perp M_\perp|\\
+      \mathcal E &= \frac{e^2}{3\pi^2 c} \*
+      \left(\frac{\omega \rho}{x}\right)^2 \* \left(\frac 1{\gamma^2} + \theta^2 \right)^2\*
+      \left\lvert \mathcal K_{2/3}^2 (\xi) + \tfrac{u^2}{1+u^2}\, \mathcal K_{1/3}^2 (\xi)\right\rvert\\
+      u &= \gamma \theta, \quad
+      x = \frac{ct}{\rho} \, \left(\tfrac{1}{\gamma^2} + \theta^2\right)^{-1/2} \;
+      \xi = \frac{\omega \rho}{3c}\, \left(\tfrac{1}{\gamma^2} + \theta^2\right)^{3/2} \\
+      w_c &= 3 \gamma^3 \omega_0,\quad \omega_0 = \rho/c
+    \end{aligned}
+    $
+\end{enumerate}
+возня с асимптотикой \underdev
+
+\paragraph{Магнитотормозное излучение}
 
 \end{multicols*}
 \end{document}
