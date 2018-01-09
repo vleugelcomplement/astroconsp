@@ -2,10 +2,12 @@
 \usepackage{trmath}
 \usepackage{trsym} 
 
-\setlayout[page-orient=landscape]{hardcopy}
+\usepackage{cmbright}
+\setlayout[page-orient=landscape, size=10]{hardcopy}
 \makeatletter
 \def\note{\ifexpmode{\@gobble}{\endnote}}
 \makeatother
+
 \hypersetup{
   pdftitle={Шпора по электроду},
   pdfauthor={taxus},
@@ -14,8 +16,9 @@
 }
 \columnseprule=0.1dd
 \def\arraystretch{1.3}
-\setlist[enumerate,1]{leftmargin=2em}
+\setlist[enumerate,1]{leftmargin=1.6em}
 \setlist[itemize,1]{leftmargin=2em, label=$\triangleright$}
+
 \def\waveop{\mathop{\boldsymbol\Box}}
 
 \newcommand{\deflabel}[1]{
@@ -33,6 +36,7 @@
   {\end{list}}
 \newenvironment{facts}{\begin{list}{$\triangleright$}{}}{\end{list}}
 
+\graphicspath{{img/}}
 \begin{document}
 \begin{multicols*}{3}\raggedright
 \parindent=0pt
@@ -764,7 +768,7 @@ $\gamma \gg 1 \quad I \approx I_\perp$
 $\Delta t_1 \sim \frac{\rho}{c \gamma} \Rightarrow \Delta t \sim \frac{\rho}{c \gamma^3}  
 \Rightarrow \omega < \omega_c = \frac{c \gamma^3}{\rho}$ 
 
-\paragraph{Спектр и поляризация движения по окуржности}
+\paragraph{Спектр и поляризация движения по окружности}
 \underdev \flame
 
 \begin{enumerate}
@@ -786,14 +790,48 @@ $\Delta t_1 \sim \frac{\rho}{c \gamma} \Rightarrow \Delta t \sim \frac{\rho}{c \
       u &= \gamma \theta, \quad
       x = \frac{ct}{\rho} \, \left(\tfrac{1}{\gamma^2} + \theta^2\right)^{-1/2} \;
       \xi = \frac{\omega \rho}{3c}\, \left(\tfrac{1}{\gamma^2} + \theta^2\right)^{3/2} \\
-      w_c &= 3 \gamma^3 \omega_0,\quad \omega_0 = \rho/c
+      & w_c = 3 \gamma^3 \omega_0,\quad \omega_0 = \rho/c
     \end{aligned}
     $
 \end{enumerate}
 возня с асимптотикой \underdev
 
 \paragraph{Магнитотормозное излучение}
+\underdev \flame
 
+$\v E = 0 \Rightarrow \fder{\mathcal E}{t} = e \v \cdot \v E = 0$
+
+\begin{defs}[Ларморовская частота]
+\item[Ларморовская частота] $\omega_H = \frac{e H}{mc \gamma}$ 
+\item[Циклотронная частота] $\frac{e H}{mc}$ 
+\item[Ларморовский радиус] $\rho_H = \frac{v_\perp}{\omega_H} = \frac{v \, sin \chi}{\omega_H}$
+\end{defs}
+
+\begin{facts}
+\item $w = \omega_H v\, \sin \chi $
+\item $\left\{
+  \begin{aligned}
+    x &= x_0 + \rho_H \, \sin(\omega_H t + \alpha) \\
+    y &= y_0 + \rho_H \, \cos(\omega_H t + \alpha)\\
+    z &= z_0 + v\, \cos \chi t\, t
+\end{aligned}\right.
+  $~--- спиралька 
+\item $F_\parallel= 0 \Rightarrow I = \frac{2 e^4 v^2 H^2 \sin^2 \chi}{3m^2 c^5} \propto \frac{e^4}{m^2}$
+\item $\mathcal W_{\text{набл}} = \frac{1}{\sin^2 \chi} \,\mathcal W_{\text{исп}}$
+\end{facts}
+
+А что такое $W$ я не знаю. И не знаю, узнаю ли. Приятного использования.
+\begin{enumerate}
+  \item $\v M (t) \sum^{\infty}_{k=-\infty} \v M_k e^{-i \omega_H k t} $
+  \item $W_k(\theta) = \frac{e^2k^2 \omega_H^2}{2\pi c}\,
+    \Bigl\lvert\v e_\parallel \beta J_k'(k \beta \cos \theta) + i \v e_\perp \tg \theta \, J_k (k \beta \cos \theta)\Bigr\rvert^2$
+  \item при $\theta = 0$ переходит в линейную, при $\theta = \pi/2$~"--- в круговую.\note{Угол между направлением и плоскостью 
+    движения, так-то.}
+\end{enumerate}
+
+\plholdev{дурацкие частные случаи}
+
+\paragraph{Рассеяние на свободных зарядах}
 \end{multicols*}
 \end{document}
 %vim: syntax sync minlines=200
