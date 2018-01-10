@@ -37,6 +37,12 @@
 *.bbl
 *.blg
 *.ent
+# tikz
+*.dep
+*.gnuplot
+*.dpth
+*.md5
+*.auxlock
 
 
 # OS generated files #

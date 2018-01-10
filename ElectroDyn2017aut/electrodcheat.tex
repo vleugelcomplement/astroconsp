@@ -2,12 +2,15 @@
 \usepackage{trmath}
 \usepackage{trsym} 
 
-\usepackage{cmbright}
 \setlayout[page-orient=landscape, size=10]{hardcopy}
 \makeatletter
 \def\note{\ifexpmode{\@gobble}{\endnote}}
 \makeatother
-
+\usepackage{pgfplots}
+\usetikzlibrary{external}
+\tikzsetexternalprefix{img/}
+\tikzexternalize
+\usepackage{docmute}
 \hypersetup{
   pdftitle={Шпора по электроду},
   pdfauthor={taxus},
@@ -145,7 +148,7 @@ $
     u = f(x-vt) + g(x+vt)
     \end{aligned}
     $
-  \item Плоская волна: $A =  A(\v n \cdot \v r - vt)$\note{вторую волну выкинули,
+  \item Плоская волна: $A =  A(\v n \cdot \v r - vt)$ \note{вторую волну выкинули,
     нам обычно хватает какого-то частного решения.}
   \item Условие поперечности: $\div \v A = 0$ $\Rightarrow$ $\v B = \frac cv \,\v n \times \v E$ 
   \item $\v S = v \, w \, \v n$.
@@ -345,7 +348,7 @@ $\div \v S = - \frac 1 {4\pi} \,
     \left(\varepsilon_2 \averg{|\v E|^2} + \mu_2 \averg{|\v H|^2}\right)$ 
     $ \Rightarrow \varepsilon_2 > 0, \mu_2 > 0$ \quest\note{Тут непонятно что с плотностью
     энергии. Но, вроде, если амплитуда сохраняется и колебания гармонические, 
-  то $\pder[2]{\averg{w}}{t}=0$. }
+  то $\textstyle\pder[2]{\averg{w}}{t}=0$. }
 \end{itemize}
 $\{\varepsilon, \mu \}_2 \ll \{\varepsilon, \mu\}_1$~--- прозрачная среда. Тогда можно ввести 
 плотность энергии, как-то так:
@@ -403,7 +406,7 @@ $\{\varepsilon, \mu \}_2 \ll \{\varepsilon, \mu\}_1$.
       &\frac{\omega_p^2 \, \gamma \omega}{(\omega_0^2 - \omega^2)^2 + \omega^2 \gamma^2}.
     \end{aligned}
     $
-  \item $\omega \ll \omega_0$
+  \item $\omega \sim \omega_0$
   \item $\omega \gg \omega_0$
 \end{enumerate}
 
@@ -477,15 +480,21 @@ $\Lambda$~--- преобразование Лоренца
     A_{\v \mu}^{\v \nu}$ \hfill /$F^{ik}$, $g_{ij}$, \dots/
 \end{enumerate}
 
-\begin{facts}
-\item $\Lambda = \begin{pmatrix}
-  \gamma &  \underdev & \underdev&\underdev \\
-  \underdev &  \underdev & \underdev&\underdev \\
-  \underdev &  \underdev & \underdev&\underdev \\
-  \underdev &  \underdev & \underdev&\underdev
-\end{pmatrix}$
-\item $a \cdot b = g_{\mu\nu} a^\mu b^\nu$
-\end{facts}
+\begin{small}
+$\begin{aligned}
+  \Lambda &= \begin{pmatrix}
+   \gamma      & -\gamma b_1& -\gamma b_2& -\gamma b_3\\
+   -\gamma b_1  & 1 + \tfrac{(\gamma-1)\,\beta_1^2}{\beta^2}  &
+   1 + \tfrac{(\gamma-1)\,\beta_1\beta_2}{\beta^2} & 1 + \tfrac{(\gamma-1)\,\beta_1\beta_3}{\beta^2}\\
+   -\gamma b_2  & 1 + \tfrac{(\gamma-1)\,\beta_2\beta_1}{\beta^2}  &
+   1 + \tfrac{(\gamma-1)\,\beta_2^2}{\beta^2} & 1 + \tfrac{(\gamma-1)\,\beta_2\beta_3}{\beta^2}\\
+   -\gamma b_3  & 1 + \tfrac{(\gamma-1)\,\beta_3\beta_1}{\beta^2}  &
+   1 + \tfrac{(\gamma-1)\,\beta_3\beta_2}{\beta^2} & 1 + \tfrac{(\gamma-1)\,\beta_3^2}{\beta^2}\\
+\end{pmatrix} \\
+&a \cdot b = g_{\mu\nu} a^\mu b^\nu
+\end{aligned}$
+\end{small}
+
 
 \paragraph{Скорость и импульс в СТО}
 
@@ -755,6 +764,7 @@ $\int \mathcal W(\v n)\,\v n\, \del \Omega = \v\beta I$
 
 \paragraph{Мгновенное движение по прямой и окружности}
 \includegraphics[width=\linewidth]{perp_par.pdf}
+% \input{img/perp_par.pgf}
 
 \begin{enumerate}
   \item $\mathcal W_\parallel = \frac{e^2}{4\pi c^2} \, w^2 \, \frac{\sin^2\theta}{(1-\beta \cos \theta)^5}$, $\theta_0 \approx \frac{1}{2 \gamma}$
@@ -777,29 +787,37 @@ $\Delta t_1 \sim \frac{\rho}{c \gamma} \Rightarrow \Delta t \sim \frac{\rho}{c \
   \item $\v M(\omega) = \frac{e}{c} \, \sqrt{c \over 4\pi} \intR e^{i \omega t} \,\del
     \left(\frac{\v n \times (\v n \times \v \beta)}{1 - \v n \cdot \v \beta}\right)$
   \item $t = T + R/c = t_1 - \frac 1c \v n\cdot \v x$
-  \item $v M(\omega) = \frac{-i\omega e\, e^{i \omega R}}{c} \, \sqrt{c \over 4\pi} \* 
+  \item $\v M(\omega) = \frac{-i\omega e\, e^{i \omega R}}{c} \, \sqrt{c \over 4\pi} \* 
      \intR e^{i \omega (t_1 - \frac 1c \v n \cdot \v \beta)} \,
   \v n \times (\v n \times \v \beta)\, \del t_1$
   \item В поляризационном базисе и при малых углах
-    $
-    \begin{aligned}
-      \mathcal E &= \frac{e^2 \omega^2}{4\pi^2 c}\,|-\v e_\parallel M_\parallel + \v e_\perp M_\perp|\\
-      \mathcal E &= \frac{e^2}{3\pi^2 c} \*
-      \left(\frac{\omega \rho}{x}\right)^2 \* \left(\frac 1{\gamma^2} + \theta^2 \right)^2\*
-      \left\lvert \mathcal K_{2/3}^2 (\xi) + \tfrac{u^2}{1+u^2}\, \mathcal K_{1/3}^2 (\xi)\right\rvert\\
-      u &= \gamma \theta, \quad
-      x = \frac{ct}{\rho} \, \left(\tfrac{1}{\gamma^2} + \theta^2\right)^{-1/2} \;
-      \xi = \frac{\omega \rho}{3c}\, \left(\tfrac{1}{\gamma^2} + \theta^2\right)^{3/2} \\
-      & w_c = 3 \gamma^3 \omega_0,\quad \omega_0 = \rho/c
-    \end{aligned}
-    $
+    \begin{small}
+      $
+      \begin{aligned}
+        \varepsilon (\omega, \theta) &= \frac{e^2 \omega^2}{4\pi^2 c}\,|-\v e_\parallel M_\parallel + \v e_\perp M_\perp|\\
+        \varepsilon (\omega, \theta) &= \frac{e^2}{3\pi^2 c} \*
+        \left(\frac{\omega \rho}{x}\right)^2 \* \left(\frac 1{\gamma^2} + \theta^2 \right)^2\*
+        \left\lvert \mathcal K_{2/3}^2 (\xi) + \tfrac{u^2}{1+u^2}\, \mathcal K_{1/3}^2 (\xi)\right\rvert\\
+        u &= \gamma \theta, \quad
+        x = \frac{ct}{\rho} \, \left(\tfrac{1}{\gamma^2} + \theta^2\right)^{-1/2} \;
+        \xi = \frac{\omega \rho}{3c}\, \left(\tfrac{1}{\gamma^2} + \theta^2\right)^{3/2} \\
+        & w_c = 3 \gamma^3 \omega_0,\quad \omega_0 = \rho/c
+      \end{aligned}
+      $
+    \end{small}
 \end{enumerate}
-возня с асимптотикой \underdev
 
+$\int \varepsilon(\omega, \theta) \, \del \omega = \frac{7}{16} \, \frac{e^2}{\rho} \, 
+\frac{\gamma^5}{\bigl(1 + (\gamma \theta)\bigr)^{5/2}} \, \left( 1 + \frac{5 u^2}{7\,(1+u^2)}\right)$
+
+$\int \del \Omega \, \int \varepsilon (\omega,\theta) \, \del \omega 
+= \frac{7 \pi e^2 \gamma^4}{4 \rho} \left(I_2 + \frac 57\bigl(I_2 - I_3\bigr)\right)$
+
+\plholdev{возня с асимптотикой \underdev}
 \paragraph{Магнитотормозное излучение}
 \underdev \flame
 
-$\v E = 0 \Rightarrow \fder{\mathcal E}{t} = e \v \cdot \v E = 0$
+$\v E = 0 \Rightarrow \fder{\mathcal E}{t} = e \v v \cdot \v E = 0$
 
 \begin{defs}[Ларморовская частота]
 \item[Ларморовская частота] $\omega_H = \frac{e H}{mc \gamma}$ 
@@ -813,7 +831,7 @@ $\v E = 0 \Rightarrow \fder{\mathcal E}{t} = e \v \cdot \v E = 0$
   \begin{aligned}
     x &= x_0 + \rho_H \, \sin(\omega_H t + \alpha) \\
     y &= y_0 + \rho_H \, \cos(\omega_H t + \alpha)\\
-    z &= z_0 + v\, \cos \chi t\, t
+    z &= z_0 + v\, \cos \chi \, t
 \end{aligned}\right.
   $~--- спиралька 
 \item $F_\parallel= 0 \Rightarrow I = \frac{2 e^4 v^2 H^2 \sin^2 \chi}{3m^2 c^5} \propto \frac{e^4}{m^2}$
@@ -821,17 +839,91 @@ $\v E = 0 \Rightarrow \fder{\mathcal E}{t} = e \v \cdot \v E = 0$
 \end{facts}
 
 А что такое $W$ я не знаю. И не знаю, узнаю ли. Приятного использования.
-\begin{enumerate}
-  \item $\v M (t) \sum^{\infty}_{k=-\infty} \v M_k e^{-i \omega_H k t} $
-  \item $W_k(\theta) = \frac{e^2k^2 \omega_H^2}{2\pi c}\,
-    \Bigl\lvert\v e_\parallel \beta J_k'(k \beta \cos \theta) + i \v e_\perp \tg \theta \, J_k (k \beta \cos \theta)\Bigr\rvert^2$
-  \item при $\theta = 0$ переходит в линейную, при $\theta = \pi/2$~"--- в круговую.\note{Угол между направлением и плоскостью 
-    движения, так-то.}
-\end{enumerate}
+\begin{small}
+  \begin{enumerate}
+    \item $\v M (t) \sum^{\infty}_{k=-\infty} \v M_k e^{-i \omega_H k t} $
+    \item $W_k(\theta) = \frac{e^2k^2 \omega_H^2}{2\pi c}\,
+      \Bigl\lvert\v e_\parallel \beta J_k'(k \beta \cos \theta) + i \v e_\perp \tg \theta \, J_k (k \beta \cos \theta)\Bigr\rvert^2$
+      (формула Шотта)
+    \item при $\theta = 0$ переходит в линейную, при $\theta = \pi/2$~"--- в круговую.\note{Угол между направлением и плоскостью 
+      движения, так-то.}
+  \end{enumerate}
+\end{small}
 
 \plholdev{дурацкие частные случаи}
 
 \paragraph{Рассеяние на свободных зарядах}
+\begin{defs}[комптоновская длина]
+\item[классический радиус электрона] $r_e= \frac{e^2}{mc^2}$~
+\item[комптоновская длина волны] $\lambda_c = \frac{h}{mc}$
+ \end{defs}
+
+\begin{facts}
+\item $\v E = (E_1, E_2)^\top$, $r_e= \frac{e^2}{mc^2}$~--- классический радиус электрона
+\item $A = \begin{pmatrix} \mu & 0 \\ 0 & 1 \end{pmatrix}$, $\v E = \frac{r_e}{R}  A \, \v E'$, $\rho = \frac{r_e^2}{R^2} \, A \rho' A$
+  \item $\v I = \frac{r_e^2}{R^2} \, R(\mu) \v I'$, а $R = \begin{pmatrix}
+    \frac{\mu^2 + 1}{2}  &  \frac{{\mu^2 - 1}}{2}  & 0 & 0 \\
+      \frac{\mu^2 - 1}{2}  &  \frac{{\mu^2 + 1}}{2} & 0 & 0 \\
+      0 & 0 & \mu & 0 \\
+      0 & 0 & 0 & \mu
+  \end{pmatrix}$
+\item Для белого света ($I'$) $I = \frac{r_e^2}{2R^2}\, (1 + \mu^2) I'$
+\end{facts}
+
+\begin{defs}[дифференциальное]
+\item[дифференциальное сечение рассеяния] $\del \sigma = I \, \del \Omega $
+\item[сечение рассеяния] $\sigma_0 = \int \del \sigma $
+\end{defs}
+
+\begin{itemize}
+  \item В классике: $\del \sigma = \frac{r_e^2}{2}\, (1+\mu^2) \, \del \Omega $
+  \item $\sigma_0 = \frac 83 \pi r_e^2$
+  \item В квантах: $\del \sigma = \frac{r_e^2}{2}  \left(\frac{\omega'}{\omega}\right)^2
+    \left(\frac{\omega'}{\Omega} +\frac{\omega'}{\Omega} - \sin^2 \theta \right) \, \del \Omega $
+\end{itemize}
+
+\paragraph{Влияние излучение на движение}
+
+$m (\dot{\v v} - \tau \ddot{\v v})= \v F_{\mathrm{ex}}$~--- уравнение Абрагама-Лоренца.
+
+Имеет смысл при $\bigl\lvert \v F_{\mathrm{rad}} \bigr\rvert \ll \bigl\lvert \v F_{\mathrm{ex}} \bigr\rvert$. 
+А всё остальное в этом билете не имеет смысла.
+
+\paragraph{Радиационное затухание}
+\begin{facts}
+\item $m \tau \omega_0^2 \, \dddot{x} = - \gamma m \dot x$, $\gamma = \tau \omega_0^2 \,\frac{2}{3}\, \frac{e^2}{c^3m}$
+\item $\v x = \v a \, e^{-i \omega t}\, e^{-\gamma t/2}$, $1/\gamma$~"--- характерное время убывания. 
+\item $I = \frac{\lfrac{\gamma\, I_0}{2\pi}}{(\omega - \omega_0)^2 + \lfrac{\gamma^2} 4}$~--- лоренцевский контур линии
+\end{facts}
+\noindent
+\begin{tikzpicture}
+    \def\wz{1}\def\g{0.2}
+  \begin{axis}[
+   xlabel=$\omega$, ylabel=$\tfrac{I}{I_{\textrm{max}}}$, 
+    domain = (\wz - 4*\g):(\wz + 4*\g),
+    width=0.9\linewidth,
+    height=0.6\linewidth,
+    axis y line=left,
+    axis x line=bottom, 
+    grid]
+    % invoke external gnuplot as
+    % calculator:
+    \addplot[samples=200,color=black] gnuplot[id=sin]{1/((x-\wz)**2+ (\g)**2/4)};
+  \end{axis}
+\end{tikzpicture}
+
+\paragraph{Рассеяние связанными зарядами}
+
+\begin{facts}
+\item $\v x= \frac{\v E_0 \, \tfrac e m}{\omega_0^2 - \omega^2 - i \omega \gamma}\, e^{-i \omega t}$
+\item $\sigma (\omega) = \sigma_0 \, \frac{\omega ^4}{(\omega_0^2 - \omega^2)^2 + \omega^2 \gamma^2} $
+\end{facts}
+
+\begin{enumerate}
+  \item $\omega \sim \omega_0$ профиль как в затухании
+  \item $\omega \ll \omega_0$ (сильная связь, релеевское рассеяние) $\sigma \approx \sigma_0 \left(\frac \omega {\omega_0}\right)^4$
+  \item $\omega \gg \omega_0$ (слабая связь) как свободный заряд
+\end{enumerate}
 \end{multicols*}
 \end{document}
 %vim: syntax sync minlines=200
