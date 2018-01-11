@@ -901,11 +901,16 @@ $m (\dot{\v v} - \tau \ddot{\v v})= \v F_{\mathrm{ex}}$~--- уравнение �
   \begin{axis}[
    xlabel=$\omega$, ylabel=$\tfrac{I}{I_{\textrm{max}}}$, 
     domain = (\wz - 4*\g):(\wz + 4*\g),
+    ymin = 0, ymax = 100,
     width=0.9\linewidth,
     height=0.6\linewidth,
     axis y line=left,
     axis x line=bottom, 
-    grid]
+    grid=both,
+    grid style={line width=.1pt, draw=gray!10},
+    major grid style={line width=.2pt,draw=gray!40},
+    minor tick num=1,
+    ]
     % invoke external gnuplot as
     % calculator:
     \addplot[samples=200,color=black] gnuplot[id=sin]{1/((x-\wz)**2+ (\g)**2/4)};
