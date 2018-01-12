@@ -1,3 +1,4 @@
+%&electrodcheat
 \documentclass{trchesh}
 \usepackage{trmath}
 \usepackage{trsym} 
@@ -6,10 +7,12 @@
 \makeatletter
 \def\note{\ifexpmode{\@gobble}{\endnote}}
 \makeatother
+\usepackage{tikz}
 \usepackage{pgfplots}
-\usetikzlibrary{external}
+\pgfplotsset{compat=1.11}
+\usetikzlibrary{external,calc,arrows}
 \tikzsetexternalprefix{img/}
-\tikzexternalize
+\tikzexternalize%
 \usepackage{docmute}
 \hypersetup{
   pdftitle={Шпора по электроду},
@@ -41,7 +44,7 @@
 
 \graphicspath{{img/}}
 \begin{document}
-\begin{multicols*}{3}\raggedright
+\begin{multicols*}{3}\raggedright%
 \parindent=0pt
 \paragraph{Уравнения Максвелла}
 \begin{enumerate}
@@ -207,9 +210,9 @@ $
 \begin{aligned}
   I &= \frac{\varepsilon v}{8 \pi} \, (\averg{|E_x|^2} +  \averg{|E_y|^2}) = \averg{|\v S|} \\
   Q &= \frac{\varepsilon v}{8 \pi} \, (\averg{|E_x|^2} -  \averg{|E_y|^2}) \\
-  U &= \frac{\varepsilon v}{8 \pi} \, (\averg{E_x^* E_y} +  \averg{E_xE_y^*}) 
+  U &= \frac{\varepsilon v}{8 \pi} \, (\averg{E_x^* E_y} +  \averg{E_x E_y^*}) 
   = \frac{\varepsilon v}{8 \pi} \, 2 \Re \averg{E_x^* E_y} \\
-  V &= \frac{\varepsilon v}{8 \pi} \,i (\averg{E_x^* E_y} -  \averg{E_xE_y^*}) 
+  V &= \frac{\varepsilon v}{8 \pi} \,i (\averg{E_x^* E_y} -  \averg{E_x E_y^*}) 
   = \frac{\varepsilon v}{8 \pi} \, 2 \Im \averg{E_x^* E_y} \\
 \end{aligned}
 $
@@ -543,7 +546,7 @@ $p_\gamma = \hbar \, \v k$
     { \gamma (1- \v n \cdot\v \beta)} $
     \begin{itemize}
       \item $\sin (\alpha'-\alpha) = 
-        \sin \alpha \, \frac{\beta - (1-\gamma^{-1})\, \cos \alpha\bigr)}{1-\beta\, \cos \alpha}$
+      \sin \alpha \, \frac{\beta - (1-\gamma^{-1})\, \cos \alpha }{1-\beta\, \cos \alpha}$
       \item $\cos \alpha' = \frac{\cos \alpha - \beta}{1-\beta \cos \alpha}$
       \item $\sin \alpha' = \frac 1 \gamma \,\frac{\sin \alpha}{1-\beta \cos \alpha}$
     \end{itemize}
@@ -768,8 +771,8 @@ $\int \mathcal W(\v n)\,\v n\, \del \Omega = \v\beta I$
 
 \begin{enumerate}
   \item $\mathcal W_\parallel = \frac{e^2}{4\pi c^2} \, w^2 \, \frac{\sin^2\theta}{(1-\beta \cos \theta)^5}$, $\theta_0 \approx \frac{1}{2 \gamma}$
-  \item $\mathcal W_\perp = \frac{e^2}{4\pi c^2}  \, \frac{w^2}{(1-\beta \cos \theta)^3} 
-    \left(1 - \frac{\sin^2 \theta \, \cos^2 \varphi}{\gamma^2\, (1-\beta \, \cos \theta)^2}\right)$,
+  \item $\mathcal W_\perp = \frac{e^2}{4\pi c^2}  \, \frac{w^2}{{(1-\beta \cos \theta)}^3} 
+  \left(1 - \frac{\sin^2 \theta \, \cos^2 \varphi}{\gamma^2\, {(1-\beta \, \cos \theta)}^2}\right)$,
     $\theta_0 = 0$, $\Delta \theta \approx 1/\gamma$
 \end{enumerate}
 
@@ -796,11 +799,11 @@ $\Delta t_1 \sim \frac{\rho}{c \gamma} \Rightarrow \Delta t \sim \frac{\rho}{c \
       \begin{aligned}
         \varepsilon (\omega, \theta) &= \frac{e^2 \omega^2}{4\pi^2 c}\,|-\v e_\parallel M_\parallel + \v e_\perp M_\perp|\\
         \varepsilon (\omega, \theta) &= \frac{e^2}{3\pi^2 c} \*
-        \left(\frac{\omega \rho}{x}\right)^2 \* \left(\frac 1{\gamma^2} + \theta^2 \right)^2\*
+        {\left(\frac{\omega \rho}{x}\right)}^2 \* {\left(\frac 1{\gamma^2} + \theta^2 \right)}^2\*
         \left\lvert \mathcal K_{2/3}^2 (\xi) + \tfrac{u^2}{1+u^2}\, \mathcal K_{1/3}^2 (\xi)\right\rvert\\
         u &= \gamma \theta, \quad
-        x = \frac{ct}{\rho} \, \left(\tfrac{1}{\gamma^2} + \theta^2\right)^{-1/2} \;
-        \xi = \frac{\omega \rho}{3c}\, \left(\tfrac{1}{\gamma^2} + \theta^2\right)^{3/2} \\
+        x = \frac{ct}{\rho} \, {\left(\tfrac{1}{\gamma^2} + \theta^2\right)}^{-1/2} \;
+        \xi = \frac{\omega \rho}{3c}\, {\left(\tfrac{1}{\gamma^2} + \theta^2\right)}^{3/2} \\
         & w_c = 3 \gamma^3 \omega_0,\quad \omega_0 = \rho/c
       \end{aligned}
       $
@@ -808,21 +811,21 @@ $\Delta t_1 \sim \frac{\rho}{c \gamma} \Rightarrow \Delta t \sim \frac{\rho}{c \
 \end{enumerate}
 
 $\int \varepsilon(\omega, \theta) \, \del \omega = \frac{7}{16} \, \frac{e^2}{\rho} \, 
-\frac{\gamma^5}{\bigl(1 + (\gamma \theta)\bigr)^{5/2}} \, \left( 1 + \frac{5 u^2}{7\,(1+u^2)}\right)$
+\frac{\gamma^5}{{\bigl(1 + (\gamma \theta)\bigr)}^{5/2}} \, \left( 1 + \frac{5 u^2}{7\,(1+u^2)}\right)$
 
 $\int \del \Omega \, \int \varepsilon (\omega,\theta) \, \del \omega 
 = \frac{7 \pi e^2 \gamma^4}{4 \rho} \left(I_2 + \frac 57\bigl(I_2 - I_3\bigr)\right)$
 
 \plholdev{возня с асимптотикой \underdev}
 \paragraph{Магнитотормозное излучение}
-\underdev \flame
+\underdev\ \flame%
 
 $\v E = 0 \Rightarrow \fder{\mathcal E}{t} = e \v v \cdot \v E = 0$
 
 \begin{defs}[Ларморовская частота]
 \item[Ларморовская частота] $\omega_H = \frac{e H}{mc \gamma}$ 
 \item[Циклотронная частота] $\frac{e H}{mc}$ 
-\item[Ларморовский радиус] $\rho_H = \frac{v_\perp}{\omega_H} = \frac{v \, sin \chi}{\omega_H}$
+\item[Ларморовский радиус] $\rho_H = \frac{v_\perp}{\omega_H} = \frac{v \, \sin \chi}{\omega_H}$
 \end{defs}
 
 \begin{facts}
@@ -854,12 +857,12 @@ $\v E = 0 \Rightarrow \fder{\mathcal E}{t} = e \v v \cdot \v E = 0$
 
 \paragraph{Рассеяние на свободных зарядах}
 \begin{defs}[комптоновская длина]
-\item[классический радиус электрона] $r_e= \frac{e^2}{mc^2}$~
+\item[классический радиус электрона] $r_e= \frac{e^2}{mc^2}$
 \item[комптоновская длина волны] $\lambda_c = \frac{h}{mc}$
  \end{defs}
 
 \begin{facts}
-\item $\v E = (E_1, E_2)^\top$, $r_e= \frac{e^2}{mc^2}$~--- классический радиус электрона
+\item $\v E = {(E_1, E_2)}^\top$, $r_e= \frac{e^2}{mc^2}$~--- классический радиус электрона
 \item $A = \begin{pmatrix} \mu & 0 \\ 0 & 1 \end{pmatrix}$, $\v E = \frac{r_e}{R}  A \, \v E'$, $\rho = \frac{r_e^2}{R^2} \, A \rho' A$
   \item $\v I = \frac{r_e^2}{R^2} \, R(\mu) \v I'$, а $R = \begin{pmatrix}
     \frac{\mu^2 + 1}{2}  &  \frac{{\mu^2 - 1}}{2}  & 0 & 0 \\
@@ -878,7 +881,7 @@ $\v E = 0 \Rightarrow \fder{\mathcal E}{t} = e \v v \cdot \v E = 0$
 \begin{itemize}
   \item В классике: $\del \sigma = \frac{r_e^2}{2}\, (1+\mu^2) \, \del \Omega $
   \item $\sigma_0 = \frac 83 \pi r_e^2$
-  \item В квантах: $\del \sigma = \frac{r_e^2}{2}  \left(\frac{\omega'}{\omega}\right)^2
+  \item В квантах: $\del \sigma = \frac{r_e^2}{2}  {\left(\frac{\omega'}{\omega}\right)}^2
     \left(\frac{\omega'}{\Omega} +\frac{\omega'}{\Omega} - \sin^2 \theta \right) \, \del \Omega $
 \end{itemize}
 
@@ -893,7 +896,7 @@ $m (\dot{\v v} - \tau \ddot{\v v})= \v F_{\mathrm{ex}}$~--- уравнение �
 \begin{facts}
 \item $m \tau \omega_0^2 \, \dddot{x} = - \gamma m \dot x$, $\gamma = \tau \omega_0^2 \,\frac{2}{3}\, \frac{e^2}{c^3m}$
 \item $\v x = \v a \, e^{-i \omega t}\, e^{-\gamma t/2}$, $1/\gamma$~"--- характерное время убывания. 
-\item $I = \frac{\lfrac{\gamma\, I_0}{2\pi}}{(\omega - \omega_0)^2 + \lfrac{\gamma^2} 4}$~--- лоренцевский контур линии
+\item $I = \frac{\lfrac{\gamma\, I_0}{2\pi}}{{(\omega - \omega_0)}^2 + \lfrac{\gamma^2} 4}$~--- лоренцевский контур линии
 \end{facts}
 \noindent
 \begin{tikzpicture}
