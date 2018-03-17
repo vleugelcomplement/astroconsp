@@ -1,4 +1,4 @@
-%&electrodcheat
+%%&electrodcheat
 \documentclass{trchesh}
 \usepackage{trmath}
 \usepackage{trsym} 
@@ -41,10 +41,11 @@
       }}%
   {\end{list}}
 \newenvironment{facts}{\begin{list}{$\triangleright$}{}}{\end{list}}
-
+\csuse{endofdump}
 \graphicspath{{img/}}
 \begin{document}
-\begin{multicols*}{3}\raggedright%
+% \raggedright
+% \begin{multicols*}{3}\raggedright%
 \parindent=0pt
 \paragraph{Уравнения Максвелла}
 \begin{enumerate}
@@ -479,19 +480,19 @@ $\Lambda$~--- преобразование Лоренца
 \begin{enumerate}
   \item $a = \mathrm{const}$ \hfill /$S^2$, $\del^4r$/
   \item $a^\alpha = \Lambda^\alpha_\mu a^\mu$ \hfill /$r$, $u$, $\nabla$ \dots/
-  \item $A_{\v \alpha}^{\v \beta} = \Lambda_{\v \alpha}^{\v \mu} \, \Lambda_{\v \nu}^{\v \beta}\,
-    A_{\v \mu}^{\v \nu}$ \hfill /$F^{ik}$, $g_{ij}$, \dots/
+  \item $a_{\v \alpha}^{\v \beta} = \Lambda_{\v \alpha}^{\v \mu} \, \Lambda_{\v \nu}^{\v \beta}\,
+    a_{\v \mu}^{\v \nu}$ \hfill /$F^{ik}$, $g_{ij}$, \dots/
 \end{enumerate}
 
 \begin{small}
 $\begin{aligned}
   \Lambda &= \begin{pmatrix}
-   \gamma      & -\gamma b_1& -\gamma b_2& -\gamma b_3\\
-   -\gamma b_1  & 1 + \tfrac{(\gamma-1)\,\beta_1^2}{\beta^2}  &
+   \gamma      & -\gamma \beta_1& -\gamma \beta_2& -\gamma \beta_3\\
+   -\gamma \beta_1  & 1 + \tfrac{(\gamma-1)\,\beta_1^2}{\beta^2}  &
    1 + \tfrac{(\gamma-1)\,\beta_1\beta_2}{\beta^2} & 1 + \tfrac{(\gamma-1)\,\beta_1\beta_3}{\beta^2}\\
-   -\gamma b_2  & 1 + \tfrac{(\gamma-1)\,\beta_2\beta_1}{\beta^2}  &
+   -\gamma \beta_2  & 1 + \tfrac{(\gamma-1)\,\beta_2\beta_1}{\beta^2}  &
    1 + \tfrac{(\gamma-1)\,\beta_2^2}{\beta^2} & 1 + \tfrac{(\gamma-1)\,\beta_2\beta_3}{\beta^2}\\
-   -\gamma b_3  & 1 + \tfrac{(\gamma-1)\,\beta_3\beta_1}{\beta^2}  &
+   -\gamma \beta_3  & 1 + \tfrac{(\gamma-1)\,\beta_3\beta_1}{\beta^2}  &
    1 + \tfrac{(\gamma-1)\,\beta_3\beta_2}{\beta^2} & 1 + \tfrac{(\gamma-1)\,\beta_3^2}{\beta^2}\\
 \end{pmatrix} \\
 &a \cdot b = g_{\mu\nu} a^\mu b^\nu
@@ -671,7 +672,7 @@ $
 Попутно $c^{-1}\, \partial_t \varphi + \nabla \v A=0$
 
 \paragraph{Напряжённость поля точечного заряда}
-Хлам, но оказалось полезно:
+Хлам, но оказалось полезно: \\
 $
 \begin{aligned}
   \pder{\v R_0}{t_1} &= -c \, \v \beta  & \pder{R_0}{t_1} &= - c\,\v\beta \cdot \v n_0\\
@@ -681,7 +682,7 @@ $
 \end{aligned}
 $\vspace{1.2ex}
 
-Напряжённости:
+Напряжённости: \\
 $
 \begin{aligned}
   \v E_1 &=  \frac{e}{s^3}\, (1-\beta^2)\, (\v R_0 - R_0 \,\v \beta) \\
@@ -932,6 +933,6 @@ $m (\dot{\v v} - \tau \ddot{\v v})= \v F_{\mathrm{ex}}$~--- уравнение �
   \item $\omega \ll \omega_0$ (сильная связь, релеевское рассеяние) $\sigma \approx \sigma_0 \left(\frac \omega {\omega_0}\right)^4$
   \item $\omega \gg \omega_0$ (слабая связь) как свободный заряд
 \end{enumerate}
-\end{multicols*}
+% \end{multicols*}
 \end{document}
 %vim: syntax sync minlines=200
