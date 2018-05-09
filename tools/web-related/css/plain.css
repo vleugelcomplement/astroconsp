@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+/* @import url(https://fonts.googleapis.com/css?family=Open+Sans); */
 html, body{
 	background-color:#fafafa;
     height:100%;
@@ -6,7 +6,7 @@ html, body{
 }
 
 body div.content {
-	font-family:"Open Sans",Arial,"Droid Sans";
+	font-family:"Lato","Noto Sans","Open Sans",Arial,"Droid Sans";
 	color:#555;
 	font-size:16px;
 	margin:2em auto;
@@ -23,7 +23,7 @@ footer {
     margin-left:auto;
     padding:0.2rem 1em 0.3rem;
     text-align:left;
-	font-family:"Open Sans",Arial,"Droid Sans";
+	font-family:Lato, "Noto Sans","Open Sans",Arial,"Droid Sans";
 	color:#555;
     font-size:x-small;
 }
