@@ -110,11 +110,11 @@ html.contrast a:visited{ color:#7d013e }
 html.contrast span.wr{ color:#800 }
 html.contrast span.mfw{ color:#117e69 }
 
-html.inverted{ background-color:#050505 }
+html.inverted { background-color:#050505 }
 html.inverted body{ color:#aaa }
 html.inverted div#invmode{
-	color:#fff;
-	background-color:#000
+    color:#fff;
+    background-color:#000
 }
 html.inverted blockquote{ color:#dad0c7 }
 html.inverted blockquote:before{ color:#bfbfbf }
@@ -122,6 +122,7 @@ html.inverted a{ color:#07a }
 html.inverted a:visited{ color:#ac5a82 }
 html.inverted span.wr{ color:#c0392b } 
 html.inverted span.mfw{ color:#19b496 }
+
 
 
 .noselect{
