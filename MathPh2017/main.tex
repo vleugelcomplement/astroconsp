@@ -1,5 +1,5 @@
 %%&electrodcheat
-\documentclass{trchesh}
+\documentclass[exam]{trchesh}
 \usepackage{trmath}
 \usepackage{trsym} 
 
@@ -25,7 +25,9 @@
 \setlist[enumerate,1]{leftmargin=1.6em, noitemsep}
 \setlist[itemize,1]{leftmargin=2em, label=$\triangleright$}
 
-\def\waveop{\mathop{\boldsymbol\Box}}
+\newcommand{\waveop}{\mathop{\boldsymbol\Box}}
+\newcommand{\laplop}{\mathop{\Delta}}
+\newcommand{\heatop}{\mathop{\left(-{\textstyle\pder{}{t}} + a^2 \Delta\right)}}
 
 \def\defsign{\hbox{$\,\Rrightarrow\,$}}
 \newcommand{\deflabel}[1]{
@@ -128,8 +130,8 @@
 \paragraph{Формула Кирхгофа (\texorpdfstring{$\R^3$}{3D})}
 
 \[
-  u(x,t) = t \fint_{\Ball{at}{x}} \varphi_1 (y) \,\del S + 
-  \pder{}{t} \left( t \fint_{\Ball{at}{x}} \varphi_0(y) \, \del S \right)
+  u(x,t) = t \fint_{\Ball_{at}(x)} \varphi_1 (y) \,\del S + 
+  \pder{}{t} \left( t \fint_{\Ball_{at}(x)} \varphi_0(y) \, \del S \right)
 \]
 
 Здесь видно, что что возмущения (начальные) влияют на решение только будучи на границе
@@ -143,8 +145,8 @@
 \[
   \begin{split}
     u(x,t) &= 
-    \frac{t^2}{2} \fint_{\Ball{at}{x}} \frac{\varphi_1(y)}{\sqrt{(at)^2 - |x-y|^2}} \,\del y + \\
-    &+ \pder{}{t} \left( \frac{t^2}{2} \fint_{\Ball{at}{x}} \frac{\varphi_0(y)}{\sqrt{(at)^2 - |x-y|^2}} \, \del y \right)
+    \frac{t^2}{2} \fint_{\Ball_{at}(x)} \frac{\varphi_1(y)}{\sqrt{(at)^2 - |x-y|^2}} \,\del y + \\
+    &+ \pder{}{t} \left( \frac{t^2}{2} \fint_{\Ball_{at}(x)} \frac{\varphi_0(y)}{\sqrt{(at)^2 - |x-y|^2}} \, \del y \right)
   \end{split}
 \]
 
@@ -181,7 +183,7 @@
 \paragraph{Закон сохранения}
 При довольно мутных условиях (что-то вроде в меру быстрого убывания $u$ к бесконечности)
 \[
-  \mathcal U(t,R) :=\int_{\Ball{R}{0}} u (x,t) \, \del x = \mathrm{const}
+  \mathcal U(t,R) :=\int_{\Ball_{R}(0)} u (x,t) \, \del x = \mathrm{const}
 \]
 
 \paragraph{Ограниченный принцип максимума}
@@ -218,6 +220,116 @@
 \]
 
 \paragraph{Свойства функции источника}
+\begin{enumerate}
+  \item $G(x,t) \in C^\infty$ при $t>0$, $|x|>0$
+  \item $G_t - a^2 \laplop G = 0$, при $t>0$, $|x|>0$
+  \item $\int_{\R^n} \!\!G(x,t)\, \del x = 1$ при $t > 0$
+  \item $\lim_{t\to 0} \int_{\R^n} \!\!\varphi(x) G(x,t) \, \del x = \varphi(0)$,
+    $\varphi \in C(\R^n) \bintersect L^\infty(\R^n)$
+\end{enumerate}
+$G$~"--- функция Грина: $G(x,0) = \delta(x)$
+
+
+
+\paragraph{Формула Пуассона}
+Поставлена задача Коши:
+\begin{align*}
+  &\varphi (x) \in C(\R^n) \bintersect L^\infty(\R^n) \span\span\span \\
+  u_t - a^2 \laplop u &=0 & (t&>0) \\
+  u(x,0) &= \varphi(x)    & (u(x,t) &\xto{t\to 0} \varphi(x) )
+\end{align*}
+Решение имеет вид
+\[
+  u(x,t) = \int_{\R^n} \varphi(x-y) G(y,t) \,\del y = \varphi \ast G
+\]
+\paragraph{Принцип Дюамеля}
+\begin{enumerate}
+  \item $\heatop P = 0$, $P(x,t,t) = 0$, $P_t(x,t,t) = f(x,t)$
+  \item $w = \dint_0^t P(x,t,t') \, \del t'$
+  \item $\waveop w = f(x,t)$
+\end{enumerate}
+Для уравнения теплопроводности
+\[
+  P(x,t,t') = \int_{\R^n} f(y, t')\,G(x-y, t-t')\,\del y
+\]
+
+\section{Уравнение Лапласа}
+\[
+  u \in C^2(\R^n) \quad -\!\laplop u = f \quad\mbox{(в $\R^n$) \note{
+    здесь ``$-$'' из-за того, что оператор Лапласа отрицательно определённый
+}}
+\]
+Разные задачи (по н.у.):
+\begin{defs}[Дирихле]
+\item[Дирихле] $u \big|_{\boundary \Omega} = \varphi(x)$
+\item[Неймана] $u_n \big|_{\boundary \Omega} = \psi(x)$ 
+  ($u_n = (\nabla u , \v n \text{ к } \boundary \Omega)$)
+\end{defs}
+
+\paragraph{Фундаментальное решение}
+\[
+  \mathcal E = \begin{cases}
+    \frac{1}{(n-2)\, |S_1|}\, \frac{1}{\|x\|^{n-2}}, & n \geqslant 2 \\[1em]
+    \tfrac{1}{2\pi}\, \ln\|x\|, & n = 2
+  \end{cases}
+\]
+Тут $|S_1|$~--- мера единичной сферы.
+
+\paragraph{Представление функции в виде суммы потенциалов}
+\[
+  \begin{split} 
+    u(x) = &- \frac{1}{(n-2)\,|S_1|} \int_\Omega \frac{\laplop u(y)}{|x-y|^{n-2}} \, \del y \\
+           &- \frac{1}{(n-2)\,|S_1|} \int_{\boundary \Omega} u(y)\, 
+              \left(\nabla_y\frac{1}{\|x-y\|^{n-2}}, \v n\right) \, \del s          \\
+           &+ \frac{1}{(n-2)\,|S_1|} \int_{\boundary \Omega} \frac{u_n(y)}{\|x-y\|^{n-2}}\,\del s
+  \end{split}
+\]
+То есть
+\[
+  \begin{split}
+    u &= -\{\text{объёмный потенциал}\} - \{\text{потенциал двойного слоя}\} \\
+      &+ \{\text{потенциал простого слоя}\}
+  \end{split}
+\]
+
+\paragraph{Интегральное представление гармонической функции}
+% я долго всовывал её в одну строчку, не поймите неправильно
+\[
+  \begin{split} 
+    u(x) = &\frac{-1}{(n-2)\,|S_1|} \left(
+      \int\limits_{\boundary \Omega} u(y) {\textstyle\pder{}{\v n}\frac{1}{\|x-y\|^{n-2}}}\,\del s - 
+      \int\limits_{\boundary \Omega} \tfrac{u_n(y)}{\|x-y\|^{n-2}}\,\del s
+    \right)
+  \end{split}
+\]
+
+\paragraph{Теорема о среднем для гармонических функций}
+\[
+  u\in C^2(U),\laplop u = 0 \Rightarrow \forall\, \Ball_{r}(x) \subset U \holds  \fint_{\boundary \Ball} u\, \del s
+  = \fint_{\Ball} u \, \del y
+\]
+\paragraph{Обратная теорема о среднем}
+\[
+  u\in C^2(U), \forall\, \Ball_{r}(x) \subset U \holds  \fint_{\boundary \Ball} u\, \del s
+  = \fint_{\Ball} u \, \del y \Rightarrow \laplop u = 0
+\]
+
+\paragraph{Свойства гармонических функций}
+\begin{enumerate}
+  \item\label{it:heat::avt::max} $u \in C^2(U) \bintersect C(\ov-U)$, $\laplop u = 0 \quad \Rightarrow$
+    \[
+      \max_{\ov-U} u = \max_{\boundary U} u \quad\text{(принцип максимума)}
+    \]
+  \item \ref{it:heat::avt::max}, $U$ связно, 
+    $\exists\, x_0\in U \that u(x_0) = \max u \quad \Rightarrow$
+    \[
+      u \mathbin{\underset{U}{\equiv}} \mathrm{const} \quad \text{(сильный принцип максимума)}
+    \]
+\end{enumerate}
+
+Единственность решения задачи Дирихле (почти очевидно).
+
+
 
 \end{document}
 %vim: syntax sync minlines=200
