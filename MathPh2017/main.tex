@@ -329,7 +329,18 @@ $G$~"--- функция Грина: $G(x,0) = \delta(x)$
 
 Единственность решения задачи Дирихле (почти очевидно).
 
+\paragraph{Свойства объёмного потенциала}
+Пусть $f\in C^2_c(\R^n)$, $\Omega \subset \R^n$,
+$J[f] = \int_\Omega \frac{f(y)}{|x-y|^{n-2}}\, \del y$\note{
+  где-то вообще требуют $C^\infty$ (то же получают для $J$). 
+У нас было $C^1$, но верится с трудом.}
+\begin{enumerate}
+  \item $J[f] \in C^2$
+  \item $x\in \R^n \setminus \ov-\Omega \:\Rightarrow\: \laplop J [f] = 0$
+  \item $x \in \Omega \quad\:\,\,\Rightarrow\:\quad \laplop J[f] = - (n-2) |S_1| f(x)$
+\end{enumerate}
+что весьма похоже на потенциалы из небмеха.
 
-
+\paragraph{}
 \end{document}
 %vim: syntax sync minlines=200
