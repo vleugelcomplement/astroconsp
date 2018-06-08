@@ -1,0 +1,223 @@
+%%&electrodcheat
+\documentclass{trchesh}
+\usepackage{trmath}
+\usepackage{trsym} 
+
+\setlayout[page-orient=landscape, size=10]{hardcopy}
+\makeatletter
+\def\note{\ifexpmode{\@gobble}{\endnote}}
+\makeatother
+% \usepackage{tikz}
+% \usepackage{pgfplots}
+% \pgfplotsset{compat=1.11}
+% \usetikzlibrary{external,calc,arrows}
+% \tikzsetexternalprefix{img/}
+% \tikzexternalize%
+% \usepackage{docmute}
+\hypersetup{
+  pdftitle={Шпора по матфизике},
+  pdfauthor={taxus},
+  pdfsubject={Матфизика},
+  pdfkeywords={Матфизика;экзамены;СПбГУ;by-taxus}
+}
+\columnseprule=0.1dd
+\def\arraystretch{1.3}
+\setlist[enumerate,1]{leftmargin=1.6em, noitemsep}
+\setlist[itemize,1]{leftmargin=2em, label=$\triangleright$}
+
+\def\waveop{\mathop{\boldsymbol\Box}}
+
+\def\defsign{\hbox{$\,\Rrightarrow\,$}}
+\newcommand{\deflabel}[1]{
+  \makebox[\labelwidth][l]{%
+    \parbox[t]{\labelwidth}{\hspace{0pt}\textsf{#1}}%
+  }~\defsign
+}
+\newenvironment{defs}[1][\hspace{12ex}]%
+  {\begin{list}{}{%
+        \let \makelabel=\deflabel%
+        \setlength{\labelwidth}{\widthof{#1}} %
+        \setlength{\leftmargin}{\labelwidth+\labelsep}%
+        \itemsep=0pt %
+      }}%
+  {\end{list}}
+\newenvironment{facts}{\begin{list}{$\triangleright$}{}}{\end{list}}
+% \csuse{endofdump}
+\graphicspath{{img/}}
+
+\renewcommand{\notesname}{Примечания}
+\begin{document}
+\parindent=0pt
+\parskip=0.2\baselineskip
+
+\section{Волновое уравнение}
+\paragraph{Классификация уравнений второго порядка}
+
+Выглядят так
+\[
+  \mathcal L[u] = \sum_{i,j} A^{ij} \partial^2_{ij} u + \sum_{i} B^i \partial_i u + C u = 0
+\]
+В зависимости от собственных чисел $A$ классифицируются
+\begin{defs}[гиперболический]
+  \item[эллиптический] $\forall\,i \holds \Lambda_i > 0 $
+  \item[параболический] $\exists\,j \that \Lambda_j = 0, \quad \forall\,i\neq j \holds \Lambda_i > 0$
+  \item[гиперболический] $\exists\,j \that \Lambda_j < 0, \quad \forall\,i\neq j \holds \Lambda_i > 0$
+\end{defs}
+И их канонические формы
+\begin{align*}
+  \waveop u &= 0 & &\defsign &&\text{волновое уравнение} \\
+  \Delta u  &= 0 & &\defsign &&\text{уравнение Лапласа} \\
+  (-\partial_t + a^2 \Delta) \, u &= 0 & &\defsign &&\text{уравнение теплопроводности}
+\end{align*}
+
+\paragraph{Характеристические поверхности}
+Здесь непросто, потому что обычно характеристики определяют для уравнений первого 
+порядка. А тут нужно как-то факторизовать. 
+
+Впрочем, можно сказать, что характеристическая поверхность~"--- $(w_x, A w_x) =0$
+Здесь $\xi = w (x,y)$, и для тех типов уравнений, что мы рассматриваем, верно
+\begin{facts}
+\item $\omega \equiv \mathrm{const}$
+\item при замене переменных $\xi = \omega(x,y)$ член при $u_{\xi\xi}$ зануляется%
+  \note{
+    У нас было всё наоборот, но так ещё непонятней что происходит
+  }
+\end{facts}
+
+\paragraph{Волновое уравнение}
+
+Уравнение и начальные условия:
+\begin{align*}
+  u_{tt} - a^2 u_{xx} &= 0 \\
+                & u(x,0) = \varphi_0(x) \\
+                & u_t(x,0) = \varphi_1(x) 
+\end{align*}
+
+Решение Даламбера 
+\[
+  u(x,t) = \frac12 \left( \varphi_0 (x - at) + \varphi_0(x+at) + 
+  \frac{1}{a} \int_{x-at}^{x+at} \varphi_1 (\xi)\, \del\xi \right)
+\]
+
+\paragraph{Принцип Дюамеля}
+Основная мысль в том, чтобы научиться получать из решения однородного уравнения
+решение неоднородного неочевидным способом.
+\begin{enumerate}
+  \item $\waveop P = 0$, $P(x,t,t) = 0$, $P_t(x,t,t) = f(x,t)$ (если существует)
+  \item $w = \dint_0^t P(x,t,t') \, \del t'$
+  \item $\waveop w = f(x,t)$
+\end{enumerate}
+Для волнового уравнения $P = \frac{1}{2a} \int\limits_{x-a(t-t')}^{x+a(t-t')} f(\xi, t')\,\del\xi$
+
+
+\paragraph{Энергетическое неравенство}
+
+\plholdev{картиночка}
+\begin{enumerate}
+  \item $\Omega_t$~--- срез конуса причинности 
+    (характеристическая поверхность волнового уравнения).
+  \item $E[u] = u_t^2 + a^2 u_x^2$
+\end{enumerate}
+Само энергетическое неравенство
+\[
+  \int_{\Omega_0} E[u] \, \del x \geqslant \int_{\Omega_t} E[u] \, \del x
+\]
+
+Отсюда можно заполучить единственность решения волнового уравнения.
+
+\paragraph{Формула Кирхгофа (\texorpdfstring{$\R^3$}{3D})}
+
+\[
+  u(x,t) = t \fint_{\Ball{at}{x}} \varphi_1 (y) \,\del S + 
+  \pder{}{t} \left( t \fint_{\Ball{at}{x}} \varphi_0(y) \, \del S \right)
+\]
+
+Здесь видно, что что возмущения (начальные) влияют на решение только будучи на границе
+конуса прчинности. Получается, что волна не <<запоминает>> своё прошлое.
+То есть, возмущение приходит с волновым фронтом и уходит с ним. 
+
+Это не принцип Гюйгенса-Френеля (тот про функцию Грина), но тоже принцип Гюйгенса.
+
+\paragraph{Формула Пуассона (\texorpdfstring{$\R^2$}{2D})}
+
+\[
+  \begin{split}
+    u(x,t) &= 
+    \frac{t^2}{2} \fint_{\Ball{at}{x}} \frac{\varphi_1(y)}{\sqrt{(at)^2 - |x-y|^2}} \,\del y + \\
+    &+ \pder{}{t} \left( \frac{t^2}{2} \fint_{\Ball{at}{x}} \frac{\varphi_0(y)}{\sqrt{(at)^2 - |x-y|^2}} \, \del y \right)
+  \end{split}
+\]
+
+Здесь возмущение <<чувствуется>> даже после прохождения фронта. В каком-то смысле
+оно <<размывается>>. Видимо, это и есть упомянутая диффузия?
+
+\section{Теплопроводность}
+
+\paragraph{Вывод уравнения}
+\begin{enumerate}
+  \item Уравение неразрывности: $u_t = - \div \v F $
+  \item Связь потока с текущим веществом $\v F \propto -\grad u$
+\end{enumerate}
+\[
+  u_t + a^2 \Delta u = 0 
+\]
+
+Характерные множества
+\begin{defs}[параболический цилиндр $(Q_T)$]
+\item[параболический цилиндр ($Q_T$)] $\Omega \times (0,T)$, $\Omega \subset \R^n$
+  % ------------------------------------------------------V very tricky, but looks like no other option
+\item[параболическая граница ($\boundary' Q_T$)] \makebox[9em]{$(\Omega \times \{0\}) \cup \boundary \Omega \times [0;T]$}
+\end{defs}
+Для удобства $R_T := Q_T ( \Omega = \R^n)$.
+
+Разные задачи:
+\begin{align}
+  & u \in C^2(\R^n) \,\bintersect\, C^1(0;T) \,\bintersect\, C(\boundary'R_T),& 
+  u(x,0) &= \varphi\\
+  & u \in C^2(\Omega) \,\bintersect\, C^1(0;T) \,\bintersect\, C(\boundary'Q_T),&
+  u \big|_{\boundary'Q_T} &= \varphi
+\end{align}
+
+\paragraph{Закон сохранения}
+При довольно мутных условиях (что-то вроде в меру быстрого убывания $u$ к бесконечности)
+\[
+  \mathcal U(t,R) :=\int_{\Ball{R}{0}} u (x,t) \, \del x = \mathrm{const}
+\]
+
+\paragraph{Ограниченный принцип максимума}
+\label{par:heat::lmax}
+\[
+  \inf_{\boundary'Q_T} u (x,t) \leqslant u(x,t) \leqslant \sup_{\boundary'Q_T} u(x,t)
+  \quad(\text{в $Q_T$})
+\]
+
+\paragraph{Принцип максимума в полупространстве}
+\label{par:heat::tmax}
+Пусть $u$ ограничена сверху\note{в Эвансе $\leqslant Ae^{a|x|^2}$, например}
+\[
+  \inf_{\R^n} u (x,t) \leqslant u(x,t) \leqslant \sup_{\R^n} u(x,t)
+\]
+
+\paragraph{Единственность}
+кажется, это очевидно следует из \ref{par:heat::lmax}, \ref{par:heat::tmax}.
+
+
+\paragraph{Автомодельные решения}
+\begin{facts}
+\item $\xi = \frac{x}{\sqrt{t}}$
+\item $v(\xi) = c \int_0^\xi e^{-\xi^2/4 a^2}\, \del \xi$
+\end{facts}
+
+\paragraph{Функция источника (одномерье)}
+\[
+  u(x,t) = \frac{1}{2a\sqrt{\pi t}} \, e ^{-\frac{x^2}{4a^2t}}
+\]
+\paragraph{Функция источника (многомерье)}
+\[
+  G(x,t) = \frac{1}{(2a\sqrt{\pi t})^n} \, e ^{-\frac{|x|^2}{4a^2t}}
+\]
+
+\paragraph{Свойства функции источника}
+
+\end{document}
+%vim: syntax sync minlines=200
