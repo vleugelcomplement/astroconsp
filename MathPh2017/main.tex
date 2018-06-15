@@ -3,6 +3,9 @@
 \usepackage{trmath}
 \usepackage{trsym} 
 
+\usepackage{embedfile}
+\embedfile{./\jobname.tex}
+
 \setlayout[page-orient=landscape, size=10]{hardcopy}
 \makeatletter
 \def\note{\ifexpmode{\@gobble}{\endnote}}
@@ -25,10 +28,11 @@
 \setlist[enumerate,1]{leftmargin=1.6em, noitemsep}
 \setlist[itemize,1]{leftmargin=2em, label=$\triangleright$}
 
+
 \newcommand{\waveop}{\mathop{\boldsymbol\Box}}
 \newcommand{\laplop}{\mathop{\Delta}}
 \newcommand{\heatop}{\mathop{\left(-{\textstyle\pder{}{t}} + a^2 \Delta\right)}}
-
+\def\Ball{\mathpzc{B}}
 \def\defsign{\hbox{$\,\Rrightarrow\,$}}
 \newcommand{\deflabel}[1]{
   \makebox[\labelwidth][l]{%
@@ -278,7 +282,7 @@ $G$~"--- функция Грина: $G(x,0) = \delta(x)$
 \paragraph{Представление функции в виде суммы потенциалов}
 \[
   \begin{split} 
-    u(x) = &- \frac{1}{(n-2)\,|S_1|} \int_\Omega \frac{\laplop u(y)}{|x-y|^{n-2}} \, \del y \\
+    u(x) = &- \frac{1}{(n-2)\,|S_1|} \int_\Omega \frac{\laplop u(y)}{\|x-y\|^{n-2}} \, \del y \\
            &- \frac{1}{(n-2)\,|S_1|} \int_{\boundary \Omega} u(y)\, 
               \left(\nabla_y\frac{1}{\|x-y\|^{n-2}}, \v n\right) \, \del s          \\
            &+ \frac{1}{(n-2)\,|S_1|} \int_{\boundary \Omega} \frac{u_n(y)}{\|x-y\|^{n-2}}\,\del s
@@ -287,8 +291,8 @@ $G$~"--- функция Грина: $G(x,0) = \delta(x)$
 То есть
 \[
   \begin{split}
-    u &= -\{\text{объёмный потенциал}\} - \{\text{потенциал двойного слоя}\} \\
-      &+ \{\text{потенциал простого слоя}\}
+    u &= -\{\text{объёмный потенциал}\} \\ &- \{\text{потенциал двойного слоя}\} \\
+      &- \{\text{потенциал простого слоя}\}
   \end{split}
 \]
 
@@ -337,10 +341,43 @@ $J[f] = \int_\Omega \frac{f(y)}{|x-y|^{n-2}}\, \del y$\note{
 \begin{enumerate}
   \item $J[f] \in C^2$
   \item $x\in \R^n \setminus \ov-\Omega \:\Rightarrow\: \laplop J [f] = 0$
-  \item $x \in \Omega \quad\:\,\,\Rightarrow\:\quad \laplop J[f] = - (n-2) |S_1| f(x)$
+  \item $x \in \Omega \quad\:\,\,\Rightarrow\:\quad \laplop J[f] = (n-2) |S_1| f(x)$
 \end{enumerate}
 что весьма похоже на потенциалы из небмеха.
 
-\paragraph{}
+\paragraph{Формула Пуассона}
+Сначала введём \emph{ядро Пуассона:} $K(x,y)$.
+При этом 
+$u\in C^1(\Omega) \bintersect C (\ov-\Omega) \bintersect L^\infty(\Omega)$,
+$\varphi \in C(\boundary \Omega) \bintersect L^\infty(\boundary \Omega)$
+
+\begin{enumerate}
+  \item $\laplop u = 0 \;\Rightarrow\; u = \int_{\boundary \Omega} K u $
+  \item $u = \int K \varphi \;\Rightarrow\; u \in C^\infty(\Omega), \:
+    \begin{cases}\laplop u = 0 \\ u \big|_{\boundary \Omega} = \varphi\end{cases} $
+\end{enumerate}
+
+Конкретные случаи:
+\begin{defs}
+\item[$\Omega = \R^{n-1}$] $K(x,y) = \frac{2 x_n}{|S_1|\, \|x-y\|^n}$ (плоскость)
+\item[$\Omega = \Ball_R(0)$] $K(x,y) = \frac{R^2 - \|x\|^2}{|S_1|\, \|x-y\|^n}$ (шар)
+\end{defs}
+
+\paragraph{Решение задачи Дирихле в шаре}
+\[
+  \begin{split}
+    \Omega = \Ball_R \\
+    f\in C^2_c(\Omega), \quad \varphi \in C(\boundary \Omega) \bintersect L^\infty(\boundary \Omega) ; \\
+    u \in C^2(\R^n), \quad -\!\laplop u = f, \quad u\big|_{\boundary \Omega} = \varphi 
+  \end{split}
+\]
+\begin{enumerate}
+  \item $v = \frac{R^2 - \|x\|^2}{|S_1|} \int_{\boundary\Ball} \frac{\varphi(y)}{\|x-y\|^n} \, \del y$
+  \item $w = \frac{1}{|S_1|\,(n-2)} \int_\Ball \frac{f(y)}{\|x-y\|^{n-2}}$
+  \item $u = v + w$
+\end{enumerate}
+Дальше мутно
+
+
 \end{document}
 %vim: syntax sync minlines=200
