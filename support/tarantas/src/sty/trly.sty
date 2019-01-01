@@ -1,0 +1,62 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{trly}[2017/07/05 
+  Layout selection machinery for `tarantas' bundle]
+
+\RequirePackage{trcore}
+
+%% Fallback                                  
+\DeclareOption*{
+  \PackageError{trly}{does not know about `\CurrentOption'.
+  Please, clarify your intentions.}
+}
+\ProcessOptions*
+
+\def \@trly@store@prefix{/tarantas/layout}
+% #1 -- layout options, optional
+% #2 -- layout name
+\newcommand*{\trly@layt@select}[2][ ]{
+  \ifinlist{#2}{\@complyt}{
+    \ex@f\setStorePrefix\ex@f{\@trly@store@prefix}
+    \setPairSep{=}
+    \storePairs{#1}
+    \storePair{name = #2}
+    \makeatletter
+    \input{#2.lyt}
+    \makeatother
+    \setStorePrefix{/tarantas/usr/}
+  } 
+  {
+    \PackageError{trly}{Layout not compatible}%
+    {Maybe you forgot to declare \string\@complyt
+    in your class?}
+  }
+}
+
+\def \trly@font@apply#1{
+  \let\orignewcommand\newcommand
+  \let\newcommand\renewcommand
+  \input{size#1.clo}%
+  \let\newcommand\orignewcommand
+}
+
+\def \trly@font@set#1{
+  \begingroup
+  \edef\defhelper{\endgroup \noexpand\trly@font@apply{#1}}
+  \defhelper
+}
+
+\storePairDef{note=\footnote}
+
+\def \note#1{%
+  \ifexpmode{}%
+  {%
+    \begingroup%
+    \ex@f\setStorePrefix\ex@f{\@trly@store@prefix}%
+    \getByKey{note}{#1}%
+    \endgroup%
+  }%
+}
+
+\let\setlayout=\trly@layt@select
+\let\setfont=\trly@font@set
+\endinput

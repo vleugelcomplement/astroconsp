@@ -1,0 +1,126 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{trcophand}[2017/07/05 
+  Class/package option handlers for `tarantas' bundle]
+
+\RequirePackage{trtools}
+
+\DeclareOption{togl}{
+  \let\tro@bl@new\providetoggle
+  \let\tro@bl@true\toggletrue
+  \let\tro@bl@if\iftoggle
+}
+% namespace hint:
+% tro @         tarantas options stuff
+%     @ bl      well, it's kind of boolean
+% will cause a trouble, surely
+%     @ hnd     option handler
+%     @ tmp     temporary routines
+\DeclareOption{bool}{
+  \let\tro@bl@new\providebool
+  \let\tro@bl@true\booltrue
+  \let\tro@bl@if\ifbool
+}
+
+%% Fallback                                  
+\DeclareOption*{
+  \PackageError{trcophand}{does not know about `\CurrentOption'.
+  Please, clarify your intentions.}
+}
+\ExecuteOptions{togl}
+\ProcessOptions\relax
+
+
+% self-made hooks
+\newcommand*{\AfterOptsProcd  } {}
+\newcommand*{\AfterLoadedClass} {}
+% feel myself like a mountain climber
+
+% redefined command with hooks
+\newcommand*{\ProcOpts        } {
+  \ProcessOptions*
+  \AfterOptsProcd 
+}
+% another one. May limit some functionality
+%+ But looks like everything still works
+\newcommand{\LoadCls}[2][\relax]{
+  \ifx #1\relax \LoadClass{#2}
+  \else         \LoadClass[#1]{#2}
+  \fi
+  \AfterLoadedClass
+}
+
+% custom option handler builder
+% before `do'ing stuff performs an optional check
+% see below for meaningful example
+\newcommand{\tro@hnd@new}[3][\relax]{
+  \providetoggle{accept}
+  \gdef#2##1{
+    \ifx #1\relax \toggletrue{accept}
+    \else #1 
+    \fi
+    
+    \iftoggle{accept} {
+      \def\do####1{
+        \def\@opt{####1}
+        #3
+      }
+      \docsvlist{##1}
+    }\relax
+  }
+}
+
+\tro@hnd@new{\DeclFlagOpt}{
+ \tro@bl@new{\@opt}
+ \DeclareOption{\@opt}{\tro@bl@true{\CurrentOption}}
+}
+
+% require \@baseclass variable in the outer scope
+\tro@hnd@new
+[\ifundef{\@baseclass}
+  {\togglefalse{accept}\PackageError{trcophand}%
+    {\noexpand\DeclPassOpt needs to know \noexpand\@baseclass}
+  } {\toggletrue{accept}}
+]
+{\DeclPassOpt}
+{\DeclareOption {\@opt}
+  {\PassOptionsToClass{\CurrentOption}{\@baseclass}}
+} 
+% as you see, lisp style can handle lots of braces gracefully
+% if there is ONE command. In lisp you have (progn..) in other case 
+% here, we need to suffer aestetically anyway
+
+
+% to reduce `expandafter's
+\def\tro@tmp@ex#1{
+  \apptocmd{\AfterLoadedClass}%
+  {\HasFlag{#1}{\RequirePackage{#1}}}{}{} %braces, you are hidden now
+}
+% there should be a workaround to conditional package loading
+% looks like i have found it
+\tro@hnd@new{\DeclPackOpt}{
+  \tro@bl@new{\@opt} % like a flag
+  \DeclareOption{\@opt}{\tro@bl@true{\CurrentOption}}
+  \ex@f\tro@tmp@ex\ex@f{\@opt}
+}
+
+% with braces
+% \HasFlag{flagname}{if-present}
+\newcommand{\HasFlag}[2]{
+  \tro@bl@if{#1}{#2}\relax
+}
+% with else clause
+\newcommand{\SwitchFlag}[3]{
+  \tro@bl@if{#1}{#2}{#3}
+}
+
+% plain tex variation, for special occasions
+% need bit of tex argument parsing here
+% less `{'/`}' -> less forgotten ones
+% \long\def\hasflag#1\then #2\done{
+%   \tro@bl@if{#1}{#2}{}
+% }
+%
+% should be \newif -- don't think this is useful enough.
+% but can implement if anyone wishes
+
+\endinput

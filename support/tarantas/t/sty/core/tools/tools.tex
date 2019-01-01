@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage{trtools} 
+
+\makeatletter
+\let\getDefT\trt@macro@getdef
+\newtoks\deftox
+\newtoks\tooltox
+\def\bar#1{#1::bar\_}
+\def\stuff#1{#1::stuff\_}
+\makeatother
+\protected\def \baaaz{\marginpar}
+
+\begin{document}
+\tableofcontents
+
+\vspace{3cm}
+\long\def \safescantokens#1#2{%
+  \begingroup
+    \everyeof{\noexpand}%
+    \endlinechar=-1
+    #1={\scantokens{#2}}%
+    \smuggleT#1
+  \endgroup
+}
+
+\makeMultiple{bar<*>,ba<*>r}
+\bar{1}
+\bars{1,2,3}
+\basr{1,2,3}
+% \getDefT{\bar}->T{\tooltox}
+% \edef\foo#1{\the\tooltox}
+% \foo
+
+\stuff{1}
+\makeMultiple{<*>stuff}
+\fbox{\stuff{1,2,3}}
+
+
+\makeatletter
+\trt@str@trim{  kek ?   }->T{\toks@}
+\trt@str@trim{     }->T{\toks@}
+\the\toks@
+\makeatother
+
+
+\newcase{!}{1}
+\newcase{@}{2}
+\newcase{^}{6}
+\newcase{&}{7}
+\defaultcase{?}
+
+\def\temp{&}
+\expandafter\selectcaseby \expandafter{\temp}
+
+\ifexpmode{exp}{eval}
+\section{sec with[note\ifexpmode{\baaaz}{\footnote}{k}]}
+
+
+%%%% Macro smuggling tests
+
+\begingroup
+\toks0={#define o 1}
+\edef\cmacro{\the\toks0}
+\csedef{c macro}{\the\toks0}
+\smuggle\cmacro
+\cssmuggle{c macro}
+\endgroup
+
+\show\cmacro
+\csshow{c macro}
+
+\LaTeX
+\end{document}

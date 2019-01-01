@@ -1,0 +1,64 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{trkvprefix}[2017/07/10
+  Keyval prefix-based storage model for `tarantas']
+
+\RequirePackage{trkv}
+
+%% Fallback                                  
+\DeclareOption*{
+  \PackageError{trkvprefix}{does not know about `\CurrentOption'.
+  Please, clarify your intentions.}{}
+}
+\ProcessOptions*\relax
+
+\input{trkvprefix.code.tex}
+
+\let \setStorePrefix=\trkv@prefix@set
+\let \esetStorePrefix=\trkv@prefix@eset
+\let \pushStorePrefix=\trkv@prefix@push
+\let \popStorePrefix=\trkv@prefix@pop
+
+
+\newFullParser \storePair \storePairs \estorePair \estorePairs%
+{{%
+  \kT=\ex@f\ex@f\ex@f{\ex@f\detokenize\ex@f{\the\kT}}%
+  \csedef{\@trkv@prefix \k}{\v}%
+  \cssmuggle{\@trkv@prefix \k}%
+}}
+
+% sometimes useful
+\newPairsParser{\gstorePairs}{%
+  \kT=\ex@f\ex@f\ex@f{\ex@f\detokenize\ex@f{\the\kT}}%
+  \csxdef{\@trkv@prefix \k}{\v}% global \def
+  %\cssmuggle{\@trkv@prefix \k}% useless
+}
+
+\def \rawgetByKey#1#2{%
+\csexpandonce{#1\detokenize{#2}}}
+
+%% no error handling -- no expansion problems
+\def \getByKey#1{%
+  \ifKeySet{#1}%
+    {\rawgetByKey{\@trkv@prefix}{#1}}%
+    {\@nil}%
+}
+
+\def \ifKeySet#1{\ifcsdef{\@trkv@prefix\detokenize{#1}}}
+
+\def \getPairByKey#1{#1\@trkv@pair@sep\getByKey{#1}}
+
+\newFullParser \storePairDef \storePairsDef \estorePairDef%
+\estorePairsDef
+{{%
+  \ifcsname \@trkv@prefix\k\endcsname%
+  \else%
+    \kT=\ex@f\ex@f\ex@f{\ex@f\detokenize\ex@f{\the\kT}}%
+    \csedef{\@trkv@prefix \k}{\v}%
+    \cssmuggle{\@trkv@prefix \k}%
+  \fi%
+}}
+
+\makeMultiple{getByKey<*>, getPair<*>ByKey}
+\setStorePrefix{tarantas/keys/}
+
+\endinput

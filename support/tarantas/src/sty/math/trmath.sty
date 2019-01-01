@@ -1,0 +1,161 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{trmath}[2017/05/28 tmath package]
+
+\RequirePackage{trcore}
+
+\DeclOpt*{
+  \PackageError{trmath}{does not know about `\CurrentOption'.
+  Please, clarify your intentions.}
+}
+\ProcOpts
+
+% \RequirePackage{accents}  % extra syms above another syms
+% leaking abstractions, here they come
+% crutchy fix for amsmath error
+%-----%<-------
+\let\dddot\relax
+\let\ddddot\relax
+%-----%<-------
+\RequirePackage{amsmath}
+\RequirePackage{amsfonts,amssymb}
+\RequirePackage{mathtools} %silently defines extra arrows, with bad spacing
+\RequirePackage{stmaryrd} % mapsfrom char
+\RequirePackage{esint} %AAA overrides my limits setup :(
+\RequirePackage{bbm}      %} more math fonts
+\RequirePackage{mathrsfs} %}
+\RequirePackage{nicefrac}
+
+% \RequirePackage{trthm}
+\RequirePackage{trkvdict}
+
+\compilerawareinput{trmath}{cfg}
+
+% if you know faster\cheaper\simplier alternative, you are welcome
+\dictdef{math hats}{
+  ~  = \widetilde,
+  -  = \overline,
+  .  = \dot,
+  .. = \ddot,
+  :  = \ddot,
+  ^  = \widehat,
+  0  = \overset\circ,
+  v  = \check,
+  -> = \overrightarrow,
+  <- = \overleftarrow
+}
+
+\newcommand*{\ov}[1]{%
+  \dictget{math hats}{#1}%
+}
+% \ov~a --> \widetilde{a}
+%   \PackageError{trmath}{Undefined option to ov: `#1'}%
+
+\newcommand*{\und}[2]{%
+  \providecommand\EqCase[3]{\ifstrequal{#1}{##1}{##2}{##3}}%
+  \EqCase{-}{\underline{#2}}     {% 
+  {\PackageError{trmath}{Undefined option to ov: `#1'}} }%
+}
+
+%\RequirePackage{xstring}
+%\IfEqCase{..}[..default..]
+% causes long compilation time
+
+
+\def\lfrac#1#2{\nicefrac{#1}{#2}}
+
+\def\dint{\displaystyle\int}
+\def\dsum{\displaystyle\sum}
+
+% make dots a bit more visible
+% \renewcommand*{\dot}[1]{\accentset{\mbox{\bfseries .}}{#1}}
+% \renewcommand*{\ddot}[1]{\accentset{\mbox{\bfseries .\hspace{-0.1ex}.}}{#1}}
+% \renewcommand*{\dddot}[1]{\accentset{\mbox{\bfseries .\hspace{-0.1ex}.\hspace{-0.1ex}.}}{#1}}
+
+% fixes a small inconvinience
+\edef\bigcup{\bigcup\limits}
+\edef\bigcap{\bigcap\limits}
+\def\*{\discretionary{\thinspace \the \textfont 2\char 2}{}{0}} %small space is better than none
+% a weird hack, use carefully
+% for unknown reasons tex cannot handle empty non-break text in math discretionary
+\def\*{%
+{}$% end math mode
+\discretionary%
+{\hbox{$\thinspace \the \textfont 2\char 2$}}%
+{\hbox{$\the \textfont 2\char 2 \thinspace$}}%
+{\hbox{$\thinspace$}}%
+${}%continue math mode
+}
+
+% \v command to rule vectors and \v* for linear forms
+\let\old@v=\v
+\def\v{\@ifstar\v@star\v@choice}
+\def\v@choice#1{\ifmmode \v@vec{#1} \else \old@v{#1} \fi}
+\def\v@star#1{\v@lin{#1}}
+\def\v@vec#1{\boldsymbol{#1}}
+\def\v@lin#1{\mathrm{#1}}
+
+\def \abs#1{\ensuremath\left\lvert#1\right\rvert}
+% symbolic operators
+
+%% patched arrows
+\input{trmarrows.code.tex}
+\input{trmop.def}
+\let\newarrowfill=\trm@arrowfill@new
+\let\newxarrow=\trm@xarrow@new
+\let\makearrowex=\trm@arrow@makex
+
+% sets
+\input{trmsets.def}
+%topology
+\input{trmtopology.def}
+% logic
+\input{trmlogic.def}
+% other parts of algebra
+\input{trmalg.def}
+
+\newcommand{\gen@der@fr}[4][\relax]{
+  \ensuremath 
+  \ifx#1\relax \frac{#4 #2}{#4 #3}
+  \else        \frac{{#4}^{#1} #2}{#4 {#3}^{#1}}
+  \fi
+}
+\let \derfrac=\gen@der@fr
+\input{trmcalc.def}
+
+% something about manifolds
+\newcommand{\tangentspace}{\ensuremath%
+\@ifstar \trm@cotansp \trm@tansp}
+\newcommand{\tangentbundle}{\ensuremath%
+\@ifstar \trm@cotanbund \trm@tanbund}
+% #1 -- star (or whaterver your like), 
+% #2 -- manifold, #3 -- point
+\def \trm@gentang#1#2#3{%
+  \ifstrempty{#3}{%
+\mathrm{T}^{#1}\mkern -2mu{#2}%
+  }{%
+\mathrm{T}^{#1}_{#3}\mkern -0mu{#2}}}
+%
+
+\newcommand{\trm@tansp}[2]{\trm@gentang{}{#1}{#2}}
+\newcommand{\trm@cotansp}[2]{\trm@gentang{*}{#1}{#2}}
+\newcommand{\trm@tanbund}[1]{\trm@gentang{}{#1}{}}
+\newcommand{\trm@cotanbund}[1]{\trm@gentang{*}{#1}{}}
+
+\let \tansp = \tangentspace
+\let \tanbnd = \tangentbundle 
+
+
+% probability theory
+\input{trmstat.def}
+
+
+\newcommand{\declareMathLetterTransform}[2]{%
+  \edef \@trt@temp@cmdexpansion{{\noexpand\mathcode`#1=\the\mathcode`#1 \noexpand#2{#1}}}
+  \begingroup%
+  \lccode`~=`#1 %
+  \lowercase{\endgroup%
+    \edef~{\expandonce{\@trt@temp@cmdexpansion}}%
+  }%
+  \mathcode`#1="8000 %
+}
+
