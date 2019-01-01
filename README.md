@@ -2,6 +2,9 @@
 
 Если вы просто ищете пдфки, вам сюда: [« wiki »](https://github.com/tis-p30/astroconsp/wiki) \
 
+ПРЕДУПРЕЖДЕНИЕ: не ищите новых документов на этой ветке ближайший месяц. Идите в `develop`
+Тут слишком много всего сломается если сходу поменять структуру не подумав.
+
 If google led your here, you may look below for technical details
 or follow the link above to download lecture notes from wiki page.
 Additional information about content is provided on the wiki page, too.
