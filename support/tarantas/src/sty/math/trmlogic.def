@@ -1,0 +1,7 @@
+\ProvidesFile{trmlogic.def}[
+  2017/08/03 Collection of logic-related symbols]
+
+% `arrows'
+\def \iff{\ensuremath{\;\Leftrightarrow\;}}
+\def \so{\ensuremath{\;\Rightarrow\;}}
+% vim:ft=tex

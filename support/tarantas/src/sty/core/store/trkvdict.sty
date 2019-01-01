@@ -1,0 +1,105 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{trkvdict}[2017/07/05 
+  Dictionaries support  for `tarantas']
+
+\RequirePackage{trkv}
+
+%% Fallback                                  
+\DeclareOption*{
+  \PackageError{trkvdict}{does not know about `\CurrentOption'.
+  Please, clarify your intentions.}
+}
+
+\ProcessOptions*\relax
+
+\def \@trd@dict@prefix{tarantas/data/}
+
+\newMultParser \dictdef \dictedef{[2]{
+    \kT=\ex@f\ex@f\ex@f{\ex@f\detokenize\ex@f{\the\kT}}%
+    \edef\@dictname{\@trd@dict@prefix\detokenize{#1}}%
+    \listcseadd{\@dictname}{\k}%
+    \csedef{\@dictname .\k}{\v}%
+    \cssmuggle{\@dictname}\cssmuggle{\@dictname .\k}%
+}}
+
+\def \dictkeys#1#2{%
+  \trt@macro@fullexpand%
+{\csuse{\@trd@dict@prefix \detokenize{#1}}}->T{\toks@}
+  \edef#2{\the\toks@}%
+}
+
+% {/dict name/}{/key/}{/code/}
+\def \trd@dict@access#1#2#3{
+  \ifcsdef{\@trd@dict@prefix\detokenize{#1.#2}}%
+    {#3}%
+    {\PackageError{trkvdict}{Value with key `\detokenize{#2}'
+      is not stored in dictionary `\detokenize{#1}', sorry}%
+      {How about \string\dictadd ?}}%
+}
+
+\def \dictget#1#2{%
+  \trd@dict@access{#1}{#2}%
+    {\csexpandonce{\@trd@dict@prefix\detokenize{#1.#2}}}%
+}
+% {/dict name/} {/key/} {/cs to store a value/}
+\def \dictgetto#1#2#3{%
+  \trd@dict@access{#1}{#2}%
+    {\edef#3{\csexpandonce{\@trd@dict@prefix\detokenize{#1.#2}}}}%
+}
+\def \dictegetto#1#2#3{%
+  \trt@macro@fullexpand{#2}->T{\toks@}
+  \begingroup
+  \def\defhelper##1{
+    \endgroup
+    \trd@dict@access{#1}{##1}%
+      {\edef#3{\csexpandonce{\@trd@dict@prefix\detokenize{#1.##1}}}}
+    }\ex@f\defhelper\ex@f{\the\toks@}%
+}
+
+\newMultParser \dictadd \dicteadd{ [2]{
+    \kT=\ex@f\ex@f\ex@f{\ex@f\detokenize\ex@f{\the\kT}}%
+    \edef\@dictname{\@trd@dict@prefix\detokenize{#1}}%
+    \ifcsdef{\@dictname}%
+    {%
+      \ifcsdef{\@dictname.\k}
+        {\PackageError{trkvdict}%
+          {Pair with key `\k' exists}
+          {Consider using \detokenize{\dictalter{#1}}{\k=\v} }}
+        {%
+          \listcseadd{\@dictname}{\k}%
+          \csedef{\@dictname.\k}{\v}%
+          \cssmuggle{\@dictname}%
+          \cssmuggle{\@dictname.\k}}%
+    }{\PackageError{trkvdict}%
+        {Attempt to add pairs to undefined dictionary}%
+        {How about \detokenize{\dictdef{#1}}{\k=\v,...}}
+        \listbreak%
+    }%
+}}
+
+\newMultParser \dictalter \dictealter{ [2]{
+    \kT=\ex@f\ex@f\ex@f{\ex@f\detokenize\ex@f{\the\kT}}%
+    \edef\@dictname{\@trd@dict@prefix\detokenize{#1}}%
+    \ifcsdef{\@dictname}%
+    {%
+      \ifcsdef{\@dictname.\k}
+        {%
+          \csedef{\@dictname.\k}{\v}%
+          \cssmuggle{\@dictname.\k}}%
+        {\PackageError{trkvdict}%
+          {Pair with key `\k' not exists}
+          {Consider using \detokenize{\dictadd{#1}}{\k=\v} }}
+    }{\PackageError{trkvdict}%
+        {Attempt to alter pairs of undefined dictionary}%
+        {How about \detokenize{\dictdef{#1}}{\k=\v,...} }%
+        \listbreak
+    }%
+}}
+
+
+
+\def \dicthaskey#1#2{%
+  \ifcsdef{\@trd@dict@prefix\detokenize{#1.#2}}%
+}
+
+\endinput

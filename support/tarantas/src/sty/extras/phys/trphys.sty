@@ -1,0 +1,13 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{trphys}[2017/05/28 Physics macros]
+
+\RequirePackage{trmath}
+\DeclOpt*{
+  \PackageError{trphys}{does not know about `\CurrentOption'.
+  Please, clarify your intentions.}
+}
+\ProcOpts\relax
+
+
+\input{trphq.def}
+

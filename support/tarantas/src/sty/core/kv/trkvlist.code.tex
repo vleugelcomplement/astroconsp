@@ -1,0 +1,59 @@
+
+\long\def \trkv@listitem#1#2{%
+  \ifblank{#2}%
+    {}%
+    {#1{#2}}%
+}
+
+\edef\trt@ampcode{\the\catcode`\&}
+\catcode`\&=3
+
+\def\trkv@dolistparser@def#1#2{%
+  \begingroup
+  \edef\@tempa{\endgroup
+    \long\def\noexpand#1####1{%
+      \expandafter\noexpand
+      \csname trkv@lst@\expandafter\@gobble\string#1\endcsname
+      \space####1\noexpand#2&}%
+    \long\csdef{trkv@lst@\expandafter\@gobble\string#1}####1\noexpand#2####2&{%
+      \noexpand\trkv@listitem\noexpand\do{####1}%
+      \noexpand\ifblank{####2}
+        {\noexpand\listbreak}
+        {\expandafter\noexpand
+         \csname trkv@lst@\expandafter\@gobble\string#1\endcsname
+	 \space####2}&}}%
+  \@tempa}
+
+% {<cs>/parser name/} {<tl>/list sep/}
+\def\trkv@arglistparser@def#1#2{%
+  \begingroup
+  \edef\@tempa{\endgroup
+    \long\def\noexpand#1####1####2{%
+      \expandafter\noexpand
+      \csname trkv@lst@\expandafter\@gobble\string#1\endcsname
+      {####1}\space####2\noexpand#2&}%
+    \long\csdef{trkv@lst@\expandafter\@gobble\string#1}####1####2\noexpand#2####3&{%
+      \noexpand\trkv@listitem{####1}{####2}%
+      \noexpand\ifblank{####3}
+        {\noexpand\listbreak}
+        {\expandafter\noexpand
+         \csname trkv@lst@\expandafter\@gobble\string#1\endcsname
+	 {####1}\space####3}&}}%
+  \@tempa}
+
+\catcode`\&=\trt@ampcode
+
+\def \trkv@listparser@def{\@ifstar \trkv@arglistparser@def \trkv@dolistparser@def}
+\def \trkv@list@sepset#1{%
+%   \let \etb@defparser@do@old=\etb@defparser@do
+%   \let \etb@defparser@arg@old=\etb@defparser@arg
+%   \let \etb@defparser@do=\trkv@dolistparser@def
+%   \let \etb@defparser@arg=\trkv@arglistparser@def
+  \let \dokvlist=\relax 
+  \let \forkvlist=\relax
+  \trkv@dolistparser@def{\dokvlist}{#1}%
+  \trkv@arglistparser@def{\forkvlist}{#1}%
+%   \let \etb@defparser@do=\etb@defparser@do@old
+%   \let \etb@defparser@arg=\etb@defparser@arg@old
+}
+% vim: ft=plaintex

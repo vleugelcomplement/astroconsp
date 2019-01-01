@@ -1,0 +1,89 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{trflex}[2017/07/05 
+  Flexible commands implementation for `tarantas' bundle]
+
+\RequirePackage{trtools}
+\RequirePackage{trkvprefix}
+\RequirePackage{tropt}
+
+
+%% Fallback                                  
+\DeclOpt*{
+  \PackageError{trflex}{does not know about `\CurrentOption'.
+  Please, clarify your intentions.}
+}
+\ProcOpts
+
+% Code
+
+\def \@trf@defnamespace{tarantas/flex/default/}
+\def \@trf@cssnamespace{tarantas/flex/css/}
+\let \@trf@cssnamespace=\@trf@defnamespace % temporary
+% {<name>} {<default parameters>} <command-args> /[2][]/ {
+\def \trf@newcmd@prepare#1#2#3#{
+  \ex@f\trt@str@trim\ex@f{\detokenize{#1}}->T{\toks@}
+  % dot after command name is for convenience
+  \esetStorePrefix{\@trf@defnamespace\ex@f\@gobble\the\toks@.}
+  \setPairSep{:}
+  \setKvListSep{;}
+  \storePairsDef{#2}
+  \trf@newcmd@define{#1}{#3}
+}
+\def \trf@newcmd@define#1#2#3{
+  \newcommand{#1}#2{%
+    \ex@f\trt@str@trim\ex@f{\detokenize{#1}}->T{\toks@}%
+    % dot after command name is required for convenience
+    \esetStorePrefix{\@trf@defnamespace\ex@f\@gobble\the\toks@.}%
+    #3%
+  }
+}
+\def \trf@newcmd@create{%
+  \ifexpmode%
+  {\unexpanded{\PackageError{trflex}{commands can't work in expansion-only mode}}}%
+  {\trf@newcmd@prepare}%
+}
+
+\def \trf@var@use#1{%
+  \csuse{\@trkv@prefix#1}%
+}
+
+% { desc-list }
+\let \@trt@endenv=\end
+\def \trf@desc@parse{
+  \futurelet \@trf@desc@nexttoken \trf@entry@check
+}
+\def \trf@entry@check{
+%   \show \@trf@desc@nexttoken
+  \ifx\@trf@desc@nexttoken\@sptoken \ex@f\ex@f\ex@f \trf@desc@parse \ex@f \@firstofone 
+  \else \ifx\@trf@desc@nexttoken\@trt@endenv %none at all, tex will insert \fi\fi here
+        \else \ex@f\ex@f\ex@f \trf@entry@parse
+        \fi
+  \fi
+}
+\def \trf@entry@parse#1#{
+%   \trt@arg@debug{==#1==}
+  \trf@entryhead@parse{#1}
+  \trf@entrybody@parse
+}
+
+\def \trf@entryhead@parse#1{
+  \trt@str@trim{#1}->T{\toks@}%
+  \esetStorePrefix{\@trf@cssnamespace\ex@f\detokenize\ex@f{\the\toks@}.}
+}
+\def \trf@entrybody@parse#1{
+  \setPairSep{:}
+  \setKvListSep{;}
+  \gstorePairs{#1}
+  % start new iteration
+  \trf@desc@parse
+}
+
+% API
+
+\let \newflexcommand=\trf@newcmd@create
+\let \flexvar=\trf@var@use
+\newenvironment{flexstyle}%
+{\endlinechar=-1\trf@desc@parse}%
+{}
+
+\endinput

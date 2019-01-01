@@ -1,0 +1,27 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% for hard copies
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesFile{hardcopy.lyt}[2017/08/06 `Hardcopy' layout]
+
+\storePairDef{size=10}
+
+\setfont{\getByKey{size}}
+
+\RequirePackage{geometry}
+\storePairsDef{paper-type = a4paper, page-orient=portrait}
+\geometry{
+  \getByKey{paper-type},
+  \getByKey{page-orient},
+  left=1cm,
+  right=1cm,
+  top=1cm,
+  bottom=1.3cm,
+  bindingoffset=0cm
+}
+\protected\def\note{\footnote}
+\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+
+\endinput
+% vim: ft=tex

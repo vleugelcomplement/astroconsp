@@ -1,0 +1,121 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{trthm}[2017/08/03
+  Theorem-like envs setup for `tarantas' bundle]
+
+\RequirePackage{trtools}
+
+
+%% Fallback                                  
+\DeclareOption*{
+  \PackageError{trthm}{does not know about `\CurrentOption'.
+  Please, clarify your intentions.}
+}
+\ProcessOptions*\relax
+
+\RequirePackage{amsthm}
+\RequirePackage[utf8]{inputenc}
+
+\patchcmd{\@xnthm}
+{\let\csname end#2\endcsname\@endtheorem}
+{\def\csname end#2\endcsname{\@endtheorem\global\def\laststat{#2}}} {}{}
+
+\theoremstyle{plain}
+\newtheorem{thrm}{Теорема}[paragraph]
+\newtheorem{lem}[thrm]{Лемма}
+\newtheorem{stat}[thrm]{Утверждение}
+\newtheorem{prop}[thrm]{Утверждение}
+\newtheorem{imp}{Следствие}[thrm]
+\newtheorem{cor}{Следствие}[thrm]
+\newtheorem*{cor*}{Следствие}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Определение}[paragraph]
+\newtheorem*{denot}{Обозначение}
+\newtheorem{exmp}{Пример}[defn]
+\newtheorem*{exmp*}{E.g}
+
+\theoremstyle{remark}
+\newtheorem{rem}{Замечание}[defn]
+\newtheorem*{rem*}{Замечание}
+
+
+\RequirePackage{chngcntr} % tools for counters 
+% \@addtoreset{imp}{lem}
+% \@addtoreset{imp}{stat}
+\counterwithin*{rem}{thrm}
+\counterwithin*{equation}{paragraph}
+
+% % we are redefining a macro that is used by a loop
+% % to redefine 9 another macros that have been defined
+% % when have defined them by a macro from amsmath
+% % which uses 4 another nested macros, last of which
+% % finally defines this evil counter we are trying to redefine
+\renewcommand*{\do}[1]{
+  \expandafter\def\csname the#1\endcsname{\arabic{#1}}%
+}
+
+% hoped to the best loop, but tastes matter
+\docsvlist{thrm,lem,stat,prop,imp,cor,defn,exmp,rem}
+
+% temporary hack
+\ifdef\c@chapter{
+  \def\trth@stat@headnumberformat{\arabic{chapter}.\arabic{paragraph}}
+}{
+\def\trth@stat@headnumberformat{\arabic{section}}
+}
+\newcommand*{\trth@head@format}[1]{
+  \csdef{p@#1}{\trth@stat@headnumberformat.\csuse{the#1}\ex@f\@gobble}
+}
+\forcsvlist{\trth@head@format}{thrm,defn,exmp}
+
+\renewcommand{\p@equation}{\theequation\expandafter\@gobble}
+
+%manual resetting
+\newcommand*{\re@setter}[1]{
+  \expandafter\newcommand\csname reset#1\endcsname{
+    \setcounter{#1}{0}
+  }
+}
+\forcsvlist{\re@setter}{defn,thrm,rem}
+\newcommand\resetall{\resetdefs \resetthrm \resetrem}
+
+%% patched proof from AMS-thm
+\newenvironment{trgenproof}[4]{\par
+  \pushQED{{\def\qedsymbol{#3}\qed}}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+  \item[\hskip\labelsep#2
+    \ifstrempty{#1}{}{/{\itshape #1}\thinspace/}]\ignorespaces
+    #4
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+
+% #1 -- optional code to be placed after proof ``header''
+% #2 -- proof env name
+% #3 -- code at the beginning of proof, something like ``Proof:''
+% #4 -- code at the end of proof, something like ``\qed''
+\newcommand{\newproof}[4][]{
+\newenvironment{#2}[1][]
+  {\begin{trgenproof}{##1}{#3}{#4}{#1}}
+  {\end{trgenproof}}
+}
+
+\newproof{tproof}{$\square$}{$\blacksquare$}
+\newproof[${}$\\]{lproof}{$\blacktriangledown$}{$\blacktriangleleft$}
+\newproof{pproof}{$\blacktriangleright$}{$\blacktriangleleft$}
+
+\def \trt@str@firstletter@proc#1{#1\trt@str@nilgobble}
+\def \trt@str@nilgobble#1\@nil{}
+\def \trt@str@firstletter#1{\trt@str@firstletter@proc#1\@nil}
+
+\newenvironment{prf}
+{%
+  \edef \@trth@curprf{\ex@f\trt@str@firstletter\ex@f{\laststat}proof}%
+  \csuse{\@trth@curprf}%
+}{\csuse{end\@trth@curprf}}
+
+\RequirePackage{changepage}% for adjustwidth
+\newenvironment{aux}[1][1cm]
+  {\begin{small}\begin{adjustwidth}{#1}{}}
+  {\end{adjustwidth}\end{small}}

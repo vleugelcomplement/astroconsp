@@ -1,0 +1,39 @@
+\documentclass{article}
+
+\usepackage{trkvdict}
+\usepackage{amsmath}
+
+\begin{document}
+
+\dictdef{math hats}{
+  ~ = \widetilde,
+  ^ = \widehat,
+  - = \overline, 
+  . = \dot,
+  \ba r = \bar
+}
+\def\ov#1{\dictget{math hats}{#1}}
+$\ov~{\alpha}, \ov^ \beta, \ov. \gamma$
+
+$\ov{\ba r} 0$
+
+\dictadd{math hats}{o = \overset\circ}
+\def\foo{-=\noexpand\bar}
+\dictealter{math hats}{\foo}
+
+% \dictadd\kek{1=1, 2=2}
+% \dictadd{math hats}{- = \bar, ~=\tilde}
+
+\def\do#1{$#1a$}
+
+\dictkeys{math hats}\mh
+\def\do#1{$\ov{#1}{A}\quad$}
+\dolistloop\mh
+
+\dictdef\kek{
+  \\* = \keki
+}
+\def\keki{{\tt\string\keki} called}
+\dictget\kek{\\*}
+
+\end{document}

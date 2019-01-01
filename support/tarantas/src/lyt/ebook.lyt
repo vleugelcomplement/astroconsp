@@ -1,0 +1,44 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Targeted for ebook readers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesFile{ebook.lyt}[2017/08/01 `Ebook' layout]
+
+\RequirePackage{trly}
+
+\RequirePackage{geometry}
+\RequirePackage{microtype}
+\RequirePackage{trenotes}
+
+\storePairDef{note=\footnote}
+\storePairDef{size=10}
+
+\setfont{\getByKey{size}}
+
+\storePairDef{model=test}
+% ebook readers screen size
+\input{ebook-models.def}
+
+\dictegetto{ebook readers screen size}{\getByKey{model}}\ebooksize
+\estorePairs{\ebooksize}
+
+\geometry{
+  reset,
+  landscape,
+  paperwidth=\getByKey{paperwidth},
+  paperheight=\getByKey{paperheight},
+  top=0.3cm,
+  bottom=0.3cm,
+  right=0.3cm,
+  left=0.3cm
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.6ex minus 0.4ex}
+
+\newenvironment{trt@id}{}{}
+\def\trch@columnsquantity{\relax}
+\def\@trch@mulcolenv@name{trt@id}
+\endinput
+% vim: ft=tex

@@ -1,0 +1,37 @@
+
+% #1 -- arrowfill name (cs)
+% #2 -- layout
+\def \trm@arrowfill@new#1#2{%
+  \def#1{\arrowfill@#2}%
+}
+
+% #1 -- xarrow name 
+% #2 -- spacing
+% #3 -- arrowfill name
+\def \trm@xarrow@new#1#2#3{%
+  \let#1\relax
+  \newcommand{#1}[2][]{\ext@arrow #2#3{##1}{##2}}%
+}
+
+% #1 -- arrow name (leftarrow)
+% #2 -- layout     (\leftarrow \relbar \relbar)
+%       if ommited, existing arrowfill is used
+% #3 -- spacing    (0359)
+\newcommand{\trm@arrow@makex}[1]{%
+  \@ifnextchar[%
+    {\trm@arrow@makex@i{#1}}%
+    {\trm@arrow@makex@i{#1}[]}%
+}
+
+\def \trm@arrow@makex@i#1[#2]#3{%
+  \ifstrempty{#2}
+    {}%
+    {\ex@f\trm@arrowfill@new\ex@f{\csname #1fill@\endcsname}{#2}}%
+    \begingroup
+    \def \exphelper##1{
+      \endgroup
+      \ex@f\trm@xarrow@new\ex@f{\csname x#1\endcsname}{#3}{##1}
+    }\ex@f\exphelper\ex@f{\csname #1fill@\endcsname}
+}
+
+% vim:ft=plaintex

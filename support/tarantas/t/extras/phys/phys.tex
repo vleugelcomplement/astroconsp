@@ -1,0 +1,21 @@
+\documentclass{minimal}
+
+\usepackage{trphys}
+\makeatletter
+\makeatother
+\newcommand{\commutr}[2]{[#1;#2]}
+\begin{document}
+\[
+  \ket{\sum a} \tensprod \ket{\frac b a} \neq \qpairing{a^2}{\int b}
+\]
+
+\[\bindqoperators{a,b}
+  \commutr ab = ab - ba
+\]
+% \makeMultiple{bindOperator<*>}
+\def \lowerhat#1{\lowercase{\hat #1}}
+\[\declareMathLetterTransform A{\lowerhat} %,\hat B,\hat a}
+  A \ket {a} = a \ket a
+\]
+
+\end{document}

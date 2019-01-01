@@ -1,0 +1,25 @@
+\ProvidesFile{trmalg.def}[
+  2017/08/03 Collection of algebra symbols]
+
+\DeclareMathOperator\rk{rk}
+\let\Re\relax
+\let\Im\relax
+\DeclareMathOperator\Re{Re}
+\DeclareMathOperator\Im{Im}
+\DeclareMathOperator\Tr{Tr}
+\DeclareMathOperator\id{id}
+\DeclareMathOperator\codim{codim}
+\DeclareMathOperator\Spec{Spec}
+
+\DeclareMathOperator\Res{Res}
+\DeclareMathOperator\Aut{Aut}
+\DeclareMathOperator\Stab{Stab}
+
+\DeclareMathOperator\Obj{Obj}
+\DeclareMathOperator\Mor{Mor}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\Ker{Ker}
+
+\DeclareMathOperator\sign{sgn}
+% vim:ft=tex

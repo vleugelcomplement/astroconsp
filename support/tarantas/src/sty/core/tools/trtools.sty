@@ -1,0 +1,39 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{trtools}[2017/07/13
+  Toolbox to drive a tarantas]
+
+%% Fallback                                  
+\DeclareOption*{
+  \PackageError{trtools}{does not know about `\CurrentOption'.
+  Please, clarify your intentions.}
+}
+\ProcessOptions*\relax
+
+\RequirePackage{etoolbox}
+\RequirePackage{iftex}
+
+% `code'
+\input{trtools.code.tex}
+
+
+% `api'
+\def\smuggle#1{\trt@macro@smuggle{#1}\as {#1}\drop }
+\def\cssmuggle#1{\trt@csmacro@smuggle{#1}\as {#1}\drop }
+\def\smuggleT#1{\trt@toks@smuggle{#1}\as {#1}\drop }
+% many thanks to pgf authors for a nice name and idea
+
+\let \listdef=\trt@list@def
+\def \makeMultiple#1{\trt@csmacro@makemultiple#1\@nil}
+\makeMultiple{<*>makeMultiple}
+
+\let\expShortOn=\trt@expShort@On
+\let\expShortOff=\trt@expShort@Off
+
+\let \newcase=\trt@cases@new
+\let \defaultcase=\trt@cases@default
+\let \selectcaseby=\trt@cases@process
+
+\let \ifexpmode=\trt@if@expmode
+
+% compiler -- variables are yet developer-only
+\let \compilerawareinput=\trt@file@compilerawareload

@@ -1,0 +1,28 @@
+\ProvidesFile{trsym.def}[2017/08/03 Predefined custom symbols]
+
+\newsym{\underdev}%
+{\mbox{\thinspace$\langle${\MineSign}$\rangle$\thinspace}}%
+{(underdev)}%
+
+\newsym{\sour}   {$\langle\ddot\sim\rangle$}              {(sour)}%
+
+\newsym{\quest}  {$\langle?\rangle$}                      {(?)}%
+
+\newsym{\flame}  {$\langle$\texttt{:set aflame}$\rangle$} {(:set aflame)}%
+
+\newsym{\coori}  {\ensuremath\mathop{\uparrow\!\uparrow}}            {↑↑}
+\newsym{\conori} {\ensuremath\mathop{\uparrow\!\downarrow}}          {↑↓} 
+
+\newcommand\plholdev[1]{\texttt{<+{#1}+>}} 
+\newcommand\intrng{\mathbin{..}} 
+\newcommand\holds{\ensuremath\:::\:}
+\newcommand\that{\ensuremath :\:}
+\newcommand\gprov{(!) } % докажем, что
+\newcommand\convex{\ensuremath\mathop{\underline\cup}}
+\newcommand\concave{\ensuremath\mathop{\overline\cap}}
+
+% (=>) but better
+\newcommand{\circlearound}[1]{%
+  \trsym@boxes@center{#1}{\ensuremath \bigcirc}%
+}
+% vim:ft=tex

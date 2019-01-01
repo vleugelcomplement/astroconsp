@@ -1,0 +1,17 @@
+\ProvidesFile{trphq.def}[
+  2017/08/03 Collection of quantum-physics related symbols]
+
+\relax
+
+\providecommand{\mvert}{\mathrel{\vert}}
+\newcommand{\bra}[1]{\ensuremath \left\langle #1 \right\rvert}
+\newcommand{\ket}[1]{\ensuremath \left\lvert #1 \right\rangle}
+\newcommand{\qpairing}[2]{\ensuremath \left\langle #1 \,\middle\vert\, #2\right\rangle}
+\let \qpair=\qpairing
+
+\providecommand{\tensprod}{\ensuremath \mathbin{\otimes}}
+
+\newcommand*{\qoperatorview}[1]{\mathop{\hat{#1}}} 
+\newcommand*{\bindqoperator}[1]{\declareMathLetterTransform #1{\qoperatorview}}
+\makeMultiple{bindqoperator<*>}
+% vim:ft=tex
