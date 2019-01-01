@@ -1,4 +1,7 @@
+$ENV{'TEXINPUTS'}=':' if length $ENV{'TEXINPUTS'} == 0;
 $ENV{'TEXINPUTS'}='./../../support//:' . $ENV{'TEXINPUTS'}; 
 $ENV{'TEXINPUTS'}='./../../../../support//:' . $ENV{'TEXINPUTS'}; 
-$ENV{'OSFONTDIR'}="/usr/local/share/fonts;$HOME/.fonts;../../fonts";
+$ENV{'OSFONTDIR'}="/usr/local/share/fonts;$HOME/.fonts;../../fonts//";
 $pdflatex = "lualatex %O %S";
+
+# vim:ft=perl
