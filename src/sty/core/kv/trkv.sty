@@ -1,0 +1,50 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{trkv}[2017/07/10
+  Key=Val parser for `tarantas' bundle]
+
+
+\RequirePackage{trtools}
+
+\newbool{trkv@debug}
+\newbool{trkv@experimental}
+\boolfalse{trkv@experimental}
+
+\DeclareOption{debug}{\booltrue{trkv@debug}}
+\DeclareOption{experimental}{\booltrue{trkv@experimental}}
+%% Fallback                                  
+\DeclareOption*{
+  \PackageError{trkv}{does not know about `\CurrentOption'.
+  Please, clarify your intentions.}{}
+}
+\ProcessOptions*\relax
+
+% namespace hint
+% trkv  @        -- package abbreviation (=name)
+%       @ pair   -- {key=value} pair
+
+\ifbool{trkv@experimental}%
+  {\input{trkv.code.tex}}%
+  {\input{trkv.oldcode.tex}}%
+\input{trkvlist.code.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A kind of public API
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% universal list parsers
+
+\trkv@dolistparser@def{\dokvlist}{,}%
+\trkv@arglistparser@def{\forkvlist}{,}%
+
+\ifbool{trkv@experimental}%
+  {\input{trkv.def}}%
+  {\input{trkvold.def}}%
+
+%% just an example
+\newPairParser{\getKey}{\k}
+\newPairParser{\getVal}{\v}
+
+
+\endinput
+% vim:ft=tex

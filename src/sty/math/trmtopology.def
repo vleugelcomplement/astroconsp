@@ -1,0 +1,7 @@
+\ProvidesFile{trmtopology.def}[
+  2018/06/06 Collection of topology-related stuff]
+
+\let \boundary=\partial
+\newcommand{\Ball}[2]{\mathpzc{B}_{#1}(#2)}
+
+% vim:ft=tex

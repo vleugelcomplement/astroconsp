@@ -1,0 +1,255 @@
+%================
+% handy variables
+\def\trt@empty{}%
+
+%=================================
+% to ease expansion control
+\let\ex@f\expandafter
+\def\trt@expShort@On{%
+  \let\trt@oldless=\>%
+  \let\>=\expandafter%
+  \edef\@trt@old@quotecatcode{\the\catcode`\'}%
+  \catcode`\'=\active%
+  \let\trt@oldquote='%
+  \let'=\noexpand%
+}
+\def\trt@expShort@Off{%
+  \let\>=\trt@oldless%
+%   \let'=\trt@oldquote%
+  \catcode`\'=\@trt@old@quotecatcode
+}
+
+\def \expandtwice#{\ex@f\expandonce\ex@f}
+%=================================
+% debug helpers
+\def \trt@arg@debug#1{%
+  \begingroup%
+  \toks@={#1}%
+  \showthe\toks@%
+  \endgroup%
+}
+%================================
+% extra tests
+\def \trt@if@empty#1{\if\relax\detokenize{#1}\relax}
+
+\def \trt@arg@lastofsix#1#2#3#4#5#6{#6}
+\def \trt@if@expmode{%
+  \toks0{\iffalse}%
+  \trt@arg@lastofsix%
+  \toks0{\fi}\@firstoftwo%
+}
+%================================
+% token list managment
+\def \trt@toks@prepend#1->T#2{
+  \begingroup
+  \def \defhelper##1{
+    \endgroup
+    #2={#1##1}
+  }
+  \ex@f\defhelper\ex@f{\the#2}
+}
+
+%==========================
+%% macro managment
+
+\def \trt@macro@getdef#1->T#2{
+  \begingroup%
+  \def \parsemean##1->##2\@nil{%
+    \endgroup%
+    #2={##2}
+  }%
+  \ex@f\parsemean\meaning#1\@nil
+}
+
+% still not expandable
+\def \trt@macro@fullexpand#1->T#2{%
+  \edef\trt@expander{\noexpand#2={#1}}%
+  \trt@expander%
+}
+%   #2=\ex@f{\romannumeral-`X#1}%
+
+%=================================
+%% to smuggle stuff outside a scope.
+
+\def \trt@toks@smuggle#1\as#2\drop#3\endgroup{%
+  \def\trt@temp{#3}%
+  \ex@f\trt@temp\ex@f\endgroup\ex@f#2\ex@f{\the#1}%
+}
+\def \trt@macro@smuggle#1\as#2\drop#3\endgroup{%
+  \def\trt@temp{#3}%
+  \ex@f\trt@temp\ex@f\endgroup%
+  \ex@f\toks@\ex@f{#1}% process cargo with care
+  \edef#2{\the\toks@}%
+}
+\def \trt@csmacro@smuggle#1\as#2\drop#3\endgroup{%
+  \bgroup%
+  \def\wrap@smugglin##1{%
+    \egroup%
+    \ex@f\trt@macro@smuggle\ex@f{\csname #1\endcsname}\as{##1}\drop#3%
+    \endgroup%
+  }%
+  \ex@f\wrap@smugglin\ex@f{\csname #2\endcsname}%
+}
+
+
+%==============================
+% strips spaces from strings
+
+% removes all spaces
+% #1 -- string
+% #2 -- token to store
+\def \trt@str@rmSpc#1->T#2{%
+  \begingroup%
+    \toks@={}%
+    \def\proc##1{%
+      \ifx ##1\nil\let\next=\relax%
+      \else \ex@f\toks@\ex@f{\the\toks@##1}\let\next=\proc%
+      \fi%
+      \next%
+    }%
+    \proc#1\nil%
+    \trt@toks@smuggle{\toks@}\as{#2}\drop%
+  \endgroup%
+}
+
+\let \trt@aux@procbeg=\@firstofone%
+
+% #1 -- separator, \@nil, for example
+% can't be passed literally, cs's gobble space
+\def \trt@aux@procendef#1{%
+  \def \trt@aux@procend##1 #1##2\@end{%
+    \ifstrempty{##2}%
+      {}% no spaces at all
+      {\toks@={##1}}%
+}}\trt@aux@procendef{\@nil}
+
+\def \trt@aux@procenduse#1{%
+  \ex@f\trt@aux@procend\the\toks@#1 #1\@end%
+}
+
+% removes only surrounding spaces
+% #1 -- string
+% #2 -- token to store
+\def \trt@str@trim#1->T#2{%
+  \ifblank{#1}{#2={}}%from etoolbox
+  {%
+    \begingroup%
+    \toks@=\ex@f{\trt@aux@procbeg#1}%
+    \trt@aux@procenduse{\@nil}%
+    \trt@toks@smuggle{\toks@}\as{#2}\drop%
+    \endgroup%
+  }%
+}
+
+
+%=========================
+% remove string prefix
+
+% #1 -- string
+% #2 -- prefix
+% #3 -- toks to spoil
+\def \trt@prefix@rm#1#2->T#3{%
+  \begingroup%
+  \def\procbeg#2##1\@nil{\endgroup #3={##1}}%
+  \procbeg#1\@nil%
+}
+%=========================
+% extract parts of string
+% #1 -- string
+% #2 -- separator
+% #3 -- toks to spoil
+\def \trt@str@sepcar#1#2->T#3{%
+  \begingroup
+  \def\splitter##1#2##2\@nil{\endgroup #3={##1}}
+  \splitter#1\@nil
+}
+\def \trt@str@sepcdr#1#2->T#3{%
+  \begingroup
+  \def\splitter##1#2##2\@nil{\endgroup #3={##2}}
+  \splitter#1\@nil
+}
+
+%==========================
+% list-like arguments
+
+\def \trt@list@def#1#2{
+  \def#1{}
+  \forcsvlist{\listadd#1}{#2}
+}
+
+\def \trt@csmacro@makemultiple#1<*>#2\@nil{%
+  \trt@if@empty{#1}%
+% TODO: patching-like behaviour
+% difficulties with \meaning and \scantokens
+%     \begingroup% <-does not spoil external token lists:)
+%     \ex@f\trt@macro@getdef\ex@f{\csname #1#2\endcsname}->T{\toks@}%
+%     \toks@={}
+%     \def\defhelper##1{
+%       \trt@arg@debug{arg##1}
+%       \endgroup
+%       \csdef{#1#2}####1{
+%         ##1
+%         \docsvlist{####1}
+%       }
+%       \csshow{#1#2}
+%     }
+%     \ex@f\defhelper\ex@f{\the\toks@}
+    \csletcs{#2@single}{#2}%
+    \csedef{#2}##1{%
+      \noexpand\forcsvlist\expandonce{\csname #2@single\endcsname}{##1}%
+    }%
+  \else%
+    \csedef{#1s#2}##1{%
+      \noexpand\forcsvlist\expandonce{\csname #1#2\endcsname}{##1}%
+    }%
+  \fi%
+}
+
+%=================================
+% control structures 
+
+\def \trt@cases@list{}
+\def \trt@cases@new#1#2{%
+  \toks@={trt@case@custom#1}%
+  \csdef{\the\toks@}{#2}%
+  \listeadd\trt@cases@list{\the\toks@}%
+}
+\def \trt@cases@default#1{%
+  \csdef{trt@case@default}{#1}%
+}
+\def \trt@cases@process#1{%
+  \ifcsdef{trt@case@custom#1}{\csuse{trt@case@custom#1}}{\csuse{trt@case@default}}%
+  \forlistloop{\csundef}{\trt@cases@list}%
+  \csundef{trt@case@default}%
+}
+
+% setting compiler variables
+\newbool{trt@compiler@isunicode}
+\def \@trt@compiler@name{tex}
+
+\ifboolexpr{bool{XeTeX} or bool{LuaTeX}}%
+  {\booltrue{trt@compiler@isunicode}}%
+  {\boolfalse{trt@compiler@isunicode}}
+%
+
+
+\ifLuaTeX
+  \def \@trt@compiler@name{luatex}
+\else 
+  \ifXeTeX
+  \def \@trt@compiler@name{xetex}
+  \else 
+    \ifPDFTeX
+    \def \@trt@compiler@name{pdftex}
+    \fi
+  \fi
+\fi
+
+%! {<tl>/name/} {/suffix/}
+% reversing to expand properly
+\edef \trt@file@compilerawareload#1#2{
+  \noexpand\IfFileExists{#1-\@trt@compiler@name.#2}%
+    {\noexpand\input{#1-\@trt@compiler@name.#2}}%
+    {\noexpand\input{#1.#2}}
+}
+% vim:ft=plaintex

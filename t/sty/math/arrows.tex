@@ -1,0 +1,81 @@
+\documentclass[preview]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{stmaryrd}
+\usepackage{trmath}
+
+
+
+\def \parsearrowformat#1/#2/#3\nil{
+  \ensuremath 
+  A &\csuse{x#1}{} B
+  &A&\csuse{x#1}[overm]{underm}B
+  &A&\csuse{x#1}[\mathrm{overm}]{\mathrm{underm}}B \\
+  A&
+  \ifstrempty{#3}{\csuse{#1}}{#2}%
+  {}B&&&&\\
+}
+\def \displarrow#1{%
+  \parsearrowformat#1//\nil
+}
+
+\makeatletter
+\newbox\arrbox
+\setbox\arrbox=\hbox{$\m@th \leftarrow$}
+\makeatother
+\begin{document}
+
+\listdef \matharrows{
+  equal/=,
+  rightarrow, longrightarrow,
+  leftarrow, longleftarrow,
+  Rightarrow, Longrightarrow,
+  Leftarrow, Longleftarrow,
+  vertleftarrow/\mapsfrom,
+  longvertleftarrow/\longmapsfrom,
+  vertrightarrow/\mapsto,
+  longvertrightarrow/\longmapsto,
+  Vertleftarrow/\Mapsfrom,
+  Longvertleftarrow/\Longmapsfrom,
+  Vertrightarrow/\Mapsto,
+  Longvertrightarrow/\Longmapsto,
+  hookrightarrow,
+  hookleftarrow,
+  twoheadrightarrow,
+  twoheadleftarrow,
+  twoheadhookrightarrow/*,
+  twoheadhookleftarrow/*,
+  leftarrowtail,
+  rightarrowtail,
+  twoheadleftarrowtail/*,
+  twoheadrightarrowtail/*,
+  rightrightarrows,
+  leftleftarrows,
+  leftrightarrow,
+  longleftrightarrow,
+  Leftrightarrow,
+  Longleftrightarrow,
+}
+\begin{align*}
+\forlistloop\displarrow \matharrows
+\end{align*}
+
+
+$
+ {A \xrightrightarrows[under]{over} B
+  A \xrightarrow[under]{over} B
+\xleftleftarrows[under]{over} C}
+\quad 
+A \xequal[not]{\rm def} B \xRightarrow{nonene} L \xLeftarrow{oooo} O
+\quad
+$
+$\vdash -\mapstochar\ \rightarrow$
+
+\bigskip
+$^{\hbox{$\leftrightarrow$}} _{\hbox{$\leftarrow$\kern -\wd\arrbox$\rightarrow$}}, {\scriptstyle\Yright\!\!\relbar\joinrel\rightarrow}\rightarrowtail
+% \smallVtail\!\!\!\rightarrowtail
+$
+\clipbox{{0.4\width} 0pt 0pt 0pt}{$\rightarrowtail$}
+\clipbox{0pt 0pt {0.6\width} 0pt}{$\rightarrowtail$}
+\bigskip
+\end{document}

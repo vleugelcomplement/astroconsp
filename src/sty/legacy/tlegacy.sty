@@ -1,0 +1,24 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% для сборки старых проектов
+% если ломается, подключить эту банку костылей
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tlegacy}[2017/05/28 Ultimate package for compiling legacy code]
+
+\RequirePackage{tmath}
+\RequirePackage{cussymb}
+\RequirePackage{thranges}
+
+\let\ittproof\tproof
+\let\endittproof\endtproof
+\let\itlproof\lproof
+\let\enditlproof\endlproof
+\let\itaux\aux
+\let\enditaux\endaux
+
+\newcommand{\pneigh}[1]{\overset{\circ}{#1}} 
+
+%varlimsup is better
+\DeclareMathOperator*\llim{\underline{lim}}
+\DeclareMathOperator*\uplim{\overline{lim}}

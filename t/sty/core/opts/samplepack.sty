@@ -1,0 +1,20 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{samplepack}[2017/08/05 
+  Sample package to test option machinery]
+
+\RequirePackage{tropt}
+\DeclareOption{sigma}{
+  \begingroup
+  \edef \AtBeginDoc@helper{%
+    \noexpand\endgroup%
+    \noexpand\AtBeginDocument{%
+    $\hbox{\CurrentOption} = \CurrentValue$\noexpand\\}%
+  }\AtBeginDoc@helper
+}
+
+\DeclFlagOpt{kek}
+
+\ProcOpts
+\HasFlag{kek}{\AtBeginDocument{kek\space}}
+
+\endinput

@@ -1,0 +1,65 @@
+\documentclass{trlnotes}
+
+\usepackage{trmath}
+\usepackage{trthm}
+\usepackage{trsym}
+\usepackage{trmath}
+\usepackage{blindtext} 
+\setlayout[note=\endnote, size=10]{ebook}
+
+\begin{document}
+\tableofcontents
+\clearpage
+some random text\note{rather conventional}
+
+\chapter{Sample}
+\paragraph{Sample par}
+\blindtext
+
+\paragraph{Another sample par}
+\blindtext
+
+\chapter{$\mathcal{M\!AT\!H}$\note{patched one}\underdev}
+
+\paragraph{Proofs}
+\label{sub:proofs}
+
+\clause{(im)proper nesting}
+\begin{tproof}[kek?]
+  $\sin\pi=0$ (o'rly?)
+  \begin{lproof}[nested]
+    another one
+    \begin{pproof}[another crazy statement]
+      $\Pi\neq\pi$
+      {%
+        \fboxsep=0pt
+        \fbox{$\bigcirc$}\fbox{$\mathord{\Rightarrow}\vphantom{<}$}
+      }%
+      \circlearound{$\mathord{\Rightarrow}\vphantom{>}$}%
+      $\circlearound{\alpha}\,\circlearound{1}$
+    \end{pproof}
+  \end{lproof}
+\end{tproof}
+
+\paragraph{Vectors}% (\coori, \conori)}
+\paragraph{Hats}
+
+$\ov~{kekkkische}, \ov.{1}, \ov0a$
+ 
+$\ov^A \neq \ov~A$
+\chapter{ETC}
+,,ls`` "`ls"' <<ls>> "<ls">
+
+\appendix
+\chapter{letters}
+\paragraph{small roman latin `a' and its appli\-cations in 
+modern digital typography}
+\paragraph{ещё какие-то буквы}
+
+
+\chapter{\textsf{code}}
+\begin{verbatim}
+  #=HEY YOU=#
+  Type{Int} <: Type
+\end{verbatim}
+\end{document}

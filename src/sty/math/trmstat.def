@@ -1,0 +1,11 @@
+\ProvidesFile{trmstat.def}[
+  2017/08/03 Collection of math statistics symbols]
+
+\DeclareMathOperator{\Exp}{M} 
+\DeclareMathOperator{\Var}{D} 
+\DeclareMathOperator{\cov}{cov} 
+\newcommand{\av}[1]{\overline{#1}} 
+\let \averg=\av
+\newcommand{\intR}{\int_{-\infty}^{+\infty}} 
+\newcommand\alev{\relax\ifmmode\text{~п.в.~}\else п.в.\fi}
+% vim:ft=tex

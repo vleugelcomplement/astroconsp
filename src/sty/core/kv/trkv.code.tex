@@ -1,0 +1,118 @@
+%% useful condition
+\newif \iftrkv@expand
+%% a few common variables
+\newtoks \trkv@pair@kT
+\newtoks \trkv@pair@vT
+
+%% naming hint
+% pairparser -- entity that assepts a whole pair  (#1<-{a=b})
+% kvparser   -- splits kv pair in its args, low-level
+
+%% name-generating macros
+\def \trkv@pairparser@cs@kvparse#1{\csname trkv@pp\ex@f\@gobble\string#1@kvparse\endcsname}
+\def \trkv@pairparser@cs@singular#1{\csname trkv@pp\ex@f\@gobble\string#1@singular\endcsname}
+\def \trkv@pairparser@cs@list#1{\csname trkv@pp\ex@f\@gobble\string#1@listparser\endcsname}
+\def \trkv@pairparser@cs@tokspreproc#1{\csname trkv@pp\ex@f\@gobble\string#1@tokspreproc\endcsname}
+\def \trkv@pairparser@code#1{\csname trkv@pp\ex@f\@gobble\string#1@code\endcsname}
+
+
+%% real parsing
+
+% new parser, front end
+\def \trkv@pairparser@new{%
+  \@ifnextchar[%]
+    {\trkv@pairparser@declare}%
+    {\trkv@pairparser@declare[{=}{,}]}%
+}
+\def \trkv@pairparser@declare[#1#2]#3{%
+  \@ifnextchar[%]
+    {\trkv@pairparser@def[{#1}{#2}]{#3}}%
+    {\trkv@pairparser@def[{#1}{#2}]{#3}[1]}% sole arg is default
+}
+
+
+% [{<tl>/pair-sep/} {<tl>/list-sep/}] {<cs>/parser name/} [<num>/number of args/] {<tl>/code/}
+%% preproc is an action on token list \toks@
+\def \trkv@pairparser@def[#1#2]#3[#4]#5{%
+  \iftrkv@debug\trt@arg@debug{pp([{#1}{#2}]#3[#4]#5)}\fi%
+% kvparser, lowlevel one
+  \trkv@kvparser@def{#1}{#3}%
+  \iftrkv@debug\ex@f\ex@f\ex@f \show \trkv@pairparser@cs@kvparse{#3}\fi%
+%
+% singular pair parser, parses a single pair
+  \trkv@singularpairparser@def{#1}{#3}%
+  \iftrkv@debug\ex@f\ex@f\ex@f \show \trkv@pairparser@cs@singular{#3}\fi%
+%
+% list parser
+  \ex@f\ex@f\ex@f\trkv@arglistparser@def\ex@f\ex@f\ex@f%
+    {\trkv@pairparser@cs@list{#3}}%
+    {#2}%
+  %
+  \iftrkv@debug\ex@f\ex@f\ex@f \show\trkv@pairparser@cs@list{#3}\fi%
+%
+% final user command
+  \iftrkv@expand%
+    \ex@f\ex@f\ex@f\def\trkv@pairparser@cs@tokspreproc{#3}{\ex@f\trt@macro@fullexpand\ex@f{\the\toks@}->T{\toks@}}%
+  \else%
+    \ex@f\ex@f\ex@f\def\trkv@pairparser@cs@tokspreproc{#3}{\relax}%
+  \fi%
+    \trkv@pairparser@defcommand{#3}{#4}{#5}{\relax}%
+  \iftrkv@debug\show #3\fi%
+}
+
+
+% {<cs>/command name/} {<num>/number of args/} {/code/} 
+%% preproc is an action on token list \toks@
+\def \trkv@pairparser@defcommand#1#2#3{
+  \edef \trt@exphandler{%
+    \unexpanded{\newcommand{#1}[#2]}{%
+      % we are embedding it here to allow proper argument substitution
+      %+ in parser code
+      \def \expandtwice{\trkv@pairparser@code{#1}{#3}}%
+      \noexpand\toks@={#####2}%
+      \expandtwice{\trkv@pairparser@cs@tokspreproc{#1}}%
+      \unexpanded{\ex@f\trkv@pairparser@run\ex@f{\the\toks@}}%
+      \expandtwice{\trkv@pairparser@cs@list{#1}}%
+      \expandtwice{\trkv@pairparser@cs@singular{#1}}%
+    }%
+  }\trt@exphandler%
+}
+
+
+% {<tl>/args/} {<cs>/list parser/} {<cs>/singular parser/}
+\def \trkv@pairparser@run#1#2#3{#2{#3}{#1}}
+
+
+% {<tl>/pair-sep/} {<cs>/parser name/}
+%% aaa=bbb=ccc\@nil. Called as <pair>==\@nil
+%% <pair> is a=b ==> #1 <- 'a', #2 <- 'b', #3 <- '='
+%% <pair> is a   ==> #1 <- 'a', #2 <- '' , #3 <- ''
+\def \trkv@kvparser@def#1#2{%
+  \ex@f\ex@f\ex@f \def\trkv@pairparser@cs@kvparse{#2}##1#1##2#1##3\@nil{%
+    \trt@str@trim{##1}->T{\kT}%
+    \trt@str@trim{##2}->T{\vT}%
+  }%
+}% small slowdown \iftrkv@debug \trt@arg@debug{kv:[##1]=[##2]}\fi%
+
+
+% {<tl>/pair-sep/} {<cs>/parser name/} {<tl>/code/}
+\def \trkv@singularpairparser@def#1#2{%
+  \ex@f\ex@f\ex@f \def\trkv@pairparser@cs@singular{#2}##1{%
+    \if\relax\detokenize{##1}\noexpand\relax%
+      \PackageError{trkv}{\string\trkv@pair@parse Nothing to parse}%
+        {Provide a nonempty string. Or invent a workaround}%
+    \else%
+    \begingroup%
+      % holders of key and value
+      \let\kT\trkv@pair@kT%
+      \let\vT\trkv@pair@vT%
+      \trkv@pairparser@cs@kvparse{#2}##1#1#1\@nil%
+      \def\k{\the\kT}%
+      \def\v{\the\vT}%
+      \trkv@pairparser@code{#2}% <-- user code
+    \endgroup%
+    \fi%
+  }%
+}
+
+% vim: ft=plaintex

@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[experimental]{trkv}
+% \usepackage{trkvprefix}
+\providecommand{\storePair}[1]{}
+\providecommand{\storePairs}[1]{}
+\providecommand{\storePairDef}[1]{}
+\providecommand{\storePairsDef}[1]{}
+\providecommand{\getByKey}[1]{}
+\providecommand{\getByKeys}[1]{}
+\providecommand{\getPairsByKey}[1]{}
+
+\def\prettylist{$=\!$[\k$\to$\v]$\!=\!$}
+\newPairParser{\getPrettyPair}{\prettylist}
+\newPairsParser{\getPrettyPairs}{\prettylist}
+\def\testlist{}
+% coerced etoolbox to produce special list parser for trkv
+% no braces problem now
+\def\do#1{\listadd\testlist{#1}}
+\dokvlist{{formulas={\it none}, math, etc}
+=
+$b$  ,                   {  c .= lf}
+              =
+{d<<=>>k l}, \TeX    =\TeX}
+\makeatletter
+\newPairParser{\storeto}[2]{
+  \kT=\ex@f\ex@f\ex@f{\ex@f\detokenize\ex@f{\the\kT}}%
+  \csedef{#1\k}{\v}%
+  \cssmuggle{#1\k}%
+}
+\newEpairParser{\estoreto}[2]{
+  \kT=\ex@f\ex@f\ex@f{\ex@f\detokenize\ex@f{\the\kT}}%
+  \csedef{#1\k}{\v}%
+  \cssmuggle{#1\k}%
+}
+\providecommand{\rawgetByKey}[2]{\csuse{#1#2}}
+\makeatother
+
+\begin{document}
+keys: \forlistloop{$|$\getKey}{\testlist}$|$ \par
+values: \forlistloop{$|$\getVal}{\testlist}$|$ \par
+pairs: \forlistloop{\getPrettyPair}{\testlist} \par
+\getPrettyPairs{guk=1,hek = \def\hek#1{{\bf#1}}\hek{kek}}\par
+\storePair{/kek/color/.ini = deep red with bits of blue}
+\fboxsep=1pt
+\fbox{\getByKey{/kek/color/.ini}}\par
+\storePairs{sigma = $\sigma$, exit = no way, coding in = \TeX}
+\fbox{\getByKeys{sigma,exit, coding in}} \par
+\fbox{\getKey{can i haz = #1#2}}
+
+
+\storePair{a func! = its body! like: #1#2}%
+\edef\x{\def\noexpand\ttt##1##2{\getByKey{a func!}}}\x
+\fbox{\ttt {$\int$} {{{$\sum$}}}}
+\relax
+
+% And a stressful one
+\getPrettyPairs{aa,bb, =aaa, \string#=jjj}
+% we can use hashes in parser arguments, but here we were trying 
+% to typeset it. Therefore, \string
+
+% multitoken separator is supported, to
+% \setPairSep{->}
+% \setKvListSep{;}
+\newPairsParser[{->};]{\procEqualPairs}{\prettylist}
+
+\procEqualPairs{ with `=' sign->can store them!; and this-> too}
+
+\storePairDef{sigma-> $\sigma\!\sigma$}
+\storePairsDef{sigme -> $\sigma\!e$; sigmo -> $\sigma\!o$}
+% \setPairSep{:}
+\getPairsByKey{sigme, sigma, sigmo}
+
+\storePair{
+ and
+ even
+ empty
+ one: }  
+\par
+
+% \input{trkv.def}
+
+\newPairsParser{\getKeysList}{
+  \expandafter\listgadd\expandafter\keylist \expandafter{\romannumeral-`X\k}
+}
+
+\def\keylist{}
+\getPrettyPairs{$\sin'$=$\cos$, $\tan'$=$\frac{1}{\cos^2}$}
+\getKeysList{$\sin'$=$\cos$, $\tan'$ = $\frac{1}{\cos^2}$}
+
+% \storePairDef{note=\footnote}
+% \edef\foo{
+% \noexpand\toks0={\getByKey{note}}
+% }want to mention that\the\toks0{and this}
+% \def \defhelper#1{
+%   \getByKey{notes/#1}
+% }
+% \expandafter \defhelper \getByKey{note}
+
+\storeto{eleven crabs}{next crab=taxus}
+\def \severalbitsoftimefreedom{when = not today}
+\estoreto{eleven crabs}{\severalbitsoftimefreedom}
+\textbf{\rawgetByKey{eleven crabs}{next crab}} will do it 
+\textit{\rawgetByKey{eleven crabs}{when}}
+
+
+\end{document}
+% TEX program = TEXINPUTS=../..//:: 

@@ -1,0 +1,29 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Стиль `timbord'
+%% пытается сделать документ удобнее
+%% для жидкокристаллических экранов
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesFile{timbord}[2017/06/04 Timbord layout]
+\RequirePackage{trenotes}
+
+\RequirePackage{geometry}
+\geometry{
+  landscape,
+  left=5cm, 
+  right=2cm,
+  top=0.5cm, 
+  bottom=0.5cm,
+  marginparsep=5mm, 
+  marginparwidth=4cm
+}
+\RequirePackage[slantedGreek]{cmbright}
+% \renewcommand\bfseries{\protect \usefont{T2A}{cmss}{bx}{n}}
+\renewcommand\bfdefault{sb}
+\DeclareMathAlphabet{\mathbf}{T2A}{cmbr}{sb}{n} %semibold hm?
+
+\reversemarginpar
+\storePairDef{note=\marginpar}
+% \newcommand{\note}[1]{\marginpar{\footnotesize #1}}
+% vim: ft=tex

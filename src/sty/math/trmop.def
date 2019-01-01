@@ -1,0 +1,82 @@
+\ProvidesFile{trmop.def}[
+  2017/08/03 Collection of various math operators]
+
+
+
+%% for double-headed arrows
+%% adapted from https://tex.stackexchange.com/a/114242
+\newcommand*{\relrelbarsep}{.386ex}
+\newcommand*{\relrelbar}{%
+  \mathrel{\mathpalette\relrelbar@create\relrelbarsep}%
+}
+\newcommand*{\relrelbar@create}[2]{%
+  \raise#2\hbox to 0pt{$\m@th#1\relbar$}%
+  \lower#2\hbox{$\m@th#1\relbar$}%
+}
+
+% for arrows with tails
+\RequirePackage{trimclip}
+\newsavebox{\trm@symbox@smallYright}
+\savebox{\trm@symbox@smallYright}{\clipbox{0pt 0pt {0.6\width} 0pt}{$\rightarrowtail$}}
+\newsavebox{\trm@symbox@smallrightarrow}
+\savebox{\trm@symbox@smallrightarrow}{\clipbox{{0.25\width} 0pt 0pt 0pt}{$\rightarrowtail$}}
+\newsavebox{\trm@symbox@smallleftarrow}
+\savebox{\trm@symbox@smallleftarrow}{\clipbox{0pt 0pt {0.25\width} 0pt}{$\leftarrowtail$}}
+\newsavebox{\trm@symbox@smallYleft}
+\savebox{\trm@symbox@smallYleft}{\clipbox{{0.6\width} 0pt 0pt 0pt}{$\leftarrowtail$}}
+\newcommand{\smallYright}{\ensuremath\usebox{\trm@symbox@smallYright}}
+\newcommand{\smallrightarrow}{\ensuremath\usebox{\trm@symbox@smallrightarrow}}
+\newcommand{\smallleftarrow}{\ensuremath\usebox{\trm@symbox@smallleftarrow}}
+\newcommand{\smallYleft}{\ensuremath\usebox{\trm@symbox@smallYleft}}
+
+% beware of long lines!
+\trm@arrow@makex{equal}              [\Relbar\Relbar\Relbar]                     {0023}
+\trm@arrow@makex{longrightarrow}     [\relbar\relbar\rightarrow]                 {00{15}{20}}
+\trm@arrow@makex{longleftarrow}      [\leftarrow\relbar\relbar]                  {00{20}{15}}
+\trm@arrow@makex{Rightarrow}                                                     {3979}
+\trm@arrow@makex{Leftarrow}                                                      {9397}
+\trm@arrow@makex{Longrightarrow}     [\Relbar\Relbar\Rightarrow]                 {39{15}{20}}
+\trm@arrow@makex{Longleftarrow}      [\Leftarrow\Relbar\Relbar]                  {93{20}{15}}
+
+\trm@arrow@makex{vertrightarrow}     [{\mapstochar\relbar}\relbar\rightarrow]    {0359}
+\trm@arrow@makex{vertleftarrow}      [\leftarrow\relbar{\relbar\mapsfromchar}]   {3095}
+\trm@arrow@makex{Vertrightarrow}     [{\Mapstochar\Relbar}\Relbar\Rightarrow]    {0789}
+\trm@arrow@makex{Vertleftarrow}      [\Leftarrow\Relbar{\Relbar\Mapsfromchar}]   {7098}
+\trm@arrow@makex{longvertrightarrow} [{\mapstochar\relbar}\relbar\rightarrow]    {03{20}{15}}
+\trm@arrow@makex{longvertleftarrow}  [\leftarrow\relbar{\relbar\mapsfromchar}]   {30{15}{20}}
+\trm@arrow@makex{Longvertrightarrow} [{\Mapstochar\Relbar}\Relbar\Rightarrow]    {03{20}{15}}
+\trm@arrow@makex{Longvertleftarrow}  [\Leftarrow\Relbar{\Relbar\Mapsfromchar}]   {30{15}{20}}
+
+\trm@arrow@makex{hookrightarrow}     [{\lhook\joinrel\relbar}\relbar\rightarrow] {0359}
+\trm@arrow@makex{hookleftarrow}      [\leftarrow\relbar{\relbar\joinrel\rhook}]  {3095}
+\trm@arrow@makex{twoheadrightarrow}  [\relbar\relbar\twoheadrightarrow]          {0589}
+\trm@arrow@makex{twoheadleftarrow}   [\twoheadleftarrow\relbar\relbar]           {5098}
+\trm@arrow@makex{twoheadhookrightarrow} [{\lhook\joinrel\relbar}\relbar\twoheadrightarrow]       {2589}
+\trm@arrow@makex{twoheadhookleftarrow}  [\twoheadleftarrow\relbar{\relbar\joinrel\rhook}]        {5298}
+% \trm@arrow@makex{rightarrowtail}        [{\smallYright\joinrel\relbar}\relbar\smallrightarrow]   {0159}
+% \trm@arrow@makex{leftarrowtail}         [\smallleftarrow\relbar{\relbar\joinrel\smallYleft}]     {1095}
+\trm@arrow@makex{rightarrowtail}        [{\smallYright\joinrel\relbar}\relbar\rightarrow]   {0359}
+\trm@arrow@makex{leftarrowtail}         [\leftarrow\relbar{\relbar\joinrel\smallYleft}]     {3095}
+\trm@arrow@makex{twoheadrightarrowtail} [{\smallYright\joinrel\relbar}\relbar\twoheadrightarrow] {0379}
+\trm@arrow@makex{twoheadleftarrowtail}  [\twoheadleftarrow\relbar{\relbar\joinrel\smallYleft}]   {3097}
+
+
+\trm@arrow@makex{rightrightarrows}   [\relrelbar\relrelbar\rightrightarrows]     {0359}
+\trm@arrow@makex{leftleftarrows}     [\leftleftarrows\relrelbar\relrelbar]       {3095}
+
+\trm@arrow@makex{leftrightarrow}     [\leftarrow\relbar\rightarrow]              {1199}
+\trm@arrow@makex{longleftrightarrow} [\leftarrow\relbar\rightarrow]              {01{20}{20}}
+\trm@arrow@makex{Leftrightarrow}                                                 {0199}
+\trm@arrow@makex{Longleftrightarrow} [\Leftarrow\Relbar\Rightarrow]              {00{20}{20}}
+
+
+\let\old@to\to \let\to\relax
+\newcommand\to{\ensuremath \mathop{\old@to}\limits}
+\newcommand\xto[1]{\ensuremath \xrightarrow[#1]{}}
+\newcommand\unito{\ensuremath \mathop{\rightrightarrows}\limits}
+
+
+
+% big slash for factorspaces
+\newcommand{\bigslant}[2]{{\raisebox{.2em}{$#1$}\big/\raisebox{-.2em}{$#2$}}}
+% vim:ft=tex

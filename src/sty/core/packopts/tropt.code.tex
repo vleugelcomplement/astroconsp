@@ -1,0 +1,76 @@
+\def\tro@opts@process{%
+  \let\ds@\@empty
+  \edef\@curroptions{\@ptionlist{\@currname.\@currext}}%
+  \tro@xprocess@ptions% starred version made default
+}
+
+\newPairsParser{\tro@procClsOptions}{
+  \edef \CurrentOption{\k}
+  \edef \CurrentValue{\v}
+  \smuggle \CurrentOption \smuggle \CurrentValue
+  \endgroup
+  \ifx\CurrentOption\@empty%
+  \else
+  \@expandtwoargs\in@{,\CurrentOption,}{,\@declaredoptions,}%
+  \ifin@
+  \@use@ption
+  \expandafter\let\csname ds@\CurrentOption\endcsname\@empty
+  \fi
+  \fi
+  \begingroup% to pair inner \endgroup
+}%
+\def\tro@xprocess@ptions{%
+  \ifx\@currext\@clsextension\else
+  \ex@f\tro@procClsOptions\ex@f{\@classoptionslist}
+  \fi%
+  \tro@process@pti@ns%
+}
+
+\@onlypreamble\@xprocess@ptions
+
+\newPairsParser{\tro@procOptions}{
+  \edef \CurrentOption{\k}
+  \edef \CurrentValue{\v}
+  \smuggle \CurrentOption \smuggle \CurrentValue
+  \endgroup
+  \@ifundefined{ds@\CurrentOption}
+  {\@use@ption \default@ds}%
+  \@use@ption%
+  \begingroup% to pair inner \endgroup
+}%
+\def\tro@process@pti@ns{%
+  \ex@f\tro@procOptions\ex@f{\@curroptions}
+  \@for\CurrentOption:=\@declaredoptions\do{%
+  \expandafter\let\csname ds@\CurrentOption\endcsname\relax}%
+  \let\CurrentOption\@empty
+  \let\CurrentValue\@empty
+  \let\@fileswith@pti@ns\@@fileswith@pti@ns
+  \AtEndOfPackage{\let\@unprocessedoptions\relax}
+}
+
+\newPairsParser{\tro@exeOpts}{
+  \edef \CurrentOption{\k}
+  \edef \CurrentValue{\v}
+  \smuggle \CurrentOption \smuggle \CurrentValue
+  \endgroup
+  \ifcsdef{ds@\CurrentOption}
+    {\csuse{ds@\CurrentOption}}
+    {\PackageError{tropt}
+      {Option `\CurrentOption'\space is unknown}
+      {Maybe you misspelled it?}}
+  \begingroup% to pair inner \endgroup
+}
+\def \tro@opts@exec#1{%
+  %spoils them
+  \let \@trt@temp@i=\CurrentOption%
+  \let \@trt@temp@ii=\CurrentValue%
+  \tro@exeOpts{#1}%
+  \let \CurrentOption=\@trt@temp@i%
+  \let \CurrentValue=\@trt@temp@ii%
+}
+
+\@onlypreamble \tro@opts@process
+\@onlypreamble \tro@xprocess@ptions
+\@onlypreamble \tro@process@pti@ns
+\@onlypreamble \tro@opts@exec
+% vim:ft=plaintex
