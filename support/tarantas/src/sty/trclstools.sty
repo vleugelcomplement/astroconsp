@@ -1,0 +1,48 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{trclstools}[2017/09/11
+  Tools for classes in `tarantas' bundle]
+
+\RequirePackage{trcore}
+
+%% Fallback                                  
+\DeclareOption*{
+  \PackageError{trclstools}{does not know about `\CurrentOption'.
+  Please, clarify your intentions.}
+}
+\ProcessOptions*\relax
+
+
+\listdef \@trcl@packpack{}
+\def \@trcl@suffix{ppk}
+
+\newcommand*{\usepackagepack}[1]{%
+  \ifinlist\@trcl@packpack{#1}{}
+    {\compilerawareinput{#1}{\@trcl@suffix}%
+     \listadd \@trcl@packpack{#1}}}
+
+\let \RequirePackagePack=\usepackagepack
+\@onlypreamble \usepackagepack
+
+\def \trcl@err@nosect{
+  \GenericError{Sectioning command intentionally cleared by
+  tarantas interior}{Consider using provided ones}
+  \@gobble
+}
+\def \firestdsections{
+  \def\do##1{\let ##1=\trcl@err@nosect
+    \toks@=\ex@f\ex@f\ex@f{\ex@f\@gobble\string##1}
+    \csundef{the\the\toks@}
+    \csundef{ttlss@\the\toks@}
+    \csundef{ttll@\the\toks@}
+  }
+  \docsvlist{
+    \part, \chapter, \section, \subsection, \subsubsection,
+    \paragraph, \subparagraph
+  }
+}
+ 
+
+\newcommand*{\addcompatiblelayout}[1]{\listadd{\@complyt}{#1}}
+
+\endinput
+% vim:nofoldenable

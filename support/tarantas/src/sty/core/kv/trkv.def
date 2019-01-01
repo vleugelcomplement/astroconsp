@@ -1,0 +1,5 @@
+\newcommand \newPairParser{\trkv@expandfalse\trkv@pairparser@new}
+\let \newPairsParser=\newPairParser
+\def \newEpairParser{\trkv@expandtrue\trkv@pairparser@new}
+%need an extra bit of work
+% vim:ft=tex

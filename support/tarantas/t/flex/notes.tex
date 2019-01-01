@@ -1,0 +1,25 @@
+\documentclass{minimal}
+\usepackage{trflex}
+% \usepackagepack{trulang}
+\input{note.flex}
+
+
+\begin{flexstyle}
+  note {
+    type:\endnote;
+  }
+  
+  
+  note {type:\footnote;}
+  note {
+    type:\marginpar;
+  }
+
+
+\end{flexstyle}
+
+\begin{document}
+$1 + 1 = x^2$
+
+foo\note{рар}
+\end{document}

@@ -1,0 +1,34 @@
+\ProvidesFile{trmsets.def}[
+  2017/08/03 Collection of set theory related symbols]
+
+% standard sets
+\let\C\relax
+\newcommand\C{\ensuremath \mathbbm{C}} 
+\newcommand\exC{\ensuremath \overline{\mathbbm{C}}} 
+\newcommand\D{\ensuremath\mathbbm{D}} 
+\newcommand\R{\ensuremath\mathbbm{R}} 
+\newcommand\Q{\ensuremath\mathbbm{Q}}
+\newcommand\Z{\ensuremath\mathbbm{Z}}
+\newcommand\N{\ensuremath\mathbbm{N}}
+\newcommand\Sphere[1]{\ensuremath\mathbbm{S}^#1}
+
+\DeclareFontFamily{OT1}{pzc}{}
+\DeclareFontShape{OT1}{pzc}{m}{it}{<-> s * [1.200] pzcmi7t}{}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+
+\newcommand{\pset}{\mathpzc P} 
+\newcommand{\alg}{\mathpzc A} 
+\newcommand{\Cell}{\ensuremath \mathpzc{Cell}\!} 
+\newcommand{\borel}{\ensuremath \mathpzc B} 
+\newcommand{\lebesgue}{\ensuremath \mathpzc M} 
+\newcommand{\open}{\ensuremath \mathcal O} 
+\newcommand{\closed}{\ensuremath \mathcal F} 
+\newcommand{\ind}{\ensuremath \mathbbm{1}}
+\newcommand{\summb}{\ensuremath \mathpzc L}
+
+\newcommand{\punct}[1]{\overset{\circ}{#1}} 
+
+\newcommand{\bunion}{\mathbin{\cup}}
+\newcommand{\bintersect}{\mathbin{\cap}}
+
+% vim:ft=tex

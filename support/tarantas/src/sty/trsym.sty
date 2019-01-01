@@ -1,0 +1,81 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  в конспектиках часто вводят свои обозначения 
+%+ свои я соберу тут. 
+% В классе остались заглушки, которые здесь переопределены
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{trsym}[2017/08/03 Custom symbols package]
+
+\RequirePackage{tropt}
+\DeclFlagOpt{draft}
+
+\DeclareOption*{
+  \PackageError{trsym}{does not know about `\CurrentOption'.
+  Please, clarify your intentions.}
+}
+\ProcOpts
+
+\RequirePackage{amsmath,amssymb}
+\RequirePackage[nointegrals]{wasysym}
+\RequirePackage{marvosym}
+
+\iftoggle{draft}
+  {\providecommand\texorpdfstring[2]{#1}}
+  {}
+% \ifLuaTeX
+%   \let \texorpdfstring \relax
+%   \newcommand{\texorpdfstring}[2]{#1}
+% \fi
+
+\newcommand{\createSubstSym}[3]{%
+  \newcommand{#1}{\texorpdfstring{#2}{#3}}% texorpdfstring is defined correctly
+}
+
+% \newcommand\savedesc[2]{\expandafter\newcommand\csname @desc@#1\endcsname{#2}}
+% \newcommand*\descsym[1]{\csname @desc@#1\endcsname}
+\let\newsym=\createSubstSym
+
+
+
+\def \trsym@boxes@center#1#2{%
+  \begingroup%
+  \ifmmode%
+    \setbox0=\hbox{$#1$}%
+    \setbox1=\hbox{$#2$}%
+  \else
+    \setbox0=\hbox{#1}%
+    \setbox1=\hbox{#2}%
+  \fi
+  \dimen0=-0.5\wd1 \advance\dimen0 by -0.5\wd0%
+  \def\expr{\vcenter{\copy1} \kern\dimen0\vcenter{\copy0}}%
+  \ensuremath \expr%
+  \endgroup%
+}
+
+
+\input{trsym.def}
+% \RequirePackage{tikz}
+% \newcommand{\gearmacro}[5]{%
+% % #1 number of teeths
+% % #2 radius intern
+% % #3 radius extern
+% % #4 angle from start to end of the first arc
+% % #5 angle to decale the second arc from the first
+%   \foreach \i in {1,...,#1} {%
+%     [rotate=(\i-1)*360/#1]  (0:#2)  arc (0:#4:#2) {[rounded corners=0pt]
+%     -- (#4+#5:#3)  arc (#4+#5:360/#1-#5:#3)} --  (360/#1:#2)
+%   }
+% }
+%
+% \newcommand{\gear}{\begin{tikzpicture}[scale=0.15]
+%     \fill[black] (0,0) circle (2em);
+%     \draw[thick,rotate=12,fill=black] \gearmacro{8}{1.8em}{2.4em}{20}{10};
+%     \draw[thick,fill=white] (0em,0em) circle(1.35em);
+% \end{tikzpicture}}
+% \newsavebox\gearbox
+% \sbox\gearbox{\raisebox{-0.1em}{\gear{}}}
+% unfortunately tikz drawn symbols have problems with toc 
+% so forget the 2 commands above
+
+%\endinput

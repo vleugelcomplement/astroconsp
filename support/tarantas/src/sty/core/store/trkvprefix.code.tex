@@ -1,0 +1,24 @@
+\def \@trkv@prefix{}
+
+\catcode`\|=3
+\def \trkv@prefix@set#1{\edef\@trkv@prefix{\detokenize{#1}}}
+\def \trkv@prefix@eset#1{\edef\@trkv@prefix{#1}}
+\def \trkv@prefix@stack{}
+\def \trkv@prefix@push{%
+  \ifblank{\@trkv@prefix}%
+    {}%
+    {\epreto\trkv@prefix@stack{\@trkv@prefix|}}%
+}
+\def \trkv@prefix@pop{%
+  \begingroup%
+  \def\proc##1|##2\@nil{%
+    \endgroup%
+    \trkv@prefix@set{##1}%
+    \def\trkv@prefix@stack{##2}%
+  }%
+  \ex@f\proc\trkv@prefix@stack\@nil%
+}
+\catcode`\|=12
+
+
+% vim: ft=plaintex

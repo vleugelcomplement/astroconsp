@@ -1,0 +1,20 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{trproblems}[2017/08/03
+  Для задачек школьникам]
+
+\RequirePackage{trcore}
+\RequirePackage{trtools}
+
+%% Fallback                                  
+\DeclOpt*{
+  \PackageError{trthm}{does not know about `\CurrentOption'.
+  Please, clarify your intentions.}
+}
+\ProcOpts\relax
+
+\RequirePackage{amsthm}
+\RequirePackage[utf8]{inputenc}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Задача}
+\newproof{solution}{\textit{Решение:}}{$\triangleleft$}

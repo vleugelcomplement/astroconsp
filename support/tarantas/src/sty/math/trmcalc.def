@@ -1,0 +1,36 @@
+\ProvidesFile{trmcalc.def}[
+  2017/08/03 Collection of calculus symbols]
+
+%% Differentiation
+\newcommand{\diffin}{\textit{дифференцируема в }} 
+\newcommand\del{\ensuremath\mathrm{d}}
+\newcommand\pder[3][\relax]{\derfrac[#1]{#2}{#3}{\partial}}
+\newcommand\fder[3][\relax]{\derfrac[#1]{#2}{#3}{\del}}
+\newcommand\tpder[3][\relax]{{\textstyle\pder[#1]{#2}{#3}}}
+
+\newcommand\pdder[3]{\ensuremath \frac{\partial^2 #1}{\partial #2 \, \partial #3}}
+\newcommand\fdder[3]{\ensuremath \frac{\del^2 #1}{\del #2 \, \del #3}}
+
+% function properties
+\DeclareMathOperator\dom{\mathcal D}
+
+%topology
+\DeclareMathOperator\clos{clos}
+
+% complex calculus
+\DeclareMathOperator\Ln{Ln}
+
+% vector calculus
+\let\divsign\div
+\let\div\relax
+\DeclareMathOperator\div{div}
+\DeclareMathOperator\rot{rot}
+\DeclareMathOperator\grad{grad}
+
+% convergence
+\def\conv{\ensuremath \textit{ сх }}
+\def\noconv{\ensuremath \textit{ расх }}
+\DeclareMathOperator\Vp{V.p.}
+\DeclareMathOperator*{\esssup}{ess\,sup}
+\DeclareMathOperator*{\argmin}{arg\,min}
+% vim:ft=tex

@@ -1,0 +1,17 @@
+\ProvidesFile{trkvold.def}[2017/07/10
+  Key=Val parser defaults for `tarantas' bundle]
+
+\let \setPairSep=\trkv@pair@sepset
+\let \setKvListSep=\trkv@list@sepset
+
+\setPairSep{=}
+\setKvListSep{,}
+
+\let \newPairParser=\trkv@pairparser@def
+\let \newPairsParser=\trkv@pairsparser@def
+\let \newEpairParser=\trkv@epairparser@def
+\let \newEpairsParser=\trkv@epairsparser@def
+\let \newFullParser=\trkv@fullpairparser@def
+\let \newSingleParser=\trkv@singpairparser@def
+\let \newMultParser=\trkv@mulpairparser@def
+% vim:ft=tex

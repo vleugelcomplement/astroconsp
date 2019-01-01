@@ -1,0 +1,44 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Сомнительные диапазоны
+% вроде таких: \S 1--5.
+% Ещё одна банка старых костылей
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{thranges}[2017/05/30 Paragraph, item,.. ranges]
+
+\RequirePackage{titlesec}
+% for cftindents
+\RequirePackage{tocloft}
+\RequirePackage{changepage}
+% 🔥
+% dirty workaround to have a doubtful effect
+\newcounter{tmp}%
+\def\parrange#1#2{%
+  %\makeatletter%
+  \addtocounter{paragraph}{1}%
+  \setcounter{tmp}{\value{paragraph}}%
+  \addtocounter{paragraph}{#1-2}%
+  \renewcommand\theparagraph{\hspace{\widthof{№}*(-2)} №№\thinspace\arabic{tmp}--\arabic{paragraph}}%
+  \titleformat\paragraph[block]{\normalfont\bfseries}{Билеты\ \hspace{\widthof{№}*2}%
+\theparagraph:}{1ex}{\normalfont\bfseries}{}  
+  \paragraph{#2}
+  \renewcommand{\theparagraph}{№\thinspace\arabic{paragraph}}%
+  \titleformat\paragraph[block]{\normalfont\bfseries}{Билет\ \theparagraph:}{1ex}{\normalfont\bfseries}{}%  
+  %\makeatother%
+}
+
+
+
+% another one
+\def\itemrange#1{%
+  \addtocounter{enumi}{1}%
+  \edef\labelenumi{\theenumi--\noexpand\theenumi.}%
+  \addtocounter{enumi}{-1}%
+  \addtocounter{enumi}{#1}%
+  \item
+  \def\labelenumi{\theenumi.}
+}
+
+\def\itemskip#1{\addtocounter{enumi}{#1}}
+

@@ -1,0 +1,4 @@
+\listdef \tro@list@true{true,on,enable}
+\listdef \tro@list@false{false,off,disable}
+
+% vim:ft=tex
