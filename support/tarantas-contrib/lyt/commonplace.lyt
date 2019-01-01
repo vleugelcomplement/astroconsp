@@ -1,0 +1,48 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesFile{commonplace.lyt}[2018/09/25 Somewhat common layout]
+
+\setmainfont{Exo-2}[
+  BoldFont    = {Lato Semibold},
+]
+\setsansfont{Lato}
+
+\storePairDef{size=10}
+
+\setfont{\getByKey{size}}
+
+\RequirePackage{geometry}
+\storePairsDef{paper-type = a4paper, page-orient=portrait}
+\geometry{
+  \getByKey{paper-type},
+  \getByKey{page-orient},
+  left=2.5cm,
+  right=2.5cm,
+  top=2.5cm,
+  bottom=2.5cm,
+  bindingoffset=0cm
+}
+\protected\def\note{\footnote}
+
+\RequirePackage{titlesec}
+
+% что это за хак? он ничего не поменял..
+% \patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+% \patchcmd{\ttlh@hang}{\noindent}{}{}{}
+
+\titleformat{\chapter}
+	{\sffamily\upshape\Huge}
+	{\thechapter \\}
+	{0.3em}{}
+
+
+\titleformat{\section}
+	{\sffamily\upshape\LARGE}
+	{\thesection \\}
+	{0.3em}{}
+
+\titleformat{\subsection}
+	{\sffamily\upshape\Large}
+	{\thesubsection \\}
+	{0.3em}{}
+\endinput
+% vim: ft=tex
