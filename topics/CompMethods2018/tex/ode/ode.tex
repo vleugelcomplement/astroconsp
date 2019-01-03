@@ -115,5 +115,66 @@
 \end{exmp}
 
 \paragraph{Метод дифференциальной прогонки}
+\label{par:ode::difftdma}
+
+Здесь будем решать краевую задачу с граничными условиями в форме \ref{it:ode::bprobl::cond::iii}.
+
+Рассмотрим $α(x)$, $β(x) \that$ (прогоночные коэффициенты)
+\begin{equation} \label{eq:ode::difftdma::tmda}
+  y'(x) = α(x) \, y(x) + β(x)
+\end{equation}
+Такая форма напрашивается при вспоминании трюка, который мы делали в прошлом параграфе.
+Там как раз $y'(a) = y_0(a) + c_1\, y_1(a)$, а $c_1 = y(a)$.
+Здесь мы пока вводим прогоночные коэффициенты формально, а существование покажем конструктивно.
+
+Найдем уравнения на $α, β$
+\[
+  \begin{aligned}
+    y'  &= α y + β \\
+    y'' &= α y' + α'y + β'
+  \end{aligned} \so
+  \begin{aligned}[t]
+    &y'' + py' + qy = f \\
+    \iff &αy' + α'y + β' + p (αy + β) + qy = f \\
+    \iff &y\,(\underbrace{α^2 + α' + p α + q}_{0}) + \underbrace{α β + β' + pβ}_f = f 
+  \end{aligned}
+\]
+В итоге получаем систему ОДУ первого порядка
+\begin{equation}\label{eq:ode::difftdma::direct}
+  \begin{aligned}
+    α' &= - α^2 - p α - q \\
+    β' &= f - pβ - αβ \\
+  \end{aligned}
+\end{equation}
+
+Посмотрим что происходит на правом конце\footnote{а что делать если $α(b)=β$ неясно}
+\[
+  \begin{aligned}
+    y'(b) &= α(b) y(b) + β(b) \\
+    y'(b) &= β y(b) + B \\
+  \end{aligned} \so y(b) = \frac{B- β(b)}{α(b) - β} 
+\]
+Сам метод выглядит так:
+\begin{description}
+  \item[прямая прогонка:] решаем систему \eqref{eq:ode::difftdma::direct} с начальными данными
+    $α(a) = α$, $β(a) = A$.
+  \item[обратная прогонка:] уже зная $α(x)$, $β(x)$ решаем \eqref{eq:ode::difftdma::tmda} c
+    начальными данными $y(b) = \frac{B- β(b)}{α(b) - β}$.
+\end{description}
+
+\begin{rem}
+  Рассмотрим однородную задачу с однородными граничными условиями. 
+  Тогда \eqref{eq:ode::difftdma::tmda} переходит в $y'(x) = α(x) \, y(x)$.
+  Если при этом $\exists\, c\in (a;b) \that y(c) = 0 \land y'(c) \neq 0$, то $α(c)$ не
+  существует. Так что, как видно, не всякое решение краевой задачи можно найти методом
+  прогонки.
+\end{rem}
+
+\paragraph{Метод прогонки для систем ОДУ}
+\label{par:ode::difftdma}
+
+
 \end{document}
+
+
 % vim:wrapmargin=3
