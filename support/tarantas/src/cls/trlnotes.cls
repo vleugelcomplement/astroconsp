@@ -61,7 +61,7 @@
 
 % is not fully compatible with biblatex and hyperref
 % consider removal
-\RequirePackage[explicit]{titlesec}
+\RequirePackage{titlesec}
 % \RequirePackage{titletoc}
 \RequirePackage{chngcntr} % tools for counters 
 
