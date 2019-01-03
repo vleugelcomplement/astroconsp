@@ -9,9 +9,9 @@
 
     \begin{de}
         \ti{Интегральным уравнением Фредгольма II рода} называется уравнение вида
-        \[
+        \begin{equation} \label{eq:fred2}
             \varphi(x) = f(x) + \mu \int\limits_a^b K(x, \, t) \varphi(t) \, \del t.
-        \]
+        \end{equation}
         Функция $K$~--- его \ti{ядро}, а $\mu$~--- \ti{характеристическое число}.\footnote{Кажется, иногда в определении полагают $\mu = 1$, но всегда ведь можно внести его в ядро.}
     \end{de}
 
@@ -52,5 +52,193 @@
             \item $\mu^{-1}$ и $\ov{-}{\mu}^{-1}$~--- собственные числа операторов $K$ и $K^*$ соответственно одинаковой конечной кратности.
         \end{enumerate}
     \end{st}
+
+    \begin{rem}
+        Для симметричного ядра (т.е. когда $K = K^*$) то же самое несложно доказать, используя разложение по собственному базису оператора $K$ (которое есть по теореме Гильберта-Шмидта \ref{thm:hilb-sch}). Так можно быстро понять, что если $\mu^{-1}$~--- собственное число $K$, то решений либо нет, либо их бесконечно много.
+    \end{rem}
+
+    Рассмотрим уравнение \ref{eq:fred2} с вырожденным ядром
+    \[
+        K(x, \, t) = \sum\limits_{i = 1}^n \alpha_i(x) \beta_i(t).
+    \]
+    Функции $\alpha_i$ и $\beta_i$ можно считать ЛНЗ: если это не так, нетрудно выразить одну из них через другие и избавиться от неё. Подставляя ядро в уравнение \ref{eq:fred2}, получим
+
+    \begin{equation}\label{eq:deg-ker-repr}
+        \varphi(x) = f(x) + \sum\limits_{j = 1}^n A_j \alpha_i(x), \text{ где } A_j = \mu \int\limits_a^b \beta_j(t) \varphi(t) \, \del t.
+    \end{equation}
+
+    Это представление для функции $\varphi$ теперь подставим в исходное уравнение:
+
+    \[
+        f(x) + \sum\limits_{i = 1}^n A_i \alpha_i(x) = f(x) + \mu \int\limits_a^b \sum\limits_{i = 1}^n \alpha_i(x) \beta_i(t) \left(f(t) + \sum\limits_{j = 1}^n A_j \alpha_j(t) \right) \, \del t
+    \]
+    Чтобы переписать это покороче, введём обозначения
+    \[
+        \beta_{ij} = \int\limits_a^b \beta_i(t) \alpha_j(t) \, \del t, \quad f_i = \int\limits_a^b f(t) \beta_i(t) \, \del t.
+    \]
+    и получим
+    \[
+        \sum\limits_{i = 1}^n A_i \alpha_i(x) = \mu \sum\limits_{i = 1}^n \left(f_i + \sum\limits_{j = 1}^n \beta_{ij} A_j \right) \alpha_i(x).
+    \] 
+    Поскольку $\alpha_i$ линейно независимы, коэффициенты при них слева и справа должны быть равны. Записав эти равенства, мы приходим к системе линейных уравнений
+    \[
+        A_i = \mu f_i + \mu \sum\limits_{j = 1}^n \beta_{ij} A_j .
+    \]
+    В векторном виде она будет выглядеть так:
+    \[
+        A = \mu (\beta A + f),
+    \]
+    где $A$ и $f$~--- векторы, $\beta$~--- матрица, а $\mu$ всё ещё число.
+
+    Эта система решается так:
+    \[
+        (I - \mu \beta) A = \mu f \so \boxed{A = \mu (I - \mu \beta)^{-1} f}\,, \text{ если } \det (I - \mu \beta) \neq 0.
+    \]
+
+    Пусть $\Delta = \det(I - \mu \beta)$ и $\Delta_{ij}$~--- алгебраическое дополнение элемента $\delta_{ij} - \mu \beta_{ij}$. Тогда можно записать явную формулу для $A$\footnote{Это просто формула для обратной матрицы через алгебраические дополнения.}:
+    \[
+        A_{i} = \dfrac{\mu}{\Delta} \sum\limits_{j = 1}^n \Delta_{ji} f_j
+    \]
+    Подставляя теперь найденные $A_i$ в \ref{eq:deg-ker-repr}, найдём, что
+    \[
+        \varphi(x) = f(x) + \lambda \int\limits_a^b \Gamma(x, \, t) f(t) \, \del t,
+    \]
+    где \ti{резольвента} $\Gamma$ имеет вид
+    \[
+        \Gamma(x, \, t) = \dfrac{1}{\Delta} \sum\limits_{i, \, j = 1}^n \Delta_{ji} \alpha_i(x) \beta_j(s).
+    \]
+
+    Трудная задача~--- приблизить произвольное ядро вырожденным. Есть несколько способов:
+
+    \begin{enumerate}
+        \item Разложить ядро в ряд Тейлора.
+        \item Интерполировать ядро.
+        \item Разложить ядро по ортогональной системе функций.
+    \end{enumerate}
+
+
+    Подробнее про них можно прочитать в книге \cite{comp-krilov-2}.
+
+    Заменяя ядро на вырожденное, мы надеемся, что и решения тоже изменятся не сильно. Надо бы это обосновать (хотя бы как-то). Пусть есть уравнение
+    \[
+        Au = f, \quad A = I - K
+    \]
+    и приближающее его уравнение
+    \[
+        A_n u_n = f, \quad A_n = I - K_n. 
+    \]
+    Нетрудно видеть, что
+    \[
+        u - u_n = (A^{-1} - A_n^{-1})f \so \|u - u_n\| \leqslant \big\|A^{-1} - A_n^{-1}\big\| \cdot \|f\|.
+    \]
+    Поэтому интересно оценить норму разности обратных операторов. Займёмся этим.
+
+    \begin{st}\label{st:close-zero-inv}
+        Пусть $P$~--- ограниченный оператор, $\|P\| < 1$. Тогда оператор $I - З$ обратим, причём
+        \[
+            (I - P)^{-1} = \sum\limits_{i = 1}^{\infty} P^n,
+        \]
+        где сходимость~--- по операторной норме.
+    \end{st}
+
+    \begin{st} \label{st:close-inv}
+        Пусть $P$ и $H$~--- ограниченные операторы, $P$ обратим, а $\|H\| < \|P^{-1}\|^{-1}$. Тогда элемент $P - H$ обратим, причём
+        \[
+            \big\| \, (P - H)^{-1}\big\|  \leqslant \dfrac{\|P\|^{-1}}{1 - \|H\| \, \|P^{-1}\|}. 
+        \]
+        и
+        \[
+            \big\| \, (P - H)^{-1} - P^{-1}\big\| \leqslant \dfrac{\|H\| \, \|P^{-1}\|^2}{1 - \|H\| \, \|P^{-1}\|}.
+        \]
+        \begin{proof}
+            Позволим себе иногда использовать дроби и $1$ вместо $I$, как если бы операторы были числами. Не составит труда переписать всё через обратные!
+
+            Заметим, что первое из двух утверждений теоремы для $P = I$ следует из \ref{st:close-zero-inv}:
+            \begin{equation}\label{eq:close-zero-inv}
+                \big\| \, (I - H)^{-1}\big\| = \left \| \, \sum\limits_{i = 1}^{\infty} H^n \, \right\| \leqslant \sum\limits_{i = 1}^{\infty} \|H\|^n = \dfrac{1}{1 - \|H\|}.
+            \end{equation}
+
+            Далее,
+            \[
+                \left\|\, \dfrac{1}{P - H} \,\right \| = \left\|\, P^{-1} \dfrac{1}{1 - P^{-1}H} \,\right \| \leqslant \|P^{-1}\| \cdot \left\|\,\dfrac{1}{1 - P^{-1}H} \,\right \| \leqslant \dfrac{\|P^{-1}\|}{1 - \|P^{-1}H\|} \leqslant \dfrac{\|P\|^{-1}}{1 - \|H\| \, \|P^{-1}\|}.
+            \]
+            В предпоследнем переходе используется соотношение \ref{eq:close-zero-inv}, где $H \to P^{-1}H$.
+
+            Наконец,
+            \[
+                \left\|\, \dfrac{1}{P - H} - \dfrac{1}{P}\,\right \| = \left\|\, \dfrac{1}{P}\left(\dfrac{1}{1 - P^{-1}H} - 1 \right)\right \| =  \left\|\, \dfrac{1}{P} \, \dfrac{P^{-1}H}{1 - P^{-1}H} \right \| \leqslant \dfrac{\|H\| \, \|P^{-1}\|^2}{1 - \|H\| \, \|P^{-1}\|}.
+            \]
+        \end{proof}
+    \end{st}
+
+    Отсюда сразу же следует утверждение
+
+    \begin{st}\label{st:dif-inv}
+        При достаточно больших $n$
+        \[
+            \big\|A^{-1} - A_n^{-1}\big\| \leqslant \dfrac{\rho \, \|A^{-1}\|^2}{1 - \rho \, \|A^{-1}\|} \text{ и } \big\|A^{-1} - A_n^{-1}\big\| \leqslant \dfrac{\rho \, \|A_n^{-1}\|^2}{1 - \rho \, \|A_n^{-1}\|},
+        \]
+        где $\rho = \|A - A_n\| = \|K - K_n\|$.
+    \end{st}
+
+    \begin{rem}
+        Рассмотрим теперь задачу с симметричным ядром (т.е. с самосопряжённым $K$). В ней есть ортонормированный собственный базис $\alpha_i$, поэтому
+        \[
+            u = \sum\limits_{i = 1}^{\infty} \langle u, \, \alpha_i \rangle \alpha_i \so Ku = \sum\limits_{i = 1}^{\infty} \langle u, \, \alpha_i \rangle \lambda_i \alpha_i,
+        \]
+        где $\lambda_i$~--- соответствующее собственное число. Расположим $\lambda_i$ в порядке убывания модуля и положим
+        \[
+            K_n u = \sum\limits_{i = 1}^{n} \langle u, \, \alpha_i \rangle \lambda_i \alpha_i
+        \]
+        Это интегральный оператор с вырожденным ядром
+        \begin{equation}\label{eq:eig-deg-ker}
+            K_n(x, \, t) = \sum\limits_{i = 1}^n \lambda_i \alpha_i(x) \ov{-}{\alpha_i(t)}.
+        \end{equation}
+
+        %unsure
+        Можно доказать, что он является лучшей аппроксимацией ранга $n$ для оператора $K$ по операторной $L^2$-норме.
+        %unsure
+
+        Посмотрим на разность:
+        \[
+            (K - K_n)u = \sum\limits_{i = n+1}^{\infty} \langle u, \, \alpha_i \rangle \lambda_i \alpha_i.
+        \]
+        Найдём её норму:
+        \[
+            \big\|(K - K_n)u \,\big\|^2 = \sum\limits_{i = n + 1}^{\infty} |u_i|^2 \, |\lambda_i|^2, \quad u_i = \langle u, \, \alpha_i \rangle.
+        \]
+        При этом
+        \[
+            \|K - K_n\| = \sup \dfrac{\big\|(K - K_n)u \,\big\|}{\|u\|},
+        \]
+        и
+        \[
+            \dfrac{\big\|(K - K_n)u \,\big\|^2}{\|u\|^2} = \dfrac{\sum\limits_{i = n + 1}^{\infty} |u_i|^2 \, |\lambda_i|^2}{\sum\limits_{i = n + 1}^{\infty} |u_i|^2} \leqslant \dfrac{\sum\limits_{i = n + 1}^{\infty} |u_i|^2 \, |\lambda_{n + 1}|^2}{\sum\limits_{i = n + 1}^{\infty} |u_i|^2} = |\lambda_{n+1}|^2.
+        \]
+        С другой стороны, эта оценка достигается, когда $u$~--- собственный вектор числа $\lambda_{n+1}$. Поэтому
+        \[
+            \boxed{\|K - K_n\| = |\lambda_{n + 1}|} \, .
+        \]
+        Отсюда и из утверждения \ref{st:dif-inv} ясно: чем быстрее убывают собственные числа, тем лучше наша оценка! 
+        %unsure
+        Из уравнения \ref{eq:eig-deg-ker} видно, что собственные числа~--- что-то вроде коэффициентов в ряде Фурье по собственным функциям для ядра. Видимо, поэтому скорость их убывания возрастает, если ядро становится более гладким... А ядра гладкие не всегда.
+        %unsure
+    \end{rem}
+
+    \begin{rem}
+        Есть способ сгладить ядро. Надо в уравнение \ref{eq:fred2} подставить
+        \[
+            \varphi(t) = f(t) + \mu\int\limits_a^b K(t, \, \xi) \varphi(\xi) \, \del \xi.
+        \]
+        Получится уравнение
+        \[
+            \varphi(x) = f_2(x) + \mu\int\limits_a^b  K_2(x, \xi) \varphi(\xi) \, \delta \xi,
+        \]
+        где
+        \[
+            f_2(x) = f(x) + \mu \int\limits_a^b K(x, \, t) f(t) \, \del t, \quad K_2(x, \, \xi) = \mu \int\limits_a^b K(x, \, t) K(t, \, \xi) \, \del t. 
+        \]
+        У $K_2$ с гладкостью получше, но его надо считать.
+    \end{rem}
 \end{document}
 % vim:wrapmargin=3
