@@ -14,71 +14,55 @@
 
 \RequirePackage{amsthm}
 \RequirePackage[utf8]{inputenc}
+\RequirePackage{chngcntr} % tools for counters 
 
+% patching theorem to remember last statement
 \patchcmd{\@xnthm}
 {\let\csname end#2\endcsname\@endtheorem}
 {\def\csname end#2\endcsname{\@endtheorem\global\def\laststat{#2}}} {}{}
 
-\theoremstyle{plain}
-\newtheorem{thrm}{Теорема}[paragraph]
-\newtheorem{lem}[thrm]{Лемма}
-\newtheorem{stat}[thrm]{Утверждение}
-\newtheorem{prop}[thrm]{Утверждение}
-\newtheorem{imp}{Следствие}[thrm]
-\newtheorem{cor}{Следствие}[thrm]
-\newtheorem*{cor*}{Следствие}
+\IfFileExists{trthm.def}{
+  \input{trthm.def}
+}{
+  \input{trthm-default.def}
+}
 
-\theoremstyle{definition}
-\newtheorem{defn}{Определение}[paragraph]
-\newtheorem*{denot}{Обозначение}
-\newtheorem{exmp}{Пример}[defn]
-\newtheorem*{exmp*}{E.g}
-
-\theoremstyle{remark}
-\newtheorem{rem}{Замечание}[defn]
-\newtheorem*{rem*}{Замечание}
-
-
-\RequirePackage{chngcntr} % tools for counters 
-% \@addtoreset{imp}{lem}
-% \@addtoreset{imp}{stat}
-\counterwithin*{rem}{thrm}
-\counterwithin*{equation}{paragraph}
-
-% % we are redefining a macro that is used by a loop
-% % to redefine 9 another macros that have been defined
-% % when have defined them by a macro from amsmath
-% % which uses 4 another nested macros, last of which
-% % finally defines this evil counter we are trying to redefine
-\renewcommand*{\do}[1]{
+% a historical note about tex macros
+%------------%<--------------------
+%% we are redefining a macro that is used by a loop
+%% to redefine 9 another macros that have been defined
+%% when have defined them by a macro from amsmath
+%% which uses 4 another nested macros, last of which
+%% finally defines this evil counter we are trying to redefine
+%------------%<--------------------
+\newcommand*{\trth@stat@intextformat@set}[1]{
   \expandafter\def\csname the#1\endcsname{\arabic{#1}}%
 }
-
-% hoped to the best loop, but tastes matter
-\docsvlist{thrm,lem,stat,prop,imp,cor,defn,exmp,rem}
-
-% temporary hack
-\ifdef\c@chapter{
-  \def\trth@stat@headnumberformat{\arabic{chapter}.\arabic{paragraph}}
-}{
-\def\trth@stat@headnumberformat{\arabic{section}}
-}
-\newcommand*{\trth@head@format}[1]{
+\newcommand*{\trth@refformat@set}[1]{
   \csdef{p@#1}{\trth@stat@headnumberformat.\csuse{the#1}\ex@f\@gobble}
 }
-\forcsvlist{\trth@head@format}{thrm,defn,exmp}
-
 \renewcommand{\p@equation}{\theequation\expandafter\@gobble}
 
-%manual resetting
+% hoped to the best loop, but tastes matter
+\forlistloop{\trth@stat@intextformat@set}{\@allstatements}
+\forlistloop{\trth@refformat@set}{\@independentstatements}
+
+
+
+% manual resetting
 \newcommand*{\re@setter}[1]{
   \expandafter\newcommand\csname reset#1\endcsname{
     \setcounter{#1}{0}
   }
 }
-\forcsvlist{\re@setter}{defn,thrm,rem}
-\newcommand\resetall{\resetdefs \resetthrm \resetrem}
+\forlistloop{\re@setter}{\@resetablestatements}
+\newcommand\resetall{%
+  \def\do##1{\csuse{reset##1}}%
+  \dolistloop{\@resetablestatements}%
+}
 
+
+% custom environments
 %% patched proof from AMS-thm
 \newenvironment{trgenproof}[4]{\par
   \pushQED{{\def\qedsymbol{#3}\qed}}%

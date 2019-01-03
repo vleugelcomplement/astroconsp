@@ -71,6 +71,8 @@
 % \firestdsections
 % }{}
 
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
 % we do not need to redefine chapters a lot
 \let \enotesectiontype=\chapter
 
@@ -104,13 +106,14 @@
 
 
 \newcounter{clause}
+\newcommand{\clauseheadsep}{1.4ex}
 \newcommand{\clause}{
   \@startsection{clause}{3}{\z@}%
   {3.25ex \@plus1ex \@minus.2ex}%
   {-1em}%
   {\normalfont\normalsize\bfseries}
 }
-\renewcommand\theclause{\arabic{clause}}
+\renewcommand\theclause{\arabic{clause}.\ }
 \counterwithin*{clause}{paragraph}
 \newcommand\clausemark{\@gobble}
 \newcommand*\l@clause{\@dottedtocline{3}{4em}{1em}}
@@ -171,8 +174,6 @@
 % % \cftsetindents{clause}{3.0em}{1em}
 
 
-\setcounter{secnumdepth}{3}
-\setcounter{tocdepth}{3}
 
 
 \RequirePackage{perpage}
