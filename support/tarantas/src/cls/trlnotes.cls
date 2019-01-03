@@ -61,7 +61,7 @@
 
 % is not fully compatible with biblatex and hyperref
 % consider removal
-% \RequirePackage[explicit]{titlesec}
+\RequirePackage[explicit]{titlesec}
 % \RequirePackage{titletoc}
 \RequirePackage{chngcntr} % tools for counters 
 
@@ -71,8 +71,6 @@
 % \firestdsections
 % }{}
 
-\setcounter{secnumdepth}{3}
-\setcounter{tocdepth}{3}
 % we do not need to redefine chapters a lot
 \let \enotesectiontype=\chapter
 
@@ -174,6 +172,8 @@
 % % \cftsetindents{clause}{3.0em}{1em}
 
 
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
 
 
 \RequirePackage{perpage}
