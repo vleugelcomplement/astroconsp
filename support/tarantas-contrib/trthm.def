@@ -1,0 +1,63 @@
+\ProvidesFile{trthm.def}[
+  2019/01/03 custom theorem definitions for astroconsp]
+
+\theoremstyle{definition}
+
+\newtheorem{thrm}{Теорема}
+\newtheorem{lem}{Лемма}
+\newtheorem{stat}{Утверждение}
+\newtheorem{prop}{Утверждение}
+\newtheorem{imp}{Следствие}
+\newtheorem{cor}{Следствие}
+\newtheorem*{cor*}{Следствие}
+
+\newtheorem{defn}{Определение}
+\newtheorem*{denot}{Обозначение}
+\newtheorem{exmp}{Пример}
+\newtheorem*{exmp*}{E.g}
+
+\theoremstyle{remark}
+\newtheorem{rem}{Замечание}
+\newtheorem*{rem*}{Замечание}
+
+\theoremstyle{definition}
+\def\copyenv#1#2{\csletcs{#1}{#2} \csletcs{end#1}{end#2}}
+\copyenv{thm}{thrm}
+\copyenv{de}{defn}
+\copyenv{lm}{lem}
+\copyenv{exm}{exmp}
+\newtheorem{pr}{Свойство}
+\newtheorem{exc}{Упражнение}
+\copyenv{st}{prop}
+
+% starred version does not touch \the<counter>
+%\counterwithin*{rem}{thrm}
+\counterwithin*{defn}{paragraph}
+\counterwithin*{thrm}{paragraph}
+\counterwithin*{lem}{paragraph}
+\counterwithin*{prop}{paragraph}
+\counterwithin*{stat}{paragraph}
+\counterwithin*{prop}{paragraph}
+\counterwithin*{imp}{paragraph}
+\counterwithin*{cor}{paragraph}
+\counterwithin*{defn}{paragraph}
+\counterwithin*{exmp}{paragraph}
+\counterwithin*{rem}{paragraph}
+
+\counterwithin*{pr}{paragraph}
+\counterwithin*{exc}{paragraph}
+
+\counterwithin*{equation}{paragraph}
+
+\listdef\@allstatements{thrm,lem,stat,prop,imp,cor,defn,exmp,rem,exc,pr}
+\listdef\@independentstatements{thrm,lem,stat,prop,imp,cor,defn,exmp,rem,exc,pr}
+\let\@resetablestatements=\@allstatements
+
+% temporary hack
+\ifdef\c@chapter{
+  \def\trth@stat@headnumberformat{\arabic{chapter}.\arabic{paragraph}}
+}{
+  \def\trth@stat@headnumberformat{\arabic{section}}
+}
+\def\@trth@stat@intextformat#1{\arabic{#1}}
+% vim:ft=tex

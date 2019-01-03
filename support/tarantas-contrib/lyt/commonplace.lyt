@@ -29,6 +29,7 @@
 }
 \protected\def\note{\footnote}
 
+\renewcommand{\arraystretch}{1}
 \RequirePackage{titlesec}
 
 % что это за хак? он ничего не поменял..
