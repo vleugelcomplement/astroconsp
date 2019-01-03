@@ -1,9 +1,52 @@
 \documentclass{trlnotes}
-\setlayout{hardcopy}
+\usepackage{trmath}
+\addcompatiblelayout{commonplace}
+\setlayout{commonplace}
+\usepackage{trthm}
+\input{mdefs}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
 \graphicspath{{../../img/}}
 
+\newtagform{roman}[\renewcommand{\theequation}{\Roman{equation}}]()
 \begin{document}
+\paragraph{Краевая задача для ОДУ 2 порядка и сведение к задаче Коши}
+\label{par:ode::bprobl}
+\begin{defn}\label{defn:ode::bprobl}
+  Рассмотрим ОДУ 2 порядка
+  \[
+    y'' + p(x) y' + q(x) y = f(x) \qquad y \in C^2([a;b])
+  \]
+  и 3 варианта условий на $y$
+  \begin{enumerate}[I]
+    \item $y(a) = A, \quad y(b) = B$ \label{it:ode::bprobl::cond:i}
+    \item $y'(a) = A, \quad y'(b) = B$ \label{it:ode::bprobl::cond::ii}
+    \item $y'(a) = α y(a) + A, \quad y'(b) = βy(b) + B$ \label{it:ode::bprobl::cond::iii}
+    \end{enumerate}
+  
+  Если $y$~--- решение для которого выполнено какое-то из условий выше, то $y$~--- решение
+  граничной задачи.
+\end{defn}
+
+\begin{thrm}[об альтернативе]\label{thrm:ode::bprobl::alt}
+  Пусть в граничной задаче \ref{defn:ode::bprobl} $A =0, B=0$.
+  Рассмотрим решение однородной задачи $y_0$. 
+
+  Тогда
+  \begin{enumerate}
+    \item $y_0 \equiv 0$~--- единственное решение однородной задачи \so неоднородная краевая 
+      задача имеет единственное решение
+    \item $y_0 \equiv 0$~--- неединственное решение однородной задачи \so неоднородная краевая 
+      задача имеет бесконечно много или не имеет решений вовсе
+  \end{enumerate}
+\end{thrm}
+
+
+\begin{prf}
+  Рассмотреть решение неоднородной краевой в виде $y(x) = y_0(x) + c_1 y_1(x) + c_2 y_2(x)$
+  и подставить граничные условия, а дальше все следует из линейной алгебры.
+\end{prf}
+
+
 \end{document}
 % vim:wrapmargin=3
