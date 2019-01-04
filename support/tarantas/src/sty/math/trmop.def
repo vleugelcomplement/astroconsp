@@ -15,19 +15,34 @@
 }
 
 % for arrows with tails
-\RequirePackage{trimclip}
-\newsavebox{\trm@symbox@smallYright}
-\savebox{\trm@symbox@smallYright}{\clipbox{0pt 0pt {0.6\width} 0pt}{$\rightarrowtail$}}
-\newsavebox{\trm@symbox@smallrightarrow}
-\savebox{\trm@symbox@smallrightarrow}{\clipbox{{0.25\width} 0pt 0pt 0pt}{$\rightarrowtail$}}
-\newsavebox{\trm@symbox@smallleftarrow}
-\savebox{\trm@symbox@smallleftarrow}{\clipbox{0pt 0pt {0.25\width} 0pt}{$\leftarrowtail$}}
-\newsavebox{\trm@symbox@smallYleft}
-\savebox{\trm@symbox@smallYleft}{\clipbox{{0.6\width} 0pt 0pt 0pt}{$\leftarrowtail$}}
-\newcommand{\smallYright}{\ensuremath\usebox{\trm@symbox@smallYright}}
-\newcommand{\smallrightarrow}{\ensuremath\usebox{\trm@symbox@smallrightarrow}}
-\newcommand{\smallleftarrow}{\ensuremath\usebox{\trm@symbox@smallleftarrow}}
-\newcommand{\smallYleft}{\ensuremath\usebox{\trm@symbox@smallYleft}}
+
+%% on-demand box creation
+%% {box} {contents if not created}
+\newcommand*{\trt@clipbox@ensure}[2]{
+  \ifdefined{#1}{\usebox{#1}}%
+    {
+      \RequirePackage{trimclip}
+      \newsavebox{#1}
+      \savebox{#1}{#2}
+    }
+}
+
+\newcommand{\righttail}{\ensuremath
+  \trt@clipbox@ensure{\trm@symbox@smallYright}%
+  {\clipbox{0pt 0pt {0.6\width} 0pt}{$\rightarrowtail$}}
+}
+\newcommand{\smallrightarrow}{\ensuremath
+  \trt@clipbox@ensure{\trm@symbox@smallrightarrow}%
+  {\clipbox{{0.25\width} 0pt 0pt 0pt}{$\rightarrowtail$}}
+}
+\newcommand{\smallleftarrow}{\ensuremath
+  \trt@clipbox@ensure{\trm@symbox@smallleftarrow}%
+  {\clipbox{0pt 0pt {0.25\width} 0pt}{$\leftarrowtail$}}
+}
+\newcommand{\lefttail}{\ensuremath
+  \trt@clipbox@ensure{\trm@symbox@smallYleft}%
+  {\clipbox{{0.6\width} 0pt 0pt 0pt}{$\leftarrowtail$}}
+}
 
 % beware of long lines!
 \trm@arrow@makex{equal}              [\Relbar\Relbar\Relbar]                     {0023}
@@ -55,10 +70,10 @@
 \trm@arrow@makex{twoheadhookleftarrow}  [\twoheadleftarrow\relbar{\relbar\joinrel\rhook}]        {5298}
 % \trm@arrow@makex{rightarrowtail}        [{\smallYright\joinrel\relbar}\relbar\smallrightarrow]   {0159}
 % \trm@arrow@makex{leftarrowtail}         [\smallleftarrow\relbar{\relbar\joinrel\smallYleft}]     {1095}
-\trm@arrow@makex{rightarrowtail}        [{\smallYright\joinrel\relbar}\relbar\rightarrow]   {0359}
-\trm@arrow@makex{leftarrowtail}         [\leftarrow\relbar{\relbar\joinrel\smallYleft}]     {3095}
-\trm@arrow@makex{twoheadrightarrowtail} [{\smallYright\joinrel\relbar}\relbar\twoheadrightarrow] {0379}
-\trm@arrow@makex{twoheadleftarrowtail}  [\twoheadleftarrow\relbar{\relbar\joinrel\smallYleft}]   {3097}
+\trm@arrow@makex{rightarrowtail}        [{\righttail\joinrel\relbar}\relbar\rightarrow]   {0359}
+\trm@arrow@makex{leftarrowtail}         [\leftarrow\relbar{\relbar\joinrel\lefttail}]     {3095}
+\trm@arrow@makex{twoheadrightarrowtail} [{\righttail\joinrel\relbar}\relbar\twoheadrightarrow] {0379}
+\trm@arrow@makex{twoheadleftarrowtail}  [\twoheadleftarrow\relbar{\relbar\joinrel\lefttail}]   {3097}
 
 
 \trm@arrow@makex{rightrightarrows}   [\relrelbar\relrelbar\rightrightarrows]     {0359}
