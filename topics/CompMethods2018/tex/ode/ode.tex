@@ -376,6 +376,201 @@ $\hat A\to \hat B$, $\v f\to \v g$. Зато $\hat α(a)\, \hat α(a)^T = I$.
 
 \paragraph{Разностный метод для краевой задачи 2 порядка}
 \label{par:ode::findiff}
+\begin{aux}
+  \textit{Предупреждение:}
+  в силу повышенной техничности этого параграфа он написан в соответствующем стиле.
+  Что поделать. Приятного прочтения.
+\end{aux}
+
+Решать краевую задачу для дифференциального уравения второго порядка
+\begin{equation}
+  y'' + p(x) y' + q(x) y = f(x) \qquad y \in C^2([a;b]) \label{eq:ode::findiff::ode}
+\end{equation}
+
+\clause{Алгоритм}
+\begin{defn}[Метод разностной прогонки]\label{defn:ode::findiff::alg}
+  Пусть задано дифференциальное уравнение с граничными условиями.
+  Методом разностной прогонки называет следующий алгоритм:
+  \begin{enumerate}
+    \item Выбор сетки: узлы, шаг (если она равномерная)
+    \item Построение сеточных уравений
+      \begin{enumerate}
+        \item Диффур в узлах сетки
+        \item Все производные через конечные разности
+      \end{enumerate}
+    \item Решение получившейся линейной системы
+  \end{enumerate}
+\end{defn}
+
+Будем дальше всюду считать, что решение задано на $[a;b]$
+\[
+  \text{$n$ узлов}\qquad h = \frac{b-a}{n} \qquad x_k = a + kh
+\]
+\clause{Формулы численного дифференцирования} 
+Здесь $M_n = \max \abs{y^{(m)}(x)}$
+\begin{align}
+  \label{eq:ode::findiff::simpforward}
+  y'(x) &= \frac{y(x+h) -y (x)}{h} + R & \abs{R} &\leqslant \tfrac{hM_2}{2} \\
+  \label{eq:ode::findiff::simpbackward}
+  y'(x) &= \frac{y(x) - y (x-h)}{h} + R & \abs{R} &\leqslant \tfrac{hM_2}{2} \\
+  \label{eq:ode::findiff::threepointforward}
+  y'(x) &= \frac{-y(x+2h) + 4y (x+h) - 3y(x)}{2h} + R & \abs{R} &\leqslant \tfrac{h^2M_3}{3} \\
+  \label{eq:ode::findiff::threepointbackward}
+  y'(x) &= \frac{3y(x) - 4y (x-h) + y(x-2h)}{2h} + R & \abs{R} &\leqslant \tfrac{h^2M_3}{3} \\
+  \label{eq:ode::findiff::simmetric}
+  y'(x) &= \frac{y(x+h) - y (x-h)}{2h} + R & \abs{R} &\leqslant \tfrac{h^2M_3}{6} \\
+  \label{eq:ode::findiff::simmetricsecondorder}
+  y''(x) &= \frac{y(x+h) - 2y (x) + y(x-h)}{h^2} + R & \abs{R} &\leqslant \tfrac{h^2M_4}{12}
+\end{align}
+Cхемы \ref{eq:ode::findiff::simpforward} и \ref{eq:ode::findiff::simpbackward} называются 
+простейшими.
+
+\clause{Разностное уравнение}
+
+\begin{equation*}
+  \frac{y(x_{k+1}) - 2y(x_k) + y(x_{k-1})}{h^2} + R_1 
+  + p(x_k) \, \frac{y(x_{k+1}) - y(x_{k-1})}{2h} + p(x_k)\,R_2 
+  + q(x_k) \, y(x_k) = f(x_k)
+\end{equation*}
+
+Можно заметить, что $R_1 + p(x_k)\, R_2 = O(h^2)$.
+Так что можно вместо $y(x_k)$ получить приближённое решение $y_k$
+(по сути, решение уже совсем другой задачи). Попутно, обозначим
+\[
+  p(x_k) = p_k,\qquad q(x_k) = q_k, \qquad f(x_k) = f_k.
+\]
+Получится
+\begin{equation}\label{eq:ode::findiff::diffeq}
+  \frac{y_{k+1} - 2y_k + y_{k-1}}{h^2}
+  + p_k \, \frac{y_{k+1} - y_{k-1}}{2h} 
+  + q_k \, y_k = f_k
+\end{equation}
+
+\clause{Граничные условия} будут рассматриваться \ref{it:ode::bprobl::cond::iii} типа,
+но вообще это неважно. Всё равно раскрывать не будем.
+
+\begin{enumerate}
+  \item \emph{Трёхточечная односторонняя аппроксимация}
+      \begin{equation*}
+        y'(x) = \frac{-y(x+2h) + 4y(x+h) - 3 y(x)}{2h} + O(h^2)
+      \end{equation*}
+
+      Запишем это выражение для границ:
+      \begin{alignat*}{3}
+        y'(a) &= \frac{-y(a+2h) + 4y(a+h) - 3 y(a)}{2h} + O(h^2) 
+              &\quad&\to\quad &
+        αy_0 + A &= \frac{-y_2 + 4 y_1 - 3y_0}{2h}\\
+        y'(b) &= \frac{3y(b) - 4y(b-h) + y(b-2h)}{2h} + O(h^2) 
+              &\quad&\to\quad &
+        βy_n + B &= \frac{3y_n - 4 y_{n-1} + y_{n-2}}{2h}
+      \end{alignat*}
+    \item \emph{Метод фиктивных узлов}
+      \begin{enumerate}
+        \item Введём $y_{-1} = y(a-h)$, $y_{n+1} = y(b+h)$
+          \begin{equation*}
+            y'(x) = \frac{y(x+h) - y(x-h)}{2h} + O(h^2)
+          \end{equation*}
+
+          Запишем это выражение для границ:
+          \begin{alignat*}{3}
+            y'(a) &= \frac{y(a+h) - y(a-h)}{2h} + O(h^2) 
+                  &\quad&\to\quad &
+            αy_0 + A &= \frac{y_1 - y_{-1}}{2h}\\
+            y'(b) &= \frac{y(b+h) - y(b-h)}{2h} + O(h^2) 
+                  &\quad&\to\quad &
+            βy_n + B &= \frac{y_{n+1} - y_{n-1}}{2h}
+          \end{alignat*}
+          Как правило, решение можно продолжить с отрезка на интервал побольше, подберём
+          $h \that y(a-h) \in I \land y(b+h) \in I$. Так что такой метод имеет смысл.
+        \item Сдвинем сетку на $\lfrac h2$, $x_0 = a-\lfrac h2$, $x_{n+1} = b+\lfrac h2$
+          \[
+            x_k = a- \lfrac h2 + kh \qquad k = 0,1 \intrng n+1
+          \]
+          Значения в узлах сетки при этом придётся вводить с помощью интерполяции
+          \[
+            y(a) = \frac{y(a-\lfrac{h}2) + y(a+\lfrac{h}2)}{2}
+          \]
+          Сами выражения для производной имеют вид
+          \begin{equation*}
+            y'(x) = \frac{y(x+\lfrac h2) - y(x-\lfrac h2)}{h} + O(h^2)
+          \end{equation*}
+
+          Запишем это выражение для границ:
+          \begin{alignat*}{3}
+            y'(a) &= \frac{y(a+\lfrac{h}2) - y(a-\frac{h}2)}{h} + O(h^2) 
+                  &\quad&\to\quad &
+            α\, \frac{y_0 + y_1}{2} + A &= \frac{y_1 - y_{0}}{h}\\
+            y'(b) &= \frac{y(b+\lfrac h2) - y(b-\lfrac h2)}{h} + O(h^2) 
+                  &\quad&\to\quad &
+            β\, \frac{y_{n+1} - y_n}{2} + B &= \frac{y_{n+1} - y_{n-1}}{2h}
+          \end{alignat*}
+
+          Такой подход не очень удобен если нужны значения в узлах. Придётся уменьшать шаг
+          в $2$ раза.
+      \end{enumerate}
+    \item \emph{Использование ДУ для исключения главного члена простейшей формулы}\par
+        \begin{equation*}
+          y'(x) = \frac{y(x+h) - y(x)}{h} + R, \quad R = O(h)
+        \end{equation*}
+        Теперь запишем разложение в ряд Тейлора:
+        \begin{equation*}
+          y(x+h) = y(x) + h y'(x) + \frac{h^2}{2}y''(x) + O(h^3) 
+          \iff y'(x)  = \frac{y(x+h) - y(a)}{h}  - \frac h2 y''(x) + O(h^2)
+        \end{equation*}
+        Из исходного уравнения \eqref{eq:ode::tdmasys::ode} подстановкой простейшей формулы получаем
+        \begin{align*}
+          y''(x) &= -\bigl(p(x) y'(x) + q(x) y(x) \bigr) + f(x)  
+          = -\left(p(x) \,\tfrac{y(x+h) -y(x)}{h} + p(x) O(h) + q(x) y(x) \right) + f(x)
+          \notag \\
+          \so 
+          -\tfrac{h}{2} y''(x) &= \tfrac{p(x)}{2} \Bigl(y(x+h) - y(x)\Bigr) + 
+          \tfrac{h}{2} \Bigl(q(x)y(x) - f(x)\Bigr) + O(h^2)
+        \end{align*}
+        
+        Оценка производной на краю
+        \begin{align*}
+          y'(a) &= \frac{y(a+h) - y(a)}{h} + \frac{p(a)}{2} \biggl(y(a+h) - y(a)\biggr) + 
+          \frac{h}{2} \biggl(q(a) y(a) - f(a)\biggr) + O(h^2)\\
+          y'(b) &= \frac{y(b) - y(b-h)}{h} - \frac{p(b)}{2} \biggl(y(b) - y(b-h)\biggr) - 
+          \frac{h}{2}\,\biggl(q(b) y(b) - f(b)\biggr) + O(h^2)
+        \end{align*}
+
+        На сетке оно имеет вид
+        \begin{equation*}
+          \begin{split}
+            α y_0 + A &= \frac{y_1 - y_{0}}{h} + \frac{p_0}{2} \biggl(y_1 - y_{0}\biggr)
+            + \frac{h}{2}\,\biggl(q_0 y_0 - f_0\biggr) \\
+            β y_n + B &= \frac{y_n - y_{n-1}}{h} - \frac{p_n}{2} \biggl(y_n - y_{n-1}\biggr)
+            - \frac{h}{2}\,\biggl(q_n y_n - f_n\biggr) \\
+            \end{split}
+        \end{equation*}
+\end{enumerate}
+
+\clause{Составление системы линейных уравнений}
+\begin{equation}\label{eq:ode::findiff::tdma}
+  \begin{aligned}
+    c_0 y_1     &- b_0 y_0                  &&=& &d_0 \\
+    c_k y_{k+1} &- b_k y_k+ y_{k-1} a_k     &&=& &d_k,\quad k= 1\intrng n-1 \\
+                &- b_n y_n + a_n y_{n-1}    &&=& &d_n 
+  \end{aligned}
+\end{equation}
+Из разностного уравнения \eqref{eq:ode::findiff::diffeq} можно найти $a_k, c_k, b_k, d_k$
+\[
+  \begin{aligned}
+    a_k &= 1- \tfrac{h}2 \, p_k &
+    b_k &= 1- h^2 \, q_k &
+    c_k &= 1+ \tfrac{h}2 \, p_k &
+    d_k &= {h}^2 \, f_k 
+  \end{aligned}
+\]
+
+Явные выражения для $a_0, b_0, c_0, d_0$ и $a_n, b_n, c_n, d_n$
+зависят от способа учета граничных условий. Разве что $a_0 = 0\land c_0 = 0$.
+Оставим остальные читателям из Беларуси в качестве упражнения.
+
+\paragraph{Метод разностной прогонки}
+\label{par:ode::fintdma}
+
 
 
 
