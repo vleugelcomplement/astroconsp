@@ -8,6 +8,9 @@
 }
 \ProcOpts\relax
 
+\def \bindvectors#1{\def\do##1{\declareMathLetterTransform ##1{\v}}\docsvlist{#1}}
+\def\uv#1{\v{\hat{#1}}}
+\def \bindunitvectors#1{\def\do##1{\declareMathLetterTransform ##1{\uv}}\docsvlist{#1}}
 
 \input{trphq.def}
 
