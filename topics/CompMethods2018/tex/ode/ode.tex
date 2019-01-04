@@ -4,13 +4,12 @@
 \setlayout{commonplace}
 \usepackage{trthm}
 \usepackage{trsym} 
+\usepackage{trphys}
 % \input{mdefs}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
 \graphicspath{{../../img/}}
-
 \newtagform{roman}[\renewcommand{\theequation}{\Roman{equation}}]()
-
 \begin{document}
 \paragraph{Краевая задача для ОДУ 2 порядка и сведение к задаче Коши}
 \label{par:ode::bprobl}
@@ -194,6 +193,15 @@
   граничной задачи.
 \end{defn}
 
+\begin{rem}
+  Вообще, граничные условия бывают куда более общего вида, но мы их не рассматриваем.
+  То, что у нас~--- это линейные распадающиеся граничные условия.
+
+  А вот так выглядят нераспадающиеся: 
+  \[
+    \hat α\v y(a) + \hat γ \v y(b) = \v β, \qquad \hat α,\hat γ\colon \R^s\to\R^s
+  \]
+\end{rem}
 
 Общее решение задачи Коши~\ref{eq:ode::tdmasys::ode} имеет вид
 \[
@@ -219,12 +227,63 @@
 
 В итоге решение примет вид 
 \[
-  \v y(x) = \v y_0 (x) + \sum_{j=p+1}^{s} c_j y_j(x)
+  \v y(x) = \v y_0 (x) + \sum_{j=p+1}^{s} c_j y_j(x) 
 \]
 
 \plholdev{здесь снова этот понятный кусок про экспоненты и беды вычислений}\underdev
 
-\clause{метод прогонки}${}$\\
+\clause{Метод прогонки,} в котором cнова зададим $\hat α, \v β$
+\begin{equation}\label{eq:ode::tdmasys::tdma}
+  \hat α(x) \, \v y(x) = \v β(x),  \qquad \hat α \colon [a;b]×\R^s \to \R^p 
+\end{equation}
+При таком условии $\forall\, x\holds y(x)\in M \subset \R^s$, $\dim M = s-p$ 
+(предполагая что $\rk \hat α(x) = p$) 
+
+Найдем уравнения на $\hat α(x), \v β(x)$
+\[\bindvectors{y,β,f}\bindqoperators{α, A}% weeell, they just look simular
+  \begin{aligned}
+    α y &= β \\
+    α y' +  α' y&=  β' \\
+  \end{aligned} \so
+  \begin{aligned}[t]
+    &y' = Ay + f  \\
+    &αAy  + αf + α'y  = β' \\
+    \iff &(\underbrace{αA + α'})\,y - \underbrace{β'} = - αf 
+  \end{aligned}
+\]
+
+Пусть $α_j$~--- строка $\hat α$.
+Тогда мы получаем систему ОДУ первого порядка
+\begin{equation}\label{eq:ode::tdmasys::direct}
+  \begin{aligned}
+    α_j' &= - \hat A^T \, α_j \\
+    β_j' &= (α_j,\v f) \\
+  \end{aligned}
+\end{equation}
+
+Посмотрим что происходит на правом конце
+\begin{equation}\label{eq:ode::tdmasys::rightbndcond}
+  \left\{\begin{aligned}
+    \hat α(b) \, \v y(b) &= \v β(b) \\
+    \hat γ \v y(b) &= \v δ \\
+  \end{aligned}\right. 
+\end{equation}
+это просто линейная система порядка $s$ на $\v y(b)$, решаем и находим.
+
+Сам метод выглядит так:
+\begin{description}
+  \item[прямая прогонка:] решаем прогоночные уравения\eqref{eq:ode::tdmasys::direct}
+    с начальными данными $\hat α(a) = \hat α$, $\v β(a) = \v β$.
+  \item[обратная прогонка:] уже зная $α(x)$, $β(x)$ решаем \eqref{eq:ode::tdmasys::tdma} c
+    начальными данными $y(b)$, найденным из системы \eqref{eq:ode::tdmasys::rightbndcond}.
+\end{description}
+
+\begin{rem}
+  Вообще метод с заменой $\hat A$ на сопряженную в прогоночных уравениях 
+  уже пафосно называется методом \emph{сопряжённых систем}, но ничем кроме
+  названия по сути не отличается.
+\end{rem}
+
 \end{document}
 
 
