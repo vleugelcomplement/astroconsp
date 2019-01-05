@@ -628,13 +628,13 @@ $a_k, b_k, c_k, d_k$ \eqref{eq:ode::findiff::tdma}.
 \paragraph{Лемма об оценке для системы разностных уравений}
 \label{par:ode::diffeqest}
 
-\begin{lem}[Достаточное условие]\label{prop:ode::diffeqest::suff}
+\begin{prop}[Достаточное условие]\label{prop:ode::diffeqest::suff}
   Пусть $\forall k\holds a_k, c_k > 0$ ($c_n, a_0 = 0$), и СЛУ имеет
   диагональное преобладание: $b_k \geqslant a_k + c_k$.
 
   Тогда если $\exists\, k\that b_k > a_k + c_k$ 
   прогоночные уравнения \ref{eq:ode::fintdma::tdmaeq} разрешимы
-\end{lem}
+\end{prop}
 \begin{prf}
   Проблемы у нас возникнут только если знаменатели обратятся в $0$.
   Учитывая диагональное преобладание, это эквивалентно $α_{k-1} \geqslant 1$.
@@ -665,7 +665,7 @@ $a_k, b_k, c_k, d_k$ \eqref{eq:ode::findiff::tdma}.
   Как видно, даже последний знаменатель $\neq 0$
 \end{prf}
 
-Посмотрим, какие лемма выше накладывает на уравнение.
+Посмотрим, какие условия утверждение выше накладывает на уравнение.
 Вспомним выражения для $a_k, \ldots$
 \[
   \begin{aligned}
@@ -711,9 +711,7 @@ $a_k, b_k, c_k, d_k$ \eqref{eq:ode::findiff::tdma}.
   сдвинуть если что-то сломается.
 \end{rem}
 
-\paragraph{Теорема о сходимости разностного метода}
-\label{par:ode::finddivconv}
-
+Теперь видимо то, что в названии
 \begin{lem}\label{lem:ode::finddivconv::est}
   Пусть выполено условие достаточности прогонки \ref{prop:ode::diffeqest::suff} в усиленном 
   виде: \[
@@ -737,6 +735,9 @@ $a_k, b_k, c_k, d_k$ \eqref{eq:ode::findiff::tdma}.
     \end{split}
   \]
 \end{prf}
+\paragraph{Теорема о сходимости разностного метода}
+\label{par:ode::finddivconv}
+
 
 \begin{thrm}\label{thrm:ode::finddivconv::conv}
   Рассмотрим краевую задачу \ref{it:ode::bprobl::cond::iii} типа для уравнения второго порядка.
@@ -834,9 +835,153 @@ L_{n+1}h^2$.
 \paragraph{Жёсткие системы ОДУ}
 \label{par:ode::stiff}
 
+Будем рассматривать задачу Коши для системы обыкновенных дифференциальных уравнений.
+\[
+  \v y'(x) = f(x, \v y(x)), \qquad \v y(x_0) = \v y_0
+\]
+Пусть $x_n$~--- узлы равномерной сетки с шагом $h$.
+
+\clause{Методы численного интегрирования ОДУ} 
+\begin{enumerate}
+  \item Метод Эйлера\label{it:ode::stiff::methods::euler}
+    \[\bindvectors{y}
+      y_{n+1} = y_n + h f(x_n, y_n)
+    \]
+  \item Неявный метод Эйлера\label{it:ode::stiff::methods::impeuler}
+    \[\bindvectors{y}
+      y_{n+1} = y_n + h f(x_{n+1}, y_{n+1})
+    \]
+\end{enumerate}
+оба метода выше имеют ошибку $\sim O(h)$. Поэтому они и называются простейшими.
+
+Рассмотрим более точные методы
+\begin{enumerate}[resume]
+  \item Улучшенный метод Эйлера\label{it:ode::stiff::methods::enheuler}
+    \[\bindvectors{y}
+      y_{n+1} = y_n + \frac{h}{2} \biggl( f(x_n,y_n) + f\bigl(x_{n+1}, y_n + hf(x_n, y_n)\bigr) \biggr)
+    \]
+  \item Метод трапеций\label{it:ode::stiff::methods::trap}
+    \[\bindvectors{y}
+      y_{n+1} = y_n + \frac{h}{2} \biggl( f(x_n,y_n) + f(x_{n+1}, y_{n+1}) \biggr)
+    \]
+  \item Метод средних прямоугольников\label{it:ode::stiff::methods::rect}
+    \[\bindvectors{y}
+      y_{n+1} = y_n + h f\left(x_n + \tfrac{h}{2}, \tfrac{y_n+y_{n+1}}{2}\right)
+    \]
+  \item Весовая формула трапеций\label{it:ode::stiff::methods::weightrap}
+    \[\bindvectors{y}
+      y_{n+1} = y_n + \frac{h}{2} \biggl( θf(x_n,y_n) + (1-θ)\,f(x_{n+1}, y_{n+1}) \biggr), \quad
+      0 \leqslant θ \leqslant 1
+    \]
+  \item Весовая формула прямоугольников\label{it:ode::stiff::methods::weighrect}
+    \[\bindvectors{y}
+    y_{n+1} = y_n + h f\left(x_n + θh, (1-θ)\, y_n + θ y_{n+1} \right), \quad
+    0 \leqslant θ \leqslant 1
+    \]
+\end{enumerate}
+Как видно, только первый метод явный, остальные неявные в той или иной степени.
+
+\plholdev{можно их точность оценить}
+
+
+\clause{Жёсткие системы}
 \begin{defn}\label{def:ode::stiff}
-  Формального определения жёсткости нет. 
+  Формального полного определения жёсткости нет.  
 \end{defn}
+\begin{rem}
+  Обычно под жёсткими системами понимают следующую ситуацию:
+  пусть в решении системы есть две области
+  \begin{enumerate}
+    \item <<переходный слой>> где решение быстро изменяется, как правило небольшой
+    \item область плавного изменения решения
+  \end{enumerate}
+  Проблема исключительно вычислительная~"--- хочется интегрировать переходный слой малым
+  шагом, а область плавного изменения большим. А она может быть довольно большой.
+  И времени у нас не вечность. И вот в процессе перехода от малого шага к большому и 
+  возникают некоторые трудности. Для систем эти области ещё могут перекрываться.
+  
+  Если такие подобные трудности возникают, то система~"--- жёсткая.
+\end{rem}
+
+В качестве некоторой попытки формализации рассуждений выше в частном
+случае иногда вводят такое определение:
+\begin{defn}\label{defn:ode::stiff::lin}
+  Пусть $f(x, \v y) = \hat A \v y$, ${λ_i}$~--- собственные числа $\hat A$, 
+  $\exists\, λ_k < 0$. Тогда если 
+  \[
+    \frac{\max_i \left\{-λ_i\right\}}{\min_i\left\{\abs{λ_i}\right\}} \gg 1
+  \]
+  систему называют жёсткой.
+\end{defn}
+
+\begin{exmp}\label{exmp:ode::stiff::linexpleuler}
+  Рассмотрим $f(x, y) = A y$, $y(0)=1$ (всё одномерное). Его решение~"--- $y=e^{Ax}$.
+
+  Попробуем решить методом Эйлера
+  \[
+    y_{n+1} = y_n + hAy_n = y_n (1+hA) = y_0 (1+hA)^{n+1}
+  \]
+  Из определения $e$ при $h\to 0$ получается истинное решение.
+  Однако, рассмотрим что происходит при $A \ll 0$.
+  \begin{enumerate}
+    \item $A<0$, $1 < \abs{Ah}< 2$. 
+      Тогда $-1 <1 + hA < 0$, $(1+hA)^n$ меняет знак. При этом численное решение осциллирует,
+      но осцилляции затухают. Истинное решение, как мы помним, убывающая экспонента.
+      С ней такого точно не бывает.
+
+      Выглядит это примерно вот так:
+
+      \includegraphics[width=0.5\pagewidth]{ode/stiff/exp-stiff-ExplicitEuler-1}
+
+    \item  $A<0$, $\abs{Ah} \geqslant 2$. Тогда $1 + hA \leqslant -1$. Здесь колебания даже
+      не затухают, а вообще растут. Что-то никак не связанное с экспонентой.
+
+      \includegraphics[width=0.5\pagewidth]{ode/stiff/exp-stiff-ExplicitEuler-2}
+  \end{enumerate} 
+\end{exmp}
+
+\begin{exmp}\label{exmp:ode::stiff::linimpleuler}
+  Снова рассмотрим $f(x, y) = A y$, $y(0)=1$ (всё одномерное). Его решение~"--- $y=e^{Ax}$.
+
+  Попробуем решить неявным методом Эйлера
+  \[
+    y_{n+1} = y_n + hAy_{n+1} \so y_{n+1} = \frac{1}{1-Ah}\, y_n =
+    \left(\frac{1}{1-Ah}\right)^{n+1} y_0
+  \]
+   
+  И вот здесь никаких проблем c $A < 0$ нету, какое бы оно большое не было.
+  Сравним его с явным методом Эйлера
+
+  \noindent\includegraphics[width=0.5\textwidth]{ode/stiff/exp-stiff-Eulers-1}
+  \includegraphics[width=0.5\textwidth]{ode/stiff/exp-stiff-Eulers-2}
+\end{exmp}
+
+\begin{defn}\label{defn:ode::stiff::R}
+  Рассмотрим одношаговый метод для $y'=Ay$, $R(z) \that y_{n+1} = R(Ah) y_{n}$~"--- функция
+  устойчивости \quest переходный множитель \quest \underdev
+\end{defn}
+
+\begin{defn}\label{defn:ode::stiff::astab}
+  Одношаговый метод называется $A$-устойчивым, если для него $\abs{R(z)} \leqslant 1$ в 
+  левой полуплоскости.
+\end{defn}
+
+\begin{defn}\label{defn:ode::stiff::astabarea}
+  $\{ z \mid \abs{R(z) \leqslant 1} \leqslant 1\}$ называется областью $A$-устойчивости метода. 
+\end{defn}
+
+\begin{exmp}\label{exmp:ode::stiff::expeulerstabarea}
+  Явный метод Эйлера устойчив в круге $\abs{z+1} < 1$: для него $R(z) = 1 + z$.
+\end{exmp}
+
+\paragraph{Неявные методы Рунге-Кутты}
+\begin{defn}\label{defn:ode::stiff::astab}
+  Одношаговый метод называется $L$-устойчивым, если он $A$-устойчив и 
+  \hbox{$\lim\limits_{z\to\infty} R(z) = 0$}.
+\end{defn}
+например, тот же неявный метод Эйлера.
+
+\label{par:ode::stiff}
 
 
 \end{document}
