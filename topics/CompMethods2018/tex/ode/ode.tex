@@ -502,7 +502,7 @@ Cхемы \ref{eq:ode::findiff::simpforward} и \ref{eq:ode::findiff::simpbackwa
             α\, \frac{y_0 + y_1}{2} + A &= \frac{y_1 - y_{0}}{h}\\
             y'(b) &= \frac{y(b+\lfrac h2) - y(b-\lfrac h2)}{h} + O(h^2) 
                   &\quad&\to\quad &
-            β\, \frac{y_{n+1} - y_n}{2} + B &= \frac{y_{n+1} - y_{n-1}}{2h}
+            β\, \frac{y_{n+1} + y_n}{2} + B &= \frac{y_{n+1} - y_{n}}{h}
           \end{alignat*}
 
           Такой подход не очень удобен если нужны значения в узлах. Придётся уменьшать шаг
@@ -558,7 +558,7 @@ Cхемы \ref{eq:ode::findiff::simpforward} и \ref{eq:ode::findiff::simpbackwa
 \[
   \begin{aligned}
     a_k &= 1- \tfrac{h}2 \, p_k &
-    b_k &= 1- h^2 \, q_k &
+    b_k &= 2- h^2 \, q_k &
     c_k &= 1+ \tfrac{h}2 \, p_k &
     d_k &= {h}^2 \, f_k 
   \end{aligned}
@@ -637,7 +637,7 @@ $a_k, b_k, c_k, d_k$ \eqref{eq:ode::findiff::tdma}.
 \end{lem}
 \begin{prf}
   Проблемы у нас возникнут только если знаменатели обратятся в $0$.
-  Учитывая диагональное преобладание, это эквивалентно $α_{k-1} < 1$.
+  Учитывая диагональное преобладание, это эквивалентно $α_{k-1} \geqslant 1$.
   
   \gprov $0 < α_{k-1} \leqslant 1$ (по индукции)
   \begin{description}
@@ -670,7 +670,7 @@ $a_k, b_k, c_k, d_k$ \eqref{eq:ode::findiff::tdma}.
 \[
   \begin{aligned}
     a_k &= 1- \tfrac{h}2 \, p_k &
-    b_k &= 1- h^2 \, q_k &
+    b_k &= 2- h^2 \, q_k &
     c_k &= 1+ \tfrac{h}2 \, p_k &
     d_k &= {h}^2 \, f_k 
   \end{aligned}
@@ -713,6 +713,130 @@ $a_k, b_k, c_k, d_k$ \eqref{eq:ode::findiff::tdma}.
 
 \paragraph{Теорема о сходимости разностного метода}
 \label{par:ode::finddivconv}
+
+\begin{lem}\label{lem:ode::finddivconv::est}
+  Пусть выполено условие достаточности прогонки \ref{prop:ode::diffeqest::suff} в усиленном 
+  виде: \[
+    b_k \geqslant a_k + c_k + δ,\quad δ > 0.
+  \]
+  Тогда
+  \[
+    \max_k \abs{y_k} \leqslant δ^{-1} \max_k \abs{d_k}
+  \]
+\end{lem}
+
+\begin{prf}
+  Пусть $M = \max \abs{y_k} = y_{k_0}$ (их же конечное число).
+  Тогда из разностной СЛУ \eqref{eq:ode::findiff::tdma}
+  \[
+    \begin{split}
+      b_{k_0} y_{k_0} &= a_{k_0} y_{k_0-1} + c_{k_0} y_{k_0+1} + d_{k_0}\\
+      \so b_{k_0} M & \leqslant a_{k_0} M + c_{k_0} M + d_{k_0} \\
+                    &\so δM \leqslant (b_{k_0} - a_{k_0} - c_{k_0}) \, M \leqslant \abs{d_{k_0}} 
+      \leqslant \max \abs{d_k} 
+    \end{split}
+  \]
+\end{prf}
+
+\begin{thrm}\label{thrm:ode::finddivconv::conv}
+  Рассмотрим краевую задачу \ref{it:ode::bprobl::cond::iii} типа для уравнения второго порядка.
+  Пусть 
+  \begin{enumerate}
+    \item $p, q, f \in C^2([a;b])$
+    \item $q(x) \leqslant -q_0$, $q_0 > 0$
+    \item $α < 0$, $β > 0$
+  \end{enumerate}
+  Тогда разностный метод сходится: 
+  \[
+    \forall \, k \holds \abs{y(x_k) - y_k} < Ch^2, \quad C=\mathrm{const}
+  \]
+\end{thrm}
+
+\begin{prf}
+  Запишем уравнение на сетке:
+\begin{equation*}
+  \frac{y(x_{k+1}) - 2y(x_k) + y(x_{k-1})}{h^2} + R_1 
+  + p(x_k) \, \frac{y(x_{k+1}) - y(x_{k-1})}{2h} + p(x_k)\,R_2 
+  + q(x_k) \, y(x_k) = f(x_k)
+\end{equation*}
+Вычтем теперь из него разностное (которое \eqref{eq:ode::findiff::diffeq}),
+вводя $w_k = y(x_k) - y_k$
+\[
+  \frac{w_{k+1}- 2w_k + w_{k-1}}{h^2} + p_k\,\frac{w_{k+1} - w_{k-1}}{2h} + q_k\,w_k = R,
+  \quad R = -R_1 - p_k R_2
+\]
+Если вспомнить как выглядят оценки $R_1$ и $R_2$ то становится понятно зачем нужен первый пункт
+в условиях теоремы. Но мы вспоминать точный вид не будем, а просто запишем $R = Lh^2$
+
+Чтобы оценить произодную на границе, можно воспользоваться формулой с фиктивными узлами 
+и сдвинутой сеткой (на $\lfrac{h}2$), тогда:
+\[
+  \frac{w_1 - w_0}{h} = α \frac{w_0 + w_1}{2} + R_0\quad 
+  \frac{w_{n+1} - w_n}{h} = β \frac{w_{n+1} + w_n}{2} + R_{n+1}
+\]
+Выражения для $R$ снова квадратичны по $h$, запишем их так: $R_0 = L_0 h^2$, $R_{n+1} =
+L_{n+1}h^2$.
+
+Запишем выражения для коэффициентов линейной системы c $w_k$:
+\[
+  \begin{aligned}
+    a_k &= \tfrac{1}{h^2} - \tfrac{p_k}{2h} &
+    b_k &= \tfrac{2}{h^2} - q_k &
+    c_k &= \tfrac{1}{h^2} + \tfrac{p_k}{2h} &
+    d_k &= {h}^2 L 
+  \end{aligned}
+\]
+(они такие же как и раньше, только правая часть в уравении поменялась)
+
+Подгоним под условия леммы~\ref{lem:ode::finddivconv::est}
+\[
+  b_k \geqslant a_k + c_k + δ \iff -q_k  \geqslant δ \;\Leftarrow\; δ = q_0
+\]
+
+На границах
+\[
+  \begin{aligned}
+    a_0 &= 0 &
+    b_0 &= \tfrac{1}{h} + \tfrac{α}2 &
+    c_0 &= \tfrac{1}h - \tfrac{α}2 &
+    d_0 &= {h}^2 L_0 \\
+    a_{n+1} &= \tfrac{1}h + \tfrac{β}2  &
+    b_{n+1} &= \tfrac{1}h - \tfrac{β}2 &
+    c_{n+1} &= 0 &
+    d_{n+1} &= -{h}^2 L_{n+1} \\
+  \end{aligned}
+\]
+
+Снова найдём $δ$
+\[
+  \begin{aligned}
+    b_0 &\geqslant a_0 + c_0 + δ &&\iff& α &\geqslant δ &&\Leftarrow& δ &= α \\
+      b_{n+1} &\geqslant a_{n+1} + c_{n+1} + δ &&\iff& -β &\geqslant δ &&\Leftarrow& δ &= -β \\
+  \end{aligned}
+\]
+
+Выберем:
+\[
+\begin{aligned}
+  δ &= \min \left\{q_0, α, -β\right\} & C &= \max \left\{\abs{L}, \abs{L_0}, \abs{L_1}\right\}
+\end{aligned}  
+\]
+
+Тогда по лемме 
+\[
+  \max \abs{w_k} \leqslant δ^{-1}\max \abs{d_k} \so \max\abs{y(x_k) - y_k} \leqslant δ^{-1} C h^2
+\]
+\end{prf}
+
+\plholdev{дальше идет каша из всяких обобщений, не буду пока их писать}
+
+
+\paragraph{Жёсткие системы ОДУ}
+\label{par:ode::stiff}
+
+\begin{defn}\label{def:ode::stiff}
+  Формального определения жёсткости нет. 
+\end{defn}
 
 
 \end{document}
