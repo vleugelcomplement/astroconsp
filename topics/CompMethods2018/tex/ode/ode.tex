@@ -628,18 +628,57 @@ $a_k, b_k, c_k, d_k$ \eqref{eq:ode::findiff::tdma}.
 \paragraph{Лемма об оценке для системы разностных уравений}
 \label{par:ode::diffeqest}
 
-\begin{prop}[Достаточное условие]\label{prop:ode::diffeqest::suff}
+\begin{lem}[Достаточное условие]\label{prop:ode::diffeqest::suff}
   Пусть $\forall k\holds a_k, c_k > 0$ ($c_n, a_0 = 0$), и СЛУ имеет
   диагональное преобладание: $b_k \geqslant a_k + c_k$.
 
   Тогда прогоночные уравнения \ref{eq:ode::fintdma::tdmaeq} разрешимы
-\end{prop}
+\end{lem}
 \begin{prf}
   Проблемы у нас возникнут только если знаменатели обратятся в $0$.
   Учитывая диагональное преобладание, это эквивалентно $α_{k-1} < 1$.
   
-  \gprov $0 < α_{k-1} \leqslant 1$ 
+  \gprov $0 < α_{k-1} \leqslant 1$ (по индукции)
+  \begin{description}
+    \item[база:] $α_0 = \frac{c_0}{b_0}$, $b_0 \geqslant c_0 > 0$, $c_0 \leqslant b_0$.
+      Кажется, все верно.\note{здесь бы и хотелось сразу $α_0 < 1$, да $a_0 = 0$, 
+      так что неравенство $c_0 \leqslant b_0$ нестрогое}
+    \item[переход:] Знаем что $α_{k-1} \leqslant 1$. 
+      Так что из условий теоремы
+      \[
+        b_k - α_{k-1} a_k \geqslant b_k - a_k \geqslant c_k > 0 \so 
+        0< α_k = \frac{c_k}{b_k - a_k α_{k-1}} \leqslant 1
+      \]
+      Попутно, верно ещё два уточнения:
+      \begin{enumerate}
+        \item Если $α_{k-1} < 1$, то $α_k < 1$, поскольку $b_k - α_{k-1} a_k > b_k - a_k$
+        \item $α_k < 1$ при $k\in 1\intrng n-1$, 
+          поскольку неравенство $b_k -a_k > c_k$ строгое при таких $k$.
+      \end{enumerate}
+  \end{description}
+  Таким образом, все $α_k$ определены.
 \end{prf}
+
+Посмотрим, какие условия это накладывает на уравнение.
+Вспомним выражения для $a_k, \ldots$
+\[
+  \begin{aligned}
+    a_k &= 1- \tfrac{h}2 \, p_k &
+    b_k &= 1- h^2 \, q_k &
+    c_k &= 1+ \tfrac{h}2 \, p_k &
+    d_k &= {h}^2 \, f_k 
+  \end{aligned}
+\]
+Отсюда
+\[
+  \begin{aligned}
+    a_k &> 0 &&\Leftarrow& h &< \tfrac{2}{\max \abs{p_k}}\\
+    c_k &> 0 &&\Leftarrow& h &< \tfrac{2}{\max \abs{p_k}} \\
+    b_k &\geqslant c_k + a_k &&\iff& q_k &\leqslant 0 
+  \end{aligned}
+\]
+
+\plholdev{подумать про граничные условия}
 
 \end{document}
 
