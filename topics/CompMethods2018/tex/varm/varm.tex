@@ -285,8 +285,103 @@
     На негладких решениях мы не получим точности лучше, чем $O(h)$. Однако этот метод для них надёжнее, чем просто сеточный.
     %unsure
 
+    \paragraph{Метод Ритца для эллиптического уравнения, энергетическое пространство и естественные условия}
 
+    Рассмотрим уравнение
+    \[
+        Lu = - \sum\limits_{i = 1}^n \dfrac{\pd}{\pd x_i}\left(a_{ik} \dfrac{\pd u}{\pd x_k}\right) + au = f.
+    \]
 
+    Коэффициенты должны удовлетворять нескольким условиям:
+
+    \begin{enumerate}
+        \item Все функции действуют в области $\Omega \subset \R^n$. В классическом сеттинге решение считается дважды непрерывно дифференцируемыми в $\Omega$ и непрерывным на $\ov{-}{\Omega}$; $a_{ij}$~--- один раз непрерывно дифференцируемы на $\ov{-}{\Omega}$, а остальные коэффициенты просто непрерывны.
+        \item Симметричность (эллиптичность): $a_{ik}(x) = a_{ki}(x)$.
+        \item Положительная определённость:
+        \[
+            \sum\limits_i \sum\limits_k a_{ik} \xi_i \xi_k \geqslant k^2 \sum\limits_i \xi_i^2.
+        \]
+    \end{enumerate}
+
+    Граничные условия бывают
+    \begin{enumerate}
+        \item $u|_{\pd\Omega} = 0$~--- I типа (задача Дирихле).
+        \item Пусть
+        \[
+            \dfrac{\pd u}{\pd \nu} \bigg|_{\pd \Omega} = \sum\limits_{i = 1}^n a_{ij} \cos(n, \, x_i) \dfrac{\pd u}{\pd x_i} \bigg|_{\pd \Omega}.
+        \]
+        Этот оператор называется \ti{конормальной производной}.
+        Тогда граничное условие выглядит, как
+        \[
+            \dfrac{\pd u}{\pd \nu} = \sigma u|_{\pd \Omega}.
+        \]
+        Это~--- задача третьего рода (задача Фон-Неймана).
+        \item Задача второго рода~--- когда $\sigma = 0$.
+    \end{enumerate}
+
+    Найдём вид энергетического произведения.
+
+    \begin{st}
+        \[
+            (Lu, \, v) = \int\limits_{\Omega} \left(\sum\limits_{i, \, j = 1}^n a_{ij} \dfrac{\pd u}{\pd x_j} \dfrac{\pd v}{\pd x_i} + auv\right) \pd x + \int\limits_{\pd \Omega} \sigma u v \, \del S.
+        \]
+        \begin{proof}
+            \[
+                (Lu, \, v) = \int\limits_{\Omega}  \left( - \sum\limits_{i = 1}^n \dfrac{\pd}{\pd x_i}\left(a_{ik} \dfrac{\pd u}{\pd x_k}\right) + au \right) v \, \del x
+            \]
+            Используя формулу интегрирования по частям
+            \[
+                \int\limits_{\Omega} \dfrac{\pd u}{\pd x_i} \varphi \, \del x = - \int\limits_{\Omega} u  \dfrac{\pd \varphi}{\pd x_i} \, \del x + \int\limits_{\pd \Omega} u\varphi \cos(n, \, x_i) \, \del S,
+            \]
+            найдём искомый результат.
+        \end{proof}
+    \end{st}
+
+    \begin{st}
+        $\hphantom{.}$
+        Оператор положительно определён, если
+        \begin{enumerate}
+            \item Задача первого типа: $a(x) \geqslant 0$;
+            \item Задача второго типа: $a(x) \geqslant a_0 > 0$;
+            \item Задача третьего типа: $a(x) \geqslant a_0 > 0$, $\sigma(x) \geqslant 0$ или $a(x) \geqslant 0$, $\sigma(x) \geqslant \sigma_0 > 0$.
+        \end{enumerate}
+        \begin{proof}
+            \[
+                (Lu, \, u) = \int\limits_{\Omega} \left(\sum\limits_{i, \, j = 1}^n a_{ij} \dfrac{\pd u}{\pd x_j} \dfrac{\pd u}{\pd x_i} + au^2\right) \pd x + \underbrace{\int\limits_{\pd \Omega} \sigma u^2 \, \del S}_{\text{III}}.
+            \]
+            Нам понадобится неравенство Фридрихса 
+            \[
+                \int\limits_{\Omega} u^2 \, \del x \leqslant c_1 \left(\;\int\limits_{\Omega} \sum \left(\dfrac{\pd u}{\pd x_i}\right)^2 \, \del x + \int\limits_{\pd \Omega} u^2 \, \del S \right).
+            \]
+            \begin{enumerate}
+                \item Здесь работает совсем грубая оценка:
+                \[
+                    \int\limits_{\Omega} \left(\sum\limits_{i, \, j = 1}^n a_{ij} \dfrac{\pd u}{\pd x_j} \dfrac{\pd u}{\pd x_i} + au^2\right) \pd x \geqslant \int\limits_{\Omega} \sum\limits_{i, \, j = 1}^n a_{ij} \dfrac{\pd u}{\pd x_j} \dfrac{\pd u}{\pd x_i} \pd x \geqslant k^2 \int\limits_{\Omega} \sum\limits_{i = 1}^n \left(\dfrac{\pd u}{\pd x_j}\right)^2\pd x \geqslant \dfrac{k^2}{c_1} \int\limits_{\Omega} u^2 \, \del x.
+                \]
+                \item 
+                Ещё проще, как это ни странно.
+                \[
+                    \int\limits_{\Omega} \left(\sum\limits_{i, \, j = 1}^n a_{ij} \dfrac{\pd u}{\pd x_j} \dfrac{\pd u}{\pd x_i} + au^2\right) \pd x \geqslant a_0\int\limits_{\Omega} u^2 \, \del x
+                \]
+                \item Первый вариант доказывается точно так же, как для II типа, а второй:
+                \[
+                    \int\limits_{\Omega} \left(\sum\limits_{i, \, j = 1}^n a_{ij} \dfrac{\pd u}{\pd x_j} \dfrac{\pd u}{\pd x_i} + au^2\right) \pd x + \int\limits_{\pd \Omega} \sigma u^2 \, \del S \geqslant k^2 \int\limits_{\Omega} \sum\limits_{i = 1}^n \left(\dfrac{\pd u}{\pd x_j}\right)^2\pd x + \sigma_0 \int\limits_{\pd \Omega} u^2 \, \del S \geqslant \dfrac{\min(k^2, \, \sigma_0)}{c_1} \int\limits_{\Omega} u^2 \, \del x.
+                \]
+            \end{enumerate}
+        \end{proof}
+    \end{st}
+
+    \begin{rem}
+        Можно доказать, что эта энергетическая норма эквивалентна норме в $W_2^1(\Omega)$:
+        \[
+            \|v\|_{W_2^1}^2 = \int\limits_{\Omega} \left(\sum \left(\dfrac{\pd u}{\pd x_i}\right)^2 + u^2 \right) \, \del x.
+        \]
+        Энергетическое пространство для II и III типов совпадёт с $W_2^1$, а для типа I унаследует граничное условие и будет состоять из элементов $W_2^1$, обращающихся в ноль на границе.
+    \end{rem}
+
+    \begin{rem}
+        Вообще всё это очень похоже на обычную краевую задачу, только многомерную. При подборе базиса $\{\varphi_k\}$ для метода Ритца в задаче I типа нужно как-то заставить $\varphi_k$ обращаться в ноль на границе области $\Omega$, которая может быть некрасивой. Чтобы это сделать, можно найти функцию $\omega(x, \, y)$~--- это на плоскости~--- которая положительна в $\Omega$ и равна нулю на границе. Читатель сможет придумать такие функции для квадрата/круга/сектора круга, но вообще это, видимо, искусство.
+    \end{rem}
 
 \end{document}
 % vim:wrapmargin=3
