@@ -339,7 +339,7 @@
   \end{aligned} 
 \]
 В итоге
-\begin{equation}\label{equation:ode::orthtdma::tdma}
+\begin{equation}\label{eq:ode::orthtdma::tdma}
   \bindvectors{y,β,f}\bindqoperators{α, A}
   \begin{aligned}
     α' &=  - α A + αA α^T \left(α α^T\right)^{-1} α \\
@@ -355,7 +355,7 @@
 При этом заменили переменную в исходном уравении, соответственно поменялись 
 $\hat A\to \hat B$, $\v f\to \v g$. Зато $\hat α(a)\, \hat α(a)^T = I$.
 Так что прогоночные уравения принимают вид
-\begin{equation}\label{equation:ode::orthtdma::tdma}
+\begin{equation}\label{eq:ode::orthtdma::orthtdma}
   \bindvectors{y,β,g}\bindqoperators{α, B}
   \begin{aligned}
     α' &=  - α B + αB α^T α \\
@@ -570,10 +570,76 @@ Cхемы \ref{eq:ode::findiff::simpforward} и \ref{eq:ode::findiff::simpbackwa
 
 \paragraph{Метод разностной прогонки}
 \label{par:ode::fintdma}
+Вспомним систему линейную систему~\ref{eq:ode::findiff::tdma}.
+Её матрица, как видно чуть ниже, трёхдиагональная.
+\[
+  \begin{pmatrix}
+    -b_0   & c_0    &         &          & 0       \\
+    a_1    & -b_1   & c_1     &          &         \\
+           & \ddots & \ddots  & \ddots             \\
+           &        & a_{n-1} & -b_{n-1} & c_{n-1} \\
+    0      &        &         & a_n      & -b_n    \\
+  \end{pmatrix}
+\]
+Такие СЛУ можно решать не за $O(n^3)$, а за $O(n)$. Опишем, как именно.
 
 
+Преобразум систему: уберём поддиагональ, на самой диагонали оставим всюду 1.
+Тогда можно написать прогоночное соотношение, очень похожее на такое же для 
+дифференциальной прогонки (в \ref{par:ode::difftdma}). 
+\begin{equation}\label{eq:ode::fintdma::direct}
+  y_k = α_k y_{k+1} + β_k
+\end{equation}
 
+% спёр из своего отчёта: там слишком хорошо, мне лучше не сделать
+Свяжем $α, β$ с $a, b, c, d$.
+\[
+  \left\{
+  \begin{aligned}
+    &y_{k-1} = α_{k-1} y_k + β_{k-1} \\
+    &a_k y_{k-1} - b_k y_k + c_k y_{k+1} = d_k
+  \end{aligned}\right. 
+  \so
+  \begin{aligned}[t]
+         &a_k α_{k-1} y_{k} + a_k β_{k-1} - b_k y_k + c_k y_{k+1} = d_k \\
+    \iff &y_k = \frac{c_k}{b_k - a_k α_{k-1}}y_{k+1} + \frac{a_k β_{k-1} - d_k}{b_k - a_k α_{k-1}}
+  \end{aligned}
+\]
 
+Отсюда получаются удобные рекурсивные соотношения для $α_k, β_k$
+\begin{equation}\label{eq:ode::fintdma::tdmaeq}
+  α_k = \frac{c_k}{b_k - a_k α_{k-1}}; \qquad β_k = \frac{a_k β_{k-1} - d_k}{b_k - a_k α_{k-1}}
+\end{equation}
+Начальные значения $α_k, β_k$ легко определяются из линейной системы на
+$a_k, b_k, c_k, d_k$ \eqref{eq:ode::findiff::tdma}.
+
+Итак, алгоритм, следующий
+\begin{description}
+  \item[прямая прогонка:] решаем прогоночные уравения~\eqref{eq:ode::fintdma::tdmaeq}
+    с начальными данными $α_0 = \frac{c_0}{b_0}$, $β_0 = -\frac{d_0}{b_0}$.
+  \item[обратная прогонка:] уже зная $α_k$, $β_k$ решаем прогоночное соотношение 
+    \eqref{eq:ode::fintdma::direct} c
+    начальными данными $y_n = β_n$ ($c_n = 0 \so α_n = 0$).
+\end{description}
+
+Как видно, что прямая, что обратная прогонка имеют асимптотику $O(n)$, что не может не
+радовать.
+Теперь подумаем над корректностью метода.
+\paragraph{Лемма об оценке для системы разностных уравений}
+\label{par:ode::diffeqest}
+
+\begin{prop}[Достаточное условие]\label{prop:ode::diffeqest::suff}
+  Пусть $\forall k\holds a_k, c_k > 0$ ($c_n, a_0 = 0$), и СЛУ имеет
+  диагональное преобладание: $b_k \geqslant a_k + c_k$.
+
+  Тогда прогоночные уравнения \ref{eq:ode::fintdma::tdmaeq} разрешимы
+\end{prop}
+\begin{prf}
+  Проблемы у нас возникнут только если знаменатели обратятся в $0$.
+  Учитывая диагональное преобладание, это эквивалентно $α_{k-1} < 1$.
+  
+  \gprov $0 < α_{k-1} \leqslant 1$ 
+\end{prf}
 
 \end{document}
 
