@@ -5,7 +5,7 @@
 \usepackage{trthm}
 \usepackage{trsym} 
 \usepackage{trphys}
-% \input{mdefs}
+\input{mdefs}
 \usepackage{silence}
 \WarningFilter{latex}{Reference}
 \graphicspath{{../../img/}}
@@ -497,7 +497,7 @@ Cхемы \ref{eq:ode::findiff::simpforward} и \ref{eq:ode::findiff::simpbackwa
 
           Запишем это выражение для границ:
           \begin{alignat*}{3}
-            y'(a) &= \frac{y(a+\lfrac{h}2) - y(a-\frac{h}2)}{h} + O(h^2) 
+            y'(a) &= \frac{y(a+\lfrac{h}2) - y(a-\lfrac{h}2)}{h} + O(h^2) 
                   &\quad&\to\quad &
             α\, \frac{y_0 + y_1}{2} + A &= \frac{y_1 - y_{0}}{h}\\
             y'(b) &= \frac{y(b+\lfrac h2) - y(b-\lfrac h2)}{h} + O(h^2) 
@@ -515,7 +515,7 @@ Cхемы \ref{eq:ode::findiff::simpforward} и \ref{eq:ode::findiff::simpbackwa
         Теперь запишем разложение в ряд Тейлора:
         \begin{equation*}
           y(x+h) = y(x) + h y'(x) + \frac{h^2}{2}y''(x) + O(h^3) 
-          \iff y'(x)  = \frac{y(x+h) - y(a)}{h}  - \frac h2 y''(x) + O(h^2)
+          \iff y'(x)  = \frac{y(x+h) - y(x)}{h}  - \frac h2 y''(x) + O(h^2)
         \end{equation*}
         Из исходного уравнения \eqref{eq:ode::tdmasys::ode} подстановкой простейшей формулы получаем
         \begin{align*}
@@ -728,8 +728,8 @@ $a_k, b_k, c_k, d_k$ \eqref{eq:ode::findiff::tdma}.
   Тогда из разностной СЛУ \eqref{eq:ode::findiff::tdma}
   \[
     \begin{split}
-      b_{k_0} y_{k_0} &= a_{k_0} y_{k_0-1} + c_{k_0} y_{k_0+1} + d_{k_0}\\
-      \so b_{k_0} M & \leqslant a_{k_0} M + c_{k_0} M + d_{k_0} \\
+      b_{k_0} y_{k_0} &= a_{k_0} y_{k_0-1} + c_{k_0} y_{k_0+1} - d_{k_0}\\
+      \so b_{k_0} M & \leqslant a_{k_0} M + c_{k_0} M - d_{k_0} \\
                     &\so δM \leqslant (b_{k_0} - a_{k_0} - c_{k_0}) \, M \leqslant \abs{d_{k_0}} 
       \leqslant \max \abs{d_k} 
     \end{split}
@@ -870,7 +870,7 @@ L_{n+1}h^2$.
     \]
   \item Весовая формула трапеций\label{it:ode::stiff::methods::weightrap}
     \[\bindvectors{y}
-      y_{n+1} = y_n + \frac{h}{2} \biggl( θf(x_n,y_n) + (1-θ)\,f(x_{n+1}, y_{n+1}) \biggr), \quad
+      y_{n+1} = y_n + h \biggl( (1-θ)\,f(x_n,y_n) + θ\,f(x_{n+1}, y_{n+1}) \biggr), \quad
       0 \leqslant θ \leqslant 1
     \]
   \item Весовая формула прямоугольников\label{it:ode::stiff::methods::weighrect}
@@ -903,16 +903,6 @@ L_{n+1}h^2$.
   Если такие подобные трудности возникают, то система~"--- жёсткая.
 \end{rem}
 
-В качестве некоторой попытки формализации рассуждений выше в частном
-случае иногда вводят такое определение:
-\begin{defn}\label{defn:ode::stiff::lin}
-  Пусть $f(x, \v y) = \hat A \v y$, ${λ_i}$~--- собственные числа $\hat A$, 
-  $\exists\, λ_k < 0$. Тогда если 
-  \[
-    \frac{\max_i \left\{-λ_i\right\}}{\min_i\left\{\abs{λ_i}\right\}} \gg 1
-  \]
-  систему называют жёсткой.
-\end{defn}
 
 \begin{exmp}\label{exmp:ode::stiff::linexpleuler}
   Рассмотрим $f(x, y) = A y$, $y(0)=1$ (всё одномерное). Его решение~"--- $y=e^{Ax}$.
@@ -942,6 +932,7 @@ L_{n+1}h^2$.
 
 \begin{exmp}\label{exmp:ode::stiff::linimpleuler}
   Снова рассмотрим $f(x, y) = A y$, $y(0)=1$ (всё одномерное). Его решение~"--- $y=e^{Ax}$.
+  Такую штуку называют пробным уравнением
 
   Попробуем решить неявным методом Эйлера
   \[
@@ -955,6 +946,27 @@ L_{n+1}h^2$.
   \noindent\includegraphics[width=0.5\textwidth]{ode/stiff/exp-stiff-Eulers-1}
   \includegraphics[width=0.5\textwidth]{ode/stiff/exp-stiff-Eulers-2}
 \end{exmp}
+
+\begin{exmp}\label{exmp:ode::stiff::linstiff}
+  \[
+    f(x, \v y) = \begin{pmatrix}
+      A & 0 \\
+      0 & a
+      \end{pmatrix} \, \begin{pmatrix} y_1 \\ y_2 \end{pmatrix}, \quad -A \gg 1, \; a \sim 1
+  \]
+  вот такая штука точно жёсткая: на одном и том же отрезке один кусок
+  решения резко изменяется, а другой ведёт себя весьма плавно.
+\end{exmp}
+
+В качестве некоторой попытки формализации рассуждений иногда вводят такое определение:
+\begin{defn}\label{defn:ode::stiff::lin}
+  Пусть $f(x, \v y) = \hat A \v y$, ${λ_i}$~--- собственные числа $\hat A$.
+  Тогда если 
+  \[
+    \frac{\max_i \left\{\abs{\Re λ_i}\right\}}{\min_i\left\{\abs{\Re λ_i}\right\}} \gg 1
+  \]
+  систему называют жёсткой.
+\end{defn}
 
 \begin{defn}\label{defn:ode::stiff::R}
   Рассмотрим одношаговый метод для $y'=Ay$, $R(z) \that y_{n+1} = R(Ah) y_{n}$~"--- функция
@@ -975,15 +987,99 @@ L_{n+1}h^2$.
 \end{exmp}
 
 \paragraph{Неявные методы Рунге-Кутты}
+\label{par:ode::implrk}
 \begin{defn}\label{defn:ode::stiff::astab}
   Одношаговый метод называется $L$-устойчивым, если он $A$-устойчив и 
   \hbox{$\lim\limits_{z\to\infty} R(z) = 0$}.
-\end{defn}
 например, тот же неявный метод Эйлера.
+\end{defn}
 
-\label{par:ode::stiff}
+Прежде чем вводить методы Рунге-Кутты, разберёмся с устойчивостью оставшихся методов
+\ref{it:ode::stiff::methods::enheuler}--\ref{it:ode::stiff::methods::weighrect}
 
+\begin{itemize}
+  \item Улучшенный метод Эйлера
+    \[
+      R(z)  = 1 + z + \frac{z^2}{2}
+    \]
+    совсем неустойчив
+  \item Метод трапеций/метод средних прямоугольников
+    \[
+      R(z)  = \frac{1+\lfrac{z}2}{1-\lfrac{z}2} 
+    \]
+  \item Весовая формула
+    \[ 
+      R(z)  = \frac{1+(1-θ)\, z}{1-θ\,z} 
+    \]
+    $A$-устойчива при $θ \geqslant \tfrac12$. 
+    Просто при таком преобразовании прообразом единичного круга будет 
+    круг/внешность круга с центром в $θ-\tfrac 12$ и радиусом $\abs{θ - \tfrac 12}$.
+\end{itemize}
 
+Всё, можно бросаться сеять паслёновые определения
+\begin{defn}[$q$-этапный метод РК]\label{defn:ode::implrk::rk}
+  \begin{align*}
+    k_i &= f\left(x_n + α_i h, y_n + h\sum_{j=1}^{i-1} β_{ij} k_j \right)\\
+        &y_{n+1} = y_n + h \sum_{i=1}^q γ_i k_i
+  \end{align*}
+  а $α_i$, $β_{ij}$, $γ_i$ уже зависят от метода.
+\end{defn}
+
+\begin{defn}\label{defn:ode::implrk::implrk}
+  \emph{Неявным методом называется} такой вариант метода РК, где у матрицы $β_{ij}$ ненулевые
+  диагональные и/или наддиагональные члены.
+\end{defn}
+\begin{defn}\label{defn:ode::implrk::implrk}
+  \emph{Диагональным неявным методом} называется такой вариант метода РК, где у матрицы $β_{ij}$
+  ненулевые диагональные члены, а наддиагональные все нулевые.
+\end{defn}
+
+Закопаемся в варианты реализации этих методов.
+Все примеры будут иметь такой вид: 
+$\begin{array}{c|c} α & β\\ \cline{2-2}\multicolumn{1}{c}{} & γ\end{array}$
+Сначала стоит заметить чем хороши неявные методы РК.
+\begin{prop}
+  Существует реализация неявного метода с $p = 2q$, где $p$~--- порядок точности
+\end{prop}
+Собственно, просто берём узлы и коэффициенты гауссовой квадратурной формулы.
+
+Ещё стоит отметить что неявные методы $A$-устойчивы, а вот диагональные как повезёт.
+
+\begin{exmp}[обычный \texttt{rk4}]
+  \[\def\arraystretch{1.5}
+    \begin{array}{c|cccc}
+      0         & 0 & 0 & 0 & 0 \\
+      \tfrac 12 & \tfrac 12 & 0 & 0 & 0 \\
+      \tfrac 12 & 0 & \tfrac 12 &0 & 0 \\
+      1         & 0 & 0 & \tfrac 12 & 0 \\
+      \cline{2-5}
+      \multicolumn{1}{c}{} & \tfrac 16 & \tfrac 13 & \tfrac 13 & \tfrac 16 
+    \end{array}
+  \]
+\end{exmp}
+
+\begin{exmp}(основанная на методе Гаусса)
+  \[\def\arraystretch{2}
+    \begin{array}{c|cc}
+      \tfrac 12 - \tfrac{\sqrt 3}{6} & \tfrac 14 & \tfrac 14 - \tfrac{\sqrt 3}6 \\
+      \tfrac 12 + \tfrac{\sqrt 3}{6} & \tfrac 14 - \tfrac{\sqrt 3}6 & \tfrac 14\\
+      \cline{2-3}
+      \multicolumn{1}{c}{} & \tfrac 12 & \tfrac 12
+    \end{array}
+  \]
+\end{exmp}
+\begin{exmp}(дигонального неявного РК)
+  \[\def\arraystretch{2}
+    \begin{array}{c|cc}
+      γ & γ & 0 \\
+      1-γ& 1-2γ & γ\\
+      \cline{2-3}
+      \multicolumn{1}{c}{} & \tfrac 12 & \tfrac 12
+    \end{array} \qquad γ = \tfrac 12 + \tfrac{\sqrt 6}{3}
+  \]
+\end{exmp}
+
+\plholdev{ещё примеры?}
 \end{document}
 
 
