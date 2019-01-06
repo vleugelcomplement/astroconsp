@@ -2,19 +2,17 @@
 \usepackage{trmath}
 \addcompatiblelayout{commonplace}
 \setlayout{commonplace}
-\usepackage{amsthm}
-% \usepackage{trthm}
+% \usepackage{amsthm}
+\usepackage{trthm}
+\usepackage{trphys}
 \input{mdefs}
+\usepackage{trsym}
 \usepackage{docmute}
 \graphicspath{{img/}}
 \title{методы отчислений}
 \date{10.01.2019}
 \author{Лектор: Б.~А.~Самокиш}
 
-% \setmainfont{Exo-2}[
-%   BoldFont    = {Lato Semibold},
-% ]
-% \setsansfont{Lato}
 \begin{document}
  
 \maketitle
@@ -22,15 +20,24 @@
 \clearpage
 
 \chapter{Однородные дифференциальные уравнения}
+\label{chap:ode}
 \input{tex/ode/ode}
 
-\[
-  \int_0^{\infty}
-\]
+\chapter{Методы линейной алгебры}
+
+\chapter{Интегральные уравнения}
+\input{tex/inteq/inteq.tex}
+
+\chapter{Вариационные методы}
+
+\chapter{Уравения в частных производных}
 
 \clearpage
 
 \appendix
+\chapter{Введение в функциональный анализ}
+\input{tex/funcan/funcan}
+
 \chapter{Обозначения}
 % \input{tex/nomenclature}
 
