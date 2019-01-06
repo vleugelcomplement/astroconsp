@@ -17,6 +17,7 @@ $(shell mkdir -p $(PDFDIR) &>/dev/null)
 TMPDIR  = /tmp/consp
 $(shell mkdir -p $(TMPDIR) &>/dev/null)
 $(shell mkdir -p $(TMPDIR)/$(PDFDIR) &>/dev/null)
+BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 MESSAGE = $(shell git log -1 --pretty=%B)
 
 @%:
@@ -39,7 +40,7 @@ post:
 	@cp -r $(TMPDIR)/$(PDFDIR) .
 	@git add $(PDFDIR)
 	@git commit -m "$(MESSAGE)"
-	@git checkout master
+	@git checkout ${BRANCH}
 	
 
 plain:	
