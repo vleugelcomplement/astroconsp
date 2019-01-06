@@ -3,19 +3,6 @@
 % \RequirePackage{etoolbox}
 
 
-%\RequirePackage{cmap}
-% \RequirePackage{hyperref}
-% \theoremstyle{definition}
-% \newtheorem{thm}{Теорема}
-% \newtheorem{de}{Определение}
-% \newtheorem{lm}{Лемма}
-% \newtheorem{exm}{Пример}
-% \newtheorem{pr}{Свойство}
-% \newtheorem{exc}{Упражнение}
-% \newtheorem{cor}{Следствие}
-% \newtheorem{st}{Утверждение}
-% \theoremstyle{remark}
-% \newtheorem{rem}{Замечание}
 \newcommand*{\icom}{\ensuremath\text{\textit{,}}}
 \newcommand*{\icol}{\ensuremath\text{\textit{:}}}
 \newcommand*{\iscol}{\ensuremath\text{\textit{;}}}
@@ -70,8 +57,12 @@
 % \DeclareMathOperator{\Stab}{Stab}
 \DeclareMathOperator{\const}{const}
 
-%\titleformat{\section}
-%  {\sffamily\mdseries\upshape\LARGE}
-%  {Билет \thesection:}{0.5em}{}
+\AtBeginDocument{%
+\let\Re\relax%
+\let\Im\relax%
+\DeclareMathOperator{\Re}{Re}%
+\DeclareMathOperator{\Im}{Im}%
+}
+
 
 
