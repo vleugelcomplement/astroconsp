@@ -15,7 +15,7 @@
 
 \newcommand\plholdev[1]{\texttt{<+{#1}+>}} 
 \newcommand\intrng{\mathbin{..}} 
-\newcommand\holds{\ensuremath\:::\:}
+\newcommand\holds{\ensuremath\:\Colon\:}
 \newcommand\that{\ensuremath :\:}
 \newcommand\gprov{(!) } % докажем, что
 \newcommand\convex{\ensuremath\mathop{\underline\cup}}

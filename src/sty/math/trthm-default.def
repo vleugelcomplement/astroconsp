@@ -1,0 +1,38 @@
+\ProvidesFile{trthm-default.def}[
+  2019/01/03 default theorem definitions]
+
+\theoremstyle{definition}
+\newtheorem{thrm}{Теорема}[paragraph]
+\newtheorem{lem}[thrm]{Лемма}
+\newtheorem{stat}[thrm]{Утверждение}
+\newtheorem{prop}[thrm]{Утверждение}
+\newtheorem{imp}{Следствие}[thrm]
+\newtheorem{cor}{Следствие}[thrm]
+\newtheorem*{cor*}{Следствие}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Определение}[paragraph]
+\newtheorem*{denot}{Обозначение}
+\newtheorem{exmp}{Пример}[defn]
+\newtheorem*{exmp*}{E.g}
+
+\theoremstyle{remark}
+\newtheorem{rem}{Замечание}[defn]
+\newtheorem*{rem*}{Замечание}
+
+
+\counterwithin*{rem}{thrm}
+\counterwithin*{equation}{paragraph}
+
+\listdef\@allstatements{thrm,lem,stat,prop,imp,cor,defn,exmp,rem}
+\listdef\@independentstatements{thrm,defn,exmp}
+\listdef\@resetablestatements{thrm,defn,rem}
+
+% temporary hack
+\ifdef\c@chapter{
+  \def\trth@stat@headnumberformat{\arabic{chapter}.\arabic{paragraph}}
+}{
+  \def\trth@stat@headnumberformat{\arabic{section}}
+}
+\def\@trth@stat@intextformat#1{\arabic{#1}}
+% vim:ft=tex
