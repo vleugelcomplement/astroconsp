@@ -61,7 +61,7 @@
 
 % is not fully compatible with biblatex and hyperref
 % consider removal
-% \RequirePackage[explicit]{titlesec}
+\RequirePackage{titlesec}
 % \RequirePackage{titletoc}
 \RequirePackage{chngcntr} % tools for counters 
 
@@ -104,13 +104,14 @@
 
 
 \newcounter{clause}
+\newcommand{\clauseheadsep}{1.4ex}
 \newcommand{\clause}{
   \@startsection{clause}{3}{\z@}%
   {3.25ex \@plus1ex \@minus.2ex}%
   {-1em}%
   {\normalfont\normalsize\bfseries}
 }
-\renewcommand\theclause{\arabic{clause}}
+\renewcommand\theclause{\arabic{clause}.\ }
 \counterwithin*{clause}{paragraph}
 \newcommand\clausemark{\@gobble}
 \newcommand*\l@clause{\@dottedtocline{3}{4em}{1em}}
