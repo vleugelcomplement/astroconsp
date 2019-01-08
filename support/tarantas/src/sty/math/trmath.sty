@@ -112,6 +112,14 @@ ${}%continue math mode
 \input{trmlogic.def}
 % other parts of algebra
 \input{trmalg.def}
+\def\trm@norm#1#{%
+  \ifblank{#1}%
+    {\trm@normdefault}%
+    {\trm@normidx{#1}}}%
+\relax
+\def\trm@normdefault#1{\ensuremath \left\Vert#1\right\Vert}
+\def\trm@normidx#1#2{\trm@normdefault{#2}_{#1}}
+\let \norm=\trm@norm
 
 \newcommand{\gen@der@fr}[4][\relax]{
   \ensuremath 
