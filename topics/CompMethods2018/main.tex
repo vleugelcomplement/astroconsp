@@ -9,17 +9,31 @@
 \usepackage[normalem]{ulem}
 \usepackage{trsym}
 \usepackage{docmute}
+\usepackage{luacode}
+\usepackage{tikz} 
 \graphicspath{{img/}}
 \title{методы отчислений}
-\date{10.01.2019}
+\date{10.01.2019\\
+  \small версия от \luaexec{tex.print(os.date("\%d.\%m.\%Y \%X"))}, 
+до экзамена
+\directlua{tex.print(math.floor(os.difftime(os.time{
+day=10, month=1, year=2019, hour=11 },os.time())/3600))}
+часов}
 \author{Лектор: Б.~А.~Самокиш}
 
+\usepackage{luatex85}
+\usepackage[all]{xy}
 \begin{document}
  
 \maketitle
 \tableofcontents
 \clearpage
 
+\makeatletter
+\let \oldxypicxto \xto
+\let \xto\relax
+\newcommand\xto[1]{\ensuremath \xrightarrow[#1]{}}
+\makeatother
 \chapter{Однородные дифференциальные уравнения}
 \label{chap:ode}
 \input{tex/ode/ode}
@@ -33,6 +47,7 @@
 \chapter{Вариационные методы}
 \input{tex/varm/varm.tex}
 
+\let \xto=\oldxypicxto
 \chapter{Уравения в частных производных}
 \input{tex/pde/pde.tex}
 

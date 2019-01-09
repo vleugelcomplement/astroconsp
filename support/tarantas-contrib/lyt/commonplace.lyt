@@ -5,7 +5,10 @@
   BoldFont    = {Lato Semibold},
 ]
 \setsansfont{Lato}
+
 \setmathfont{STIX Two Math}
+\setmonofont{CMU Typewriter Text}
+\newfontfamily\cyrillicfonttt{CMU Typewriter Text}[Script=Cyrillic]
 
 % Use XITSMath for    [     ]     (     )     {     }
 % \setmathfont[range={"005B,"005D,"0028,"0029,"007B,"007D}]{XITS Math}
@@ -16,7 +19,7 @@
 \storePairDef{size=10}
 \setfont{\getByKey{size}}
 
-\RequirePackage[luatex]{geometry}
+\RequirePackage{geometry}
 \storePairsDef{paper-type = a4paper, page-orient=portrait}
 \geometry{
   \getByKey{paper-type},
