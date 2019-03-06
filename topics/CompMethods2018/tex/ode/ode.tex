@@ -566,7 +566,6 @@ Cхемы \ref{eq:ode::findiff::simpforward} и \ref{eq:ode::findiff::simpbackwa
 
 Явные выражения для $a_0, b_0, c_0, d_0$ и $a_n, b_n, c_n, d_n$
 зависят от способа учета граничных условий. Разве что $a_0 = 0\land c_0 = 0$.
-Оставим остальные читателям из Беларуси в качестве упражнения.
 
 \paragraph{Метод разностной прогонки}
 \label{par:ode::fintdma}
@@ -745,7 +744,7 @@ $a_k, b_k, c_k, d_k$ \eqref{eq:ode::findiff::tdma}.
   \begin{enumerate}
     \item $p, q, f \in C^2([a;b])$
     \item $q(x) \leqslant -q_0$, $q_0 > 0$
-    \item $α < 0$, $β > 0$
+    \item $α > 0$, $β < 0$
   \end{enumerate}
   Тогда разностный метод сходится: 
   \[
@@ -828,8 +827,6 @@ L_{n+1}h^2$.
   \max \abs{w_k} \leqslant δ^{-1}\max \abs{d_k} \so \max\abs{y(x_k) - y_k} \leqslant δ^{-1} C h^2
 \]
 \end{prf}
-
-\plholdev{дальше идет каша из всяких обобщений, не буду пока их писать}
 
 
 \paragraph{Жёсткие системы ОДУ}
@@ -1016,7 +1013,6 @@ L_{n+1}h^2$.
     круг/внешность круга с центром в $θ-\tfrac 12$ и радиусом $\abs{θ - \tfrac 12}$.
 \end{itemize}
 
-Всё, можно бросаться сеять паслёновые определения
 \begin{defn}[$q$-этапный метод РК]\label{defn:ode::implrk::rk}
   \begin{align*}
     k_i &= f\left(x_n + α_i h, y_n + h\sum_{j=1}^{i-1} β_{ij} k_j \right)\\
@@ -1034,7 +1030,7 @@ L_{n+1}h^2$.
   ненулевые диагональные члены, а наддиагональные все нулевые.
 \end{defn}
 
-Закопаемся в варианты реализации этих методов.
+Углубимся в варианты реализации этих методов.
 Все примеры будут иметь такой вид: 
 $\begin{array}{c|c} α & β\\ \cline{2-2}\multicolumn{1}{c}{} & γ\end{array}$
 Сначала стоит заметить чем хороши неявные методы РК.
@@ -1079,7 +1075,6 @@ $\begin{array}{c|c} α & β\\ \cline{2-2}\multicolumn{1}{c}{} & γ\end{array}$
   \]
 \end{exmp}
 
-\plholdev{ещё примеры?}
 \end{document}
 
 
