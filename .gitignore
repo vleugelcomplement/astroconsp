@@ -33,10 +33,11 @@
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+*.ent
 # bib[la]tex stuff
 *.bbl
 *.blg
-*.ent
+*.run.xml
 # tikz
 *.dep
 *.gnuplot
