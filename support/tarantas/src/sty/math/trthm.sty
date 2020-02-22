@@ -41,7 +41,8 @@
 \newcommand*{\trth@refformat@set}[1]{
   \csdef{p@#1}{\trth@stat@headnumberformat.\csuse{the#1}\ex@f\@gobble}
 }
-\renewcommand{\p@equation}{\theequation\expandafter\@gobble}
+\counterwithout{equation}{chapter}
+% \renewcommand{\p@equation}{\theequation}%\expandafter\@gobble}
 
 % hoped to the best loop, but tastes matter
 \forlistloop{\trth@stat@intextformat@set}{\@allstatements}
