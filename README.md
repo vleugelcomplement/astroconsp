@@ -12,11 +12,18 @@
 ### Build process
 
 ```sh
-$ make
+$ make 
 ```
 
 Пдфка окажется в pdf/
 
 ```sh 
 $ make clean # вызовет latexmk -C
+```
+
+
+### Deploy 
+
+```sh
+$ make post
 ```
