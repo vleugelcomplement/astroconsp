@@ -27,3 +27,4 @@ $ make clean # вызовет latexmk -C
 ```sh
 $ make post
 ```
+push pdf/ to gh-pages to make them directly downloadable 
